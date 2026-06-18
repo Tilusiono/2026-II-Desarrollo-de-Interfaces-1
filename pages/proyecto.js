@@ -26,10 +26,10 @@ class  profesor{
 }
 
 class  notas {
-    FechaRegistro: Date;
-    FechaCierre:Date;
+    FechaRegistro;  Date;
+    FechaCierre; Date;
     Nota; number;
-    NotaPrevia; number
+    NotaPrevia; number;
 } 
 
 class  cursos{
@@ -37,3 +37,9 @@ class  cursos{
     descripcion;
     ;
 } 
+
+class Producto {
+
+}
+
+let producto1 = new Producto();
