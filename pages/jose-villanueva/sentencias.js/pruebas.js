@@ -14,6 +14,7 @@ if (llueve) {
     console.log("Llevar lentes de sol.");
 }
 
+let velocidad ;
 if (velocidad > 120) {
     console.log("Infracción grave.");
 } else if (velocidad > 100) {
