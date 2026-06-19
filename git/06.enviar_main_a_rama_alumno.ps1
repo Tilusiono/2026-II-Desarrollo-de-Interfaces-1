@@ -2,58 +2,44 @@ git checkout main
 git pull origin main
 
 $branch = "bernabe-inche"
+$allowedPath = "pages/$branch"
 
 Write-Host ""
-Write-Host "Procesando rama: $branch"
+Write-Host "Sincronizando main hacia: $branch"
 
 git checkout $branch
 git pull origin $branch
 
-$tempPath = ".tmp_pages_$branch"
-$tempGitPath = ".tmp_git_$branch"
+# Guardar pages/$branch del alumno
+$tempPages = ".tmp_pages_$branch"
 
-if (Test-Path $tempPath) {
-    Remove-Item $tempPath -Recurse -Force
+if (Test-Path $tempPages) {
+    Remove-Item $tempPages -Recurse -Force
 }
 
-if (Test-Path $tempGitPath) {
-    Remove-Item $tempGitPath -Recurse -Force
+if (Test-Path $allowedPath) {
+    Copy-Item $allowedPath $tempPages -Recurse -Force
 }
 
-# Guardar SOLO pages/$branch
-if (Test-Path "pages/$branch") {
-    Copy-Item "pages/$branch" $tempPath -Recurse -Force
-}
+# Traer todo desde main
+git checkout main -- .
 
-# Guardar carpeta git
+# No traer carpeta git desde main
 if (Test-Path "git") {
-    Copy-Item "git" $tempGitPath -Recurse -Force
+    Remove-Item "git" -Recurse -Force
+    git restore --source=HEAD --worktree --staged git 2>$null
 }
 
-# Reemplazar toda la rama con main
-git reset --hard main
-
-# Eliminar pages completa
+# No traer pages de otros alumnos
 if (Test-Path "pages") {
     Remove-Item "pages" -Recurse -Force
 }
 
-# Eliminar git que vino desde main
-if (Test-Path "git") {
-    Remove-Item "git" -Recurse -Force
-}
-
-# Restaurar SOLO pages/$branch
-if (Test-Path $tempPath) {
+# Restaurar solo pages/$branch del alumno
+if (Test-Path $tempPages) {
     New-Item -ItemType Directory -Force -Path "pages" | Out-Null
-    Copy-Item $tempPath "pages/$branch" -Recurse -Force
-    Remove-Item $tempPath -Recurse -Force
-}
-
-# Restaurar carpeta git original de la rama
-if (Test-Path $tempGitPath) {
-    Copy-Item $tempGitPath "git" -Recurse -Force
-    Remove-Item $tempGitPath -Recurse -Force
+    Copy-Item $tempPages $allowedPath -Recurse -Force
+    Remove-Item $tempPages -Recurse -Force
 }
 
 git add -A
@@ -61,11 +47,12 @@ git add -A
 $changes = git status --porcelain
 
 if ($changes) {
-    git commit -m "Sincronizar main conservando pages/$branch y carpeta git"
-    git push origin $branch --force-with-lease
-    Write-Host "✔ $branch actualizada"
-} else {
-    Write-Host "⏭ $branch no tiene cambios"
+    git commit -m "Sincronizar main conservando solo $allowedPath"
+    git push origin $branch
+    Write-Host "✔ Rama $branch actualizada desde main"
+}
+else {
+    Write-Host "⏭ No hay cambios para sincronizar"
 }
 
 git checkout main
