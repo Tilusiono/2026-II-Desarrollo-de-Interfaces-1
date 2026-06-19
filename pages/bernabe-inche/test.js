@@ -19,11 +19,3 @@ console.log(typeof apellido_materno);
 const edad=32;
 console.log(edad);
 console.log(typeof edad);
-
-const fecha = new Date("1991-11-28");
-console.log(fecha);
-console.log(typeof fecha);
-
-const fechaRegistro = new Date(Date.now());
-console.log(fechaRegistro);
-console.log(typeof fechaRegistro);
