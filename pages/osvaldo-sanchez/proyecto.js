@@ -40,5 +40,5 @@ class Producto {
 }
 
 
-let alumno1 = new alumno("Osvaldo", "Sanchez", 20, "123456789");
+let alumno1 = new alumno("Osvaldo", "Sanchez", 99, "123456789");
 console.log(alumno1);
