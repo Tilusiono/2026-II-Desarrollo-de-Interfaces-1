@@ -67,15 +67,15 @@
           "5N2H7XBJFzsJRxib2poia"
         ],
         "ui": {
-          "x": 42.3333,
-          "y": 254.6666,
+          "x": 118.3333,
+          "y": 232.6666,
           "zIndex": 2,
           "widthName": 60,
           "widthComment": 60,
           "color": ""
         },
         "meta": {
-          "updateAt": 1781852194086,
+          "updateAt": 1781875964146,
           "createAt": 1781851136241
         }
       },
@@ -714,8 +714,8 @@
           "columnIds": [
             "Pewzg_vTSx_Mt0-5F0ddc"
           ],
-          "x": 240.3333,
-          "y": 454.6666,
+          "x": 316.3333,
+          "y": 432.6666,
           "direction": 8
         },
         "end": {
