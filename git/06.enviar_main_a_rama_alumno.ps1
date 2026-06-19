@@ -10,44 +10,28 @@ Write-Host "Sincronizando main hacia: $branch"
 git checkout $branch
 git pull origin $branch
 
-# Guardar pages/$branch del alumno
-$tempPages = ".tmp_pages_$branch"
-
-if (Test-Path $tempPages) {
-    Remove-Item $tempPages -Recurse -Force
-}
-
-if (Test-Path $allowedPath) {
-    Copy-Item $allowedPath $tempPages -Recurse -Force
-}
-
 # Traer todo desde main
 git checkout main -- .
 
-# No traer carpeta git desde main
+# Eliminar carpeta git si vino desde main
 if (Test-Path "git") {
     Remove-Item "git" -Recurse -Force
-    git restore --source=HEAD --worktree --staged git 2>$null
 }
 
-# No traer pages de otros alumnos
+# Eliminar todas las carpetas pages
 if (Test-Path "pages") {
     Remove-Item "pages" -Recurse -Force
 }
 
-# Restaurar solo pages/$branch del alumno
-if (Test-Path $tempPages) {
-    New-Item -ItemType Directory -Force -Path "pages" | Out-Null
-    Copy-Item $tempPages $allowedPath -Recurse -Force
-    Remove-Item $tempPages -Recurse -Force
-}
+# Traer SOLO pages/$branch desde main
+git checkout main -- $allowedPath
 
 git add -A
 
 $changes = git status --porcelain
 
 if ($changes) {
-    git commit -m "Sincronizar main conservando solo $allowedPath"
+    git commit -m "Sincronizar main hacia $branch incluyendo solo $allowedPath"
     git push origin $branch
     Write-Host "✔ Rama $branch actualizada desde main"
 }
