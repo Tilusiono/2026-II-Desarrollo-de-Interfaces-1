@@ -16,5 +16,8 @@ const apellido_materno="Ticlavilca";
 console.log(apellido_materno);
 console.log(typeof apellido_materno);
 
-console.log("Revisado");
-console.log("por Bernabé Inche Ticlavilca");
+const edad=32;
+console.log(edad);
+console.log(typeof edad);
+
+console.log("Revisado por Bernabé Inche Ticlavilca");
