@@ -5,14 +5,17 @@ $branches = git branch --format="%(refname:short)" | Where-Object { $_ -ne "main
 
 foreach ($branch in $branches) {
 
+    $allowedPath = "pages/$branch"
+
     Write-Host ""
     Write-Host "Procesando rama: $branch"
 
-    $allowedPath = "pages/$branch"
+    git checkout main
+    git pull origin main
 
     git fetch origin $branch
 
-    # Verifica si existe la carpeta en la rama
+    # Verifica si existe pages/$branch en la rama
     git ls-tree -d $branch $allowedPath | Out-Null
 
     if ($LASTEXITCODE -ne 0) {
@@ -20,8 +23,13 @@ foreach ($branch in $branches) {
         continue
     }
 
-    # Copiar SOLO la versión final de pages/$branch desde la rama hacia main
-    git checkout $branch -- $allowedPath
+    # Borra en main la carpeta actual del alumno
+    if (Test-Path $allowedPath) {
+        Remove-Item $allowedPath -Recurse -Force
+    }
+
+    # Copia SOLO la versión final de pages/$branch desde la rama hacia main
+    git restore --source=$branch --worktree --staged $allowedPath
 
     git add -A $allowedPath
 
@@ -31,7 +39,8 @@ foreach ($branch in $branches) {
         git commit -m "Actualizar versión final de $branch"
         git push origin main
         Write-Host "✔ Se copió la versión final de $allowedPath a main."
-    } else {
+    }
+    else {
         Write-Host "⏭ $branch no tiene cambios nuevos en $allowedPath."
     }
 }
