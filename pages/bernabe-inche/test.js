@@ -16,5 +16,6 @@ const apellido_materno="Ticlavilca";
 console.log(apellido_materno);
 console.log(typeof apellido_materno);
 
+/***test */
 console.log("Revisado");
 console.log("por Bernabé Inche Ticlavilca");
