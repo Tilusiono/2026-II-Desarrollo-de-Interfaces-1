@@ -1,45 +1,45 @@
 class Alumno {
-    constructor(id, nombre, apellido, edad, correo, telefono, grado, estado) {
+    constructor(id, nombre, apellido, edad, correoElectronico, telefono, gradoAcademico, estado) {
         this.idAlumno = id;
         this.nombre = nombre;
         this.apellido = apellido;
         this.edad = edad;
-        this.correoElectronico = correo;
+        this.correoElectronico = correoElectronico;
         this.telefono = telefono;
-        this.gradoAcademico = grado;
+        this.gradoAcademico = gradoAcademico;
         this.estado = estado;
     }
 }
 
 class Profesor {
-    constructor(id, nombre, apellido, edad, correo, telefono, especialidad, fecha) {
+    constructor(id, nombre, apellido, edad, correoElectronico, telefono, especialidad, fechaContratacion) {
         this.idProfesor = id;
         this.nombre = nombre;
         this.apellido = apellido;
         this.edad = edad;
-        this.correoElectronico = correo;
+        this.correoElectronico = correoElectronico;
         this.telefono = telefono;
         this.especialidad = especialidad;
-        this.fechaContratacion = fecha;
+        this.fechaContratacion = fechaContratacion;
     }
 }
 
 class Notas {
-    constructor(id, idAlumno, idCurso, calificacion, tipo, fecha) {
+    constructor(id, idAlumno, idCurso, calificacion, tipoEvaluacion, fecha) {
         this.idNota = id;
         this.idAlumno = idAlumno;
         this.idCurso = idCurso;
         this.calificacion = calificacion;
-        this.tipoEvaluacion = tipo;
+        this.tipoEvaluacion = tipoEvaluacion;
         this.fecha = fecha;
     }
 }
 
 class Curso {
-    constructor(id, nombre, codigo, idProfesor, creditos, horario) {
+    constructor(id, nombreCurso, codigoCurso, idProfesor, creditos, horario) {
         this.idCurso = id;
-        this.nombreCurso = nombre;
-        this.codigoCurso = codigo;
+        this.nombreCurso = nombreCurso;
+        this.codigoCurso = codigoCurso;
         this.idProfesor = idProfesor;
         this.creditos = creditos;
         this.horario = horario;
@@ -47,64 +47,64 @@ class Curso {
 }
 
 class Matricula {
-    constructor(id, idAlumno, idCurso, periodo, fecha) {
+    constructor(id, idAlumno, idCurso, periodoAcademico, fechaInscripcion) {
         this.idMatricula = id;
         this.idAlumno = idAlumno;
         this.idCurso = idCurso;
-        this.periodoAcademico = periodo;
-        this.fechaInscripcion = fecha;
+        this.periodoAcademico = periodoAcademico;
+        this.fechaInscripcion = fechaInscripcion;
     }
 }
 
 class Asistencia {
-    constructor(id, idAlumno, idCurso, fecha, estado, observaciones) {
+    constructor(id, idAlumno, idCurso, fecha, estadoAsistencia, observaciones) {
         this.idAsistencia = id;
         this.idAlumno = idAlumno;
         this.idCurso = idCurso;
         this.fecha = fecha;
-        this.estadoAsistencia = estado;
+        this.estadoAsistencia = estadoAsistencia;
         this.observaciones = observaciones;
     }
 }
 
 class Aula {
-    constructor(id, nombre, capacidad, pabellon, tipo) {
+    constructor(id, nombreAula, capacidad, pabellon, tipoAula) {
         this.idAula = id;
-        this.nombreAula = nombre;
+        this.nombreAula = nombreAula;
         this.capacidad = capacidad;
         this.pabellon = pabellon;
-        this.tipoAula = tipo;
+        this.tipoAula = tipoAula;
     }
 }
 
 class Carrera {
-    constructor(id, nombre, codigo, duracion, director, estado) {
+    constructor(id, nombreCarrera, codigoCarrera, duracionSemestres, directorCarrera, estado) {
         this.idCarrera = id;
-        this.nombreCarrera = nombre;
-        this.codigoCarrera = codigo;
-        this.duracionSemestres = duracion;
-        this.directorCarrera = director;
+        this.nombreCarrera = nombreCarrera;
+        this.codigoCarrera = codigoCarrera;
+        this.duracionSemestres = duracionSemestres;
+        this.directorCarrera = directorCarrera;
         this.estado = estado;
     }
 }
 
 class Pago {
-    constructor(id, idAlumno, monto, fecha, concepto, estado, metodo) {
+    constructor(id, idAlumno, monto, fechaPago, concepto, estadoPago, metodoPago) {
         this.idPago = id;
         this.idAlumno = idAlumno;
         this.monto = monto;
-        this.fechaPago = fecha;
+        this.fechaPago = fechaPago;
         this.concepto = concepto;
-        this.estadoPago = estado;
-        this.metodoPago = metodo;
+        this.estadoPago = estadoPago;
+        this.metodoPago = metodoPago;
     }
 }
 
 class Departamento {
-    constructor(id, nombre, jefe, ubicacion, estado) {
+    constructor(id, nombreDepartamento, jefeDepartamento, ubicacion, estado) {
         this.idDepartamento = id;
-        this.nombreDepartamento = nombre;
-        this.jefeDepartamento = jefe;
+        this.nombreDepartamento = nombreDepartamento;
+        this.jefeDepartamento = jefeDepartamento;
         this.ubicacion = ubicacion;
         this.estado = estado;
     }
