@@ -54,5 +54,5 @@ class cursos {
 
 
 
-let alumno1 = new Alumno("Raymond", "Diaz", 20, "123456789");
+let alumno1 = new Alumno("Raymond", "Diaz", 99, "123456789");
 console.log(alumno1);
