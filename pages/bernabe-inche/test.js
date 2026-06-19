@@ -15,3 +15,7 @@ console.log(typeof apellido_paterno);
 const apellido_materno="Ticlavilca";
 console.log(apellido_materno);
 console.log(typeof apellido_materno);
+
+const edad=32;
+console.log(edad);
+console.log(typeof edad);
