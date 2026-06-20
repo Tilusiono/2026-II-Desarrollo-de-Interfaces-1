@@ -14,10 +14,6 @@ class Empleado{
         this.#movil = movil;
         this.#sector = sector;
     }
-
-    mostrarEmpleado(){
-        console.log(this.#idEmpleado, this.#nombre, this.#apellido);
-    }
 }
 
 class Sector{
@@ -29,10 +25,6 @@ class Sector{
         this.#idSector = id;
         this.#nombreSector = nombre;
         this.#descripcion = descripcion;
-    }
-
-    mostrarSector(){
-        console.log(this.#nombreSector);
     }
 }
 
@@ -50,10 +42,6 @@ class Jefe{
         this.#telefono = telefono;
         this.#area = area;
     }
-
-    mostrarJefe(){
-        console.log(this.#nombre, this.#area);
-    }
 }
 
 class Asistencia{
@@ -68,17 +56,12 @@ class Asistencia{
         this.#estado = estado;
         this.#idEmpleado = empleado;
     }
-
-    mostrarAsistencia(){
-        console.log(this.#fecha, this.#estado);
-    }
 }
 
 class HorasTrabajadas{
     #idHoras;
     #horasNormales;
     #horasExtras;
-    #totalHoras;
     #fecha;
     #idEmpleado;
 
@@ -86,13 +69,8 @@ class HorasTrabajadas{
         this.#idHoras = id;
         this.#horasNormales = normales;
         this.#horasExtras = extras;
-        this.#totalHoras = normales + extras;
         this.#fecha = fecha;
         this.#idEmpleado = empleado;
-    }
-
-    mostrarHoras(){
-        console.log(this.#totalHoras);
     }
 }
 
@@ -136,10 +114,6 @@ class Feriado{
         this.#fecha = fecha;
         this.#descripcion = descripcion;
     }
-
-    mostrarFeriado(){
-        console.log(this.#fecha, this.#descripcion);
-    }
 }
 
 class Pago{
@@ -153,10 +127,6 @@ class Pago{
         this.#monto = monto;
         this.#fechaPago = fecha;
         this.#idEmpleado = empleado;
-    }
-
-    mostrarPago(){
-        console.log(this.#monto);
     }
 }
 
@@ -172,8 +142,77 @@ class Reporte{
         this.#tipo = tipo;
         this.#idJefe = jefe;
     }
-
-    mostrarReporte(){
-        console.log(this.#tipo);
-    }
 }
+
+// usando el new
+let sector1 = new Sector(
+    1,
+    "Sistemas",
+    "Area de tecnologia."
+)
+
+let empleado1= new empleado(
+    101,
+    "Jose",
+    "Mendoza",
+    17,
+    "954302181",
+    sector1,
+)
+
+let jefe1 = new Jefe(
+    1,
+    "Carlos Martinez",
+    45,
+    "987654321",
+    "Sistemas"
+)
+
+let asistencia1 = new Asistencia(
+    1,
+    "2024-06-01",
+    "Presente",
+    empleado1
+)
+
+let horas1= new HorasTrabajadas(
+    1,
+    8,
+    2,
+    "2024-06-01",
+    empleado1
+)
+let permiso1 = new Permiso(
+    1,
+    "Cita Medica",
+    "21/06/2026",
+    "24/06/2026",
+    empleado1
+);
+
+let vacaciones1 = new Vacaciones(
+    1,
+    "01/07/2026",
+    "15/07/2026",
+    empleado1
+);
+
+let feriado1 = new Feriado(
+    1,
+    "28/07/2026",
+    "Fiestas Patrias"
+);
+
+let pago1 = new Pago(
+    1,
+    1500,
+    "30/06/2026",
+    empleado1
+);
+
+let reporte1 = new Reporte(
+    1,
+    "30/06/2026",
+    "Reporte Mensual",
+    jefe1
+);
