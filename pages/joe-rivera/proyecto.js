@@ -1,180 +1,191 @@
-class Mercado {
-    nombre;
-    tipoCafe;
-    capacidad;
-    sucursal;
+class Gimnasio {
+    #nombre;
+    #dirección;
+    #capacidad;
+    #sedes;
 
-    constructor(nombre, tipoCafe, capacidad) 
+    constructor(nombre, dirección, capacidad, sedes) 
 {
-    this.nombre = nombre;
-    this.tipoCafe = tipoCafe;
-    this.capacidad = capacidad;
+    this.#nombre = nombre;
+    this.#dirección = dirección;
+    this.#capacidad = capacidad;
+    this.#sedes = sedes;
 }
 }
 
-const cafeteria1 = new Mercado("Central", "Arábica", 120, "Sucursal Centro");
+const gimnasio1 = new Gimnasio("Power Gym", "Calle Trabajo", 200, "Ate Vitarte, San Juan de Lurigancho, San Borja y Miraflores");
 
 
 
 class Vendedor {
-    nombre;
-    apellido;
-    turno;
-    salario;
-constructor(nombre, apellido, turno)
+    #nombre;
+    #apellido;
+    #turno;
+    #salario;
+constructor(nombre, apellido, turno, salario)
  {
-    this.nombre = nombre;
-    this.apellido = apellido;
-    this.turno = turno;
+    this.#nombre = nombre;
+    this.#apellido = apellido;
+    this.#turno = turno;
+    this.#salario = salario;
 }
 
 }
 
-const vendedor1 = new Vendedor("Luis", "Gómez", "Mañana", 1500);
+const vendedor1 = new Vendedor("Tulio", "Manaure", "Tarde", 2000);
 
 
 
-class Cliente {
-    nombre;
-    telefono;
-    correo;
-    direccion;
+class Socio {
+    #nombre;
+    #telefono;
+    #correo;
+    #direccion;
 
-    constructor(nombre, telefono, correo) 
+    constructor(nombre, telefono, correo, direccion) 
 {
-    this.nombre = nombre;
-    this.telefono = telefono;
-    this.correo = correo;
+    this.#nombre = nombre;
+    this.#telefono = telefono;
+    this.#correo = correo;
+    this.#direccion = direccion; 
 }
 }
 
-const vendedor1 = new Vendedor("Luis", "Gómez", "Mañana", 1500);
+const socio1 = new Socio("José", "992531000", "tupapijose@soyrico.com", "San Roque Vitarte");
 
 
-class Producto {
-    nombreProducto;
-    categoria;
-    stock;
-    descripcion;
+class Membresía {
+    #nombreMembresía;
+    #meses;
+    #beneficios;
+    #estado;
 
-    constructor(nombreProducto, categoria, stock) 
-{
-    this.nombreProducto = nombreProducto;
-    this.categoria = categoria;
-    this.stock = stock;
+    constructor(nombreMembresía, meses, beneficios, estado) 
+    {
+    this.#nombreMembresía = nombreMembresía;
+    this.#meses = meses;
+    this.#beneficios = beneficios;
+    this.#estado = estado;
 }
 
 }
 
-const producto1 = new Producto("Latte", "Bebida", 20, "Café con leche");
+const membresia1 = new Membresía("Plan Anual Black", 12, "Acceso a todas las instalaciones durante un año", "Activa");
 
 
 
 
 
 class Precio {
-    precioUnitario;
-    descuento;
-    precioFinal;
-    moneda;
+    #precioUnitario;
+    #descuentoSoles;
+    #pagoTotal;
+    #moneda;
 
-constructor(precioUnitario, descuento, precioFinal) 
+constructor(precioUnitario, descuentoSoles, pagoTotal, moneda) 
 {
-    this.precioUnitario = precioUnitario;
-    this.descuento = descuento;
-    this.precioFinal = precioFinal;
+    this.#precioUnitario = precioUnitario;
+    this.#descuentoSoles = descuentoSoles;
+    this.#pagoTotal = pagoTotal;
+    this.#moneda = moneda;
 }
 
 }
 
-const precio1 = new Precio(10, 2, 8, "Soles");
+const precio1 = new Precio(350, 50, 300, "Soles");
 
 
 class Ubicacion {
-    direccion;
-    distrito;
-    referencia;
-    codigoPostal;
-constructor(direccion, distrito, referencia) 
+    #direccion;
+    #distrito;
+    #referencia;
+    #codigoPostal;
+constructor(direccion, distrito, referencia, codigoPostal) 
 {
-    this.direccion = direccion;
-    this.distrito = distrito;
-    this.referencia = referencia;
+    this.#direccion = direccion;
+    this.#distrito = distrito;
+    this.#referencia = referencia;
+    this.#codigoPostal = codigoPostal;
 }
 
 }
 
 
-const ubicacion1 = new Ubicacion("Av. Principal 123", "Miraflores", "Frente al parque", "15074");
+const ubicacion1 = new Ubicacion("Paradero Inca Cola", "Ate Vitarte", "A una cuadra de Idat", "15074");
 
 
 class Horario {
-    horaApertura;
-    horaCierre;
-    diasAtencion;
-    turnoEspecial;
+    #horaApertura;
+    #horaCierre;
+    #diasAtencion;
+    #turnoEspecial;
 
-constructor(horaApertura, horaCierre, diasAtencion) 
+constructor(horaApertura, horaCierre, diasAtencion, turnoEspecial) 
 {
-    this.horaApertura = horaApertura;
-    this.horaCierre = horaCierre;
-    this.diasAtencion = diasAtencion;
+    this.#horaApertura = horaApertura;
+    this.#horaCierre = horaCierre;
+    this.#diasAtencion = diasAtencion;
+    this.#turnoEspecial = turnoEspecial;
 }
 
 }
 
-const horario1 = new Horario("08:00", "20:00", "Lunes a Sábado", "Noche");
+const horario = new Horario("06:00", "22:00", "Lunes a Sábado", "Domingos y festivos");
 
 
 
 class Telefono {
-    numeroPrincipal;
-    numeroSecundario;
-    codigoPais;
-    extension;
+    #numeroPrincipal;
+    #numeroSecundario;
+    #codigoPais;
+    #extension;
 
-constructor(numeroPrincipal, numeroSecundario, codigoPais)
+constructor(numeroPrincipal, numeroSecundario, codigoPais, extension)
  {
-    this.numeroPrincipal = numeroPrincipal;
-    this.numeroSecundario = numeroSecundario;
-    this.codigoPais = codigoPais;
+    this.#numeroPrincipal = numeroPrincipal;
+    this.#numeroSecundario = numeroSecundario;
+    this.#codigoPais = codigoPais;
+    this.#extension = extension;
 }
 }
 
-const telefono1 = new Telefono("987654321", "912345678", "+51", "101");
+const telefono1 = new Telefono("976920560", "992587789", "+51", "101");
 
 
 
 
 class Correo {
-    correoPrincipal;
-    correoSoporte;
-    dominio;
-    estado;
+    #correoPrincipal;
+    #correoSoporte;
+    #dominio;
+    #estado;
 
-constructor(correoPrincipal, correoSoporte, dominio) 
+constructor(correoPrincipal, correoSoporte, dominio, estado) 
 {
-    this.correoPrincipal = correoPrincipal;
-    this.correoSoporte = correoSoporte;
-    this.dominio = dominio;
-}
+    this.#correoPrincipal = correoPrincipal;
+    this.#correoSoporte = correoSoporte;
+    this.#dominio = dominio;
+    this.#estado = estado;
 }
 
-const correo1 = new Correo("info@cafe.com", "soporte@cafe.com", "cafe.com", "Activo");
+}
+
+const correo1 = new Correo("Powe@gym.com", "soporte@powergym.com", "powergym.com", "Activo");
 
 
 
 class Venta {
-    fecha;
-    cantidad;
-    total;
-    metodoPago;
+    #fecha;
+    #membresiaCompradas;
+    #total;
+    #metodoPago;
 
-constructor(fecha, cantidad, total) 
+constructor(fecha, membresiaCompradas, total, metodoPago) 
 {
-    this.fecha = fecha;
-    this.cantidad = cantidad;
-    this.total = total;
+    this.#fecha = fecha;
+    this.#membresiaCompradas = membresiaCompradas;
+    this.#total = total;
+    this.#metodoPago = metodoPago;   
 }
 }
-const venta1 = new Venta("18/06/2026", 3, 30, "Efectivo");
+const venta1 = new Venta("22/06/2026", membresia1, 300, "Tarjeta de Crédito");
