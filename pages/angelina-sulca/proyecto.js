@@ -44,9 +44,9 @@ const carrito1 = new carrito();
 
 class descuento{
      porcentajeCantidad;
-     porcentanjePago;
+     porcentajePago;
      descCantidad;
-     subtotalconDescuento;
+     subtotalConDescuento;
      descPago
      
      
@@ -66,7 +66,7 @@ class cliente{
      nombreCompleto;
      correo;
      telefono;
-     dirrecion;
+     direcion;
      fechaRegistro;
 
     constructor (nomComp, corr, tel, dir, fecReg){
