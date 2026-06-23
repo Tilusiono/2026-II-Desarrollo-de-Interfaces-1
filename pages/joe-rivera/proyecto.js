@@ -1,8 +1,21 @@
+
 class Gimnasio {
     #nombre;
     #dirección;
     #capacidad;
     #sedes;
+
+
+
+    /**
+     * Creates an instance of Gimnasio.
+     *
+     * @constructor
+     * @param {string} nombre 
+     * @param {string} dirección 
+     * @param {number} capacidad 
+     * @param {string} sedes 
+     */
 
     constructor(nombre, dirección, capacidad, sedes) 
 {
@@ -22,6 +35,17 @@ class Vendedor {
     #apellido;
     #turno;
     #salario;
+
+
+/**
+ * Creates an instance of Vendedor.
+ *
+ * @constructor
+ * @param {string} nombre 
+ * @param {string} apellido 
+ * @param {string} turno 
+ * @param {number} salario 
+ */
 constructor(nombre, apellido, turno, salario)
  {
     this.#nombre = nombre;
@@ -42,6 +66,17 @@ class Socio {
     #correo;
     #direccion;
 
+
+
+    /**
+     * Creates an instance of Socio.
+     *
+     * @constructor
+     * @param {string} nombre 
+     * @param {number} telefono 
+     * @param {string} correo 
+     * @param {string} direccion 
+     */
     constructor(nombre, telefono, correo, direccion) 
 {
     this.#nombre = nombre;
@@ -60,6 +95,15 @@ class Membresía {
     #beneficios;
     #estado;
 
+    /**
+     * Creates an instance of Membresía.
+     *
+     * @constructor
+     * @param {string} nombreMembresía 
+     * @param {number} meses 
+     * @param {string} beneficios 
+     * @param {string} estado 
+     */
     constructor(nombreMembresía, meses, beneficios, estado) 
     {
     this.#nombreMembresía = nombreMembresía;
@@ -75,13 +119,22 @@ const membresia1 = new Membresía("Plan Anual Black", 12, "Acceso a todas las in
 
 
 
-
 class Precio {
     #precioUnitario;
     #descuentoSoles;
     #pagoTotal;
     #moneda;
 
+
+/**
+ * Creates an instance of Precio.
+ *
+ * @constructor
+ * @param {number} precioUnitario 
+ * @param {number} descuentoSoles 
+ * @param {number} pagoTotal 
+ * @param {string} moneda 
+ */
 constructor(precioUnitario, descuentoSoles, pagoTotal, moneda) 
 {
     this.#precioUnitario = precioUnitario;
@@ -100,6 +153,16 @@ class Ubicacion {
     #distrito;
     #referencia;
     #codigoPostal;
+    
+/**
+ * Creates an instance of Ubicacion.
+ *
+ * @constructor
+ * @param {string} direccion 
+ * @param {string} distrito 
+ * @param {string} referencia 
+ * @param {number} codigoPostal 
+ */
 constructor(direccion, distrito, referencia, codigoPostal) 
 {
     this.#direccion = direccion;
@@ -120,6 +183,15 @@ class Horario {
     #diasAtencion;
     #turnoEspecial;
 
+/**
+ * Creates an instance of Horario.
+ *
+ * @constructor
+ * @param {number} horaApertura 
+ * @param {number} horaCierre 
+ * @param {string} diasAtencion 
+ * @param {string} turnoEspecial 
+ */
 constructor(horaApertura, horaCierre, diasAtencion, turnoEspecial) 
 {
     this.#horaApertura = horaApertura;
@@ -189,3 +261,21 @@ constructor(fecha, membresiaCompradas, total, metodoPago)
 }
 }
 const venta1 = new Venta("22/06/2026", membresia1, 300, "Tarjeta de Crédito");
+
+/*****PRUEBA EN CLASEEEEEEEEEEE******* */
+
+class alumnoTop10 extends Alumno{
+
+
+}
+
+class AlumnoTercioSuperior extends Alumno{
+
+
+}
+
+class AlumnoGeneral extends Alumno{ 
+
+
+}
+
