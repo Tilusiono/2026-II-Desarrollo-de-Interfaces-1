@@ -151,7 +151,7 @@ let sector1 = new Sector(
     "Area de tecnologia."
 )
 
-let empleado1= new empleado(
+let empleado1= new Empleado(
     101,
     "Jose",
     "Mendoza",
