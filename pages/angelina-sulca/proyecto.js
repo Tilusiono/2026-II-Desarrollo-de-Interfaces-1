@@ -48,6 +48,7 @@ class descuento{
      descCantidad;
      subtotalConDescuento;
      descPago
+     total
      
      
     constructor (porCant, porPag, desCant, subDesc, desPag, tot){
