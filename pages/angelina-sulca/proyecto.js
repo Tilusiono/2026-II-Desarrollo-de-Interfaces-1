@@ -11,7 +11,7 @@ class producto {
      precioUnitario;
      precioDocena;
 
-    construtor (cod, nom, mar, col, cal, pUni, pDoc){
+    constructor (cod, nom, mar, col, cal, pUni, pDoc){
         this.id = cod;
         this.nombre = nom;
         this.marca = mar;
@@ -31,7 +31,7 @@ class carrito{
      total;
      subtotal;
      
-    construtor (itm, metPag, tot, subTot){
+    constructor (itm, metPag, tot, subTot){
         this.item = itm;
         this.metodoPago = metPag;
         this.total = tot;
@@ -50,7 +50,7 @@ class descuento{
      descPago
      
      
-    construtor (porCant, porPag, desCant, subDesc, desPag, tot){
+    constructor (porCant, porPag, desCant, subDesc, desPag, tot){
         this.porcentajeCantidad = porCant;
         this.porcentajePago = porPag;
         this.descCantidad = desCant;
@@ -69,7 +69,7 @@ class cliente{
      dirrecion;
      fechaRegistro;
 
-    construtor (nomComp, corr, tel, dir, fecReg){
+    constructor (nomComp, corr, tel, dir, fecReg){
         this.nombreCompleto = nomComp;
         this.correo = corr;
         this.telefono = tel;
@@ -87,7 +87,7 @@ class compra{
      fecha;
      estado;
 
-    construtor (cli, car, desc, fec, est){
+    constructor (cli, car, desc, fec, est){
         this.cliente = cli;
         this.carrito = car;
         this.descuento = desc;
