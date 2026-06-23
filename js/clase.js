@@ -79,7 +79,7 @@ class Alumno {
     }
 }
 
-
+let prueba = new Alumno(4,"Barcena,Ramirez,,,,,,")
 
 let a0 = new Alumno(1, "Bernabe");
 let a1 = new Alumno(2, "Jose", "Rojas");

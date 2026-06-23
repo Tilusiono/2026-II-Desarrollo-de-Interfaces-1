@@ -107,3 +107,20 @@ class recompensa {
 }
    
 
+console.log(usuario)
+console.log(recepcionista)
+console.log(Billetera_virtual)
+console.log(historial)
+console.log(Fichas)
+console.log(Mesa)
+console.log(apuesta)
+console.log(Juez_mesa)
+console.log(partida)
+console.log(recompensa)
+
+
+
+
+
+
+
