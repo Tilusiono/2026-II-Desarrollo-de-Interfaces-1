@@ -25,7 +25,7 @@ class Producto {
 class Categoria {
     idCategoria;
     nombreCategoria;
-    descripcion;
+    descripcion; 
     cantidadProductos;
 
     constructor(idCat, nomCat, desc, cantPro) {

@@ -95,7 +95,7 @@ a3.setNombre("Ana Luisa");
 console.log(a3.getNombre());
 
 console.log(a4.getNombre());
-console.log(a4.validarEdadValida());
+
 
 
 console.dir(a4);
@@ -132,3 +132,17 @@ Tipos de datos en JavaScript
 | BigInt    | `"bigint"`            | `typeof 100n`         |
 | Symbol    | `"symbol"`            | `typeof Symbol()`     | 
 */
+
+
+class AlumnoTop10 extends Alumno {
+
+}
+
+class AlumnoTercioSuperior extends Alumno {
+    
+}
+
+class AlumnoGeneral extends Alumno {
+    
+}
+
