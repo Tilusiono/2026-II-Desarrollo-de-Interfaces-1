@@ -130,3 +130,12 @@ Tipos de datos en JavaScript
 | BigInt    | `"bigint"`            | `typeof 100n`         |
 | Symbol    | `"symbol"`            | `typeof Symbol()`     | 
 */
+
+const igv=19.4
+console.log(igv)
+igv=20
+console.log(igv)
+
+
+
+
