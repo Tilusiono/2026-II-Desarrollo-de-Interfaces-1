@@ -47,7 +47,7 @@ class Alumno {
     }
 
     #validarEdad() {
-        return this.#edad >= 18;
+        return this.#edad >= 0 && this.#edad >= 18;
     }
 
     mostrarEstado() {
