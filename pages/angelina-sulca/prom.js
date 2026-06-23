@@ -130,3 +130,17 @@ Tipos de datos en JavaScript
 | BigInt    | `"bigint"`            | `typeof 100n`         |
 | Symbol    | `"symbol"`            | `typeof Symbol()`     | 
 */
+
+let al= new Alumno(3, "ss")
+
+class AlumnoTop extends Alumno{
+
+}
+
+class AlumnoTercioSuperior extends{
+
+}
+
+class AlumnoNormal extends{
+
+}
