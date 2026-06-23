@@ -187,3 +187,13 @@ class Animal {
     return this.#especie;
   }
 }
+const persona = new Persona("Tulio", 18);
+
+persona.obtenerNombre();
+persona.obtenerEdad();
+
+const igv = 0.18
+console.log(igv)  
+
+const igv2=20;
+console.log(igv2)
