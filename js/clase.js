@@ -80,8 +80,8 @@ class Alumno {
 }
 
 
-
-let a0 = new Alumno(1, "Bernabe");
+   
+let a0 = new Alumno(1, "Bernabe");                        
 let a1 = new Alumno(2, "Jose", "Rojas");
 let a2 = new Alumno(3, "Felix", "Rodriguez", 22);
 let a3 = new Alumno(4, "Ana", "Mejia", 22, "999421499");
@@ -130,3 +130,8 @@ Tipos de datos en JavaScript
 | BigInt    | `"bigint"`            | `typeof 100n`         |
 | Symbol    | `"symbol"`            | `typeof Symbol()`     | 
 */
+
+let igv2024=19.4
+console.log(igv2024) 
+igv2024:20
+console.log(igv2024)    

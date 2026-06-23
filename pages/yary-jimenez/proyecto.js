@@ -4,6 +4,14 @@ class Cafeteria {
     #capacidad;
     #sucursal;
 
+    /**
+     * 
+     * @param {number} nombre 
+     * @param {string} tipoCafe 
+     * @param {string} capacidad 
+     * @param {number} sucursal 
+     */
+
     constructor(nombre, tipoCafe, capacidad, sucursal) 
 {
     this.#nombre = nombre;
@@ -186,4 +194,19 @@ constructor(fecha, cantidad, total)
 }
 }
 const venta1 = new Venta("18/06/2026", 3, 30, "Efectivo");
+
+
+class AlumnoTop10 extends Alumno{
+
+}
+
+class AlumnoTercioSuperior extends Alumno{
+
+}
+
+class AlumnoGeneral extends Alumno{
+
+}
+
+
 
