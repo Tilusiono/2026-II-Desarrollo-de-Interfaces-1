@@ -131,16 +131,60 @@ Tipos de datos en JavaScript
 | Symbol    | `"symbol"`            | `typeof Symbol()`     | 
 */
 
-let al= new Alumno(3, "ss")
+
 
 class AlumnoTop extends Alumno{
 
+    porcentajeBeca = 90;
+    montoBeca = 1000;
+    promedioMinimo = 18;
 }
 
-class AlumnoTercioSuperior extends{
+class AlumnoTercioSuperior extends Alumno{
 
+    porcentajeBeca = 60;
+    montoBeca = 600;
+    promedioMinimo = 15;
 }
 
-class AlumnoNormal extends{
+class AlumnoNormal extends Alumno{
 
+    porcentajeBeca = 60;
+    montoBeca = 600;
+    promedioMinimo = 15;
 }
+
+let top1 = new AlumnoTop(
+    7,
+    "Pedro",
+    "Gomez",
+    19,
+    "987654321",
+    new Date("2007-03-15")
+);
+
+let tercio1 = new AlumnoTercioSuperior(
+    8,
+    "Maria",
+    "Lopez",
+    20,
+    "999888777",
+    new Date("2006-08-20")
+);
+
+let normal1 = new AlumnoNormal(
+    9,
+    "Juan",
+    "Perez",
+    18,
+    "966555444",
+    new Date("2008-01-10")
+);
+
+console.log(top1);
+console.log(tercio1);
+console.log(normal1);
+
+console.log("Beca Top:", top1.porcentajeBeca + "%");
+console.log("Beca Tercio:", tercio1.porcentajeBeca + "%");
+console.log("Beca Normal:", normal1.porcentajeBeca + "%");
