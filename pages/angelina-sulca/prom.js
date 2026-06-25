@@ -69,7 +69,7 @@ class Alumno {
     /**
      * Establece el nombre del alumno.
      *
-     * @param {string} nombre Nuevo nombre del alumno.
+     * @param {nombre} nombre Nuevo nombre del alumno.
      */
     setNombre(nombre) {
         if (typeof nombre !== "string")
@@ -79,7 +79,7 @@ class Alumno {
     }
 }
 
-let prueva= new Alumno(4,"Daniel",)
+
 
 let a0 = new Alumno(1, "Bernabe");
 let a1 = new Alumno(2, "Jose", "Rojas");
@@ -130,3 +130,61 @@ Tipos de datos en JavaScript
 | BigInt    | `"bigint"`            | `typeof 100n`         |
 | Symbol    | `"symbol"`            | `typeof Symbol()`     | 
 */
+
+
+
+class AlumnoTop extends Alumno{
+
+    porcentajeBeca = 90;
+    montoBeca = 1000;
+    promedioMinimo = 18;
+}
+
+class AlumnoTercioSuperior extends Alumno{
+
+    porcentajeBeca = 60;
+    montoBeca = 600;
+    promedioMinimo = 15;
+}
+
+class AlumnoNormal extends Alumno{
+
+    porcentajeBeca = 60;
+    montoBeca = 600;
+    promedioMinimo = 15;
+}
+
+let top1 = new AlumnoTop(
+    7,
+    "Pedro",
+    "Gomez",
+    19,
+    "987654321",
+    new Date("2007-03-15")
+);
+
+let tercio1 = new AlumnoTercioSuperior(
+    8,
+    "Maria",
+    "Lopez",
+    20,
+    "999888777",
+    new Date("2006-08-20")
+);
+
+let normal1 = new AlumnoNormal(
+    9,
+    "Juan",
+    "Perez",
+    18,
+    "966555444",
+    new Date("2008-01-10")
+);
+
+console.log(top1);
+console.log(tercio1);
+console.log(normal1);
+
+console.log("Beca Top:", top1.porcentajeBeca + "%");
+console.log("Beca Tercio:", tercio1.porcentajeBeca + "%");
+console.log("Beca Normal:", normal1.porcentajeBeca + "%");
