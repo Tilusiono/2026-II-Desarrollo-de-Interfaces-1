@@ -54,10 +54,10 @@ class AlumnoNacional extends Alumno {
     cambiarSede(nuevaSede) {
         this.sede = nuevaSede;
     }
-    registrarEntrada(fechaHora) {
+    registrarEntrada(fechaHora,aula) {
 
         console.log(
-            `${this.getNombre()} ingresó el ${fechaHora.toLocaleString()}`
+            `${this.getNombre()} ingresó el ${fechaHora.toLocaleString()}, aula ${aula}`
         );
 
     }

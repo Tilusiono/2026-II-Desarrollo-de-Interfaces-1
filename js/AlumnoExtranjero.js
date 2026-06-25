@@ -54,10 +54,10 @@ class AlumnoExtranjero extends Alumno {
     this.idioma = nuevoIdioma;
   }
 
-    registrarEntrada(fechaHora) {
+    registrarEntrada(fechaHora,observacion) {
 
         console.log(
-            `${this.getNombre()} registró su entrada (${fechaHora.toLocaleString()})`
+            `${this.getNombre()} registró su entrada (${fechaHora.toLocaleString()}), observacion ${observacion}`
         );
 
     }
