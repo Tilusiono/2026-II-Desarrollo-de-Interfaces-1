@@ -1,0 +1,11 @@
+codigo,nombre,habilitada
+S001,Programación I - D,True
+S002,Base de Datos - C,True
+S003,Desarrollo Web - D,True
+S004,POO - A,True
+S005,Redes - C,True
+S006,Sistemas Operativos - B,True
+S007,Arquitectura - A,False
+S008,UX/UI - B,True
+S009,Inglés Técnico - A,False
+S010,Cloud Computing - C,True
