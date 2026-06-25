@@ -60,3 +60,5 @@ miTelefono.recibirMercancia(20);
 // --- CLIENTE 3: El cazador de ofertas ---
 // Bajamos el precio del iPhone por una oferta especial.
 miTelefono.aplicarDescuento(150.00);
+
+const 
