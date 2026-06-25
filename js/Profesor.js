@@ -1,11 +1,13 @@
-import Persona from "./Persona.js";
-
 class Profesor extends Persona {
   #especialidad;
   #codigoDocente;
+  #salario; 
 
   sede;
   correo;
+  departamento; 
+  tipoContrato; 
+  gradosAcademicos;
 
   constructor(
     id,
@@ -18,6 +20,10 @@ class Profesor extends Persona {
     codigoDocente,
     sede,
     correo,
+    departamento,   
+    tipoContrato,  
+    salario,          
+    gradosAcademicos  
   ) {
     super(id, nombre, apellido, edad, telefono, fechaNacimiento);
 
@@ -25,14 +31,23 @@ class Profesor extends Persona {
     this.#codigoDocente = codigoDocente;
     this.sede = sede;
     this.correo = correo;
+    
+    // Asignación de los nuevos parámetros
+    this.departamento = departamento;
+    this.tipoContrato = tipoContrato;
+    this.#salario = salario;
+    this.gradosAcademicos = gradosAcademicos;
   }
 
   mostrarDatos() {
+
     return `
     Profesor: ${this.getNombre()}
     Especialidad: ${this.#especialidad}
+    Departamento: ${this.departamento}
     Sede: ${this.sede}
     Correo: ${this.correo}
+    Tipo de Contrato: ${this.tipoContrato}
     `;
   }
 
@@ -46,6 +61,10 @@ class Profesor extends Persona {
     console.log(
       `${this.getNombre()} profesor registró su salida (${fechaHora.toLocaleString()})`,
     );
+  }
+
+  getSalario() {
+    return this.#salario;
   }
 }
 
