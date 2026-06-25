@@ -1,4 +1,17 @@
+//1
 class Alumno {
+
+    /**
+     * 
+     * @param {number} id 
+     * @param {string} nombre 
+     * @param {string} apellido 
+     * @param {number} edad 
+     * @param {string} correoElectronico 
+     * @param {string} telefono 
+     * @param {string} gradoAcademico 
+     * @param {boolean} estado 
+     */
     constructor(id, nombre, apellido, edad, correoElectronico, telefono, gradoAcademico, estado) {
         this.idAlumno = id;
         this.nombre = nombre;
@@ -7,10 +20,17 @@ class Alumno {
         this.correoElectronico = correoElectronico;
         this.telefono = telefono;
         this.gradoAcademico = gradoAcademico;
-        this.estado = estado;
+        this.estado = estado;   
     }
 }
 
+let a0 = new Alumno(1, "Villanueva");
+let a1 = new Alumno(2, "Jose", "Carlos");
+let a2 = new Alumno(3, "Tulio", "Manaure", 19);
+let a3 = new Alumno(4, "Joe", "Estefano", 19, "947851485");
+let a4 = new Alumno(5, "Roy", "Remigio", 17, "948751489", new Date("2009-02-16"));
+
+//2
 class Profesor {
     constructor(id, nombre, apellido, edad, correoElectronico, telefono, especialidad, fechaContratacion) {
         this.idProfesor = id;
@@ -24,6 +44,13 @@ class Profesor {
     }
 }
 
+let p0 = new Profesor(101, "Kenny");
+let p1 = new Profesor(102, "Bernabe", "Inche");
+let p2 = new Profesor(103, "Giomar", "Bazan", 32);
+let p3 = new Profesor(104, "Yenner", "Mendoza", 38, "YMendoza@email.com");
+let p4 = new Profesor(105, "Herber", "de la Cruz", 30, "HDLC@email.com", "987654321", "Base de Datos", new Date("1996-08-11"));
+
+//3
 class Notas {
     constructor(id, idAlumno, idCurso, calificacion, tipoEvaluacion, fecha) {
         this.idNota = id;
@@ -35,6 +62,7 @@ class Notas {
     }
 }
 
+//4
 class Curso {
     constructor(id, nombreCurso, codigoCurso, idProfesor, creditos, horario) {
         this.idCurso = id;
@@ -46,6 +74,13 @@ class Curso {
     }
 }
 
+let c0 = new Curso(501, "Programación Orientada a Objetos");
+let c1 = new Curso(502, "Desarrollo de Interfaces 1", "AUL-402");
+let c2 = new Curso(503, "Lectura Crítica y Argumentación", "AUL-207", 105); 
+let c3 = new Curso(504, "Proyecto Desarrollo de los Componentes de la Capa de Vista", "PCV-504", 104, 4);
+let c4 = new Curso(505, "Diseño de Base Datos Relacionales", "BD-504", 103, 5, "jueves 08:45 - 11:00");
+
+//5
 class Matricula {
     constructor(id, idAlumno, idCurso, periodoAcademico, fechaInscripcion) {
         this.idMatricula = id;
@@ -56,6 +91,8 @@ class Matricula {
     }
 }
 
+
+//6
 class Asistencia {
     constructor(id, idAlumno, idCurso, fecha, estadoAsistencia, observaciones) {
         this.idAsistencia = id;
@@ -67,6 +104,7 @@ class Asistencia {
     }
 }
 
+//7
 class Aula {
     constructor(id, nombreAula, capacidad, pabellon, tipoAula) {
         this.idAula = id;
@@ -77,6 +115,7 @@ class Aula {
     }
 }
 
+//8
 class Carrera {
     constructor(id, nombreCarrera, codigoCarrera, duracionSemestres, directorCarrera, estado) {
         this.idCarrera = id;
@@ -88,6 +127,8 @@ class Carrera {
     }
 }
 
+
+//9
 class Pago {
     constructor(id, idAlumno, monto, fechaPago, concepto, estadoPago, metodoPago) {
         this.idPago = id;
@@ -100,10 +141,11 @@ class Pago {
     }
 }
 
+//10
 class Departamento {
     constructor(id, nombreDepartamento, jefeDepartamento, ubicacion, estado) {
         this.idDepartamento = id;
-        this.nombreDepartamento = nombreDepartamento;
+        this.nombreDepartamento = nombreDepartamento;       
         this.jefeDepartamento = jefeDepartamento;
         this.ubicacion = ubicacion;
         this.estado = estado;
@@ -129,3 +171,29 @@ let producto1 = new Producto(
     25,
     "Logitech"
 );
+
+const igv =19.4
+console.log(igv); 
+const cigv=20;
+console.log(cigv); 
+
+class Alimnotop10 extends Producto {
+    constructor(id, nombre, categoria, precio, stock, marca, fechaVencimiento) {
+        super(id, nombre, categoria, precio, stock, marca);
+        this.fechaVencimiento = fechaVencimiento;
+    }
+}
+
+class alumnoterciosuperios extends Producto {
+    constructor(id, nombre, categoria, precio, stock, marca, fechaVencimiento) {
+        super(id, nombre, categoria, precio, stock, marca);
+        this.fechaVencimiento = fechaVencimiento;
+    }
+}
+
+class alumnoterciopromedio extends Producto {
+    constructor(id, nombre, categoria, precio, stock, marca, fechaVencimiento) {
+        super(id, nombre, categoria, precio, stock, marca);
+        this.fechaVencimiento = fechaVencimiento;
+    }
+}
