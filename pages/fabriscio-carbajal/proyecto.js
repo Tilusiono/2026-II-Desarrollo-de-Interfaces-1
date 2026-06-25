@@ -1,16 +1,38 @@
 class Cliente {
-    id_cliente;
-    nombre;
-    apellido_paterno;
-    dni;
-    telefono;
+    #id_cliente;
+    #nombre;
+    #apellido_paterno;
+    #dni;
+    #telefono;
+    
+    /**
+     * Crea una instancia de la clase Cliente
+     * 
+     * @param {number} id Identificador único del cliente.
+     * @param {string} nom Nombre del cliente.
+     * @param {string} [ape = "Sin apellido"] Apellido paterno del cliente.
+     * @param {string} dni DNI del cliente.
+     * @param {string} [tel = "none"] Teléfono del cliente.
+     */
 
-    constructor(id, nom, ape, dni, tel) {
-        this.id_cliente = id;
-        this.nombre = nom;
-        this.apellido_paterno = ape;
-        this.dni = dni;
-        this.telefono = tel;
+    constructor(id, nom, ape = "Sin apellido", dni, tel = "none") {
+
+        if (typeof id !== "number")
+            throw new Error("El ID debe ser un número");
+        if (typeof nom !== "string")
+            throw new Error("El nombre debe ser una cadena de texto");
+        if (typeof ape !== "string")
+            throw new Error("El apellido debe ser una cadena de texto");
+        if (typeof dni !== "string")
+            throw new Error("El DNI debe ser una cadena de texto");
+        if (typeof tel !== "string")
+            throw new Error("El teléfono debe ser una cadena de texto");
+
+        this.#id_cliente = id;
+        this.#nombre = nom;
+        this.#apellido_paterno = ape;
+        this.#dni = dni;
+        this.#telefono = tel;
     }
 }
 
@@ -41,6 +63,15 @@ class Producto {
         this.nombre = nom;
         this.precio = prec;
         this.inventario = inv;
+    }
+}
+class Categoria {
+    id_categoria;
+    nombre;
+
+    constructor(id, nom) {
+        this.id_categoria = id;
+        this.nombre = nom;
     }
 }
 
@@ -96,6 +127,18 @@ class Inventario {
         this.id_producto = id_prod;
         this.id_sede = id_sed;
         this.cantidad = cant;
+    }
+}
+
+class Proveedor {
+    id_proveedor;
+    ruc;
+    telefono;
+
+    constructor(id, ruc, tel) {
+        this.id_proveedor = id;
+        this.ruc = ruc;
+        this.telefono = tel;
     }
 }
 
