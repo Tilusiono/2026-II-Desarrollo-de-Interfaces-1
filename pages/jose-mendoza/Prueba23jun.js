@@ -1,8 +1,3 @@
-/*
-Ctrl+Shift+P -> Quokka.js Run Automatically for current file
-
-
-*/
 class Alumno {
 
     // Propiedades privadas
@@ -69,7 +64,7 @@ class Alumno {
     /**
      * Establece el nombre del alumno.
      *
-     * @param {nombre} nombre Nuevo nombre del alumno.
+     * @param {string} nombre Nuevo nombre del alumno.
      */
     setNombre(nombre) {
         if (typeof nombre !== "string")
@@ -79,54 +74,16 @@ class Alumno {
     }
 }
 
+class AlummnoTop10 extends Alumno{
 
+}
 
-let a0 = new Alumno(1, "Bernabe");
-let a1 = new Alumno(2, "Jose", "Rojas");
-let a2 = new Alumno(3, "Felix", "Rodriguez", 22);
-let a3 = new Alumno(4, "Ana", "Mejia", 22, "999421499");
-let a4 = new Alumno(5, "Daniel", "Inche", 32, "919759571", new Date("1993-12-15"));
+class AlumnoTercioSuperior extends Alumno{
 
+}
 
+class AlumnoGeneral extends Alumno{
 
-console.log(a3.getNombre());
-a3.setNombre("Ana Luisa");
-console.log(a3.getNombre());
+}
 
-console.log(a4.getNombre());
-
-
-console.dir(a4);
-console.log(a4);
-console.log(a4.fechaNacimiento);
-
-console.log(a0.mostrarEstado());
-console.log(a1.mostrarEstado());
-console.log(a2.mostrarEstado());
-console.log(a3.mostrarEstado());
-console.log(a4.mostrarEstado());
-
-
-
-let alumnos = [
-    a0, a1, a2, a3, a4,
-    new Alumno(6, "Jean", "Perez", 17, "987654321", new Date("2006-05-20"))
-
-];
-
-console.log(alumnos)
-
-/*
-Tipos de datos en JavaScript
-
-| Tipo      | Resultado de `typeof` | Ejemplo               |
-| --------- | --------------------- | --------------------- |
-| String    | `"string"`            | `typeof "Hola"`       |
-| Number    | `"number"`            | `typeof 25`           |
-| Boolean   | `"boolean"`           | `typeof true`         |
-| Undefined | `"undefined"`         | `typeof undefined`    |
-| Object    | `"object"`            | `typeof {}`           |
-| Function  | `"function"`          | `typeof function(){}` |
-| BigInt    | `"bigint"`            | `typeof 100n`         |
-| Symbol    | `"symbol"`            | `typeof Symbol()`     | 
-*/
+// mi proyecto mismo aplicar todo lo aprendido 
