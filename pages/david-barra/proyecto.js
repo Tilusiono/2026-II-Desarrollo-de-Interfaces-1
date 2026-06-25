@@ -1,4 +1,4 @@
-/*SUPERMERCADO "Élite Market"*/
+/* SUPERMERCADO "Élite Market" */
 
 class Producto {
     idProducto;
@@ -10,29 +10,29 @@ class Producto {
     fechaVencimiento;
     codigoBarras;
 
-    constructor(idpro, nom, desc, pre, sto, mar, fecVen, cod) {
-        this.idProducto = idpro;
+    constructor(idPro, nom, desc, pre, sto, mar, fecVen, codBar) {
+        this.idProducto = idPro;
         this.nombre = nom;
         this.descripcion = desc;
         this.precio = pre;
         this.stock = sto;
         this.marca = mar;
         this.fechaVencimiento = fecVen;
-        this.codigoBarras = cod;
+        this.codigoBarras = codBar;
     }
 }
 
 class Categoria {
     idCategoria;
     nombreCategoria;
-    descripcion;
+    descripcion; 
     cantidadProductos;
 
-    constructor(idCat, nomCat, desc, cant) {
+    constructor(idCat, nomCat, desc, cantPro) {
         this.idCategoria = idCat;
         this.nombreCategoria = nomCat;
         this.descripcion = desc;
-        this.cantidadProductos = cant;
+        this.cantidadProductos = cantPro;
     }
 }
 
@@ -56,77 +56,25 @@ class Cliente {
     }
 }
 
-class Empleado {
-    idEmpleado;
+class Cajero {
+    idCajero;
     nombre;
     apellido;
-    cargo;
+    turno;
     salario;
     telefono;
     correo;
     fechaContratacion;
 
-    constructor(idEmp, nom, ape, car, sal, tel, cor, fecCon) {
-        this.idEmpleado = idEmp;
+    constructor(idCaj, nom, ape, tur, sal, tel, cor, fecCon) {
+        this.idCajero = idCaj;
         this.nombre = nom;
         this.apellido = ape;
-        this.cargo = car;
+        this.turno = tur;
         this.salario = sal;
         this.telefono = tel;
         this.correo = cor;
         this.fechaContratacion = fecCon;
-    }
-}
-
-class CarritoCompra {
-    idCarrito;
-    cantidadProductos;
-    total;
-    estado;
-    fechaCreacion;
-
-    constructor(idCar, cant, tot, est, fec) {
-        this.idCarrito = idCar;
-        this.cantidadProductos = cant;
-        this.total = tot;
-        this.estado = est;
-        this.fechaCreacion = fec;
-    }
-}
-
-class Venta {
-    idVenta;
-    fecha;
-    total;
-    metodoPago;
-    descuento;
-    impuesto;
-    estado;
-
-    constructor(idVen, fec, tot, met, des, imp, est) {
-        this.idVenta = idVen;
-        this.fecha = fec;
-        this.total = tot;
-        this.metodoPago = met;
-        this.descuento = des;
-        this.impuesto = imp;
-        this.estado = est;
-    }
-}
-
-class DetalleVenta {
-    idDetalle;
-    cantidad;
-    precioUnitario;
-    subtotal;
-    descuento;
-
-    constructor(idDet, cant, preUni, sub, des) {
-        this.idDetalle = idDet;
-        this.cantidad = cant;
-        this.precioUnitario = preUni;
-        this.subtotal = sub;
-        this.descuento = des;
     }
 }
 
@@ -157,31 +105,85 @@ class Proveedor {
     ruc;
     nombreContacto;
 
-    constructor(idPro, nom, tel, cor, dir, ruc, con) {
-        this.idProveedor = idPro;
+    constructor(idProv, nom, tel, cor, dir, ruc, nomCon) {
+        this.idProveedor = idProv;
         this.nombre = nom;
         this.telefono = tel;
         this.correo = cor;
         this.direccion = dir;
         this.ruc = ruc;
-        this.nombreContacto = con;
+        this.nombreContacto = nomCon;
     }
 }
 
-class Factura {
-    idFactura;
+class CarritoCompra {
+    idCarrito;
+    cantidadProductos;
+    total;
+    estado;
+    fechaCreacion;
+
+    constructor(idCar, cantPro, tot, est, fecCre) {
+        this.idCarrito = idCar;
+        this.cantidadProductos = cantPro;
+        this.total = tot;
+        this.estado = est;
+        this.fechaCreacion = fecCre;
+    }
+}
+
+class Venta {
+    idVenta;
+    fecha;
+    total;
+    metodoPago;
+    descuento;
+    impuesto;
+    estado;
+
+    constructor(idVen, fec, tot, metPag, des, imp, est) {
+        this.idVenta = idVen;
+        this.fecha = fec;
+        this.total = tot;
+        this.metodoPago = metPag;
+        this.descuento = des;
+        this.impuesto = imp;
+        this.estado = est;
+    }
+}
+
+class DetalleVenta {
+    idDetalleVenta;
+    cantidad;
+    precioUnitario;
+    subtotal;
+    descuento;
+
+    constructor(idDet, cant, preUni, sub, des) {
+        this.idDetalleVenta = idDet;
+        this.cantidad = cant;
+        this.precioUnitario = preUni;
+        this.subtotal = sub;
+        this.descuento = des;
+    }
+}
+
+class Comprobante {
+    idComprobante;
+    tipoComprobante;
     fechaEmision;
     subtotal;
     impuesto;
     total;
     estadoPago;
 
-    constructor(idFac, fec, sub, imp, tot, est) {
-        this.idFactura = idFac;
-        this.fechaEmision = fec;
+    constructor(idCom, tipCom, fecEmi, sub, imp, tot, estPag) {
+        this.idComprobante = idCom;
+        this.tipoComprobante = tipCom;
+        this.fechaEmision = fecEmi;
         this.subtotal = sub;
         this.impuesto = imp;
         this.total = tot;
-        this.estadoPago = est;
+        this.estadoPago = estPag;
     }
 }
