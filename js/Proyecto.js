@@ -2,6 +2,7 @@ import AlumnoNacional from "./AlumnoNacional.js";
 import AlumnoExtranjero from "./AlumnoExtranjero.js";
 import AlumnoIntercambio from "./AlumnoIntercambio.js";
 import IAsistencia from "./IAsistencia.js";
+import Profesor from "./Profesor.js";
 
 
 const alumnoNacional = new AlumnoNacional(
@@ -17,7 +18,6 @@ const alumnoNacional = new AlumnoNacional(
     "Desarrollo de Sistemas"
 );
 
-console.log(alumnoNacional.mostrarDatos());
 
 const alumnoExtranjero = new AlumnoExtranjero(
     2,
@@ -32,7 +32,6 @@ const alumnoExtranjero = new AlumnoExtranjero(
     "Sede San Isidro"
 );
 
-console.log(alumnoExtranjero.mostrarDatos());
 
 
 const alumnoIntercambio = new AlumnoIntercambio(
@@ -48,6 +47,8 @@ const alumnoIntercambio = new AlumnoIntercambio(
     "Intercambio Académico"
 );
 
+console.log(alumnoNacional.mostrarDatos());
+console.log(alumnoExtranjero.mostrarDatos());
 console.log(alumnoIntercambio.mostrarDatos());
 
 
@@ -68,13 +69,16 @@ alumnoExtranjero.registrarSalida( new Date(new Date().setHours(new Date().getHou
 const profesor = new Profesor(
     1,
     "Bernabe",
-    "Inche",
-    "Programación",
+    "Inche",32,
     "999888777",
+    new Date("1993-03-08"),
+    "Programación",
+    "fbinche",
+    "Sede ATE",
     "fbinche@idat.pe",
-    "Sede ATE"
 );
 
 profesor.mostrarDatos();
 profesor.registrarEntrada(new Date());
 profesor.registrarSalida(new Date(new Date().setHours(new Date().getHours() + 5)));
+
