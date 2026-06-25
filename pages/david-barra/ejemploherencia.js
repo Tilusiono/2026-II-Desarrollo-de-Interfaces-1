@@ -49,7 +49,7 @@ class Alumno {
     #validarEdad() {
         return this.#edad >= 0 && this.#edad >= 18;
     }
-
+/*hacer que el 0 de que no ingresó edad*/
     mostrarEstado() {
 
         if (this.#validarEdad()) {
@@ -69,7 +69,7 @@ class Alumno {
     /**
      * Establece el nombre del alumno.
      *
-     * @param {string} nombre Nuevo nombre del alumno.
+     * @param {string} Nombre del alumno.
      */
     setNombre(nombre) {
         if (typeof nombre !== "string")
@@ -80,7 +80,8 @@ class Alumno {
 }
 
 
-
+let prueba=new Alumno(4, "FELIPE");
+/*validar 2 clases de mi proyecto "objetos"*/
 let a0 = new Alumno(1, "Bernabe");
 let a1 = new Alumno(2, "Jose", "Rojas");
 let a2 = new Alumno(3, "Felix", "Rodriguez", 22);
@@ -94,6 +95,7 @@ a3.setNombre("Ana Luisa");
 console.log(a3.getNombre());
 
 console.log(a4.getNombre());
+
 
 
 console.dir(a4);
@@ -130,3 +132,17 @@ Tipos de datos en JavaScript
 | BigInt    | `"bigint"`            | `typeof 100n`         |
 | Symbol    | `"symbol"`            | `typeof Symbol()`     | 
 */
+
+
+class AlumnoTop10 extends Alumno {
+
+}
+
+class AlumnoTercioSuperior extends Alumno {
+    
+}
+
+class AlumnoGeneral extends Alumno {
+    
+}
+
