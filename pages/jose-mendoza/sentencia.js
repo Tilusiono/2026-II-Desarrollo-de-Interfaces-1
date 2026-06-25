@@ -2,7 +2,7 @@
 // 1
 let pais1= "Peru";
 
-if(pais==="Peru"){
+if(pais1==="Peru"){
     console.log("Eres peruano ")
 }else{
     console.log("No eres peruano")
