@@ -54,16 +54,21 @@ class AlumnoNacional extends Alumno {
     cambiarSede(nuevaSede) {
         this.sede = nuevaSede;
     }
-    registrarEntrada(fechaHora, aula) {
-  console.log(
-    `${this.getNombre()} ingresó (${fechaHora.toLocaleString()}) al aula ${aula}`
-  );
+    registrarEntrada(fechaHora) {
+
+        console.log(
+            `${this.getNombre()} ingresó el ${fechaHora.toLocaleString()}`
+        );
+
+    }
+
+    registrarSalida(fechaHora) {
+
+        console.log(
+            `${this.getNombre()} salió el ${fechaHora.toLocaleString()}`
+        );
+
+    }
 }
 
-registrarSalida(fechaHora, curso) {
-  console.log(
-    `${this.getNombre()} salió (${fechaHora.toLocaleString()}) del curso ${curso}`
-  );
-}
-}
 export default AlumnoNacional;
