@@ -1,42 +1,32 @@
+$branch = "bernabe-inche"
+$path = "pages/$branch"
+
+Write-Host "Sync main -> $branch (CONTROLADO)"
+
+# 1. actualizar main
 git checkout main
 git pull origin main
-git fetch origin
 
-$branch = "bernabe-inche"
-$allowedPath = "pages/$branch"
-
-Write-Host ""
-Write-Host "Procesando rama: $branch"
-
+# 2. ir a rama alumno
 git checkout $branch
 git pull origin $branch
 
-# Merge dando prioridad a main en conflictos
-git merge main -X theirs --no-edit
-
-# Traer desde main todo EXCEPTO pages y git
-git restore --source=main --staged --worktree -- . ":(exclude)pages" ":(exclude)git"
-
-# Quitar git si existe como carpeta versionada
+# 3. LIMPIAR TODO lo peligroso primero
 git rm -r --ignore-unmatch git
-
-# Quitar todas las pages actuales de la rama
 git rm -r --ignore-unmatch pages
 
-# Traer SOLO pages/$branch desde main, con prioridad a main
-git restore --source=main --staged --worktree -- $allowedPath
+# 4. TRAER SOLO lo permitido (NO usar ".")
+git checkout main -- $path
+git checkout main -- assets js css database docs
 
-git add -A
+# 5. agregar SOLO lo necesario
+git add $path assets js css database docs
 
-$changes = git status --porcelain
-
-if ($changes) {
-    git commit -m "Sincronizar main hacia $branch con prioridad a main"
+# 6. commit
+if (git status --porcelain) {
+    git commit -m "Sincronizar branch -> $branch desde main"
     git push origin $branch
-    Write-Host "✔ $branch actualizado correctamente"
-} else {
-    git push origin $branch
-    Write-Host "⏭ No hubo cambios para sincronizar"
 }
 
+# 7. volver a main
 git checkout main

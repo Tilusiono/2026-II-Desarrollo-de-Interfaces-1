@@ -1,50 +1,44 @@
+# 1. actualizar main primero
 git checkout main
 git pull origin main
-git fetch origin
 
+# 2. obtener ramas locales desde pages/
 $branches = Get-ChildItem pages -Directory
 
 foreach ($student in $branches) {
 
     $branch = $student.Name
-    $allowedPath = "pages/$branch"
+    $path = "pages/$branch"
 
-    Write-Host ""
-    Write-Host "========================================"
-    Write-Host "Procesando rama: $branch"
-    Write-Host "========================================"
+    Write-Host "`n============================"
+    Write-Host "Sync -> $branch"
+    Write-Host "============================"
 
+    # ir a rama del alumno
     git checkout $branch
     git pull origin $branch
 
-    # Merge dando prioridad a main en conflictos
-    git merge main -X theirs --no-edit
-
-    # Traer desde main todo EXCEPTO pages y git
-    git restore --source=main --staged --worktree -- . ":(exclude)pages" ":(exclude)git"
-
-    # Quitar git si existe como carpeta versionada
+    # 🔥 limpiar cosas peligrosas
     git rm -r --ignore-unmatch git
-
-    # Quitar todas las pages actuales de la rama
     git rm -r --ignore-unmatch pages
 
-    # Traer SOLO pages/$branch desde main, con prioridad a main
-    git restore --source=main --staged --worktree -- $allowedPath
+    # 🔥 traer SOLO lo permitido desde main
+    git checkout main -- $path
+    git checkout main -- assets js css database docs
 
-    git add -A
+    # agregar SOLO lo necesario
+    git add $path assets js css database docs
 
-    $changes = git status --porcelain
-
-    if ($changes) {
-        git commit -m "Sincronizar main hacia $branch con prioridad a main"
+    # commit si hay cambios
+    if (git status --porcelain) {
+        git commit -m "Sync main -> $branch"
         git push origin $branch
-        Write-Host "✔ $branch actualizado correctamente"
+        Write-Host "✔ $branch actualizado"
     }
     else {
-        git push origin $branch
-        Write-Host "⏭ $branch no tuvo cambios adicionales"
+        Write-Host "⏭ Sin cambios en $branch"
     }
 }
 
+# volver a main
 git checkout main
