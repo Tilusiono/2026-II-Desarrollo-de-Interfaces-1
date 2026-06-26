@@ -48,16 +48,5 @@ class Profesor extends Persona {
     );
   }
 }
-  registrarHorario(fechaHora) {
-    console.log(
-      `${this.getNombre()} profesor registró su horario (${fechaHora.toLocaleString()})`,
-    );
-  }   
 
-
-  registrarHorario(fechaHora) {
-    console.log(
-      `${this.getNombre()} profesor registró su horario (${fechaHora.toLocaleString()})`,
-    );
-  }
 export default Profesor;
