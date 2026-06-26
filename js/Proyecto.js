@@ -55,13 +55,13 @@ console.log(alumnoIntercambio.mostrarDatos());
 alumnoIntercambio.setNombre("Diani")
 console.trace(alumnoIntercambio)
 
-alumnoIntercambio.registrarEntrada( new Date(),"Interfaces1");
+alumnoIntercambio.registrarEntrada( new Date());
 alumnoIntercambio.registrarSalida( new Date(new Date().setHours(new Date().getHours() + 3)));
 
-alumnoNacional.registrarEntrada( new Date(),"202");
+alumnoNacional.registrarEntrada( new Date());
 alumnoNacional.registrarSalida(  new Date(new Date().setHours(new Date().getHours() + 4)));
 
-alumnoExtranjero.registrarEntrada( new Date(),"Ninguno");
+alumnoExtranjero.registrarEntrada( new Date());
 alumnoExtranjero.registrarSalida( new Date(new Date().setHours(new Date().getHours() + 5)));
 
 
@@ -79,6 +79,7 @@ const profesor = new Profesor(
 );
 
 profesor.mostrarDatos();
-profesor.registrarEntrada(new Date(),"Lima","Laptop");
+profesor.registrarEntrada(new Date());
 profesor.registrarSalida(new Date(new Date().setHours(new Date().getHours() + 5)));
+profesor.registrarSalida(new Date(new Date().setHours(new Date().getHours() + 6)));
 

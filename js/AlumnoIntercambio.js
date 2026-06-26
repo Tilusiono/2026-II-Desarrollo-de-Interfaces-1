@@ -53,9 +53,9 @@ class AlumnoIntercambio extends Alumno {
     this.programaIntercambio = nuevoPrograma;
   }
 
-  registrarEntrada(fechaHora,curso) {
+  registrarEntrada(fechaHora) {
     console.log(
-      `${this.getNombre()} inició su intercambio (${fechaHora.toLocaleString()}), curso ${curso}`,
+      `${this.getNombre()} inició su intercambio (${fechaHora.toLocaleString()})`,
     );
   }
 
