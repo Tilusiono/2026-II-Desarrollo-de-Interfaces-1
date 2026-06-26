@@ -79,6 +79,7 @@ const profesor = new Profesor(
 );
 
 profesor.mostrarDatos();
-profesor.registrarEntrada(new Date(), "A101", "Programación");
-profesor.registrarSalida(new Date(), "A101", "Programación");
+profesor.registrarEntrada(new Date());
+profesor.registrarSalida(new Date(new Date().setHours(new Date().getHours() + 5)));
+profesor.registrarSalida(new Date(new Date().setHours(new Date().getHours() + 6)));
 
