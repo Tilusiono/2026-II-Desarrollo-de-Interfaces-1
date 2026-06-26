@@ -17,12 +17,13 @@ class Gimnasio {
      * @param {string} sedes 
      */
 
-    constructor(nombre, dirección, capacidad, sedes) {
-        this.#nombre = nombre;
-        this.#dirección = dirección;
-        this.#capacidad = capacidad;
-        this.#sedes = sedes;
-    }
+    constructor(nombre, dirección, capacidad, sedes) 
+{
+    this.#nombre = nombre;
+    this.#dirección = dirección;
+    this.#capacidad = capacidad;
+    this.#sedes = sedes;
+}
 }
 
 const gimnasio1 = new Gimnasio("Power Gym", "Calle Trabajo", 200, "Ate Vitarte, San Juan de Lurigancho, San Borja y Miraflores");
@@ -36,21 +37,22 @@ class Vendedor {
     #salario;
 
 
-    /**
-     * Creates an instance of Vendedor.
-     *
-     * @constructor
-     * @param {string} nombre 
-     * @param {string} apellido 
-     * @param {string} turno 
-     * @param {number} salario 
-     */
-    constructor(nombre, apellido, turno, salario) {
-        this.#nombre = nombre;
-        this.#apellido = apellido;
-        this.#turno = turno;
-        this.#salario = salario;
-    }
+/**
+ * Creates an instance of Vendedor.
+ *
+ * @constructor
+ * @param {string} nombre 
+ * @param {string} apellido 
+ * @param {string} turno 
+ * @param {number} salario 
+ */
+constructor(nombre, apellido, turno, salario)
+ {
+    this.#nombre = nombre;
+    this.#apellido = apellido;
+    this.#turno = turno;
+    this.#salario = salario;
+}
 
 }
 
@@ -75,12 +77,13 @@ class Socio {
      * @param {string} correo 
      * @param {string} direccion 
      */
-    constructor(nombre, telefono, correo, direccion) {
-        this.#nombre = nombre;
-        this.#telefono = telefono;
-        this.#correo = correo;
-        this.#direccion = direccion;
-    }
+    constructor(nombre, telefono, correo, direccion) 
+{
+    this.#nombre = nombre;
+    this.#telefono = telefono;
+    this.#correo = correo;
+    this.#direccion = direccion; 
+}
 }
 
 const socio1 = new Socio("José", "992531000", "tupapijose@soyrico.com", "San Roque Vitarte");
@@ -101,12 +104,13 @@ class Membresía {
      * @param {string} beneficios 
      * @param {string} estado 
      */
-    constructor(nombreMembresía, meses, beneficios, estado) {
-        this.#nombreMembresía = nombreMembresía;
-        this.#meses = meses;
-        this.#beneficios = beneficios;
-        this.#estado = estado;
-    }
+    constructor(nombreMembresía, meses, beneficios, estado) 
+    {
+    this.#nombreMembresía = nombreMembresía;
+    this.#meses = meses;
+    this.#beneficios = beneficios;
+    this.#estado = estado;
+}
 
 }
 
@@ -122,21 +126,22 @@ class Precio {
     #moneda;
 
 
-    /**
-     * Creates an instance of Precio.
-     *
-     * @constructor
-     * @param {number} precioUnitario 
-     * @param {number} descuentoSoles 
-     * @param {number} pagoTotal 
-     * @param {string} moneda 
-     */
-    constructor(precioUnitario, descuentoSoles, pagoTotal, moneda) {
-        this.#precioUnitario = precioUnitario;
-        this.#descuentoSoles = descuentoSoles;
-        this.#pagoTotal = pagoTotal;
-        this.#moneda = moneda;
-    }
+/**
+ * Creates an instance of Precio.
+ *
+ * @constructor
+ * @param {number} precioUnitario 
+ * @param {number} descuentoSoles 
+ * @param {number} pagoTotal 
+ * @param {string} moneda 
+ */
+constructor(precioUnitario, descuentoSoles, pagoTotal, moneda) 
+{
+    this.#precioUnitario = precioUnitario;
+    this.#descuentoSoles = descuentoSoles;
+    this.#pagoTotal = pagoTotal;
+    this.#moneda = moneda;
+}
 
 }
 
@@ -148,22 +153,23 @@ class Ubicacion {
     #distrito;
     #referencia;
     #codigoPostal;
-
-    /**
-     * Creates an instance of Ubicacion.
-     *
-     * @constructor
-     * @param {string} direccion 
-     * @param {string} distrito 
-     * @param {string} referencia 
-     * @param {number} codigoPostal 
-     */
-    constructor(direccion, distrito, referencia, codigoPostal) {
-        this.#direccion = direccion;
-        this.#distrito = distrito;
-        this.#referencia = referencia;
-        this.#codigoPostal = codigoPostal;
-    }
+    
+/**
+ * Creates an instance of Ubicacion.
+ *
+ * @constructor
+ * @param {string} direccion 
+ * @param {string} distrito 
+ * @param {string} referencia 
+ * @param {number} codigoPostal 
+ */
+constructor(direccion, distrito, referencia, codigoPostal) 
+{
+    this.#direccion = direccion;
+    this.#distrito = distrito;
+    this.#referencia = referencia;
+    this.#codigoPostal = codigoPostal;
+}
 
 }
 
@@ -177,21 +183,22 @@ class Horario {
     #diasAtencion;
     #turnoEspecial;
 
-    /**
-     * Creates an instance of Horario.
-     *
-     * @constructor
-     * @param {number} horaApertura 
-     * @param {number} horaCierre 
-     * @param {string} diasAtencion 
-     * @param {string} turnoEspecial 
-     */
-    constructor(horaApertura, horaCierre, diasAtencion, turnoEspecial) {
-        this.#horaApertura = horaApertura;
-        this.#horaCierre = horaCierre;
-        this.#diasAtencion = diasAtencion;
-        this.#turnoEspecial = turnoEspecial;
-    }
+/**
+ * Creates an instance of Horario.
+ *
+ * @constructor
+ * @param {number} horaApertura 
+ * @param {number} horaCierre 
+ * @param {string} diasAtencion 
+ * @param {string} turnoEspecial 
+ */
+constructor(horaApertura, horaCierre, diasAtencion, turnoEspecial) 
+{
+    this.#horaApertura = horaApertura;
+    this.#horaCierre = horaCierre;
+    this.#diasAtencion = diasAtencion;
+    this.#turnoEspecial = turnoEspecial;
+}
 
 }
 
@@ -205,15 +212,13 @@ class Telefono {
     #codigoPais;
     #extension;
 
-
-
-
-    constructor(numeroPrincipal, numeroSecundario, codigoPais, extension) {
-        this.#numeroPrincipal = numeroPrincipal;
-        this.#numeroSecundario = numeroSecundario;
-        this.#codigoPais = codigoPais;
-        this.#extension = extension;
-    }
+constructor(numeroPrincipal, numeroSecundario, codigoPais, extension)
+ {
+    this.#numeroPrincipal = numeroPrincipal;
+    this.#numeroSecundario = numeroSecundario;
+    this.#codigoPais = codigoPais;
+    this.#extension = extension;
+}
 }
 
 const telefono1 = new Telefono("976920560", "992587789", "+51", "101");
@@ -227,14 +232,13 @@ class Correo {
     #dominio;
     #estado;
 
-
-
-    constructor(correoPrincipal, correoSoporte, dominio, estado) {
-        this.#correoPrincipal = correoPrincipal;
-        this.#correoSoporte = correoSoporte;
-        this.#dominio = dominio;
-        this.#estado = estado;
-    }
+constructor(correoPrincipal, correoSoporte, dominio, estado) 
+{
+    this.#correoPrincipal = correoPrincipal;
+    this.#correoSoporte = correoSoporte;
+    this.#dominio = dominio;
+    this.#estado = estado;
+}
 
 }
 
@@ -248,28 +252,29 @@ class Venta {
     #total;
     #metodoPago;
 
-    constructor(fecha, membresiaCompradas, total, metodoPago) {
-        this.#fecha = fecha;
-        this.#membresiaCompradas = membresiaCompradas;
-        this.#total = total;
-        this.#metodoPago = metodoPago;
-    }
+constructor(fecha, membresiaCompradas, total, metodoPago) 
+{
+    this.#fecha = fecha;
+    this.#membresiaCompradas = membresiaCompradas;
+    this.#total = total;
+    this.#metodoPago = metodoPago;   
+}
 }
 const venta1 = new Venta("22/06/2026", membresia1, 300, "Tarjeta de Crédito");
 
 /*****PRUEBA EN CLASEEEEEEEEEEE******* */
 
-class alumnoTop10 extends Alumno {
+class alumnoTop10 extends Alumno{
 
 
 }
 
-class AlumnoTercioSuperior extends Alumno {
+class AlumnoTercioSuperior extends Alumno{
 
 
 }
 
-class AlumnoGeneral extends Alumno {
+class AlumnoGeneral extends Alumno{ 
 
 
 }

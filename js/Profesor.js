@@ -36,19 +36,17 @@ class Profesor extends Persona {
     `;
   }
 
-  registrarEntrada(fechaHora, aula, modalidad) {
+  registrarEntrada(fechaHora) {
     console.log(
-      `${this.getNombre()} profesor registró su entrada (${fechaHora.toLocaleString()})`, en aula ${ aula } - ${ modalidad }`,
+      `${this.getNombre()} profesor registró su entrada (${fechaHora.toLocaleString()})`,
     );
   }
 
   registrarSalida(fechaHora) {
     console.log(
-      `${ this.getNombre() } profesor registró su salida(${ fechaHora.toLocaleString() })`, en aula ${aula} - ${modalidad}`,
+      `${this.getNombre()} profesor registró su salida (${fechaHora.toLocaleString()})`,
     );
   }
 }
-
-
 
 export default Profesor;
