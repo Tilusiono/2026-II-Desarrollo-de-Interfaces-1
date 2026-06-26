@@ -43,12 +43,11 @@ class AlumnoNacional extends Alumno {
 
     // Métodos públicos
 
-    mostrarDatos(grado) {
+    mostrarDatos() {
     return `Alumno Nacional
     Nombre: ${this.getNombre()}
     Departamento: ${this.#obtenerDepartamento()}
     Código válido: ${this.#validarCodigo()}
-    Grado: ${grado}
     `;
     }
 

@@ -42,12 +42,11 @@ class AlumnoExtranjero extends Alumno {
 
   // Métodos públicos
 
-  mostrarDatos(grado) {
+  mostrarDatos() {
     return `Alumno Extranjero
     Nombre: ${this.getNombre()}
     País: ${this.#obtenerPais()}
     Pasaporte válido: ${this.#validarPasaporte()}
-    Grado: ${grado}
     `;
   }
 

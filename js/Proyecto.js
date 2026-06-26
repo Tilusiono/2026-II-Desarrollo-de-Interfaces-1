@@ -47,9 +47,9 @@ const alumnoIntercambio = new AlumnoIntercambio(
     "Intercambio Académico"
 );
 
-console.log(alumnoNacional.mostrarDatos("Primaria"));
-console.log(alumnoExtranjero.mostrarDatos("Secuendaria"));
-console.log(alumnoIntercambio.mostrarDatos("Secundaria"));
+console.log(alumnoNacional.mostrarDatos());
+console.log(alumnoExtranjero.mostrarDatos());
+console.log(alumnoIntercambio.mostrarDatos());
 
 
 alumnoIntercambio.setNombre("Diani")
@@ -79,6 +79,7 @@ const profesor = new Profesor(
 );
 
 profesor.mostrarDatos();
-profesor.registrarEntrada(new Date(), "Desarrollo web", "tarde");
-profesor.registrarSalida(new Date(new Date().setHours(new Date().getHours() + 5)), "Desarrollo web", "tarde");
+profesor.registrarEntrada(new Date());
+profesor.registrarSalida(new Date(new Date().setHours(new Date().getHours() + 5)));
+profesor.registrarSalida(new Date(new Date().setHours(new Date().getHours() + 6)));
 

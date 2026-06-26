@@ -35,7 +35,6 @@ class Alumno extends Persona {
             fechaNacimiento
         );
     }
-    
 }
 
 export default Alumno;

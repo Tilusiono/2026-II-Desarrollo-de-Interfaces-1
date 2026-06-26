@@ -41,12 +41,11 @@ class AlumnoIntercambio extends Alumno {
 
   // Métodos públicos
 
-  mostrarDatos(grado) {
+  mostrarDatos() {
     return `Alumno de Intercambio
     Nombre: ${this.getNombre()}
     Instituto de origen: ${this.#obtenerInstituto()}
     Intercambio largo: ${this.#esIntercambioLargo()}
-    Grado: ${grado}
     `;
   }
 
