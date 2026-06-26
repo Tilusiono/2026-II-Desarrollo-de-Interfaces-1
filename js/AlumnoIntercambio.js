@@ -53,15 +53,15 @@ class AlumnoIntercambio extends Alumno {
     this.programaIntercambio = nuevoPrograma;
   }
 
-  registrarEntrada(fechaHora, destino) {
+  registrarEntrada(fechaHora) {
     console.log(
-      `${this.getNombre()} inició su intercambio (${fechaHora.toLocaleString()}) con destino a: ${destino}.`,
+      `${this.getNombre()} inició su intercambio (${fechaHora.toLocaleString()})`,
     );
   }
 
-  registrarSalida(fechaHora,materiasAprobadas,experiencia) {
+  registrarSalida(fechaHora) {
     console.log(
-      `${this.getNombre()} terminó su intercambio (${fechaHora.toLocaleString()}) logrando aprobar ${materiasAprobadas} materias. Valoración: ${experiencia}.`,
+      `${this.getNombre()} terminó su intercambio (${fechaHora.toLocaleString()})`,
     );
   }
 }
