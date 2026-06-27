@@ -26,6 +26,9 @@ git add $path assets js css database docs
 if (git status --porcelain) {
     git commit -m "Sincronizar branch -> $branch desde main"
     git push origin $branch
+    Write-Host "✔ $branch actualizado"
+}else{
+     Write-Host "⏭ Sin cambios en $branch"
 }
 
 # 7. volver a main

@@ -31,7 +31,7 @@ foreach ($student in $branches) {
 
     # commit si hay cambios
     if (git status --porcelain) {
-        git commit -m "Sync main -> $branch"
+        git commit -m "Sincronizar branch -> $branch desde main"
         git push origin $branch
         Write-Host "✔ $branch actualizado"
     }
