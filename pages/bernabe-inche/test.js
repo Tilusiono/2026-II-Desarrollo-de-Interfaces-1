@@ -18,5 +18,6 @@ console.log(typeof apellido_materno);
 
 /***test */
 console.log("Revisado");
-console.log("Revisado2");
+console.log("RevisadoOK1");
+console.log("RevisadoOK2");
 console.log("por Bernabé Inche Ticlavilca");
