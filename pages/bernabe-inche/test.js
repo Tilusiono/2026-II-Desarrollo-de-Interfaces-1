@@ -21,3 +21,8 @@ console.log("Revisado");
 console.log("RevisadoOK1");
 console.log("RevisadoOK2");
 console.log("por Bernabé Inche Ticlavilca");
+
+
+console.log("1");
+console.log("2");
+console.log("3");

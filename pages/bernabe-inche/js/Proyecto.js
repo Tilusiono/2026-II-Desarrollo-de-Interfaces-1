@@ -78,10 +78,12 @@ const profesor = new Profesor(
     "fbinche@idat.pe",
 );
 
-profesor.mostrarDatos();
-profesor.registrarEntrada(new Date());
-profesor.registrarSalida(new Date(new Date().setHours(new Date().getHours() + 5)));
 
-/*** Registrar salida TEST*/
+console.log(profesor.mostrarDatos());
+
+console.trace(profesor)
+
+console.log("OK")
+profesor.registrarEntrada(new Date());
 profesor.registrarSalida(new Date(new Date().setHours(new Date().getHours() + 10)));
 
