@@ -1,4 +1,4 @@
-import Colchon from "./Colchon";
+import Colchon from "./Colchon.js";
 
 class ColchonIndividual extends Colchon{
     color;
@@ -12,9 +12,7 @@ class ColchonIndividual extends Colchon{
     mostrarDatos(){
         super.mostrarDatos();
 
-        return `
-        Color: ${this.color}
-        `
+        console.log(`Color: ${this.color}\n`)
     }
 }
 

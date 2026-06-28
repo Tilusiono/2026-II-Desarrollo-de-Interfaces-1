@@ -8,7 +8,7 @@ class Cliente {
     /**
      * Crea una instancia de la clase Cliente
      * 
-     * @param {number} id Identificador único del cliente.
+     * @param {number} [id] Identificador único del cliente.
      * @param {string} nom Nombre del cliente.
      * @param {string} [ape = "Sin apellido"] Apellido paterno del cliente.
      * @param {string} dni DNI del cliente.

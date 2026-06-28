@@ -1,4 +1,4 @@
-import Producto from "./Producto";
+import Producto from "./Producto.js";
 
 class Colchon extends Producto{
     plaza;
@@ -14,10 +14,7 @@ class Colchon extends Producto{
     mostrarDatos(){
         super.mostrarDatos();
 
-        return `
-        Plaza: ${this.plaza}
-        Comodidad: ${this.comodidad}
-        `
+        console.log(`Plaza: ${this.plaza} \nComodidad: ${this.comodidad}`)
     }
 }
 

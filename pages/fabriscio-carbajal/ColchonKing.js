@@ -1,4 +1,4 @@
-import Colchon from "./Colchon";
+import Colchon from "./Colchon.js";
 
 class ColchonKing extends Colchon{
     pesoMaximo;
@@ -12,9 +12,7 @@ class ColchonKing extends Colchon{
     mostrarDatos(){
         super.mostrarDatos();
 
-        return `
-        Peso Máximo: ${this.pesoMaximo}
-        `
+        console.log(`Peso Máximo: ${this.pesoMaximo}\n`)
     }
 }
 

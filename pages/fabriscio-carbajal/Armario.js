@@ -1,4 +1,4 @@
-import Mueble from "./Mueble";   
+import Mueble from "./Mueble.js";   
 
 class Armario extends Mueble{
     columnas;
@@ -14,10 +14,7 @@ class Armario extends Mueble{
     mostrarDatos(){
         super.mostrarDatos();
 
-        return `
-        Columnas: ${this.columnas}
-        Cajones: ${this.cajones}
-        `
+        console.log(`Columnas: ${this.columnas} \nCajones: ${this.cajones}\n`)
     }
 }
    

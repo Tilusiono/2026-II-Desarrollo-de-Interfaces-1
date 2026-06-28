@@ -1,8 +1,8 @@
-import Producto from "./Producto";
+import Producto from "./Producto.js";
 
 class Mueble extends Producto {
-    tipoMadera;
-
+    tipoMadera;     // pino, roble, cedro y nogal
+    
     constructor(id, nom, prec, inv, tp_madr) {
         super(id, nom, prec, inv)
 
@@ -12,9 +12,7 @@ class Mueble extends Producto {
     mostrarDatos() {
         super.mostrarDatos();
             
-        return `
-        Tipo de madera: ${this.tipoMadera}
-        `    
+        console.log( `Tipo de madera: ${this.tipoMadera}`)  
     }
 }
 

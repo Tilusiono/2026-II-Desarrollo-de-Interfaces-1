@@ -5,6 +5,7 @@ class Producto {
     inventario;
 
     constructor(id, nom, prec, inv) {
+
         this.idProducto = id;
         this.nombre = nom;
         this.precio = prec;
@@ -12,11 +13,8 @@ class Producto {
     }
 
     mostrarDatos() {
-        return `
-        Producto: ${this.nombre}
-        Precio: ${this.precio}
-        Inventario: ${this.inventario}
-        `    
+        console.log(`\nProducto: ${this.nombre} \nPrecio: ${this.precio} \nInventario: ${this.inventario}`)
+
     }
 
     añadirStock(cantidadAgregar) {

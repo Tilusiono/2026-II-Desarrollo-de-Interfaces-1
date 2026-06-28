@@ -1,21 +1,19 @@
-import Mueble from "./Mueble";
+import Mueble from "./Mueble.js";
 
 class Estante extends Mueble{
     filas;
 
-    constructor(id, nom, prec, inv, tp_madr, fl){
+    constructor(id, nom, prec, inv, tp_madr, fls){
         super(id, nom, prec, inv, tp_madr)
 
-        this.filas = fl;
+        this.filas = fls;
     }
 
     mostrarDatos() {
         super.mostrarDatos();
 
-        return `
-        Filas = ${this.filas}
-        `
+        console.log(`Filas = ${this.filas}\n`)
     }
 }
 
-export default Mueble
+export default Estante
