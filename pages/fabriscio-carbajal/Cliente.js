@@ -1,14 +1,14 @@
 class Cliente {
     #idCliente;
     #nombre;
-    #apellido_paterno;
+    #apellidoPaterno;
     #dni;
     #telefono;
     
     /**
      * Crea una instancia de la clase Cliente
      * 
-     * @param {number} [id] Identificador único del cliente.
+     * @param {number} id Identificador único del cliente.
      * @param {string} nom Nombre del cliente.
      * @param {string} [ape = "Sin apellido"] Apellido paterno del cliente.
      * @param {string} dni DNI del cliente.
@@ -34,6 +34,25 @@ class Cliente {
         this.#dni = dni;
         this.#telefono = tel;
     }
+
+    getNombre() {
+        return this.#nombre;
+    }
+
+    añadirCarrito(producto, cantidad){
+
+        if (cantidad >= producto.inventario){
+            return console.log("Cantidad insuficiente en el inventario, pruebe con una cantidad menor")
+        }
+
+        let carrito = {
+            "id": producto.idProducto,
+            "producto": producto.nombre,
+            "cantidad": cantidad
+        }
+        return carrito
+    }
+
 }
 
 export default Cliente;

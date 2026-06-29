@@ -38,5 +38,35 @@ class Vendedor {
         this.#telefono = tel;
         this.#salario = sal;
     }
+
+    registrarVenta(cliente, carrito, productosAlmacenados){
+        console.log(`Carrito del cliente ${cliente.getNombre()}: \n`)
+
+        let subtotal;
+        let total = 0;
+        const igv = 0.18;
+
+        for (let i = 0; i < carrito.length; i++){ // recorre segun el tamaño del carrito
+            for (let j = 0; j < productosAlmacenados.length; j++) // busca segun el tamaño del total de productos almacenados
+                if (carrito[i].id == productosAlmacenados[j].idProducto) { // condicion si la posicion del carrito coincide con un producto almacenado
+
+                    subtotal = (productosAlmacenados[j].precio * carrito[i].cantidad); //crea un subtotal
+
+                    total = total + subtotal;
+
+                    productosAlmacenados[j].inventario - carrito[i].cantidad; // resta al inventario del producto
+
+                    let pr = carrito[i].producto
+                    pr = String(pr); 
+                    console.log(pr.padEnd(30) + subtotal) // espacio a la izquierda para no descuadrar los precios
+            }
+        }
+        console.log(`\nOP GRAVADA:    ${total}`);
+        let totalIgv = total * igv;
+        console.log(`IGV:           ${totalIgv}`);
+        let totalFinal = total + totalIgv;
+        console.log(`TOTAL:         ${totalFinal}`);
+    }
 }
 
+export default Vendedor;
