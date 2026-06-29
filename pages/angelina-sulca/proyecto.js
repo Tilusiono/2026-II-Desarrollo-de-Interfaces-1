@@ -1,10 +1,52 @@
 //proyecto SchoolSupply.
 
-class Entidad {
+// ============================================
+// NIVEL 1 - CLASE BASE (ABSTRACCIÓN)
+// ============================================
+
+class ObjetoBase {
+    #creadoEn;
+    #version;
+
+    constructor() {
+        this.#creadoEn = new Date();
+        this.#version = "1.0";
+    }
+
+    // Métodos públicos
+    obtenerFechaCreacion() {
+        return this.#creadoEn.toLocaleDateString();
+    }
+
+    obtenerVersion() {
+        return this.#version;
+    }
+
+    // Métodos privados (abstracción)
+    #registrarEvento(tipo) {
+        console.log("Evento: " + tipo + " - " + this.#creadoEn.toLocaleTimeString());
+    }
+
+    #validarVersion() {
+        return this.#version !== "";
+    }
+
+    // Método polimórfico (será sobrescrito)
+    obtenerTipo() {
+        return "ObjetoBase";
+    }
+
+    obtenerDescripcion() {
+        return "Objeto base del sistema";
+    }
+}
+
+class Entidad extends ObjetoBase {
     id;
     nombre;
 
     constructor(id, nombre) {
+        super();
         this.id = id;
         this.nombre = nombre;
     }
@@ -34,7 +76,22 @@ class Entidad {
     obtenerIdentificador() {
         return "ID: " + this.id + " - Nombre: " + this.nombre;
     }
+
+        obtenerTipo() {
+        return "Entidad";
+    }
+
+    obtenerDescripcion() {
+        return "Entidad con ID: " + this.id;
+    }
+
+    // Método privado (abstracción)
+    #validarEntidad() {
+        return this.id > 0 && this.nombre !== "";
+    }
 }
+
+
 
 class producto extends Entidad { 
     #stock;
@@ -110,6 +167,15 @@ class producto extends Entidad {
             return true;
         }
         return false;
+    }
+
+    // POLIMORFISMO
+    obtenerTipo() {
+        return "Producto";
+    }
+
+    obtenerDescripcion() {
+        return "Producto: " + this.nombre + " - " + this.marca;
     }
 
     // Método privado
@@ -456,6 +522,15 @@ class cliente extends Entidad {
 
     esMayorista() {
         return this.#totalGastado > 500;
+    }
+
+    // POLIMORFISMO
+    obtenerTipo() {
+        return "Cliente";
+    }
+
+    obtenerDescripcion() {
+        return "Cliente: " + this.nombre + " - " + this.correo;
     }
 
     // Método privado
@@ -1068,3 +1143,11 @@ class detalleCompra extends Entidad {
 }
 
 const detalleCompra1 = new detalleCompra(1, null, 3, 9, 27, "Cuadernos A4");
+
+// DEMOSTRACIÓN DE POLIMORFISMO
+
+console.log("=== DEMOSTRACIÓN DE POLIMORFISMO ===");
+console.log(producto1.obtenerTipo());        
+console.log(producto1.obtenerDescripcion()); 
+console.log(cliente1.obtenerTipo());        
+console.log(cliente1.obtenerDescripcion());
