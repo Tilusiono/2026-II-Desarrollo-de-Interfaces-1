@@ -1,55 +1,67 @@
 //1
-class Alumno {
+class Persona {
+    #id;
+    #nombre;
+    #apellido;
+    #edad;
 
-    /**
-     * 
-     * @param {number} id 
-     * @param {string} nombre 
-     * @param {string} apellido 
-     * @param {number} edad 
-     * @param {string} correoElectronico 
-     * @param {string} telefono 
-     * @param {string} gradoAcademico 
-     * @param {boolean} estado 
-     */
-    constructor(id, nombre, apellido, edad, correoElectronico, telefono, gradoAcademico, estado) {
-        this.idAlumno = id;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.edad = edad;
-        this.correoElectronico = correoElectronico;
-        this.telefono = telefono;
-        this.gradoAcademico = gradoAcademico;
-        this.estado = estado;   
+    constructor(id, nombre, apellido, edad) {
+        this.#id = id;
+        this.#nombre = nombre;
+        this.#apellido = apellido;
+        this.#edad = edad;
+    }
+
+    // GETTERS (encapsulamiento)
+    getNombreCompleto() {
+        return `${this.#nombre} ${this.#apellido}`;
+    }
+
+    mostrarEdad() {
+        return this.#edad;
+    }
+
+    // MÉTODOS PRIVADOS
+    #validarEdad() {
+        return this.#edad >= 0;
+    }
+
+    #formatearNombre() {
+        return this.#nombre.toUpperCase();
     }
 }
-
-let a0 = new Alumno(1, "Villanueva");
-let a1 = new Alumno(2, "Jose", "Carlos");
-let a2 = new Alumno(3, "Tulio", "Manaure", 19);
-let a3 = new Alumno(4, "Joe", "Estefano", 19, "947851485");
-let a4 = new Alumno(5, "Roy", "Remigio", 17, "948751489", new Date("2009-02-16"));
-
 //2
-class Profesor {
-    constructor(id, nombre, apellido, edad, correoElectronico, telefono, especialidad, fechaContratacion) {
-        this.idProfesor = id;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.edad = edad;
-        this.correoElectronico = correoElectronico;
-        this.telefono = telefono;
-        this.especialidad = especialidad;
-        this.fechaContratacion = fechaContratacion;
+class Alumno extends Persona {
+    #correo;
+    #telefono;
+    #grado;
+    #estado;
+
+    constructor(id, nombre, apellido, edad, correo, telefono, grado, estado) {
+        super(id, nombre, apellido, edad);
+        this.#correo = correo;
+        this.#telefono = telefono;
+        this.#grado = grado;
+        this.#estado = estado;
+    }
+
+    // POLIMORFISMO
+    mostrarRol() {
+        return "Soy un alumno";
+    }
+
+    mostrarInfo() {
+        return `${this.getNombreCompleto()} - ${this.#grado}`;
+    }
+
+    #validarCorreo() {
+        return this.#correo.includes("@");
+    }
+
+    #estadoActivo() {
+        return this.#estado === true;
     }
 }
-
-let p0 = new Profesor(101, "Kenny");
-let p1 = new Profesor(102, "Bernabe", "Inche");
-let p2 = new Profesor(103, "Giomar", "Bazan", 32);
-let p3 = new Profesor(104, "Yenner", "Mendoza", 38, "YMendoza@email.com");
-let p4 = new Profesor(105, "Herber", "de la Cruz", 30, "HDLC@email.com", "987654321", "Base de Datos", new Date("1996-08-11"));
-
 //3
 class Notas {
     constructor(id, idAlumno, idCurso, calificacion, tipoEvaluacion, fecha) {
@@ -62,122 +74,174 @@ class Notas {
     }
 }
 
+class Profesor extends Persona {
+    #correo;
+    #especialidad;
+    #telefono;
+    #contratacion;
+
+    constructor(id, nombre, apellido, edad, correo, especialidad, telefono, fecha) {
+        super(id, nombre, apellido, edad);
+        this.#correo = correo;
+        this.#especialidad = especialidad;
+        this.#telefono = telefono;
+        this.#contratacion = fecha;
+    }
+
+    mostrarRol() {
+        return "Soy un profesor";
+    }
+
+    mostrarEspecialidad() {
+        return this.#especialidad;
+    }
+
+    #validarContrato() {
+        return this.#contratacion instanceof Date;
+    }
+
+    #correoValido() {
+        return this.#correo.includes("@");
+    }
+}
+
 //4
 class Curso {
-    constructor(id, nombreCurso, codigoCurso, idProfesor, creditos, horario) {
-        this.idCurso = id;
-        this.nombreCurso = nombreCurso;
-        this.codigoCurso = codigoCurso;
-        this.idProfesor = idProfesor;
-        this.creditos = creditos;
-        this.horario = horario;
+    #id;
+    #nombre;
+    #codigo;
+    #creditos;
+
+    constructor(id, nombre, codigo, creditos) {
+        this.#id = id;
+        this.#nombre = nombre;
+        this.#codigo = codigo;
+        this.#creditos = creditos;
+    }
+
+    mostrarCurso() {
+        return `${this.#nombre} (${this.#codigo})`;
+    }
+
+    obtenerCreditos() {
+        return this.#creditos;
+    }
+
+    #validarCreditos() {
+        return this.#creditos > 0;
+    }
+
+    #formatoCodigo() {
+        return this.#codigo.toUpperCase();
     }
 }
-
-let c0 = new Curso(501, "Programación Orientada a Objetos");
-let c1 = new Curso(502, "Desarrollo de Interfaces 1", "AUL-402");
-let c2 = new Curso(503, "Lectura Crítica y Argumentación", "AUL-207", 105); 
-let c3 = new Curso(504, "Proyecto Desarrollo de los Componentes de la Capa de Vista", "PCV-504", 104, 4);
-let c4 = new Curso(505, "Diseño de Base Datos Relacionales", "BD-504", 103, 5, "jueves 08:45 - 11:00");
-
 //5
 class Matricula {
-    constructor(id, idAlumno, idCurso, periodoAcademico, fechaInscripcion) {
-        this.idMatricula = id;
-        this.idAlumno = idAlumno;
-        this.idCurso = idCurso;
-        this.periodoAcademico = periodoAcademico;
-        this.fechaInscripcion = fechaInscripcion;
+    #id;
+    #alumno;
+    #curso;
+    #fecha;
+
+    constructor(id, alumno, curso, fecha) {
+        this.#id = id;
+        this.#alumno = alumno;
+        this.#curso = curso;
+        this.#fecha = fecha;
+    }
+
+    mostrarMatricula() {
+        return `Matrícula registrada`;
+    }
+
+    resumen() {
+        return `${this.#alumno} en ${this.#curso}`;
+    }
+
+    #validarFecha() {
+        return this.#fecha instanceof Date;
+    }
+
+    #estadoMatricula() {
+        return true;
     }
 }
-
-
 //6
 class Asistencia {
-    constructor(id, idAlumno, idCurso, fecha, estadoAsistencia, observaciones) {
-        this.idAsistencia = id;
-        this.idAlumno = idAlumno;
-        this.idCurso = idCurso;
-        this.fecha = fecha;
-        this.estadoAsistencia = estadoAsistencia;
-        this.observaciones = observaciones;
-    }
+    #id; #estado; #fecha; #observacion;
+    constructor(id, estado, fecha, obs) { this.#id=id; this.#estado=estado; this.#fecha=fecha; this.#observacion=obs; }
+    registrar(){ return "Asistencia registrada"; }
+    estado(){ return this.#estado; }
+    #validar(){ return true; }
+    #formato(){ return this.#fecha.toString(); }
 }
-
 //7
 class Aula {
-    constructor(id, nombreAula, capacidad, pabellon, tipoAula) {
-        this.idAula = id;
-        this.nombreAula = nombreAula;
-        this.capacidad = capacidad;
-        this.pabellon = pabellon;
-        this.tipoAula = tipoAula;
-    }
+    #id; #nombre; #capacidad; #pabellon;
+    constructor(id,nombre,cap,pab){ this.#id=id; this.#nombre=nombre; this.#capacidad=cap; this.#pabellon=pab; }
+    mostrar(){ return this.#nombre; }
+    capacidad(){ return this.#capacidad; }
+    #validar(){ return this.#capacidad>0; }
+    #info(){ return "Aula OK"; }
 }
-
 //8
 class Carrera {
-    constructor(id, nombreCarrera, codigoCarrera, duracionSemestres, directorCarrera, estado) {
-        this.idCarrera = id;
-        this.nombreCarrera = nombreCarrera;
-        this.codigoCarrera = codigoCarrera;
-        this.duracionSemestres = duracionSemestres;
-        this.directorCarrera = directorCarrera;
-        this.estado = estado;
-    }
+    #id; #nombre; #duracion; #director;
+    constructor(id,nombre,duracion,director){ this.#id=id; this.#nombre=nombre; this.#duracion=duracion; this.#director=director; }
+    mostrar(){ return this.#nombre; }
+    duracion(){ return this.#duracion; }
+    #validar(){ return true; }
+    #estado(){ return "activa"; }
 }
-
-
 //9
 class Pago {
-    constructor(id, idAlumno, monto, fechaPago, concepto, estadoPago, metodoPago) {
-        this.idPago = id;
-        this.idAlumno = idAlumno;
-        this.monto = monto;
-        this.fechaPago = fechaPago;
-        this.concepto = concepto;
-        this.estadoPago = estadoPago;
-        this.metodoPago = metodoPago;
-    }
+    #id; #monto; #metodo; #estado;
+    constructor(id,monto,metodo,estado){ this.#id=id; this.#monto=monto; this.#metodo=metodo; this.#estado=estado; }
+    pagar(){ return "Pago realizado"; }
+    estado(){ return this.#estado; }
+    #validar(){ return this.#monto>0; }
+    #tipo(){ return this.#metodo; }
 }
-
 //10
 class Departamento {
-    constructor(id, nombreDepartamento, jefeDepartamento, ubicacion, estado) {
-        this.idDepartamento = id;
-        this.nombreDepartamento = nombreDepartamento;       
-        this.jefeDepartamento = jefeDepartamento;
-        this.ubicacion = ubicacion;
-        this.estado = estado;
-    }
+    #id; #nombre; #jefe; #ubicacion;
+    constructor(id,nombre,jefe,ubi){ this.#id=id; this.#nombre=nombre; this.#jefe=jefe; this.#ubicacion=ubi; }
+    mostrar(){ return this.#nombre; }
+    jefe(){ return this.#jefe; }
+    #validar(){ return true; }
+    #info(){ return this.#ubicacion; }
 }
 
 class Producto {
-    constructor(id, nombre, categoria, precio, stock, marca) {
-        this.id = id;
-        this.nombre = nombre;
-        this.categoria = categoria;
-        this.precio = precio;
-        this.stock = stock;
-        this.marca = marca;
+    #id;
+    #nombre;
+    #precio;
+    #stock;
+
+    constructor(id, nombre, precio, stock) {
+        this.#id = id;
+        this.#nombre = nombre;
+        this.#precio = precio;
+        this.#stock = stock;
+    }
+
+    mostrarInfo() {
+        return `${this.#nombre} - S/ ${this.#precio}`;
+    }
+
+    calcularValorInventario() {
+        return this.#precio * this.#stock;
+    }
+
+    #validarStock() {
+        return this.#stock > 0;
+    }
+
+    #formatearNombre() {
+        return this.#nombre.toUpperCase();
     }
 }
 
-let producto1 = new Producto(
-    101,
-    "Mouse Gamer",
-    "Periféricos",
-    120,
-    25,
-    "Logitech"
-);
-
-const igv =19.4
-console.log(igv); 
-const cigv=20;
-console.log(cigv); 
-
-class Alimnotop10 extends Producto {
+class Alumnotop10 extends Producto {
     constructor(id, nombre, categoria, precio, stock, marca, fechaVencimiento) {
         super(id, nombre, categoria, precio, stock, marca);
         this.fechaVencimiento = fechaVencimiento;

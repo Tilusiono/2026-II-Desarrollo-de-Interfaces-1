@@ -1,0 +1,60 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #f4f6f9;
+}
+
+header {
+  background: #1e88e5;
+  color: white;
+  padding: 15px;
+  text-align: center;
+}
+
+header input {
+  margin-top: 10px;
+  padding: 8px;
+  width: 60%;
+  border-radius: 5px;
+  border: none;
+}
+
+main {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  flex-wrap: wrap;
+}
+
+section {
+  flex: 1;
+  min-width: 300px;
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.evento {
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+}
+
+button {
+  padding: 6px 10px;
+  margin-top: 5px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.inscribir {
+  background: #2e7d32;
+  color: white;
+}
+
+.cancelar {
+  background: #c62828;
+  color: white;
+}
