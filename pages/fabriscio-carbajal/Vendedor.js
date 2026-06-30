@@ -45,6 +45,7 @@ class Vendedor {
             apellido = "";
         }
         console.log(`Carrito del cliente ${cliente.getNombre()}${apellido}: \n`) // Imprime el nombre y apellido del vendedor
+        console.log("PRODUCTO                      PREC.\n") 
 
         let subtotal;
         let total = 0;
@@ -65,11 +66,11 @@ class Vendedor {
                     console.log(pr.padEnd(30) + subtotal) // espacio a la izquierda para no descuadrar los precios
             }
         }
-        console.log(`\nOP GRAVADA:    ${total}`);
+        console.log(`\nOP GRAVADA:                   ${total}`);
         let totalIgv = total * igv;
-        console.log(`IGV:           ${totalIgv}`);
+        console.log(`IGV:                          ${totalIgv}`);
         let totalFinal = total + totalIgv;
-        console.log(`TOTAL:         ${totalFinal}`);
+        console.log(`TOTAL:                        ${totalFinal}`);
     }
 }
 
