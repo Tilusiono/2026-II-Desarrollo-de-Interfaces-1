@@ -9,6 +9,9 @@ class molde{
         this.nombre = nombre;
     }
 
+
+
+
     // Getters
     getid() {
         return this.id;
@@ -36,26 +39,34 @@ class molde{
     }
 }
 
-class producto extends molde {
+class item extends molde {
+    
+    #codigoItem;
     #stock;
     #disponible;
-    #codigoInterno;
+
 
     tamaño;
     tipo;
-    precioUnitario;
-    precioCombo;
+    precio;
 
-    constructor( nom,  tam, tip, prec, ) {
+    constructor( cod, nom, stock, disponible, tam, tip, prec) {
+
         super(cod, nom);
-
-        this.nombre = nom;
-        this.tamaño = tam;
+        
+        this.tamano = tam;
         this.tipo = tip;
         this.precio = prec;
-        this.#codigoInterno = "CAF-" + cod;
+        this.#codigoItem = "CAF-" + cod;
+
+        this.#stock = stock;
+        this.#disponible = true;
+
     }
 
+
+
+    
     // Getters
     getstock() {
         return this.#stock;
@@ -278,7 +289,7 @@ class Categoria extends molde {
 
         return this.#totalProductos;
     }
-h
+
 
     obtenerInformacion() {
         return "Categoría: " + this.nombre + " - " + this.descripcion;
