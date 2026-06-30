@@ -131,7 +131,3 @@ Tipos de datos en JavaScript
 | Symbol    | `"symbol"`            | `typeof Symbol()`     | 
 */
 
-let igv2024=19.4
-console.log(igv2024); 19.4
-igv2024:20
-console.log(igv2024); 20
