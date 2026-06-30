@@ -19,7 +19,8 @@ class AlumnoNacional extends Alumno {
         departamento,
         codigoEstudiante,
         sede,
-        carreraTecnica
+        carreraTecnica,
+        turnoEstudio
     ) {
 
         super(id, nombre, apellido, edad, telefono, fechaNacimiento);
@@ -29,6 +30,7 @@ class AlumnoNacional extends Alumno {
 
         this.sede = sede;
         this.carreraTecnica = carreraTecnica;
+        this.turnoEstudio = turnoEstudio;
     }
 
     // Métodos privados

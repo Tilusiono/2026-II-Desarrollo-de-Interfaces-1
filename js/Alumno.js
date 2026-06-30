@@ -24,7 +24,8 @@ class Alumno extends Persona {
         apellidoAlumno = "Sin Apellido",
         edadAlumno = 0,
         telefonoAlumno = "",
-        fechaNacimiento = new Date()
+        fechaNacimiento = new Date(),
+        grado
     ) {
         super(
             id,
@@ -34,6 +35,7 @@ class Alumno extends Persona {
             telefonoAlumno,
             fechaNacimiento
         );
+        this.grado = grado;
     }
 }
 

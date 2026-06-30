@@ -19,6 +19,7 @@ class AlumnoIntercambio extends Alumno {
     duracionMeses,
     paisDestino,
     programaIntercambio,
+    modalidad
   ) {
     super(id, nombre, apellido, edad, telefono, fechaNacimiento);
 
@@ -27,6 +28,7 @@ class AlumnoIntercambio extends Alumno {
 
     this.paisDestino = paisDestino;
     this.programaIntercambio = programaIntercambio;
+    this.modalidad = modalidad;
   }
 
   // Métodos privados

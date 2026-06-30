@@ -20,6 +20,7 @@ class AlumnoExtranjero extends Alumno {
     numeroPasaporte,
     idioma,
     sede,
+    nivelVisa
   ) {
     super(id, nombre, apellido, edad, telefono, fechaNacimiento);
 
@@ -28,6 +29,7 @@ class AlumnoExtranjero extends Alumno {
 
     this.idioma = idioma;
     this.sede = sede;
+    this.nivelVisa = nivelVisa;
   }
 
   // Métodos privados
