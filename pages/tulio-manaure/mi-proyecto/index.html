@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plataforma de Eventos</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <header>
+        <h1>Plataforma de Eventos</h1>
+        <p>Descubre y gestiona tus inscripciones en tiempo real</p>
+    </header>
+
+    <div class="container">
+        <section class="filtros">
+            <label for="search-input">Buscar:</label>
+            <input type="text" id="search-input" placeholder="Ej. JavaScript...">
+
+            <label for="category-select">Categoría:</label>
+            <select id="category-select">
+                <option value="todos">Todas</option>
+                <option value="Tecnología">Tecnología</option>
+                <option value="Diseño">Diseño</option>
+                <option value="Negocios">Negocios</option>
+            </select>
+        </section>
+
+        <div class="secciones-grid">
+            <section class="eventos-disponibles">
+                <h2>Eventos Disponibles</h2>
+                <div id="events-container">
+                    </div>
+            </section>
+
+            <aside class="mis-inscripciones">
+                <h2>Mis Inscripciones (<span id="ticket-count">0</span>)</h2>
+                <ul id="my-events-list">
+                    </ul>
+            </aside>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
