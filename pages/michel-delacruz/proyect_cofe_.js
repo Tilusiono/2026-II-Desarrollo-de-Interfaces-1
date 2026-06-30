@@ -1,380 +1,271 @@
-//proyecto Cafeteria.
-
-class molde{
-    id;
-    nombre;
-
-    constructor(id, nombre) {
-        this.id = id;
+// =======================
+// MOLDE (CLASE BASE)
+// =======================
+class Molde {
+    constructor(nombre) {
         this.nombre = nombre;
     }
 
-
-
-
-    // Getters
-    getid() {
-        return this.id;
-    }
-
-    getnombre() {
+    getNombre() {
         return this.nombre;
     }
 
-    // Setters
-    setid(nuevoId) {
-        if (nuevoId !== "") {
-            this.id = nuevoId;
-        }
-    }
-
-    setnombre(nuevoNombre) {
+    // set modifica
+    setNombre(nuevoNombre) {
         if (nuevoNombre !== "") {
             this.nombre = nuevoNombre;
         }
     }
-
-    obtenerIdentificador() {
-        return "ID: " + this.id + " - Nombre: " + this.nombre;
-    }
 }
 
-class item extends molde {
-    
-    #codigoItem;
+
+// =======================
+// PRODUCTO
+// =======================
+class Producto extends Molde {
+    #id;
     #stock;
     #disponible;
 
+    constructor(iditem, nombre, precio, stock, disponible) {
+        super(nombre);
 
-    tamaño;
-    tipo;
-    precio;
-
-    constructor( cod, nom, stock, disponible, tam, tip, prec) {
-
-        super(cod, nom);
-        
-        this.tamano = tam;
-        this.tipo = tip;
-        this.precio = prec;
-        this.#codigoItem = "CAF-" + cod;
-
+        this.#iditem = iditem;
+        this.precio = precio;
         this.#stock = stock;
-        this.#disponible = true;
-
+        this.#disponible = disponible;
     }
 
+    getId() {
+        return this.#id;
+    }
 
-
-    
-    // Getters
-    getstock() {
+    getStock() {
         return this.#stock;
     }
 
-    getdisponible() {
+    getDisponible() {
         return this.#disponible;
     }
 
-    getcodigoInterno() {
-        return this.#codigoInterno;
-    }
-
-    // Setters
-    setstock(nuevoStock) {
+    setStock(nuevoStock) {
         if (nuevoStock >= 0) {
             this.#stock = nuevoStock;
         }
     }
 
-    setdisponible(estado) {
+    setDisponible(estado) {
         this.#disponible = estado;
     }
 
-    // Métodos públicos
-    obtenerPrecio(cantidad) {
-        let resultado = 0;
-
-        if (cantidad >= 10) {
-            resultado = this.precioCombo * (cantidad / 10);
-        } else {
-            resultado = this.precioUnitario * cantidad;
-        }
-
-        return resultado;
-    }
-
     obtenerInfo() {
-        return this.nombre + " - " + this.marca + " (" + this.tamaño + ")";
-    }
-
-
-    // Método privado
-    #validarPrecio() {
-        return this.precioUnitario > 0 && this.precioCombo > 0;
+        return `${this.nombre} - S/ ${this.precio}`;
     }
 }
 
 
+// =======================
+// BEBIDA
+// =======================
+class Bebida extends Producto {
+    constructor(id, nombre, precio, stock, disponible, tamano, tipo) {
+        super(id, nombre, precio, stock, disponible);
+
+        this.tamano = tamano; // chico, mediano, grande
+        this.tipo = tipo;     // caliente o fría
+    }
+
+    obtenerInfo() {
+        return `${this.nombre} (${this.tamano}) - ${this.tipo} - S/ ${this.precio}`;
+    }
+}
 
 
-
-const producto1 = new producto(
-    1,
-    "Cappuccino",
-    "Juan Valdez",
-    "Grande",
-    "Bebida Caliente",
-    15,
-    140,
-    50
-);
-
-
-
-
-c
-class cliente extends molde {
-    #tipo;
+// =======================
+// CLIENTE
+// =======================
+class Cliente extends Molde {
     #compras;
     #totalGastado;
 
-    correo;
-    telefono;
-    direccion;
-    fechaRegistro;
+    constructor(nombre, correo, telefono, direccion) {
+        super(nombre);
 
-    constructor(nomComp, corr, tel, dir, fecReg) {
-        super(0, nomComp);
+        this.correo = correo;
+        this.telefono = telefono;
+        this.direccion = direccion;
 
-        this.correo = corr;
-        this.telefono = tel;
-        this.direccion = dir;
-        this.fechaRegistro = fecReg;
-        this.#tipo = "Frecuente";
         this.#compras = [];
         this.#totalGastado = 0;
     }
 
-    // Getters
-    gettipo() {
-        return this.#tipo;
-    }
-
-    getcompras() {
+    getCompras() {
         return this.#compras;
     }
 
-    gettotalGastado() {
+    getTotalGastado() {
         return this.#totalGastado;
-    }
-
-    // Setters
-    setdireccion(nuevaDireccion) {
-        this.direccion = nuevaDireccion;
-    }
-
-    settelefono(nuevoTelefono) {
-        if (nuevoTelefono.length >= 9) {
-            this.telefono = nuevoTelefono;
-        }
-    }
-
-    // Métodos públicos
-    obtenerDatos() {
-        return "Cliente: " + this.nombre + " - Correo: " + this.correo;
-    }
-
-    actualizarTipo(total) {
-        if (total > 200) {
-            this.#tipo = "VIP";
-            return "Cliente VIP";
-        } else {
-            this.#tipo = "Frecuente";
-            return "Cliente Frecuente";
-        }
     }
 
     agregarCompra(compra) {
         this.#compras.push(compra);
-        this.#totalGastado = this.#totalGastado + compra.gettotalFinal();
-        return this.#compras.length;
+        this.#totalGastado += compra.calcularTotal();
     }
 
-    validarCorreo() {
-        return this.correo.includes("@") && this.correo.includes(".");
-    }
-
-    cambiarDireccion(nueva) {
-        this.direccion = nueva;
-        return this.direccion;
-    }
-
-    esVIP() {
-        return this.#totalGastado > 500;
-    }
-
-    obtenerHistorial() {
-        return this.#compras;
-    }
-
-    // Método privado
-    #validarTelefono() {
-        return this.telefono.length >= 9;
+    obtenerDatos() {
+        return `Cliente: ${this.nombre} - ${this.correo}`;
     }
 }
 
-const cliente1 = new cliente(
-    "Carlos Ramírez",
-    "carlos@email.com",
-    "987654321",
-    "Av. Los Cafetos 123",
-    new Date()
-);
-
-class Categoria extends molde {
-    #productos;
-    #totalProductos;
-
-    descripcion;
-    estado;
-    fechaRegistro;
-
-    constructor(cod, nom, desc, est, fecReg) {
-        super(cod, nom);
-
-        this.descripcion = desc;
-        this.estado = est;
-        this.fechaRegistro = fecReg;
-        this.#productos = [];
-        this.#totalProductos = 0;
+// =======================
+// COMPRA
+// =======================
+class Compra {
+    constructor(id, cliente) {
+        this.id = id;
+        this.cliente = cliente;
+        this.productos = [];
+        this.total = 0;
+        this.fecha = new Date();
     }
 
-    // Getters
-    getproductos() {
+    agregarProducto(producto) {
+        this.productos.push(producto);
+        this.total += producto.precio;
+    }
+
+    calcularTotal() {
+        return this.total;
+    }
+}
+
+
+// =======================
+// EMPLEADO
+// =======================
+class Empleado extends Molde {
+    constructor(nombre, cargo, sueldo, turno) {
+        super(nombre);
+
+        this.cargo = cargo;
+        this.sueldo = sueldo;
+        this.turno = turno; // mañana, tarde, noche
+    }
+
+    obtenerInfo() {
+        return `Empleado: ${this.nombre} - ${this.cargo} (${this.turno})`;
+    }
+
+    subirSueldo(porcentaje) {
+        this.sueldo += this.sueldo * (porcentaje / 100);
+    }
+}
+
+// =======================
+// CATEGORIA
+// =======================
+class Categoria extends Molde {
+    #productos;
+
+    constructor(nombre, descripcion) {
+        super(nombre);
+
+        this.descripcion = descripcion;
+        this.#productos = [];
+    }
+
+    agregarProducto(producto) {
+        this.#productos.push(producto);
+    }
+
+    obtenerProductos() {
         return this.#productos;
     }
 
-    gettotalProductos() {
-        return this.#totalProductos;
-    }
-
-    // Setters
-    setnombre(nuevoNombre) {
-        this.nombre = nuevoNombre;
-    }
-
-    setdescripcion(nuevaDescripcion) {
-        this.descripcion = nuevaDescripcion;
-    }
-
-    // Métodos públicos
-    agregarProducto(producto) {
-        this.#productos.push(producto);
-        this.#totalProductos = this.#totalProductos + 1;
-        return this.#totalProductos;
-    }
-
-    eliminarProducto(id) {
-        let nuevos = [];
-
-        for (let i = 0; i < this.#productos.length; i++) {
-            if (this.#productos[i].id !== id) {
-                nuevos.push(this.#productos[i]);
-            }
-        }
-
-        this.#productos = nuevos;
-        this.#totalProductos = this.#productos.length;
-
-        return this.#totalProductos;
-    }
-
-
-    obtenerInformacion() {
-        return "Categoría: " + this.nombre + " - " + this.descripcion;
-    }
-
-    // Método privado
-    #contarProductosDisponibles() {
-        let disponibles = 0;
-
-        for (let i = 0; i < this.#productos.length; i++) {
-            if (this.#productos[i].getdisponible()) {
-                disponibles++;
-            }
-        }
-
-        return disponibles;
+    obtenerInfo() {
+        return `Categoría: ${this.nombre} - ${this.descripcion}`;
     }
 }
 
-
-
-const categoria1 = new Categoria(
-    1,
-    "Bebidas Calientes",
-    "Cafés, chocolates y tés preparados al momento",
-    true,
-    new Date()
-);
-
-class metodoPago extends molde {
-    #transacciones;
-    #totalProcesado;
-
-    descuento;
-    tipo;
-    estado;
-
-    constructor(cod, nom, desc, tip, est) {
-        super(cod, nom);
-
-        this.descuento = desc;
-        this.tipo = tip;
-        this.estado = est;
-        this.#transacciones = 0;
-        this.#totalProcesado = 0;
+// =======================
+// PAGO
+// =======================
+class Pago {
+    constructor(metodo, monto) {
+        this.metodo = metodo; // Yape, efectivo, tarjeta
+        this.monto = monto;
+        this.estado = "pendiente";
+        this.fecha = new Date();
     }
 
-    // Getters
-    gettransacciones() {
-        return this.#transacciones;
-    }
-
-    gettotalProcesado() {
-        return this.#totalProcesado;
-    }
-
-    // Setters
-    setnombre(nuevoNombre) {
-        this.nombre = nuevoNombre;
-    }
-
-    setdescuento(nuevoDescuento) {
-        if (nuevoDescuento >= 0) {
-            this.descuento = nuevoDescuento;
-        }
-    }
-
-    // Métodos públicos
-    procesarPago(monto) {
-        if (this.estado && this.#validarMonto(monto)) {
-            this.#transacciones = this.#transacciones + 1;
-            this.#totalProcesado = this.#totalProcesado + monto;
+    procesarPago() {
+        if (this.monto > 0) {
+            this.estado = "completado";
             return true;
         }
-
         return false;
     }
 
-
+    obtenerInfo() {
+        return `Pago: ${this.metodo} - S/ ${this.monto} - ${this.estado}`;
+    }
 }
 
-const metodoPago1 = new metodoPago(
-    1,
-    "Yape",
-    5,
-    "Digital",
-    true
-);
+// =======================
+// INVENTARIO
+// =======================
+class Inventario {
+    constructor() {
+        this.productos = [];
+    }
+
+    agregarProducto(producto) {
+        this.productos.push(producto);
+    }
+
+    eliminarProducto(id) {
+        this.productos = this.productos.filter(p => p.getId() !== id);
+    }
+
+    buscarProducto(nombre) {
+        return this.productos.find(p => p.getNombre() === nombre);
+    }
+
+    mostrarInventario() {
+        return this.productos;
+    }
+}
+
+// =======================
+// DEMO DEL SISTEMA
+// =======================
+
+// Productos
+const cafe1 = new Bebida(1, "Cappuccino", 12, 20, true, "Grande", "Caliente");
+const cafe2 = new Bebida(2, "Latte", 10, 15, true, "Mediano", "Caliente");
+
+// Cliente
+const cliente1 = new Cliente("Carlos Ramírez", "carlos@email.com", "987654321", "Lima");
+
+// Compra
+const compra1 = new Compra(1, cliente1);
+compra1.agregarProducto(cafe1);
+compra1.agregarProducto(cafe2);
+
+// Asignar compra al cliente
+cliente1.agregarCompra(compra1);
+
+// Pago
+const pago1 = new Pago("Yape", compra1.total);
+pago1.procesarPago();
+
+// Inventario
+const inventario = new Inventario();
+inventario.agregarProducto(cafe1);
+inventario.agregarProducto(cafe2);
+
+// Mostrar resultados
+console.log(compra1);
+console.log(cliente1.obtenerDatos());
+console.log(pago1.obtenerInfo());
+console.log(inventario.mostrarInventario());
