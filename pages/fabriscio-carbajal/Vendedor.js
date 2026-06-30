@@ -40,13 +40,17 @@ class Vendedor {
     }
 
     registrarVenta(cliente, carrito, productosAlmacenados){
-        console.log(`Carrito del cliente ${cliente.getNombre()}: \n`)
+        let apellido = " " + cliente.getApellido();      
+        if (cliente.getApellido() == "Sin apellido"){ // condicion si el cliente tiene un apellido indefinido
+            apellido = "";
+        }
+        console.log(`Carrito del cliente ${cliente.getNombre()}${apellido}: \n`) // Imprime el nombre y apellido del vendedor
 
         let subtotal;
         let total = 0;
         const igv = 0.18;
 
-        for (let i = 0; i < carrito.length; i++){ // recorre segun el tamaño del carrito
+        for (let i = 0; i < carrito.length; i++){ // recorre según el tamaño del carrito
             for (let j = 0; j < productosAlmacenados.length; j++) // busca segun el tamaño del total de productos almacenados
                 if (carrito[i].id == productosAlmacenados[j].idProducto) { // condicion si la posicion del carrito coincide con un producto almacenado
 

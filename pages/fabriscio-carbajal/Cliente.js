@@ -39,6 +39,10 @@ class Cliente {
         return this.#nombre;
     }
 
+    getApellido() {
+        return this.#apellidoPaterno
+    }
+
     añadirCarrito(producto, cantidad){
 
         if (cantidad >= producto.inventario){

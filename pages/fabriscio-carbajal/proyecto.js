@@ -6,7 +6,7 @@ import Cliente from "./Cliente.js";
 import Vendedor from "./Vendedor.js";
 
 // creacion del cliente
-const cliente1 = new Cliente(1, "Pedro", "Rojas", "12345678")
+const cliente1 = new Cliente(1, "Pedro", "Gonzales", "12345678")
 
 
 // creaciones de productos
