@@ -1,0 +1,28 @@
+public class Alumno {
+// Propiedades generales
+private String idAlumno;
+private String nombre;
+private String apellido;
+private double promedioGeneral;
+
+// Constructor
+public Alumno(String idAlumno, String nombre, String apellido, double promedioGeneral) {
+this.idAlumno = idAlumno;
+this.nombre = nombre;
+this.apellido = apellido;
+this.promedioGeneral = promedioGeneral;
+}
+
+// Getters y Setters
+public String getIdAlumno() { return idAlumno; }
+public void setIdAlumno(String idAlumno) { this.idAlumno = idAlumno; }
+
+public String getNombre() { return nombre; }
+public void setNombre(String nombre) { this.nombre = nombre; }
+
+public String getApellido() { return apellido; }
+public void setApellido(String apellido) { this.apellido = apellido; }
+
+public double getPromedioGeneral() { return promedioGeneral; }
+public void setPromedioGeneral(double promedioGeneral) { this.promedioGeneral = promedioGeneral; }
+}

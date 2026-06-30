@@ -61,4 +61,8 @@ miTelefono.recibirMercancia(20);
 // Bajamos el precio del iPhone por una oferta especial.
 miTelefono.aplicarDescuento(150.00);
 
-const 
+const igv = 19.4
+console.log(igv);
+const cigv = 20;
+console.log(cigv);
+

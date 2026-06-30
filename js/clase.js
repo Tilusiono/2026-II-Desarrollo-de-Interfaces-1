@@ -1,7 +1,7 @@
 /*
 Ctrl+Shift+P -> Quokka.js Run Automatically for current file
 
-
+/..
 */
 class Alumno {
 
@@ -12,7 +12,7 @@ class Alumno {
     #edad;
     #telefono;
     fechaNacimiento;
-
+    
     /**
      * Crea una instancia de Alumno.
      *
