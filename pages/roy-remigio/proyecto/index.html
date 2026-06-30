@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StayHub - Sistema de Reservas de Hospedaje</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="logo">
+                <h1>🏨 StayHub</h1>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#propiedades">Propiedades</a></li>
+                <li><a href="#reservas">Mis Reservas</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+            <div class="carrito-icon" id="carritoIcon">
+                <span>🛒</span>
+                <span class="carrito-count" id="carritoCount">0</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="hero" id="inicio">
+        <div class="hero-content">
+            <h2>Encuentra tu hospedaje perfecto</h2>
+            <p>Reserva las mejores propiedades al mejor precio</p>
+            
+            <div class="buscador">
+                <input type="text" id="buscador" placeholder="Buscar por ciudad o nombre..." 
+                       class="input-buscador">
+                <select id="filtroTipo" class="select-filtro">
+                    <option value="">Todos los tipos</option>
+                    <option value="apartamento">Apartamento</option>
+                    <option value="casa">Casa</option>
+                    <option value="villa">Villa</option>
+                    <option value="cabaña">Cabaña</option>
+                </select>
+                <select id="filtroCapacidad" class="select-filtro">
+                    <option value="">Cualquier capacidad</option>
+                    <option value="1">1 persona</option>
+                    <option value="2">2 personas</option>
+                    <option value="4">4 personas</option>
+                    <option value="6">6+ personas</option>
+                </select>
+                <button id="btnBuscar" class="btn-buscar">Buscar</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROPIEDADES -->
+    <section class="propiedades" id="propiedades">
+        <h2>Propiedades Disponibles</h2>
+        <div class="filtros-activos">
+            <span id="filtroTexto" class="filtro-chip"></span>
+        </div>
+        <div class="propiedades-grid" id="propiedadesGrid">
+            <!-- Se llena dinámicamente -->
+        </div>
+    </section>
+
+    <!-- MODAL DE RESERVA -->
+    <div class="modal" id="modalReserva">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Realizar Reserva</h2>
+            
+            <div class="modal-info">
+                <img id="modalImg" src="" alt="Propiedad">
+                <div class="modal-detalles">
+                    <h3 id="modalTitulo"></h3>
+                    <p id="modalPrecio"></p>
+                    <p id="modalCapacidad"></p>
+                </div>
+            </div>
+
+            <form id="formularioReserva" class="form-reserva">
+                <div class="form-group">
+                    <label>Fecha de Entrada:</label>
+                    <input type="date" id="fechaEntrada" required>
+                </div>
+                <div class="form-group">
+                    <label>Fecha de Salida:</label>
+                    <input type="date" id="fechaSalida" required>
+                </div>
+                <div class="form-group">
+                    <label>Cantidad de Huéspedes:</label>
+                    <input type="number" id="cantidadHuespedes" min="1" required>
+                </div>
+
+                <div class="resumen-reserva">
+                    <p>Noches: <span id="cantidadNoches">0</span></p>
+                    <p>Precio por noche: $<span id="precioNoche">0</span></p>
+                    <p class="total">Total: $<span id="totalReserva">0</span></p>
+                </div>
+
+                <button type="submit" class="btn-confirmar">Agregar al Carrito</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- CARRITO -->
+    <div class="carrito-panel" id="carritoPanel">
+        <div class="carrito-header">
+            <h2>Tu Carrito</h2>
+            <span class="close-carrito">&times;</span>
+        </div>
+        <div class="carrito-items" id="carritoItems">
+            <!-- Se llena dinámicamente -->
+        </div>
+        <div class="carrito-footer">
+            <p class="carrito-total">Total: $<span id="totalCarrito">0</span></p>
+            <button id="btnCheckout" class="btn-checkout">Proceder a Pago</button>
+        </div>
+    </div>
+
+    <!-- SECCIÓN DE RESERVAS -->
+    <section class="mis-reservas" id="reservas">
+        <h2>Mis Reservas</h2>
+        <div class="reservas-list" id="reservasList">
+            <p class="sin-reservas">No tienes reservas aún</p>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer" id="contacto">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Sobre StayHub</h4>
+                <p>La mejor plataforma para reservar tu hospedaje ideal</p>
+            </div>
+            <div class="footer-section">
+                <h4>Contacto</h4>
+                <p>Email: info@stayhub.com</p>
+                <p>Teléfono: +1 (555) 123-4567</p>
+            </div>
+            <div class="footer-section">
+                <h4>Síguenos</h4>
+                <div class="social-links">
+                    <a href="#">Facebook</a>
+                    <a href="#">Instagram</a>
+                    <a href="#">Twitter</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 StayHub. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="scrip.js"></script>
+</body>
+</html>
