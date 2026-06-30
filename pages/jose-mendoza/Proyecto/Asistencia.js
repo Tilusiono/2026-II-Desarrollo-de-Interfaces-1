@@ -57,16 +57,27 @@ export class Asistencia{
 
     // metodos
 
-    registrarEntrada(hora){
-        this.setHoraEntrada(hora);
+    registrarEntrada(fechahora){
+        console.log(
+            `${this.getNombre()} Registro su entrada a las (${fechahora.toLocaleString()})`
+        )
     }
 
-    registrarSalida(hora){
-        this.setHoraSalida(hora);
+    registrarSalida(fechahora){
+        console.log(
+            `${this.getNombre()} Registro su Salida a las (${fechahora.toLocaleString()})`
+        )
     }
 
     verificacionAsistencia(){
         return this.getHoraEntrada() && this.getHoraSalida()
     }
 
+    mostrarInformacion() {
+        return `
+            Fecha        : ${this.getFecha().toLocaleDateString()}
+            Hora Entrada : ${this.getHoraEntrada()}
+            Hora Salida  : ${this.getHoraSalida()}
+            `;
+    }
 }

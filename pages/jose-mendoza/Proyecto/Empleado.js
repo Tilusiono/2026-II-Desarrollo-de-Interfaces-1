@@ -85,19 +85,19 @@ export class Empleado extends Persona{
         return "Solicitud de Vacaciones Enviado"
     }
 
-    // metodo de registro de entrada y salida
+    // // metodo de registro de entrada y salida
 
-    registrarEntrada(fechaHora){
-        console.log(
-            `${this.getNombre()} El Empleado registró su entrada (${fechaHora.toLocaleString()})`,
-        );
-    }
+    // registrarEntrada(fechaHora){
+    //     console.log(
+    //         `${this.getNombre()} El Empleado registró su entrada (${fechaHora.toLocaleString()})`,
+    //     );
+    // }
 
-    registrarSalida(fechaHora){
-        console.log(
-            `${this.getNombre()} El Empleado registró su salida (${fechaHora.toLocaleString()})`,
-        );
-    }
+    // registrarSalida(fechaHora){
+    //     console.log(
+    //         `${this.getNombre()} El Empleado registró su salida (${fechaHora.toLocaleString()})`,
+    //     );
+    // }
 
 
     mostrarInformacion() {
@@ -109,7 +109,7 @@ export class Empleado extends Persona{
         Código: ${this.getCod_Empleado()}
         Cargo: ${this.getCargo()}
         Salario: ${this.getSalarioBase()}
-        Fecha de ingreso: ${this.fechaIngreso}
+        Fecha de ingreso: ${this.fechaIngreso.toLocaleDateString()}
         `;
 }
 }

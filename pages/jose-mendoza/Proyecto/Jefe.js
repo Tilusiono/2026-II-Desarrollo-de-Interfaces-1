@@ -105,7 +105,7 @@ export class Jefe extends Empleado{
         Código: ${this.getCod_Empleado()}
         Cargo: ${this.getCargo()}
         Salario: ${this.getSalarioBase()}
-        Fecha Ingreso: ${this.fechaIngreso} 
+        Fecha Ingreso: ${this.fechaIngreso.toLocaleDateString()} 
         Bonificación: ${this.getBonificacion()}
         Nivel: ${this.getNivel()}
         `;
