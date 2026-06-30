@@ -59,13 +59,13 @@ export class Asistencia{
 
     registrarEntrada(nombre){
         console.log(
-            `${nombre} Registro su entrada a las (${fechahora.toLocaleString()})`
+            `${nombre} Registro su entrada la fecha  (${this.getFecha().toLocaleDateString()} a las ${this.getHoraEntrada()})`
         )
     }
 
     registrarSalida(nombre){
         console.log(
-            `${nombre} Registro su Salida a las (${fechahora.toLocaleString()})`
+            `${nombre} Registro su Salida la fecha  (${this.getFecha().toLocaleDateString()} a las ${this.getHoraSalida()})`
         )
     }
 

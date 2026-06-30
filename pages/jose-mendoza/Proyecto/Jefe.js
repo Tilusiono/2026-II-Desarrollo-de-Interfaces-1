@@ -20,6 +20,7 @@ export class Jefe extends Empleado{
         cargo="",
         salarioBase=0,
         fechaIngreso=new Date(),
+        sector="",
         // CLASEJEFE
         bonificacion=0,
         cantidadEmpleados=0,
@@ -36,7 +37,8 @@ export class Jefe extends Empleado{
             cod_empleado,
             cargo,
             salarioBase,
-            fechaIngreso
+            fechaIngreso,
+            sector
         );
         this.#bonificacion = bonificacion;
         this.#cantidadEmpleados = cantidadEmpleados;
@@ -106,6 +108,7 @@ export class Jefe extends Empleado{
         Cargo: ${this.getCargo()}
         Salario: ${this.getSalarioBase()}
         Fecha Ingreso: ${this.fechaIngreso.toLocaleDateString()} 
+        Sector  : ${this.getSector().getNombreSector()}
         Bonificación: ${this.getBonificacion()}
         Nivel: ${this.getNivel()}
         `;

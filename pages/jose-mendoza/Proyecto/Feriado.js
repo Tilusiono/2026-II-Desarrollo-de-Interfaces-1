@@ -1,4 +1,4 @@
-class Feriado{
+export class Feriado{
     // variable privada
     #nombre;
     #fecha;
@@ -11,7 +11,7 @@ class Feriado{
         nombre="",
         fecha="",
         tipo="",
-        activo=""
+        activo=false
     ){
         this.#nombre=nombre
         this.#fecha=fecha
@@ -70,7 +70,8 @@ class Feriado{
         return `
             Nombre :${this.getNombre()}
             Fecha  : ${this.getFecha()}
-            Tipo   : ${this.getTipo()}`;
+            Tipo   : ${this.getTipo()}
+            Activo : ${this.activo}`;
 }
 
 }

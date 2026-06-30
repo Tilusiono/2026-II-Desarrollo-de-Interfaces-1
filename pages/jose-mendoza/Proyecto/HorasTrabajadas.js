@@ -1,4 +1,4 @@
-class horasTrabajadas {
+export class horasTrabajadas {
     // variables privadas
     #horasNormales;
     #horasExtras;
@@ -71,4 +71,12 @@ class horasTrabajadas {
     }
 
 
+    mostrarHoras() {
+    return `
+        Horas Normales   : ${this.getHorasNormales()}
+        Horas Extras     : ${this.getHorasExtras()}
+        Horas Nocturnas  : ${this.getHorasNocturnas()}
+        Total de Horas   : ${this.calcularTotalHoras()}
+        `;
+}
 }

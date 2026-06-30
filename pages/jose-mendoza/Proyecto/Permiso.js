@@ -12,7 +12,7 @@ export class Permiso{
         fechaInicio ="",
         fechaFin="",
         motivo="",
-        aprobado=""
+        aprobado=false
     ){
         this.#fechaInicio = fechaInicio;
         this.#fechaFin = fechaFin;
@@ -22,35 +22,35 @@ export class Permiso{
 
     // setter
 
-    setFechaInicio(){
+    getFechaInicio(){
         return this.#fechaInicio
     }
 
-    setFechaFIn(){
+    getFechaFIn(){
         return this.#fechaFin
     }
 
-    setMotivo(){
+    getMotivo(){
         return this.#motivo
     }
 
     // getter
 
-    getFechaInicio(fechaInicio){
+    setFechaInicio(fechaInicio){
         if(typeof fechaInicio !== "string"){
             throw new Error("Fecha Invalida");
         }
         this.#fechaInicio=fechaInicio
     }
 
-    getFechaFin(fechaFin){
+    setFechaFin(fechaFin){
         if(typeof fechaFin !== "string"){
             throw new Error("Fecha Invalida");
         }
         this.#fechaFin=fechaFin
     }
 
-    getMotivo(motivo){
+    setMotivo(motivo){
         if(typeof motivo !== "string"){
             throw new Error("Motivo Invalido");
         }

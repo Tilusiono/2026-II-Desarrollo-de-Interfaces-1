@@ -5,6 +5,7 @@ export class Empleado extends Persona{
     #cod_empleado;
     #cargo;
     #salarioBase;
+    #sector
 
     // variable publica
     fechaIngreso; 
@@ -21,6 +22,7 @@ export class Empleado extends Persona{
         cargo="",
         salarioBase=0,
         fechaIngreso = new Date(),
+        sector
 
     ){
         // super nos sirve para poder llamar 
@@ -30,6 +32,7 @@ export class Empleado extends Persona{
         this.#cod_empleado = cod_empleado;
         this.#cargo = cargo;
         this.#salarioBase = salarioBase;
+        this.#sector = sector;
         this.fechaIngreso = fechaIngreso;
     }
 
@@ -45,6 +48,10 @@ export class Empleado extends Persona{
 
     getSalarioBase(){
         return this.#salarioBase
+    }
+
+    getSector() {
+        return this.#sector;
     }
 
     // setter
@@ -70,35 +77,24 @@ export class Empleado extends Persona{
         this.#salarioBase =salarioBase;
     }
 
-
+    setSector(sector){
+        if(typeof sector !== "number"){
+            throw new Error("Sector Invalido");
+        }
+    }
     // metodo
 
     registrarAsistencia(){
         this.estado="Presente";
     }
 
-    solicitarPermiso(){
-        return "Permiso Solicitado"
+    solicitarPermiso(permiso){
+        return `${this.getNombre()} solicitó un permiso por ${permiso.getMotivo()}`;
     }
 
     solicitarVacaciones(){
         return "Solicitud de Vacaciones Enviado"
     }
-
-    // // metodo de registro de entrada y salida
-
-    // registrarEntrada(fechaHora){
-    //     console.log(
-    //         `${this.getNombre()} El Empleado registró su entrada (${fechaHora.toLocaleString()})`,
-    //     );
-    // }
-
-    // registrarSalida(fechaHora){
-    //     console.log(
-    //         `${this.getNombre()} El Empleado registró su salida (${fechaHora.toLocaleString()})`,
-    //     );
-    // }
-
 
     mostrarInformacion() {
         return `
@@ -110,6 +106,7 @@ export class Empleado extends Persona{
         Cargo: ${this.getCargo()}
         Salario: ${this.getSalarioBase()}
         Fecha de ingreso: ${this.fechaIngreso.toLocaleDateString()}
+        Sector: ${this.getSector().getNombreSector()}
         `;
 }
 }

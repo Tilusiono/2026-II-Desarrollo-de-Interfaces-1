@@ -67,6 +67,7 @@ export class Sector{
 
     mostrarSector(){
         return `
+        Id   : ${this.getIdSector()} 
         Sector : ${this.getNombreSector()}
         Ubicacion : ${this.getUbicacion()}
         `
