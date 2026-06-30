@@ -66,9 +66,9 @@ const jefeasistencia1= new Asistencia(
 console.log("----Control de Entrada y Salida----")
 console.log(jefeasistencia1.mostrarInformacion())
 
-const jefeasistencia =
-.registrarEntrada(new Date())
-.registrarSalida(new Date(new Date().setHours(new Date().getHours() + 5)))
+jefeasistencia1.registrarEntrada(jefe1.getNombre(),new Date())
+jefeasistencia1.registrarSalida(jefe1.getNombre(),new Date(new Date().setHours(new Date().getHours() + 5)))
+
 
 // registro Asistencia
 jefe1.registrarAsistencia();

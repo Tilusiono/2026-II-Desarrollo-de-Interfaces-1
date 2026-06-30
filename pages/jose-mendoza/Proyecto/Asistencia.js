@@ -57,15 +57,15 @@ export class Asistencia{
 
     // metodos
 
-    registrarEntrada(fechahora){
+    registrarEntrada(nombre){
         console.log(
-            `${this.getNombre()} Registro su entrada a las (${fechahora.toLocaleString()})`
+            `${nombre} Registro su entrada a las (${fechahora.toLocaleString()})`
         )
     }
 
-    registrarSalida(fechahora){
+    registrarSalida(nombre){
         console.log(
-            `${this.getNombre()} Registro su Salida a las (${fechahora.toLocaleString()})`
+            `${nombre} Registro su Salida a las (${fechahora.toLocaleString()})`
         )
     }
 
