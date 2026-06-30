@@ -52,11 +52,6 @@ console.log(alumnoExtranjero.mostrarDatos());
 console.log(alumnoIntercambio.mostrarDatos());
 
 
-<<<<<<< HEAD
-// --- CLIENTE 3: El cazador de ofertas ---
-// Bajamos el precio del iPhone por una oferta especial.
-miTelefono.aplicarDescuento(150.00);
-=======
 alumnoIntercambio.setNombre("Diani")
 console.trace(alumnoIntercambio)
 
@@ -87,5 +82,4 @@ profesor.mostrarDatos();
 profesor.registrarEntrada(new Date());
 profesor.registrarSalida(new Date(new Date().setHours(new Date().getHours() + 5)));
 profesor.registrarSalida(new Date(new Date().setHours(new Date().getHours() + 6)));
->>>>>>> d33cae4d7bca508a8a80aa1574531cb68765a971
 
