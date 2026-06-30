@@ -68,7 +68,7 @@ class Vendedor {
         }
         console.log(`\nOP GRAVADA:                   ${total}`);
         let totalIgv = total * igv;
-        console.log(`IGV:                          ${totalIgv}`);
+        console.log(`IGV TOTAL:                     ${totalIgv}`);
         let totalFinal = total + totalIgv;
         console.log(`TOTAL:                        ${totalFinal}`);
     }
