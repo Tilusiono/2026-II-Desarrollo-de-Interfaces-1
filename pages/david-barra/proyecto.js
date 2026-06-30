@@ -948,3 +948,5 @@ console.log(carrito1.mostrarTotal());                         // Imprime el tota
 console.log(venta1.calcularTotal());                          // Imprime el total final de la venta con/sin descuento
 console.log(detalle1.mostrarSubtotal());                      // Imprime el subtotal calculado del detalle de venta
 console.log(comprobante1.mostrarEstadoPago());                // Imprime si el comprobante está pagado o pendiente
+
+//Profe use IA para documentar mi codigo par acordarme mejor
