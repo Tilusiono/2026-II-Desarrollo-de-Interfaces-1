@@ -40,5 +40,12 @@ class Producto {
 }
 
 
-let alumno1 = new alumno("Osvaldo", "Sanchez", 99, "123456789");
+let alumno1 = new alumno("Osvaldo", "Sanchez", 18, "123456789");
 console.log(alumno1);
+
+
+
+let igv2024=-19.4
+console.log(igv2024)
+igv2024=20;
+console.log(igv2024)
