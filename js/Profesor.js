@@ -25,6 +25,8 @@ class Profesor extends Persona {
     this.#codigoDocente = codigoDocente;
     this.sede = sede;
     this.correo = correo;
+    this.turno = turno;
+    this.activo = activo;
   }
 
   mostrarDatos() {
