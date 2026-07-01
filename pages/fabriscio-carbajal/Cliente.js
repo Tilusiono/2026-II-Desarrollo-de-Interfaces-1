@@ -43,12 +43,14 @@ class Cliente {
         return this.#apellidoPaterno
     }
 
+    // Recibe como parametros el objeto producto y la cantidad que el cliente desea comprar
     añadirCarrito(producto, cantidad){
 
         if (cantidad >= producto.inventario){
             return console.log("Cantidad insuficiente en el inventario, pruebe con una cantidad menor")
         }
 
+        // Almacena el id del producto, el nombre y la cantidad en un objeto
         let carrito = {
             "id": producto.idProducto,
             "producto": producto.nombre,

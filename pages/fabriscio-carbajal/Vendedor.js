@@ -40,12 +40,12 @@ class Vendedor {
     }
 
     registrarVenta(cliente, carrito, productosAlmacenados){
-        let apellido = " " + cliente.getApellido();      
-        if (cliente.getApellido() == "Sin apellido"){ // condicion si el cliente tiene un apellido indefinido
-            apellido = "";
-        }
-        console.log(`Carrito del cliente ${cliente.getNombre()}${apellido}: \n`) // Imprime el nombre y apellido del vendedor
-        console.log("PRODUCTO                      PREC.\n") 
+
+        let resultado = ""; // variable que almacenara los datos para imprimirlos en una boleta
+
+
+        resultado += `PRODUCTO                      UDS.   P.U.  SUBTOTAL\n`
+        resultado += `----------------------------------------------------\n`
 
         let subtotal;
         let total = 0;
@@ -61,16 +61,24 @@ class Vendedor {
 
                     productosAlmacenados[j].inventario - carrito[i].cantidad; // resta al inventario del producto
 
-                    let pr = carrito[i].producto
-                    pr = String(pr); 
-                    console.log(pr.padEnd(30) + subtotal) // espacio a la izquierda para no descuadrar los precios
+                    let nom = carrito[i].producto; // Almacena el nombre del producto
+                    let prUnd = productosAlmacenados[j].precio; // Almacena el precio por unidad del producto
+                    let und = carrito[i].cantidad; // Almacena la cantidad de productos comprados
+
+                    nom = String(nom);
+                    und = String(und); 
+                    prUnd = String(prUnd);
+
+                    resultado += `${nom.padEnd(30)} ${und.padEnd(5)} ${prUnd.padEnd(8)}${subtotal}\n` // espacio a la izquierda para no descuadrar los precios
             }
         }
-        console.log(`\nOP GRAVADA:                   ${total}`);
+        resultado += `----------------------------------------------------`
+        resultado += `\nOP GRAVADA:                  S/ ${total}`;
         let totalIgv = total * igv;
-        console.log(`IGV TOTAL:                    ${totalIgv}`);
+        resultado += `\nIGV (18%):                   S/ ${totalIgv}`;
         let totalFinal = total + totalIgv;
-        console.log(`TOTAL:                        ${totalFinal}`);
+        resultado +=`\nTOTAL:                       S/ ${totalFinal}`;
+        return resultado
     }
 }
 

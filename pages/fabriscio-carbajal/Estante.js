@@ -12,7 +12,7 @@ class Estante extends Mueble{
     mostrarDatos() {
         super.mostrarDatos();
 
-        console.log(`Filas = ${this.filas}\n`)
+        console.log(`Filas: ${this.filas}\n`)
     }
 }
 
