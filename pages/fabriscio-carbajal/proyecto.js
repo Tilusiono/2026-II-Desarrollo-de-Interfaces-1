@@ -4,6 +4,7 @@ import Armario from "./Armario.js";
 import Estante from "./Estante.js";
 import Cliente from "./Cliente.js";
 import Vendedor from "./Vendedor.js";
+import Comprobante from "./Comprobante.js";
 
 // creacion del cliente
 const cliente1 = new Cliente(1, "Pedro", "Gonzales", "12345678")
@@ -17,6 +18,7 @@ const estante1 = new Estante(4, "Estante flotante", 200, 12, "pino", 2);
 
 const productosAlmacenados = [colchonIndividual1, colchonKing1, armario1, estante1]
 
+// mostrar datos de los productos
 colchonIndividual1.mostrarDatos();
 colchonKing1.mostrarDatos();
 armario1.mostrarDatos();
@@ -29,10 +31,18 @@ carrito1.push(cliente1.añadirCarrito(colchonIndividual1, 1));
 carrito1.push(cliente1.añadirCarrito(colchonKing1, 1));
 carrito1.push(cliente1.añadirCarrito(estante1, 10));
 
-
+// muestra como se ve el carrito (lista de objetos)
 console.log(carrito1);
 
+// crea un vendedor
 const vendedor1 = new Vendedor(1, "Carlos", "Lopez", "45678876", "900000123", 1130);
 
-const cc = vendedor1.registrarVenta(cliente1, carrito1, productosAlmacenados);
-console.log(cc)
+// registra los detalles de la venta en un string
+const venta1 = vendedor1.registrarVenta(cliente1, carrito1, productosAlmacenados); 
+
+// crea una boleta con los detalles de la venta
+
+const comprobante = new Comprobante(1, venta1, cliente1)
+
+// imorime el comprobante
+comprobante.mostrarInformación()

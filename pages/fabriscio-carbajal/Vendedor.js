@@ -73,11 +73,11 @@ class Vendedor {
             }
         }
         resultado += `----------------------------------------------------`
-        resultado += `\nOP GRAVADA:                  S/ ${total}`;
+        resultado += `\nOP GRAVADA:                 S/ ${total}`;
         let totalIgv = total * igv;
-        resultado += `\nIGV (18%):                   S/ ${totalIgv}`;
+        resultado += `\nIGV (18%):                  S/ ${totalIgv}`;
         let totalFinal = total + totalIgv;
-        resultado +=`\nTOTAL:                       S/ ${totalFinal}`;
+        resultado +=`\nTOTAL:                      S/ ${totalFinal}`;
         return resultado
     }
 }
