@@ -16,7 +16,7 @@ class Comprobante {
 
     mostrarInformación(){
         console.log("====================================================");
-        console.log("                  SISTEMA DE VENTAS                ");
+        console.log("                     VIVAMUEBLE                     ");
         console.log("====================================================");
         console.log(`Cliente    : ${this.cliente.getNombre()}`); // muestra datos que lleva una boleta
         console.log(`Fecha      : ${this.dia}`);
