@@ -1,20 +1,45 @@
 /**proyecto casino Las Perlitas De Barcena */
 
 class usuario {
-    Constructor(id_usuario, nombre, edad, correo_electronico, telefono) {
-        
-        if (edad < 18) {
-            throw new Error("El usuario debe ser mayor de edad para registrarse en el casino.");
-        }
     
-        this.id_usuario = id_usuario;
-        this.nombre = nombre;
-        this.edad = edad;
-        this.correo_electronico = correo_electronico;
-        this.telefono = telefono
-        console.log("Usuario registrado exitosamente.");
+    #correo_electronico;//privado
+    #telefono;//privado
+    #edad_usuario;//privado
+    id_usuario;//publico
+    nombre;//publico
+        Constructor(id_usuario, nombre, edad, correo_electronico, telefono) {
+        
+            if (edad < 18) {
+                throw new Error("El usuario debe ser mayor de edad para registrarse en el casino.");
+            }   
+            this.id_usuario = id_usuario;
+            this.nombre = nombre;
+            this.#edad_usuario = edad;
+            this.#correo_electronico = correo_electronico;
+            this.#telefono = telefono
+            console.log("Usuario registrado exitosamente.");
 }
+        //metodo publico
+        mostrar_telefono(){
+            return `Teléfono de contacto: ${this.#telefono}`
+        }
+        actualizarCorreo(nuevoCorreo) {
+        if (this.#validarFormatoCorreo(nuevoCorreo)) {
+            this.#correo_electronico = nuevoCorreo;
+            console.log("Correo actualizado correctamente.");
+        } else {
+            console.log("Error: Correo no válido.");
+        }
+    }
+        //metodo privado
+    #validarFormatoCorreo(correo) {
+        return correo.includes("@") && correo.includes(".");
+    }
 
+    // 2. 
+    #SEÑOR() {
+        return this.#edad_usuario >= 70;
+    }
 }
 
 
@@ -54,14 +79,16 @@ class recepcionista {
 }
 
 class Fichas {
-    Constructor(id_usuario, cantidad_fichas) {
+    id_usuario;//VALOR PUBLICO
+    #cantidad_fichas;//VALOR PRIVADO
+    #fecha_adquision;//VALOR PRIVADO
+    valor_ficha;//VALOR Publico
+    Constructor(id_usuario, cantidad_fichas,valor_ficha,fecha_adquisicion) {
         this.id_usuario = id_usuario;
-        this.cantidad_fichas = cantidad_fichas;
-        this.valor_ficha;
-        this.fecha_adquisicion;
+        this.#cantidad_fichas = cantidad_fichas;
+        this.valor_ficha = valor_ficha;
+        this.#fecha_adquisicion = fecha_adquisicion
     }
-    
-    
 }
 
 class Mesa {
