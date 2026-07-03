@@ -1,21 +1,48 @@
 /**proyecto casino Las Perlitas De Barcena */
 
 class usuario {
-    Constructor(id, nombre, edad, correo_electronico, telefono) {
+    Constructor(id_usuario, nombre, edad, correo_electronico, telefono) {
         
         if (edad < 18) {
             throw new Error("El usuario debe ser mayor de edad para registrarse en el casino.");
         }
     
-        this.id = id;
+        this.id_usuario = id_usuario;
         this.nombre = nombre;
         this.edad = edad;
         this.correo_electronico = correo_electronico;
-        this.telefono = telefono;
+        this.telefono = telefono
         console.log("Usuario registrado exitosamente.");
 }
 
 }
+
+
+class Billetera_virtual extends usuario {
+    constructor(id_usuario,correo_electronico,nombre,telefono,fondos_restantes,retirar_fondos,depositar_fondos) {
+        super(nombre,correo_electronico,id_usuario)
+        this.fondos_restantes = fondos_restantes;
+        this.retirar_fondos = retirar_fondos;
+        this.depositar_fondos = depositar_fondos;
+
+    
+}
+
+}
+
+class historial extends Billetera_virtual{ 
+
+    constructor(id_usuario, transacciones, fecha_transaccion,monto_transaccion,tipo_transaccion,fondos_restantes,depositar_fondos,retirar_fondos) {
+
+        super(fondos_restantes,retirar_fondos,depositar_fondos)
+        this.id_usuario = id_usuario    
+        this.transacciones = transacciones;
+        this.fecha_transaccion =fecha_transaccion;
+        this.monto_transaccion =monto_transaccion;
+        this.tipo_transaccion =tipo_transaccion;
+    }
+}
+
 
 class recepcionista {
     Constructor(id_empleado, nombre_empleado, turno) {
@@ -24,26 +51,6 @@ class recepcionista {
         this.turno = turno;
     }
     
-}
-class Billetera_virtual {
-    constructor(id_usuario, fondos_restantes) {
-        this.id_usuario = id_usuario;   
-        this.fondos_restantes = fondos_restantes;
-   
-    retirar_fondos;
-    depositar_fondos;
-}
-
-}
-class historial {
-
-    constructor(id_usuario, transacciones) {
-        this.id_usuario = id_usuario    
-        this.transacciones = transacciones;
-        this.fecha_transaccion;
-        this.monto_transaccion;
-        this.tipo_transaccion;
-    }
 }
 
 class Fichas {
