@@ -3,157 +3,129 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StayHub - Sistema de Reservas de Hospedaje</title>
+    <title>RVEVENTS - Sistema de Eventos por Roy Remigio Villanueva</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- NAVBAR -->
-    <nav class="navbar">
-        <div class="navbar-container">
-            <div class="logo">
-                <h1>🏨 StayHub</h1>
+    <div id="app">
+        <header class="header">
+            <div class="container">
+                <div class="header-content">
+                    <h1 class="logo">RVEVENTS</h1>
+                    <nav class="nav">
+                        <a href="#" onclick="showPage('home')" class="nav-link">Inicio</a>
+                        <a href="#" onclick="showPage('events')" class="nav-link">Eventos</a>
+                        <a href="#" onclick="showPage('my-events')" class="nav-link" id="myEventsLink">Mis Eventos</a>
+                    </nav>
+                    <div class="auth-buttons" id="authButtons">
+                        <button onclick="showPage('login')" class="btn btn-outline">Iniciar Sesión</button>
+                        <button onclick="showPage('register')" class="btn btn-primary">Registrarse</button>
+                    </div>
+                    <div class="user-info" id="userInfo" style="display: none;">
+                        <span id="userName"></span>
+                        <button onclick="logout()" class="btn btn-outline">Cerrar Sesión</button>
+                    </div>
+                </div>
             </div>
-            <ul class="nav-menu">
-                <li><a href="#inicio">Inicio</a></li>
-                <li><a href="#propiedades">Propiedades</a></li>
-                <li><a href="#reservas">Mis Reservas</a></li>
-                <li><a href="#contacto">Contacto</a></li>
-            </ul>
-            <div class="carrito-icon" id="carritoIcon">
-                <span>🛒</span>
-                <span class="carrito-count" id="carritoCount">0</span>
+        </header>
+
+        <main class="main">
+     
+            <div id="homePage" class="page">
+                <section class="hero">
+                    <div class="container">
+                        <h2 class="hero-title">Bienvenido a RVEVENTS</h2>
+                        <p class="hero-subtitle">Sistema de eventos creado por <strong>Roy Remigio Villanueva</strong>. Encuentra y regístrate en los mejores eventos.</p>
+                        <button onclick="showPage('events')" class="btn btn-large btn-primary">Explorar Eventos</button>
+                    </div>
+                </section>
+
+                <section class="featured-events">
+                    <div class="container">
+                        <h3 class="section-title">Eventos Destacados</h3>
+                        <div id="featuredEvents" class="events-grid"></div>
+                    </div>
+                </section>
             </div>
-        </div>
-    </nav>
 
-    <!-- HERO SECTION -->
-    <section class="hero" id="inicio">
-        <div class="hero-content">
-            <h2>Encuentra tu hospedaje perfecto</h2>
-            <p>Reserva las mejores propiedades al mejor precio</p>
-            
-            <div class="buscador">
-                <input type="text" id="buscador" placeholder="Buscar por ciudad o nombre..." 
-                       class="input-buscador">
-                <select id="filtroTipo" class="select-filtro">
-                    <option value="">Todos los tipos</option>
-                    <option value="apartamento">Apartamento</option>
-                    <option value="casa">Casa</option>
-                    <option value="villa">Villa</option>
-                    <option value="cabaña">Cabaña</option>
-                </select>
-                <select id="filtroCapacidad" class="select-filtro">
-                    <option value="">Cualquier capacidad</option>
-                    <option value="1">1 persona</option>
-                    <option value="2">2 personas</option>
-                    <option value="4">4 personas</option>
-                    <option value="6">6+ personas</option>
-                </select>
-                <button id="btnBuscar" class="btn-buscar">Buscar</button>
-            </div>
-        </div>
-    </section>
+            <div id="eventsPage" class="page" style="display: none;">
+                <div class="container">
+                    <h2 class="page-title">Todos los Eventos</h2>
+                    
+                    <div class="filters">
+                        <input type="text" id="searchInput" placeholder="Buscar eventos..." class="search-input">
+                        <select id="categoryFilter" class="filter-select">
+                            <option value="">Todas las categorías</option>
+                            <option value="conferencia">Conferencias</option>
+                            <option value="taller">Talleres</option>
+                            <option value="concierto">Conciertos</option>
+                            <option value="deporte">Deportes</option>
+                            <option value="cultura">Cultura</option>
+                        </select>
+                        <input type="date" id="dateFilter" class="filter-input">
+                    </div>
 
-    <!-- PROPIEDADES -->
-    <section class="propiedades" id="propiedades">
-        <h2>Propiedades Disponibles</h2>
-        <div class="filtros-activos">
-            <span id="filtroTexto" class="filtro-chip"></span>
-        </div>
-        <div class="propiedades-grid" id="propiedadesGrid">
-            <!-- Se llena dinámicamente -->
-        </div>
-    </section>
-
-    <!-- MODAL DE RESERVA -->
-    <div class="modal" id="modalReserva">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Realizar Reserva</h2>
-            
-            <div class="modal-info">
-                <img id="modalImg" src="" alt="Propiedad">
-                <div class="modal-detalles">
-                    <h3 id="modalTitulo"></h3>
-                    <p id="modalPrecio"></p>
-                    <p id="modalCapacidad"></p>
+                    <div id="eventsList" class="events-grid"></div>
                 </div>
             </div>
 
-            <form id="formularioReserva" class="form-reserva">
-                <div class="form-group">
-                    <label>Fecha de Entrada:</label>
-                    <input type="date" id="fechaEntrada" required>
+            <div id="eventDetailPage" class="page" style="display: none;">
+                <div class="container">
+                    <button onclick="showPage('events')" class="btn btn-back">← Volver</button>
+                    <div id="eventDetail"></div>
                 </div>
-                <div class="form-group">
-                    <label>Fecha de Salida:</label>
-                    <input type="date" id="fechaSalida" required>
-                </div>
-                <div class="form-group">
-                    <label>Cantidad de Huéspedes:</label>
-                    <input type="number" id="cantidadHuespedes" min="1" required>
-                </div>
+            </div>
 
-                <div class="resumen-reserva">
-                    <p>Noches: <span id="cantidadNoches">0</span></p>
-                    <p>Precio por noche: $<span id="precioNoche">0</span></p>
-                    <p class="total">Total: $<span id="totalReserva">0</span></p>
+            <div id="loginPage" class="page" style="display: none;">
+                <div class="container">
+                    <div class="auth-card">
+                        <h2 class="auth-title">Iniciar Sesión</h2>
+                        <form id="loginForm" class="auth-form">
+                            <input type="email" id="loginEmail" placeholder="Correo electrónico" required>
+                            <input type="password" id="loginPassword" placeholder="Contraseña" required>
+                            <button type="submit" class="btn btn-primary btn-full">Ingresar</button>
+                        </form>
+                        <p class="auth-footer">
+                            ¿No tienes cuenta? <a href="#" onclick="showPage('register')">Regístrate aquí</a>
+                        </p>
+                    </div>
                 </div>
+            </div>
 
-                <button type="submit" class="btn-confirmar">Agregar al Carrito</button>
-            </form>
-        </div>
+            <div id="registerPage" class="page" style="display: none;">
+                <div class="container">
+                    <div class="auth-card">
+                        <h2 class="auth-title">Crear Cuenta</h2>
+                        <form id="registerForm" class="auth-form">
+                            <input type="text" id="registerName" placeholder="Nombre completo" required>
+                            <input type="email" id="registerEmail" placeholder="Correo electrónico" required>
+                            <input type="password" id="registerPassword" placeholder="Contraseña" required>
+                            <input type="password" id="registerConfirmPassword" placeholder="Confirmar contraseña" required>
+                            <button type="submit" class="btn btn-primary btn-full">Registrarse</button>
+                        </form>
+                        <p class="auth-footer">
+                            ¿Ya tienes cuenta? <a href="#" onclick="showPage('login')">Inicia sesión aquí</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="my-eventsPage" class="page" style="display: none;">
+                <div class="container">
+                    <h2 class="page-title">Mis Inscripciones</h2>
+                    <div id="myRegistrations" class="events-grid"></div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <div class="container footer-inner">
+                <h3 class="footer-logo">RVEVENTS</h3>
+            </div>
+        </footer>
     </div>
 
-    <!-- CARRITO -->
-    <div class="carrito-panel" id="carritoPanel">
-        <div class="carrito-header">
-            <h2>Tu Carrito</h2>
-            <span class="close-carrito">&times;</span>
-        </div>
-        <div class="carrito-items" id="carritoItems">
-            <!-- Se llena dinámicamente -->
-        </div>
-        <div class="carrito-footer">
-            <p class="carrito-total">Total: $<span id="totalCarrito">0</span></p>
-            <button id="btnCheckout" class="btn-checkout">Proceder a Pago</button>
-        </div>
-    </div>
-
-    <!-- SECCIÓN DE RESERVAS -->
-    <section class="mis-reservas" id="reservas">
-        <h2>Mis Reservas</h2>
-        <div class="reservas-list" id="reservasList">
-            <p class="sin-reservas">No tienes reservas aún</p>
-        </div>
-    </section>
-
-    <!-- FOOTER -->
-    <footer class="footer" id="contacto">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h4>Sobre StayHub</h4>
-                <p>La mejor plataforma para reservar tu hospedaje ideal</p>
-            </div>
-            <div class="footer-section">
-                <h4>Contacto</h4>
-                <p>Email: info@stayhub.com</p>
-                <p>Teléfono: +1 (555) 123-4567</p>
-            </div>
-            <div class="footer-section">
-                <h4>Síguenos</h4>
-                <div class="social-links">
-                    <a href="#">Facebook</a>
-                    <a href="#">Instagram</a>
-                    <a href="#">Twitter</a>
-                </div>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 StayHub. Todos los derechos reservados.</p>
-        </div>
-    </footer>
-
-    <script src="scrip.js"></script>
+    <script src="classes.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
