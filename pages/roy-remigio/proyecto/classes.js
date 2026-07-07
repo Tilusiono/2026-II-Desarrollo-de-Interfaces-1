@@ -1,10 +1,19 @@
-class EntidadBase {
-    constructor(id, tipo) {
-        if (new.target === EntidadBase) {
-            throw new Error('No se puede instanciar la clase abstracta EntidadBase');
+class Persona {
+    #nombre;
+    #apellido;
+    #edad;
+    #correo;
+
+    constructor(id, tipo, nombre = 'Sin nombre', apellido = '', edad = 0, correo = '') {
+        if (new.target === Persona) {
+            throw new Error('No se puede instanciar la clase abstracta Persona');
         }
         this.id = id;
         this.tipo = tipo;
+        this.#nombre = nombre || 'Sin nombre';
+        this.#apellido = apellido || '';
+        this.#edad = edad;
+        this.#correo = correo || '';
     }
 
     obtenerIdentificador() {
@@ -19,6 +28,10 @@ class EntidadBase {
         return `${this.tipo.toUpperCase()} #${this.id}`;
     }
 
+    obtenerNombreCompleto() {
+        return `${this.#nombre} ${this.#apellido}`.trim();
+    }
+
     #validarTipo() {
         return Boolean(this.tipo);
     }
@@ -30,27 +43,53 @@ class EntidadBase {
     obtenerEtiqueta() {
         return this.#formatearTipo();
     }
+
+    get nombre() {
+        return this.#nombre;
+    }
+
+    get apellido() {
+        return this.#apellido;
+    }
+
+    get edad() {
+        return this.#edad;
+    }
+
+    get correo() {
+        return this.#correo;
+    }
 }
 
-class Usuario extends EntidadBase {
-    #nombre;
-    #correo;
+class Usuario extends Persona {
     #rol;
+    #telefono;
+    #ciudad;
+    #estado;
 
-    constructor({ id, nombre, email, rol = 'visitante', registrados = [] } = {}) {
-        super(id, 'usuario');
-        this.#nombre = nombre || 'Invitado';
-        this.#correo = email || '';
+    constructor({ id, nombre, email, rol = 'visitante', telefono = '', ciudad = '', estado = 'activo', registrados = [] } = {}) {
+        super(id, 'usuario', nombre || 'Invitado', '', 0, email || '');
         this.#rol = rol;
+        this.#telefono = telefono;
+        this.#ciudad = ciudad;
+        this.#estado = estado;
         this.registrados = new Set(registrados);
     }
 
     mostrarResumen() {
-        return `${this.#formatearNombre()} (${this.#rol})`;
+        return `${this.nombre} (${this.#rol})`;
     }
 
     actualizarRol(nuevoRol) {
         this.#rol = this.#validarRol(nuevoRol) ? nuevoRol : this.#rol;
+    }
+
+    actualizarTelefono(nuevoTelefono) {
+        this.#telefono = this.#validarTexto(nuevoTelefono) ? nuevoTelefono : this.#telefono;
+    }
+
+    actualizarCiudad(nuevaCiudad) {
+        this.#ciudad = this.#validarTexto(nuevaCiudad) ? nuevaCiudad : this.#ciudad;
     }
 
     estaRegistrado(eventoId) {
@@ -69,78 +108,163 @@ class Usuario extends EntidadBase {
         return typeof rol === 'string' && rol.trim().length > 0;
     }
 
-    #formatearNombre() {
-        return this.#nombre.charAt(0).toUpperCase() + this.#nombre.slice(1);
-    }
-
-    get nombre() {
-        return this.#nombre;
-    }
-
-    get email() {
-        return this.#correo;
-    }
-}
-
-class Organizador extends EntidadBase {
-    #nombre;
-    #equipo;
-    #especialidad;
-
-    constructor(id, nombre, equipo, especialidad) {
-        super(id, 'organizador');
-        this.#nombre = nombre;
-        this.#equipo = equipo;
-        this.#especialidad = especialidad;
-    }
-
-    mostrarResumen() {
-        return `${this.#nombre} lidera ${this.#equipo}`;
-    }
-
-    asignarEquipo(nuevoEquipo) {
-        this.#equipo = this.#validarEquipo(nuevoEquipo) ? nuevoEquipo : this.#equipo;
-    }
-
-    #validarEquipo(value) {
+    #validarTexto(value) {
         return typeof value === 'string' && value.trim().length > 0;
     }
 
-    #formatearNombre() {
-        return this.#nombre.toUpperCase();
+    get rol() {
+        return this.#rol;
+    }
+
+    get telefono() {
+        return this.#telefono;
+    }
+
+    get ciudad() {
+        return this.#ciudad;
+    }
+
+    get estado() {
+        return this.#estado;
+    }
+
+    get email() {
+        return this.correo;
+    }
+}
+
+class Organizador extends Persona {
+    #equipo;
+    #especialidad;
+    #telefono;
+    #departamento;
+
+    constructor({ id, nombre, apellido = '', edad = 0, correo = '', equipo = 'Equipo', especialidad = 'General', telefono = '', departamento = 'Eventos' } = {}) {
+        super(id, 'organizador', nombre, apellido, edad, correo);
+        this.#equipo = equipo;
+        this.#especialidad = especialidad;
+        this.#telefono = telefono;
+        this.#departamento = departamento;
+    }
+
+    mostrarResumen() {
+        return `${this.nombre} lidera ${this.#equipo}`;
+    }
+
+    asignarEquipo(nuevoEquipo) {
+        this.#equipo = this.#validarTexto(nuevoEquipo) ? nuevoEquipo : this.#equipo;
+    }
+
+    #validarTexto(value) {
+        return typeof value === 'string' && value.trim().length > 0;
     }
 
     get especialidad() {
         return this.#especialidad;
     }
+
+    get telefono() {
+        return this.#telefono;
+    }
+
+    get departamento() {
+        return this.#departamento;
+    }
 }
 
-class Participante extends EntidadBase {
-    #nombre;
+class Participante extends Persona {
     #interes;
     #nivel;
+    #preferencia;
+    #estado;
 
-    constructor(id, nombre, interes, nivel) {
-        super(id, 'participante');
-        this.#nombre = nombre;
+    constructor({ id, nombre, apellido = '', edad = 0, correo = '', interes = 'General', nivel = 'Inicial', preferencia = 'Sin definir', estado = 'activo' } = {}) {
+        super(id, 'participante', nombre, apellido, edad, correo);
         this.#interes = interes;
+        this.#nivel = nivel;
+        this.#preferencia = preferencia;
+        this.#estado = estado;
+    }
+
+    mostrarResumen() {
+        return `${this.nombre} está interesado en ${this.#interes}`;
+    }
+
+    actualizarInteres(nuevoInteres) {
+        this.#interes = this.#validarTexto(nuevoInteres) ? nuevoInteres : this.#interes;
+    }
+
+    #validarTexto(value) {
+        return typeof value === 'string' && value.trim().length > 0;
+    }
+
+    get nivel() {
+        return this.#nivel;
+    }
+
+    get preferencia() {
+        return this.#preferencia;
+    }
+
+    get estado() {
+        return this.#estado;
+    }
+}
+
+class Profesor extends Persona {
+    #especialidad;
+    #curso;
+    #experiencia;
+    #turno;
+
+    constructor({ id, nombre, apellido = '', edad = 0, correo = '', especialidad = 'General', curso = 'General', experiencia = 'Sin registrar', turno = 'Mañana' } = {}) {
+        super(id, 'profesor', nombre, apellido, edad, correo);
+        this.#especialidad = especialidad;
+        this.#curso = curso;
+        this.#experiencia = experiencia;
+        this.#turno = turno;
+    }
+
+    mostrarResumen() {
+        return `${this.nombre} enseña ${this.#curso} (${this.#especialidad})`;
+    }
+
+    actualizarCurso(nuevoCurso) {
+        this.#curso = this.#validarTexto(nuevoCurso) ? nuevoCurso : this.#curso;
+    }
+
+    #validarTexto(value) {
+        return typeof value === 'string' && value.trim().length > 0;
+    }
+
+    get especialidad() {
+        return this.#especialidad;
+    }
+
+    get curso() {
+        return this.#curso;
+    }
+
+    get experiencia() {
+        return this.#experiencia;
+    }
+
+    get turno() {
+        return this.#turno;
+    }
+}
+
+class ProfesorMatematicas extends Profesor {
+    #nivel;
+
+    constructor({ id, nombre, apellido = '', edad = 0, correo = '', nivel = 'Básico' } = {}) {
+        super({ id, nombre, apellido, edad, correo, especialidad: 'Matemáticas', curso: 'Álgebra', experiencia: '3 años', turno: 'Mañana' });
+        this.tipo = 'profesor-matematicas';
         this.#nivel = nivel;
     }
 
     mostrarResumen() {
-        return `${this.#nombre} está interesado en ${this.#interes}`;
-    }
-
-    actualizarInteres(nuevoInteres) {
-        this.#interes = this.#validarInteres(nuevoInteres) ? nuevoInteres : this.#interes;
-    }
-
-    #validarInteres(value) {
-        return typeof value === 'string' && value.trim().length > 0;
-    }
-
-    #formatearInteres() {
-        return this.#interes.toLowerCase();
+        return `${this.nombre} enseña Matemáticas nivel ${this.#nivel}`;
     }
 
     get nivel() {
@@ -148,7 +272,25 @@ class Participante extends EntidadBase {
     }
 }
 
-class Evento extends EntidadBase {
+class ProfesorHistoria extends Profesor {
+    #enfoque;
+
+    constructor({ id, nombre, apellido = '', edad = 0, correo = '', enfoque = 'Histórica' } = {}) {
+        super({ id, nombre, apellido, edad, correo, especialidad: 'Historia', curso: 'Historia Universal', experiencia: '4 años', turno: 'Tarde' });
+        this.tipo = 'profesor-historia';
+        this.#enfoque = enfoque;
+    }
+
+    mostrarResumen() {
+        return `${this.nombre} enseña historia con enfoque ${this.#enfoque}`;
+    }
+
+    get enfoque() {
+        return this.#enfoque;
+    }
+}
+
+class Evento extends Persona {
     #titulo;
     #categoria;
     #datos;
@@ -257,13 +399,15 @@ class Conferencia extends Evento {
     #ponente;
     #duracion;
     #tema;
+    #modalidad;
 
-    constructor({ id, titulo, fecha, ponente, duracion, tema, hora = '', ubicacion = '', capacidad = 100, registrados = 0, precio = 0.0, descripcion = '', imagen = '' }) {
+    constructor({ id, titulo, fecha, ponente, duracion, tema, modalidad = 'Presencial', hora = '', ubicacion = '', capacidad = 100, registrados = 0, precio = 0.0, descripcion = '', imagen = '' }) {
         super({ id, titulo, categoria: 'conferencia', fecha, hora, ubicacion, capacidad, registrados, precio, descripcion, imagen });
         this.tipo = 'conferencia';
         this.#ponente = ponente || 'Por confirmar';
         this.#duracion = duracion || '1 hora';
         this.#tema = tema || 'Tecnología';
+        this.#modalidad = modalidad;
     }
 
     mostrarResumen() {
@@ -289,19 +433,25 @@ class Conferencia extends Evento {
     get tema() {
         return this.#tema;
     }
+
+    get modalidad() {
+        return this.#modalidad;
+    }
 }
 
 class Taller extends Evento {
     #materiales;
     #nivel;
     #duracion;
+    #objetivo;
 
-    constructor({ id, titulo, fecha, materiales, nivel, duracion, hora = '', ubicacion = '', capacidad = 100, registrados = 0, precio = 0.0, descripcion = '', imagen = '' }) {
+    constructor({ id, titulo, fecha, materiales, nivel, duracion, objetivo = 'Aprender', hora = '', ubicacion = '', capacidad = 100, registrados = 0, precio = 0.0, descripcion = '', imagen = '' }) {
         super({ id, titulo, categoria: 'taller', fecha, hora, ubicacion, capacidad, registrados, precio, descripcion, imagen });
         this.tipo = 'taller';
         this.#materiales = materiales || 'Material básico';
         this.#nivel = nivel || 'Inicial';
         this.#duracion = duracion || '2 horas';
+        this.#objetivo = objetivo;
     }
 
     mostrarResumen() {
@@ -323,19 +473,25 @@ class Taller extends Evento {
     get materiales() {
         return this.#materiales;
     }
+
+    get objetivo() {
+        return this.#objetivo;
+    }
 }
 
 class Concierto extends Evento {
     #artista;
     #aforo;
     #genero;
+    #formato;
 
-    constructor({ id, titulo, fecha, artista, aforo, genero, hora = '', ubicacion = '', capacidad = 100, registrados = 0, precio = 0.0, descripcion = '', imagen = '' }) {
+    constructor({ id, titulo, fecha, artista, aforo, genero, formato = 'En vivo', hora = '', ubicacion = '', capacidad = 100, registrados = 0, precio = 0.0, descripcion = '', imagen = '' }) {
         super({ id, titulo, categoria: 'concierto', fecha, hora, ubicacion, capacidad, registrados, precio, descripcion, imagen });
         this.tipo = 'concierto';
         this.#artista = artista || 'Artista invitado';
         this.#aforo = aforo || capacidad;
         this.#genero = genero || 'Variado';
+        this.#formato = formato;
     }
 
     mostrarResumen() {
@@ -357,19 +513,25 @@ class Concierto extends Evento {
     get genero() {
         return this.#genero;
     }
+
+    get formato() {
+        return this.#formato;
+    }
 }
 
 class Deporte extends Evento {
     #modalidad;
     #distancia;
     #rangoEdad;
+    #nivel;
 
-    constructor({ id, titulo, fecha, modalidad, distancia, rangoEdad, hora = '', ubicacion = '', capacidad = 100, registrados = 0, precio = 0.0, descripcion = '', imagen = '' }) {
+    constructor({ id, titulo, fecha, modalidad, distancia, rangoEdad, nivel = 'Principiante', hora = '', ubicacion = '', capacidad = 100, registrados = 0, precio = 0.0, descripcion = '', imagen = '' }) {
         super({ id, titulo, categoria: 'deporte', fecha, hora, ubicacion, capacidad, registrados, precio, descripcion, imagen });
         this.tipo = 'deporte';
         this.#modalidad = modalidad || 'General';
         this.#distancia = distancia || '5 km';
         this.#rangoEdad = rangoEdad || 'Todos';
+        this.#nivel = nivel;
     }
 
     mostrarResumen() {
@@ -391,19 +553,61 @@ class Deporte extends Evento {
     get distancia() {
         return this.#distancia;
     }
+
+    get nivel() {
+        return this.#nivel;
+    }
+}
+
+class Futbol extends Deporte {
+    #tipoCancha;
+
+    constructor({ id, titulo, fecha, tipoCancha = 'Sintética', hora = '', ubicacion = '', capacidad = 100, registrados = 0, precio = 0.0, descripcion = '', imagen = '' }) {
+        super({ id, titulo, fecha, modalidad: 'Fútbol', distancia: '7 km', rangoEdad: 'Mayores de 12', hora, ubicacion, capacidad, registrados, precio, descripcion, imagen });
+        this.tipo = 'futbol';
+        this.#tipoCancha = tipoCancha;
+    }
+
+    mostrarResumen() {
+        return `${this.titulo} - Fútbol en cancha ${this.#tipoCancha}`;
+    }
+
+    get tipoCancha() {
+        return this.#tipoCancha;
+    }
+}
+
+class Atletismo extends Deporte {
+    #prueba;
+
+    constructor({ id, titulo, fecha, prueba = '100m', hora = '', ubicacion = '', capacidad = 100, registrados = 0, precio = 0.0, descripcion = '', imagen = '' }) {
+        super({ id, titulo, fecha, modalidad: 'Atletismo', distancia: '100 m', rangoEdad: 'Todos', hora, ubicacion, capacidad, registrados, precio, descripcion, imagen });
+        this.tipo = 'atletismo';
+        this.#prueba = prueba;
+    }
+
+    mostrarResumen() {
+        return `${this.titulo} - Prueba ${this.#prueba}`;
+    }
+
+    get prueba() {
+        return this.#prueba;
+    }
 }
 
 class Cultura extends Evento {
     #tematica;
     #lugar;
     #duracion;
+    #publicoObjetivo;
 
-    constructor({ id, titulo, fecha, tematica, lugar, duracion, hora = '', ubicacion = '', capacidad = 100, registrados = 0, precio = 0.0, descripcion = '', imagen = '' }) {
+    constructor({ id, titulo, fecha, tematica, lugar, duracion, publicoObjetivo = 'General', hora = '', ubicacion = '', capacidad = 100, registrados = 0, precio = 0.0, descripcion = '', imagen = '' }) {
         super({ id, titulo, categoria: 'cultura', fecha, hora, ubicacion, capacidad, registrados, precio, descripcion, imagen });
         this.tipo = 'cultura';
         this.#tematica = tematica || 'General';
         this.#lugar = lugar || 'Por definir';
         this.#duracion = duracion || '1 día';
+        this.#publicoObjetivo = publicoObjetivo;
     }
 
     mostrarResumen() {
@@ -425,18 +629,28 @@ class Cultura extends Evento {
     get lugar() {
         return this.#lugar;
     }
+
+    get duracion() {
+        return this.#duracion;
+    }
+
+    get publicoObjetivo() {
+        return this.#publicoObjetivo;
+    }
 }
 
-class Inscripcion extends EntidadBase {
+class Inscripcion extends Persona {
     #usuario;
     #evento;
     #estado;
+    #fechaRegistro;
 
-    constructor(id, usuario, evento, estado = 'pendiente') {
-        super(id, 'inscripcion');
+    constructor(id, usuario, evento, estado = 'pendiente', fechaRegistro = new Date().toISOString()) {
+        super(id, 'inscripcion', 'Inscripción', '', 0, '');
         this.#usuario = usuario;
         this.#evento = evento;
         this.#estado = estado;
+        this.#fechaRegistro = fechaRegistro;
     }
 
     mostrarResumen() {
@@ -458,18 +672,24 @@ class Inscripcion extends EntidadBase {
     get estado() {
         return this.#estado;
     }
+
+    get fechaRegistro() {
+        return this.#fechaRegistro;
+    }
 }
 
-class Pago extends EntidadBase {
+class Pago extends Persona {
     #monto;
     #metodo;
     #estado;
+    #referencia;
 
-    constructor(id, monto, metodo, estado = 'pendiente') {
-        super(id, 'pago');
+    constructor(id, monto, metodo, estado = 'pendiente', referencia = 'SIN-REF') {
+        super(id, 'pago', 'Pago', '', 0, '');
         this.#monto = monto;
         this.#metodo = metodo;
         this.#estado = estado;
+        this.#referencia = referencia;
     }
 
     mostrarResumen() {
@@ -490,6 +710,10 @@ class Pago extends EntidadBase {
 
     get estado() {
         return this.#estado;
+    }
+
+    get referencia() {
+        return this.#referencia;
     }
 }
 
@@ -580,15 +804,20 @@ const sistema = (function () {
 })();
 
 export {
-    EntidadBase,
+    Persona,
     Usuario,
     Organizador,
     Participante,
+    Profesor,
+    ProfesorMatematicas,
+    ProfesorHistoria,
     Evento,
     Conferencia,
     Taller,
     Concierto,
     Deporte,
+    Futbol,
+    Atletismo,
     Cultura,
     Inscripcion,
     Pago,
