@@ -1,11 +1,31 @@
 
-class Molde {
-    constructor(nombre) {
+// ---------
+// PERSONA
+// ---------
+
+
+class Persona {
+    constructor(nombre,apellido_paterno,apellido_materno,fecha_nacimineto) {
         this.nombre = nombre;
+        this.apellido_paterno = apellido_paterno;
+        this.apellido_materno = apellido_materno;
+        this.fecha_nacimiento = fecha_nacimineto;
     }
 
     getNombre() {
         return this.nombre;
+    }
+
+    getApellidoPaterno() {
+        return this.apellido_paterno;
+    }
+
+    getApellidoMaterno() {
+        return this.apellido_materno;
+    }
+
+    getFechaNacimiento() {
+        return this.fecha_nacimiento;
     }
 
     // 
@@ -20,23 +40,69 @@ class Molde {
     return /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(nombre);
     }
 
+    #validarApellidoPaterno(apellido_paterno) {
+    return /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(apellido_paterno);
+    }
+
+    #validarApellidoMaterno(apellido_materno) {
+    return /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(apellido_materno);
+    }
+
+    #validarFecha(fecha) {
+    return /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/.test(fecha);
+    }
+
     #MayuculaNombre(nombre) {
     return nombre.charAt(0).toUpperCase() + nombre.slice(1).toLowerCase();
     }
 
 }
 
+// ---------
+// CATEGORIA 
+// ---------
+class Categoria {
+    #productos;
+
+    constructor(nombre, descripcion) {
+    this.nombre = nombre;
+    this.descripcion = descripcion;
+    this.#productos = [];
+    }
+
+    agregarProducto(producto) {
+        this.#productos.push(producto);
+    }
+
+    obtenerProductos() {
+        return this.#productos;
+    }
+
+    obtenerInfo() {
+        return `Categoría: ${this.nombre} - ${this.descripcion}`;
+    }
+
+    // PRIVADO
+    #validarDescripcion(descripcion) {
+    return descripcion.trim() !== "";
+    }
+
+    #contarProductos() {
+    return this.#productos.length;
+    }
+}
+
 
 // ---------
 // PRODUCTO
 // ---------
-class Producto extends Molde {
-    #id;
+class Producto extends Categoria {
+    #iditem;
     #stock;
     #disponible;
 
-    constructor(iditem, nombre, precio, stock, disponible) {
-        super(nombre);
+    constructor(iditem, nombre,descripcion, precio, stock, disponible) {
+        super(nombre, descripcion);
 
         this.#iditem = iditem;
         this.precio = precio;
@@ -103,15 +169,44 @@ class Bebida extends Producto {
 
 
 // ---------
+// POSTRE 
+// ---------
+class Postre extends Producto {
+    constructor(id, nombre, precio, stock, disponible, tamano, tipo) {
+        super(id, nombre, precio, stock, disponible);
+
+        this.tamano = tamano; // chico, mediano, grande
+        this.tipo = tipo;     // caliente o fría
+    }
+     
+
+    obtenerInfo() {
+        return `${this.nombre} (${this.tamano}) - ${this.tipo} - S/ ${this.precio}`;
+    }
+
+    // PRIVADO
+
+    #validarTamano(tamano) {
+    return ["Chico", "Mediano", "Grande"].includes(tamano);
+    }
+
+    #validarTipo(tipo) {
+    return ["Caliente", "Fría"].includes(tipo);
+    }
+}
+
+// ---------
 // CLIENTE
 // ---------
-class Cliente extends Molde {
+class Cliente extends Persona {
     #compras;
     #totalGastado;
 
-    constructor(nombre, correo, telefono, direccion) {
-        super(nombre);
+    constructor(nombre, apellido_paterno, apellido_materno, correo, telefono, direccion) {
+        super(nombre,apellido_paterno,apellido_materno);
 
+        this.#apellido_paterno = apellido_paterno;
+        this.#apellido_materno = apellido_materno;
         this.correo = correo;
         this.telefono = telefono;
         this.direccion = direccion;
@@ -191,10 +286,11 @@ class Compra {
 // ---------
 // EMPLEADO
 // ---------
-class Empleado extends Molde {
-    constructor(nombre, cargo, sueldo, turno) {
-        super(nombre);
-
+class Empleado extends Persona {
+    constructor(nombre,apellido_paterno, apellido_materno, cargo, sueldo, turno) {
+        super(nombre,apellido_paterno,apellido_materno);
+        this.#apellido_paterno = apellido_paterno;
+        this.#apellido_materno = apellido_materno;
         this.cargo = cargo;
         this.sueldo = sueldo;
         this.turno = turno; // mañana, tarde, noche
@@ -218,40 +314,6 @@ class Empleado extends Molde {
     }
 }
 
-// ---------
-// CATEGORIA
-// ---------
-class Categoria extends Molde {
-    #productos;
-
-    constructor(nombre, descripcion) {
-        super(nombre);
-
-        this.descripcion = descripcion;
-        this.#productos = [];
-    }
-
-    agregarProducto(producto) {
-        this.#productos.push(producto);
-    }
-
-    obtenerProductos() {
-        return this.#productos;
-    }
-
-    obtenerInfo() {
-        return `Categoría: ${this.nombre} - ${this.descripcion}`;
-    }
-
-    // PRIVADO
-    #validarDescripcion(descripcion) {
-    return descripcion.trim() !== "";
-    }
-
-    #contarProductos() {
-    return this.#productos.length;
-    }
-}
 
 // ---------
 // PAGO
@@ -320,40 +382,7 @@ class Inventario {
 
 }
 
-
-// Productos
-const cafe1 = new Bebida(1, "Cappuccino", 12, 20, true, "Grande", "Caliente");
-const cafe2 = new Bebida(2, "Latte", 10, 15, true, "Mediano", "Caliente");
-
-// Cliente
-const cliente1 = new Cliente("Carlos Ramírez", "carlos@email.com", "987654321", "Lima");
-
-// Compra
-const compra1 = new Compra(1, cliente1);
-compra1.agregarProducto(cafe1);
-compra1.agregarProducto(cafe2);
-
-// Asignar compra al cliente
-cliente1.agregarCompra(compra1);
-
-// Pago
-const pago1 = new Pago("Yape", compra1.total);
-pago1.procesarPago();
-
-// Inventario
-const inventario = new Inventario();
-inventario.agregarProducto(cafe1);
-inventario.agregarProducto(cafe2);
-
-// Mostrar resultados
-console.log(compra1);
-console.log(cliente1.obtenerDatos());
-console.log(pago1.obtenerInfo());
-console.log(inventario.mostrarInventario());
-
-
-
-// prueva
+// factura
 
 class Factura {
     #numero;
@@ -402,3 +431,46 @@ IGV: S/ ${this.#calcularIGV().toFixed(2)}
 `;
     }
 }
+
+// WERHUBAJIGSDFKJSDG
+
+// Productos
+const cafe1 = new Bebida(1, "Cappuccino", 12, 20, true, "Grande", "Caliente");
+const cafe2 = new Bebida(2, "Latte", 10, 15, true, "Mediano", "Caliente");
+const cafe3 = new Bebida(3, "Americano", 8, 12, true, "Grande", "Caliente");
+const postre1 = new Postre(4, "Cheesecake", 15, 10, true, "Mediano", "Fría");
+const postre2 = new Postre(5, "Tarta de Manzana", 12, 8, true, "Mediano", "Fría");
+
+// Cliente
+const cliente1 = new Cliente("Carlos Ramírez", "carlos@email.com", "987654321", "Lima");
+
+// Compra
+const compra1 = new Compra(1, cliente1);
+compra1.agregarProducto(cafe1);
+compra1.agregarProducto(cafe2);
+compra1.agregarProducto(cafe3);
+compra1.agregarProducto(postre1);
+compra1.agregarProducto(postre2);
+// Asignar compra al cliente
+cliente1.agregarCompra(compra1);
+
+// Pago
+const pago1 = new Pago("Yape", compra1.total);
+pago1.procesarPago();
+
+// Inventario
+const inventario = new Inventario();
+inventario.agregarProducto(cafe1);
+inventario.agregarProducto(cafe2);
+inventario.agregarProducto(cafe3);
+inventario.agregarProducto(postre1);
+inventario.agregarProducto(postre2);
+
+// Mostrar resultados
+console.log(compra1);
+console.log(cliente1.obtenerDatos());
+console.log(pago1.obtenerInfo());
+console.log(inventario.mostrarInventario());
+
+
+
