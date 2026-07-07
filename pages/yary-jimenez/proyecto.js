@@ -73,7 +73,7 @@ cerrar() {
 }
 
 
-class Empleado extends persona{
+class Empleado extends Persona{
  cargo; 
     #salario;
     #turno;
@@ -159,8 +159,6 @@ const vendedor1 = new Vendedor(
 
 
 
-
-
 class Cliente {
     nombre;
     #telefono;
@@ -169,7 +167,7 @@ class Cliente {
 
     constructor(nombre, telefono, correo, direccion) 
 {
-    this.#nombre = nombre;
+    this.nombre = nombre;
     this.#telefono = telefono;
     this.#correo = correo;
     this.#direccion = direccion;    
@@ -201,7 +199,7 @@ class Producto {
 
     constructor(nombreProducto, categoria, stock, descripcion) 
 {
-    this.#nombreProducto = nombreProducto;
+    this.nombreProducto = nombreProducto;
     this.#categoria = categoria;
     this.#stock = stock;
     this.#descripcion = descripcion;
@@ -232,7 +230,7 @@ class Precio {
 
 constructor(precioUnitario, descuento, precioFinal, moneda) 
 {
-    this.#precioUnitario = precioUnitario;
+    this.precioUnitario = precioUnitario;
     this.#descuento = descuento;
     this.#precioFinal = precioFinal;
     this.#moneda = moneda;
@@ -256,7 +254,7 @@ class Ubicacion {
     #codigoPostal;
 constructor(direccion, distrito, referencia, codigoPostal) 
 {
-    this.#direccion = direccion;
+    this.direccion = direccion;
     this.#distrito = distrito;
     this.#referencia = referencia;
     this.#codigoPostal = codigoPostal;
@@ -280,7 +278,7 @@ class Horario {
 
 constructor(horaApertura, horaCierre, diasAtencion, turnoEspecial) 
 {
-    this.#horaApertura = horaApertura;
+    this.horaApertura = horaApertura;
     this.#horaCierre = horaCierre;
     this.#diasAtencion = diasAtencion;
     this.#turnoEspecial = turnoEspecial;
@@ -305,7 +303,7 @@ class Telefono {
 
 constructor(numeroPrincipal, numeroSecundario, codigoPais, extension)
  {
-    this.#numeroPrincipal = numeroPrincipal;
+    this.numeroPrincipal = numeroPrincipal;
     this.#numeroSecundario = numeroSecundario;
     this.#codigoPais = codigoPais;
     this.#extension = extension;
@@ -331,7 +329,7 @@ class Correo {
 
 constructor(correoPrincipal, correoSoporte, dominio, estado) 
 {
-    this.#correoPrincipal = correoPrincipal;
+    this.correoPrincipal = correoPrincipal;
     this.#correoSoporte = correoSoporte;
     this.#dominio = dominio;
     this.#estado = estado;
@@ -357,7 +355,7 @@ class Venta {
 
 constructor(fecha, cantidad, total, metodoPago) 
 {
-    this.#fecha = fecha;
+    this.fecha = fecha;
     this.#cantidad = cantidad;
     this.#total = total;
     this.#metodoPago = metodoPago;  
@@ -374,17 +372,6 @@ imprimir() {}
 
 
 
-class AlumnoTop10 extends Alumno{
-
-}
-
-class AlumnoTercioSuperior extends Alumno{
-
-}
-
-class AlumnoGeneral extends Alumno{
-
-}
 
 
 
