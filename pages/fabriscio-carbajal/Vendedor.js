@@ -53,7 +53,7 @@ class Vendedor {
 
         for (let i = 0; i < carrito.length; i++){ // recorre según el tamaño del carrito
             for (let j = 0; j < productosAlmacenados.length; j++) // busca segun el tamaño del total de productos almacenados
-                if (carrito[i].id == productosAlmacenados[j].idProducto) { // condicion si la posicion del carrito coincide con un producto almacenado
+                if (carrito[i].id == productosAlmacenados[j].idProducto) { // condicion si el id de la posicion del carrito coincide con el id deun producto almacenado
 
                     subtotal = (productosAlmacenados[j].precio * carrito[i].cantidad); //crea un subtotal
 
