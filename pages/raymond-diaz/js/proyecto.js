@@ -135,6 +135,57 @@ const vendedor = new Vendedor({
     sede: "Lima"
 });
 
+const clientes = [
+    new ClienteNatural(
+        1,
+        "Luis",
+        "Ramírez",
+        20,
+        "987-111-222",
+        new Date("2006-05-12"),
+        "76543210",
+        "Santa Anita - Lima",
+        "Frecuente",
+        "Yape"
+    ),
+    new ClienteEmpresarial(
+        2,
+        "María",
+        "Torres",
+        28,
+        "955-444-333",
+        new Date("1998-03-18"),
+        "20678945123",
+        "Soluciones Digitales Torres SAC",
+        "Servicios informáticos",
+        "compras@torresdigital.pe"
+    )
+];
+
+const garantias = [
+    new Garantia(1, "GAR-RYZEN-12", 12, "Cubre fallas de fábrica, no daños por mala instalación.", "Ryzen 5 5600X"),
+    new Garantia(2, "GAR-SSD-24", 24, "Cubre fallas internas del disco y errores de lectura.", "SSD NVMe 1TB")
+];
+
+const metodosPago = [
+    new MetodoPago(1, "Efectivo", "Pago directo en tienda.", 0),
+    new MetodoPago(2, "Tarjeta", "Pago con tarjeta de débito o crédito.", 0.03),
+    new MetodoPago(3, "Yape / Plin", "Pago digital por número telefónico.", 0)
+];
+
+const inventario = new Inventario(1, "Almacén Principal - Lima", "Raymond Díaz");
+inventario.registrarEntrada("Ryzen 5 5600X", 5);
+inventario.registrarEntrada("SSD NVMe 1TB", 6);
+inventario.registrarSalida("Mouse Gamer RGB", 1);
+
+const comprobanteDemo = new Factura(
+    1,
+    "F001",
+    "000123",
+    "Factura",
+    "Soluciones Digitales Torres SAC"
+);
+
 const productos = [
     new Procesador({
         id: 1,
@@ -207,6 +258,7 @@ const datosVendedor = document.querySelector("#datosVendedor");
 const listaProductos = document.querySelector("#listaProductos");
 const listaCarrito = document.querySelector("#listaCarrito");
 const listaProveedores = document.querySelector("#listaProveedores");
+const listaClientes = document.querySelector("#listaClientes");
 const busqueda = document.querySelector("#busqueda");
 const categoria = document.querySelector("#categoria");
 const subtotal = document.querySelector("#subtotal");
@@ -214,6 +266,10 @@ const igv = document.querySelector("#igv");
 const total = document.querySelector("#total");
 const finalizarVenta = document.querySelector("#finalizarVenta");
 const mensajeVenta = document.querySelector("#mensajeVenta");
+const listaGarantias = document.querySelector("#listaGarantias");
+const listaMetodosPago = document.querySelector("#listaMetodosPago");
+const datosInventario = document.querySelector("#datosInventario");
+const datosFactura = document.querySelector("#datosFactura");
 
 function formatearMoneda(valor) {
     return `S/ ${valor.toFixed(2)}`;
@@ -284,6 +340,37 @@ function renderizarCarrito() {
     total.textContent = formatearMoneda(proyecto.calcularTotal());
 }
 
+function renderizarClientes() {
+    listaClientes.innerHTML = "";
+
+    clientes.forEach(cliente => {
+        const tarjeta = document.createElement("article");
+        tarjeta.className = "tarjeta-cliente";
+        tarjeta.innerHTML = `<h3>${cliente.nombreCompleto}</h3><p>${cliente.mostrarDatos()}</p>`;
+        listaClientes.appendChild(tarjeta);
+    });
+}
+
+function renderizarModulosExtra() {
+    listaGarantias.innerHTML = "";
+    listaMetodosPago.innerHTML = "";
+
+    garantias.forEach(garantia => {
+        const item = document.createElement("p");
+        item.innerHTML = garantia.mostrarDatos();
+        listaGarantias.appendChild(item);
+    });
+
+    metodosPago.forEach(metodo => {
+        const item = document.createElement("p");
+        item.innerHTML = metodo.mostrarDatos();
+        listaMetodosPago.appendChild(item);
+    });
+
+    datosInventario.innerHTML = inventario.mostrarDatos();
+    datosFactura.innerHTML = comprobanteDemo.emitir(proyecto.calcularTotal());
+}
+
 function renderizarProveedores() {
     listaProveedores.innerHTML = "";
 
@@ -298,6 +385,8 @@ function renderizarProveedores() {
 function actualizarInterfaz() {
     renderizarProductos();
     renderizarCarrito();
+    renderizarClientes();
+    renderizarModulosExtra();
     renderizarProveedores();
 }
 
