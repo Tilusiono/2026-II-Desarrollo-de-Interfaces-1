@@ -33,6 +33,7 @@ class Alumno {
 class Profesor {
 
     nombre;
+    curso;
     #apellido;
     #fechaNac;
     #gradoAcademico;
@@ -62,6 +63,53 @@ class Profesor {
         return this.#gradoAcademico;
     }
 }
+
+// Clase hija 1
+class ProfesorMatematicas extends Profesor {
+
+    salon;
+
+    constructor(nombre, apellido, fechaNac, gradoAcademico, salon) {
+        super(nombre, apellido, fechaNac, gradoAcademico);
+        this.salon = salon;
+    }
+
+    resolverEjercicios() {
+        console.log(this.nombre + " está resolviendo ejercicios de Matemáticas.");
+    }
+}
+
+// Clase hija 2
+class ProfesorProgramacion extends Profesor {
+
+    lenguaje;
+
+    constructor(nombre, apellido, fechaNac, gradoAcademico, lenguaje) {
+        super(nombre, apellido, fechaNac, gradoAcademico);
+        this.lenguaje = lenguaje;
+    }
+
+    programar() {
+        console.log(this.nombre + " enseña " + this.lenguaje + ".");
+    }
+}
+
+// Clase hija 3
+class ProfesorIngles extends Profesor {
+
+    nivel;
+
+    constructor(nombre, apellido, fechaNac, gradoAcademico, nivel) {
+        super(nombre, apellido, fechaNac, gradoAcademico);
+        this.nivel = nivel;
+    }
+
+    hablarIngles() {
+        console.log(this.nombre + " enseña inglés nivel " + this.nivel + ".");
+    }
+}
+
+
 class Notas {
 
     fechaRegistro;
