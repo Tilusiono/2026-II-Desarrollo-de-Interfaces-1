@@ -1,16 +1,16 @@
-class Persona extends EntidadTienda {
+class Persona {
     nacionalidad;
+    #id;
     #nombre;
     #documento;
-    #contacto;
 
-    constructor(id, codigoRef, nombre, documento, contacto, nacionalidad = "Peruana") {
-        super(id, codigoRef);
-        if (typeof nombre !== "string") throw new Error("Nombre debe ser string");
-
+    constructor(id, nombre, documento, nacionalidad = "Peruana") {
+        if (new.target === Persona) {
+            throw new Error("Abstracción: Persona no se puede instanciar.");
+        }
+        this.#id = id;
         this.#nombre = nombre;
         this.#documento = documento;
-        this.#contacto = contacto;
         this.nacionalidad = nacionalidad;
     }
 
@@ -18,16 +18,18 @@ class Persona extends EntidadTienda {
         return this.#documento.length >= 8;
     }
 
-    #formatearContacto() {
-        return `Contacto registrado: ${this.#contacto}`;
+    #formatearNombre() {
+        return this.#nombre.toUpperCase();
     }
 
-    actualizarContactoBase(nuevoContacto) {
-        if (typeof nuevoContacto === "string") this.#contacto = nuevoContacto;
-        return this.#formatearContacto();
+    verificarIdentidad() {
+        const valido = this.#esDocumentoValido();
+        return `Usuario ${this.#formatearNombre()} - DNI válido: ${valido}`;
     }
 
-    obtenerDetalles() { 
-        return `Persona: ${this.#nombre} - Doc Válido: ${this.#esDocumentoValido()}`;
+    obtenerDetalles() {
+        throw new Error("Polimorfismo: Debe implementarse en la clase hija.");
     }
 }
+
+export default Persona

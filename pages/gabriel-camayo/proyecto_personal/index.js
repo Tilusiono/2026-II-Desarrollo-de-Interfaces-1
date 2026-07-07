@@ -1,15 +1,20 @@
-const tecladoGamer = new Periferico(1, "PER-001", "Teclado Razer", 350, 10, "USB-C", "Negro", true);
-const procesador = new ComponentePC(2, "COMP-001", "Ryzen 7", 1200, 4, 105, "AM5", 4500);
-const empleado = new EmpleadoTienda(3, "EMP-001", "Jose", "74859612", "999888777", 1500, "Vendedor", 12000);
-const venta = new VentaTienda(4, "VEN-001", 350, "Tarjeta", "B001-01", 10, 3, "Lima Sur");
+// Importamos solo las clases que vamos a instanciar directamente
+import Teclado from './Teclado.js';
+import Procesador from './Procesador.js';
+import Vendedor from './Vendedor.js';
+import Venta from './Venta.js';
 
-const ecosistema = [tecladoGamer, procesador, empleado, venta];
+const miTeclado = new Teclado(1, "Teclado Redragon", 150, "USB", "Negro", true, false, "Red", "TKL", "ES");
+const miProcesador = new Procesador(2, "Ryzen 5 7600", 900, 65, "AM5", 5100, true, 6, 12, "Zen 4");
+const miVendedor = new Vendedor(3, "Gabriel Camayo", "71234567", 1200, "Asesor", true, "Tarde", "Lima Centro", 120, 45);
+const miVenta = new Venta(1001, 1050, "Yape", 50, 3, "Av. Arequipa 123", true);
 
-ecosistema.forEach(entidad => {
-    console.log(entidad.obtenerDetalles()); 
-});
+// Probando el polimorfismo
+const elementos = [miTeclado, miProcesador, miVendedor, miVenta];
+elementos.forEach(el => console.log(el.obtenerDetalles()));
 
-console.log(tecladoGamer.probarIluminacion());
-console.log(procesador.testearRendimiento("AM5"));
-console.log(empleado.generarReportePago());
-console.log(venta.generarGuiaRemision());
+// Probando métodos específicos
+console.log(miTeclado.testearTeclas());
+console.log(miProcesador.mostrarRendimiento());
+console.log(miVendedor.reportarProductividad());
+console.log(miVenta.generarGuia());

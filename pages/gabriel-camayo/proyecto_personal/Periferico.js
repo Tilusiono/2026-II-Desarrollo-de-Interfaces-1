@@ -1,11 +1,13 @@
+import Articulo from './Articulo.js';
+
 class Periferico extends Articulo {
     inalambrico;
     #tipoConexion;
     #color;
     #rgb;
 
-    constructor(id, codigoRef, nombreArticulo, precioBase, stockActual, tipoConexion, color, rgb, inalambrico = true) {
-        super(id, codigoRef, nombreArticulo, precioBase, stockActual);
+    constructor(id, nombre, precioBase, tipoConexion, color, rgb, inalambrico = true) {
+        super(id, nombre, precioBase);
         this.#tipoConexion = tipoConexion;
         this.#color = color;
         this.#rgb = rgb;
@@ -13,19 +15,21 @@ class Periferico extends Articulo {
     }
 
     #validarConexion() {
-        return this.inalambrico ? "Batería" : "Cableado";
+        return this.inalambrico ? "Usa Batería" : "Usa Cable";
     }
 
     #consumoEnergia() {
-        return this.#rgb ? "Alto consumo" : "Bajo consumo";
+        return this.#rgb ? "Consumo Alto" : "Consumo Bajo";
     }
 
     probarIluminacion() {
         const consumo = this.#consumoEnergia();
-        return this.#rgb ? `RGB encendido en color ${this.#color} (${consumo})` : "Sin iluminación";
+        return this.#rgb ? `RGB encendido (${consumo})` : "Sin RGB";
     }
 
-    obtenerDetalles() { 
-        return `Periférico ${this.#color} | Conexión: ${this.#validarConexion()}`;
+    obtenerDetalles() {
+        return `Periférico: ${this.#color} - Conexión: ${this.#validarConexion()}`;
     }
 }
+
+export default Periferico

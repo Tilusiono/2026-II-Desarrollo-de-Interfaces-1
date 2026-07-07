@@ -1,14 +1,16 @@
-class Transaccion extends EntidadTienda {
+class Transaccion {
     moneda;
+    #idTransaccion;
     #montoTotal;
     #metodoPago;
-    #comprobante;
 
-    constructor(id, codigoRef, montoTotal, metodoPago, comprobante, moneda = "PEN") {
-        super(id, codigoRef);
+    constructor(idTransaccion, montoTotal, metodoPago, moneda = "PEN") {
+        if (new.target === Transaccion) {
+            throw new Error("Abstracción: Transaccion no se puede instanciar.");
+        }
+        this.#idTransaccion = idTransaccion;
         this.#montoTotal = montoTotal;
         this.#metodoPago = metodoPago;
-        this.#comprobante = comprobante;
         this.moneda = moneda;
     }
 
@@ -17,15 +19,17 @@ class Transaccion extends EntidadTienda {
     }
 
     #generarFolio() {
-        return `FOLIO-${this.#comprobante}-${this.#metodoPago}`;
+        return `TRX-${this.#idTransaccion}-${this.#metodoPago}`;
     }
 
     procesarPagoBase() {
-        if (!this.#validarMonto()) throw new Error("Monto inválido para procesar.");
-        return `Pago procesado vía ${this.#metodoPago} | ${this.#generarFolio()}`;
+        if (!this.#validarMonto()) throw new Error("Monto inválido");
+        return `Aprobado: ${this.#generarFolio()} por ${this.#montoTotal} ${this.moneda}`;
     }
 
-    obtenerDetalles() { 
-        return `Transacción de ${this.#montoTotal} ${this.moneda}`;
+    obtenerDetalles() {
+        throw new Error("Polimorfismo: Debe implementarse en la clase hija.");
     }
 }
+
+export default Transaccion

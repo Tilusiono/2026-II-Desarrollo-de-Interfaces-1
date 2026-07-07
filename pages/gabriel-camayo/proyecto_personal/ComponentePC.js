@@ -1,32 +1,35 @@
+import Articulo from './Articulo.js';
+
 class ComponentePC extends Articulo {
-    esCompatibleMac;
+    compatibleMac;
     #tdp;
     #socket;
     #frecuencia;
 
-    constructor(id, codigoRef, nombreArticulo, precioBase, stockActual, tdp, socket, frecuencia, esCompatibleMac = false) {
-        super(id, codigoRef, nombreArticulo, precioBase, stockActual);
+    constructor(id, nombre, precioBase, tdp, socket, frecuencia, compatibleMac = false) {
+        super(id, nombre, precioBase);
         this.#tdp = tdp;
         this.#socket = socket;
         this.#frecuencia = frecuencia;
-        this.esCompatibleMac = esCompatibleMac;
+        this.compatibleMac = compatibleMac;
     }
 
     #evaluarTemperatura() {
-        return this.#tdp > 100 ? "Requiere refrigeración líquida" : "Disipador de aire suficiente";
+        return this.#tdp > 100 ? "Requiere líquida" : "Disipador stock";
     }
 
-    #validarSocket(placaBase) {
-        return this.#socket === placaBase;
+    #validarSocket(placa) {
+        return this.#socket === placa;
     }
 
-    testearRendimiento(placaBase) {
+    testearRendimiento(placa) {
         const temp = this.#evaluarTemperatura();
-        const compatible = this.#validarSocket(placaBase);
-        return compatible ? `Rendimiento óptimo a ${this.#frecuencia}MHz. ${temp}` : "Error de compatibilidad";
+        return this.#validarSocket(placa) ? `Óptimo a ${this.#frecuencia}MHz - ${temp}` : "No compatible";
     }
 
-    obtenerDetalles() { 
-        return `Componente PC | Socket: ${this.#socket} | Mac Compatible: ${this.esCompatibleMac}`;
+    obtenerDetalles() {
+        return `Componente [Socket ${this.#socket}] - Mac: ${this.compatibleMac}`;
     }
 }
+
+export default ComponentePC

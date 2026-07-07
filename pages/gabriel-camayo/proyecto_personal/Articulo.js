@@ -1,32 +1,37 @@
-class Articulo extends EntidadTienda {
-    enOferta;
-    #nombreArticulo;
+class Articulo {
+    fechaRegistro;
+    #id;
+    #nombre;
     #precioBase;
-    #stockActual;
 
-    constructor(id, codigoRef, nombreArticulo, precioBase, stockActual, enOferta = false) {
-        super(id, codigoRef);
-        this.#nombreArticulo = nombreArticulo;
+    constructor(id, nombre, precioBase, fechaRegistro = new Date()) {
+        if (new.target === Articulo) {
+            throw new Error("Abstracción: Articulo no se puede instanciar directamente.");
+        }
+        if (typeof id !== "number") throw new Error("ID debe ser number");
+        
+        this.#id = id;
+        this.#nombre = nombre;
         this.#precioBase = precioBase;
-        this.#stockActual = stockActual;
-        this.enOferta = enOferta;
+        this.fechaRegistro = fechaRegistro;
     }
 
-    #calcularImpuesto() {
+    #calcularIGV() {
         return this.#precioBase * 0.18;
     }
 
-    #tieneStockCritico() {
-        return this.#stockActual < 5;
+    #validarPrecioVenta() {
+        return this.#precioBase > 0;
     }
 
     calcularPrecioFinal() {
-        const impuesto = this.#calcularImpuesto();
-        const descuento = this.enOferta ? 0.10 : 0;
-        return (this.#precioBase + impuesto) * (1 - descuento);
+        if (!this.#validarPrecioVenta()) throw new Error("Precio inválido");
+        return this.#precioBase + this.#calcularIGV();
     }
 
-    obtenerDetalles() { 
-        return `Artículo: ${this.#nombreArticulo} | Stock crítico: ${this.#tieneStockCritico()}`;
+    obtenerDetalles() {
+        throw new Error("Polimorfismo: Debe implementarse en la clase hija.");
     }
 }
+
+ export default Articulo
