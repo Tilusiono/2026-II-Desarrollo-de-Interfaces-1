@@ -197,59 +197,7 @@ const horario = new Horario("06:00", "22:00", "Lunes a Sábado", "Domingos y fes
 
 
 
-
-/**CLASE 9**/
-class Correo {
-    correoPrincipal;
-    #correoSoporte;
-    #dominio;
-    #estado;
-
-    constructor(correoPrincipal, correoSoporte, dominio, estado) 
-    {
-        this.correoPrincipal = correoPrincipal;
-        this.#correoSoporte = correoSoporte;
-        this.#dominio = dominio;
-        this.#estado = estado;
-    }
-
-    // --- MÉTODOS DE CORREO ---
-    despachar() { return this.#enviar(); }
-    estadoCuenta() { return this.#estado; }
-
-    #enviar() { return `Destino: ${this.correoPrincipal}`; }
-    #filtrarSpam() { return true; }
-}
-
-const correo1 = new Correo("Powe@gym.com", "soporte@powergym.com", "powergym.com", "Activo");
-
-
 /**CLASE 10**/
-class Venta {
-    fecha;
-    #membresiaCompradas;
-    #total;
-    #metodoPago;
-
-    constructor(fecha, membresiaCompradas, total, metodoPago) 
-    {
-        this.fecha = fecha;
-        this.#membresiaCompradas = membresiaCompradas;
-        this.#total = total;
-        this.#metodoPago = metodoPago;   
-    }
-    // --- MÉTODOS DE VENTA ---
-    imprimirTicket() { return this.#generarCuerpo(); }
-    montoTotal() { return this.#total; }
-
-    #generarCuerpo() { return `Ticket del ${this.fecha}`; }
-    #validarTarjeta() { return this.#metodoPago === "Tarjeta de Crédito"; }
-}
-
-const venta1 = new Venta("22/06/2026", membresia1, 300, "Tarjeta de Crédito");
-
-
-/**CLASE 4**/
 class Membresía {
     nombreMembresía;
     #meses;
@@ -278,7 +226,7 @@ class Membresía {
 const membresia1 = new Membresía("Plan Anual Black", 12, "Acceso a todas las instalaciones durante un año", "Activa");
 
 
-/**CLASE 5**/
+/**CLASE 11**/
 class Precio {
     precioUnitario;
     #descuentoSoles;
@@ -308,7 +256,7 @@ constructor(precioUnitario, descuentoSoles, pagoTotal, moneda)
 const precio1 = new Precio(350, 50, 300, "Soles");
 
 
-/**CLASE 6**/
+/**CLASE 12**/
 
 class Ubicacion {
     direccion;
@@ -337,7 +285,7 @@ constructor(direccion, distrito, referencia, codigoPostal)
 const ubicacion1 = new Ubicacion("Paradero Inca Cola", "Ate Vitarte", "A una cuadra de Idat", "15074");
 
 
-/**CLASE 7**/
+/**CLASE 13**/
 class Horario {
     horaApertura;
     #horaCierre;
@@ -365,35 +313,7 @@ constructor(horaApertura, horaCierre, diasAtencion, turnoEspecial)
 const horario = new Horario("06:00", "22:00", "Lunes a Sábado", "Domingos y festivos");
 
 
-/**CLASE 8**/
-
-class Telefono {
-    numeroPrincipal;
-    #numeroSecundario;
-    #codigoPais;
-    #extension;
-
-constructor(numeroPrincipal, numeroSecundario, codigoPais, extension)
- {
-    this.numeroPrincipal = numeroPrincipal;
-    this.#numeroSecundario = numeroSecundario;
-    this.#codigoPais = codigoPais;
-    this.#extension = extension;
-}
-
-// --- MÉTODOS DE TELEFONO ---
-    formatoInternacional() { return this.#unirCodigo(); }
-    tieneAnexo() { return this.#extension !== ""; }
-
-    #unirCodigo() { return `${this.#codigoPais} ${this.numeroPrincipal}`; }
-    #esCelular() { return this.numeroPrincipal.startsWith("9"); }
-}
-
-const telefono1 = new Telefono("976920560", "992587789", "+51", "101");
-
-
-
-/**CLASE 9**/
+/**CLASE 14**/
 
 class Correo {
     correoPrincipal;
@@ -421,7 +341,7 @@ constructor(correoPrincipal, correoSoporte, dominio, estado)
 const correo1 = new Correo("Powe@gym.com", "soporte@powergym.com", "powergym.com", "Activo");
 
 
-/**CLASE 10**/
+/**CLASE 15**/
 
 class Venta {
     fecha;
