@@ -196,30 +196,6 @@ class Horario {
 const horario = new Horario("06:00", "22:00", "Lunes a Sábado", "Domingos y festivos");
 
 
-/**CLASE 8**/
-class Telefono {
-    numeroPrincipal;
-    #numeroSecundario;
-    #codigoPais;
-    #extension;
-
-    constructor(numeroPrincipal, numeroSecundario, codigoPais, extension)
-    {
-        this.numeroPrincipal = numeroPrincipal;
-        this.#numeroSecundario = numeroSecundario;
-        this.#codigoPais = codigoPais;
-        this.#extension = extension;
-    }
-
-    // --- MÉTODOS DE TELEFONO ---
-    formatoInternacional() { return this.#unirCodigo(); }
-    tieneAnexo() { return this.#extension !== ""; }
-
-    #unirCodigo() { return `${this.#codigoPais} ${this.numeroPrincipal}`; }
-    #esCelular() { return this.numeroPrincipal.startsWith("9"); }
-}
-
-const telefono1 = new Telefono("976920560", "992587789", "+51", "101");
 
 
 /**CLASE 9**/
