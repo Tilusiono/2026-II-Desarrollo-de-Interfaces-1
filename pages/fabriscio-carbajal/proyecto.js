@@ -56,6 +56,8 @@ console.log(colchonKing1.getNombre())
 colchonIndividual1.setNombre("Nuevo colchon personal")
 colchonKing1.setNombre("Nuevo colchon Gigante")
 
+console.log("")
+
 // imprimir los cambios realizados
 console.log(colchonIndividual1.getNombre())
 console.log(colchonKing1.getNombre())

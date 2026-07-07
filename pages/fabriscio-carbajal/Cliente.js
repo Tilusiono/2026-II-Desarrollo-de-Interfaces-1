@@ -53,7 +53,7 @@ class Cliente {
         // Almacena el id del producto, el nombre y la cantidad en un objeto
         let carrito = {
             "id": producto.idProducto,
-            "producto": producto.nombre,
+            "producto": producto.getNombre(),  // almacenará con el getter el nombre privado del producto
             "cantidad": cantidad
         }
         return carrito

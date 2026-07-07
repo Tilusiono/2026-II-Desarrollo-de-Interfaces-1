@@ -10,15 +10,6 @@ class Colchon extends Producto{
         this.plaza = plz;
         this.comodidad = comd;
     }
-    // heredan el getter ambos colchones
-    getNombre(){
-        return this.nombre
-    }
-
-    // heredan setter 
-    setNombre(nuevoNombre){
-        this.nombre = nuevoNombre
-    }
 
     mostrarDatos(){
         super.mostrarDatos();
