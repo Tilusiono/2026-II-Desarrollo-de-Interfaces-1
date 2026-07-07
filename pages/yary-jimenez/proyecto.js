@@ -1,5 +1,40 @@
-class Cafeteria {
-    #nombre;
+class Persona {
+    nombre; 
+    #dni;
+    #telefono;
+    #correo;
+
+    constructor(nombre, dni, telefono, correo) {
+        if (new.target === Persona) {
+            throw new Error("No se puede crear un objeto de Persona.");
+        }
+
+        this.nombre = nombre;
+        this.#dni = dni;
+        this.#telefono = telefono;
+        this.#correo = correo;
+    }
+
+    
+    mostrarDatos() {
+        console.log("Nombre: " + this.nombre);
+    }
+
+    trabajar() {
+        console.log("La persona trabaja.");
+    }
+
+    
+    #validarCorreo() {
+        return this.#correo.includes("@");
+    }
+
+    #validarTelefono() {
+        return this.#telefono.length >= 9;
+    }
+}
+ class Cafeteria {
+    nombre;
     #tipoCafe;
     #capacidad;
     #sucursal;
@@ -14,38 +49,120 @@ class Cafeteria {
 
     constructor(nombre, tipoCafe, capacidad, sucursal) 
 {
-    this.#nombre = nombre;
+    this.nombre = nombre;
     this.#tipoCafe = tipoCafe;
     this.#capacidad = capacidad;
     this.#sucursal = sucursal;
 }
+abrir() {
+    console.log("La cafetería abrió.");
 }
 
-const cafeteria1 = new Cafeteria("Central", "Arábica", 120, "Sucursal Centro");
+cerrar() {
+    console.log("La cafetería cerró.");
+}
+
+// Métodos privados
+#limpiar() {
+    console.log("Limpiando...");
+}
+
+#contarMesas() {
+    return this.#capacidad;
+}
+}
 
 
-
-class Vendedor {
-    #nombre;
-    #apellido;
-    #turno;
+class Empleado extends persona{
+ cargo; 
     #salario;
-constructor(nombre, apellido, turno, salario)
- {
-    this.#nombre = nombre;
-    this.#apellido = apellido;
-    this.#turno = turno;
-    this.#salario = salario;
+    #turno;
+    #codigo;
+
+    constructor(nombre, dni, telefono, correo, cargo, salario, turno, codigo) {
+
+        super(nombre, dni, telefono, correo);
+
+        this.cargo = cargo;
+        this.#salario = salario;
+        this.#turno = turno;
+        this.#codigo = codigo;
+    }
+
+    mostrarCargo() {
+        console.log(this.cargo);
+    }
+
+    trabajar() {
+        console.log("El empleado trabaja.");
+    }
+
+    #calcularBono() {
+        return this.#salario * 0.10;
+    }
+
+    #registrarEntrada() {
+        console.log("Entrada registrada");
+    }
 }
 
+class Vendedor extends Empleado {
+
+    sucursal; // Pública
+    #ventas;
+    #comision;
+    #zona;
+
+    constructor(nombre, dni, telefono, correo, cargo, salario, turno, codigo,
+        sucursal, ventas, comision, zona) {
+
+        super(nombre, dni, telefono, correo, cargo, salario, turno, codigo);
+
+        this.sucursal = sucursal;
+        this.#ventas = ventas;
+        this.#comision = comision;
+        this.#zona = zona;
+    }
+
+    trabajar() {
+        console.log("El vendedor vende café.");
+    }
+
+    vender() {
+        console.log("Venta realizada.");
+    }
+
+    #calcularComision() {
+        return this.#ventas * this.#comision;
+    }
+
+    #actualizarVentas() {
+        this.#ventas++;
+    }
+  
 }
+const vendedor1 = new Vendedor(
+    "Luis",
+    "12345678",
+    "999999999",
+    "luis@email.com",
+    "Vendedor",
+    1500,
+    "Mañana",
+    "EMP001",
+    "Sucursal Centro",
+    20,
+    5,
+    "Zona Norte"
+);
 
 
-const vendedor1 = new Vendedor("Luis", "Gómez", "Mañana", 1500);
+
+
 
 
 class Cliente {
-    #nombre;
+    nombre;
     #telefono;
     #correo;
     #direccion;
@@ -57,13 +174,27 @@ class Cliente {
     this.#correo = correo;
     this.#direccion = direccion;    
 }
+comprar() {
+    console.log("Cliente comprando");
 }
 
-const cliente1 = new Cliente("Luis", "999999999", "luis@email.com", "Av. Principal 123");
+consultar() {
+    console.log("Consulta realizada");
+}
+
+#validarCorreo() {
+    return true;
+}
+
+#registrarCompra() {
+    console.log("Compra registrada");
+}
+}
+
 
 
 class Producto {
-    #nombreProducto;
+    nombreProducto;
     #categoria;
     #stock;
     #descripcion;
@@ -76,16 +207,27 @@ class Producto {
     this.#descripcion = descripcion;
 }
 
+vender() {
+    console.log("Producto vendido");
 }
 
-const producto1 = new Producto("Latte", "Bebida", 20, "Café con leche");
+reponer() {
+    console.log("Stock actualizado");
+}
+
+#actualizarStock() {}
+
+#validarStock() {}
+
+}
+
 
 
 
 
 
 class Precio {
-    #precioUnitario;
+    precioUnitario;
     #descuento;
     #precioFinal;
     #moneda;
@@ -98,13 +240,19 @@ constructor(precioUnitario, descuento, precioFinal)
     this.#moneda = moneda;
 }
 
+calcular() {}
+
+mostrar() {}
+
+#aplicarDescuento() {}
+
+#convertir() {}
 }
 
-const precio1 = new Precio(10, 2, 8, "Soles");
 
 
 class Ubicacion {
-    #direccion;
+    direccion;
     #distrito;
     #referencia;
     #codigoPostal;
@@ -115,14 +263,19 @@ constructor(direccion, distrito, referencia)
     this.#referencia = referencia;
     this.#codigoPostal = codigoPostal;
 }
+mostrar() {}
+
+actualizar() {}
+
+#validar() {}
+
+#buscarMapa() {}
 }
 
 
-const ubicacion1 = new Ubicacion("Av. Principal 123", "Miraflores", "Frente al parque", "15074");
-
 
 class Horario {
-    #horaApertura;
+    horaApertura;
     #horaCierre;
     #diasAtencion;
     #turnoEspecial;
@@ -134,14 +287,20 @@ constructor(horaApertura, horaCierre, diasAtencion)
     this.#diasAtencion = diasAtencion;
     this.#turnoEspecial = turnoEspecial;
 }
+abrir() {}
 
+cerrar() {}
+
+#validarHora() {}
+
+#cambiarTurno() {}
 }
 
-const horario1 = new Horario("08:00", "20:00", "Lunes a Sábado", "Noche");
+
 
 
 class Telefono {
-    #numeroPrincipal;
+    numeroPrincipal;
     #numeroSecundario;
     #codigoPais;
     #extension;
@@ -153,9 +312,15 @@ constructor(numeroPrincipal, numeroSecundario, codigoPais)
     this.#codigoPais = codigoPais;
     this.#extension = extension;
 }
+abrir() {}
+
+cerrar() {}
+
+#validarHora() {}
+
+#cambiarTurno() {}
 }
 
-const telefono1 = new Telefono("987654321", "912345678", "+51", "101");
 
 
 
