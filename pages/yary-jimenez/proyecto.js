@@ -15,7 +15,6 @@ class Persona {
         this.#correo = correo;
     }
 
-    
     mostrarDatos() {
         console.log("Nombre: " + this.nombre);
     }
