@@ -111,7 +111,7 @@ class Producto extends Categoria {
     }
 
     getId() {
-        return this.#id;
+        return this.#iditem;
     }
 
     getStock() {
@@ -205,8 +205,8 @@ class Cliente extends Persona {
     constructor(nombre, apellido_paterno, apellido_materno, correo, telefono, direccion) {
         super(nombre,apellido_paterno,apellido_materno);
 
-        this.#apellido_paterno = apellido_paterno;
-        this.#apellido_materno = apellido_materno;
+        this.apellido_paterno = apellido_paterno;
+        this.apellido_materno = apellido_materno;
         this.correo = correo;
         this.telefono = telefono;
         this.direccion = direccion;
@@ -289,8 +289,8 @@ class Compra {
 class Empleado extends Persona {
     constructor(nombre,apellido_paterno, apellido_materno, cargo, sueldo, turno) {
         super(nombre,apellido_paterno,apellido_materno);
-        this.#apellido_paterno = apellido_paterno;
-        this.#apellido_materno = apellido_materno;
+        this.apellido_paterno = apellido_paterno;
+        this.apellido_materno = apellido_materno;
         this.cargo = cargo;
         this.sueldo = sueldo;
         this.turno = turno; // mañana, tarde, noche
