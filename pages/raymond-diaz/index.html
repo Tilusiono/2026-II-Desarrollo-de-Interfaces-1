@@ -99,6 +99,43 @@
             <p id="mensajeVenta" class="mensaje" role="status"></p>
         </aside>
 
+        <section id="clientes" class="clientes" aria-labelledby="tituloClientes">
+            <h2 id="tituloClientes">Clientes registrados</h2>
+            <p>
+                Clientes de ejemplo para la venta de equipos electrónicos para PC.
+            </p>
+            <div id="listaClientes" class="lista-clientes"></div>
+        </section>
+
+        <section id="modulosExtra" class="modulos-extra" aria-labelledby="tituloModulosExtra">
+            <h2 id="tituloModulosExtra">Gestión adicional de la tienda</h2>
+            <p>
+                Módulos extra para controlar garantías, métodos de pago, inventario y comprobantes.
+            </p>
+
+            <div class="grid-extra">
+                <article class="tarjeta-extra">
+                    <h3>Garantías</h3>
+                    <div id="listaGarantias"></div>
+                </article>
+
+                <article class="tarjeta-extra">
+                    <h3>Métodos de pago</h3>
+                    <div id="listaMetodosPago"></div>
+                </article>
+
+                <article class="tarjeta-extra">
+                    <h3>Inventario</h3>
+                    <div id="datosInventario"></div>
+                </article>
+
+                <article class="tarjeta-extra">
+                    <h3>Comprobante</h3>
+                    <div id="datosFactura"></div>
+                </article>
+            </div>
+        </section>
+
         <section id="proveedores" class="proveedores" aria-labelledby="tituloProveedores">
             <h2 id="tituloProveedores">Proveedores de equipos electrónicos</h2>
             <p>
@@ -113,6 +150,13 @@
     </footer>
 
     <script src="js/vendedor.js"></script>
+    <script src="js/IRegistroVenta.js"></script>
+    <script src="js/ClienteNatural.js"></script>
+    <script src="js/ClienteEmpresarial.js"></script>
+    <script src="js/Garantia.js"></script>
+    <script src="js/MetodoPago.js"></script>
+    <script src="js/Inventario.js"></script>
+    <script src="js/Factura.js"></script>
     <script src="js/productos.js"></script>
     <script src="js/proyecto.js"></script>
 </body>
