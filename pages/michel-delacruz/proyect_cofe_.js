@@ -10,12 +10,22 @@ class Molde {
         return this.nombre;
     }
 
-    // set modifica
+    // 
     setNombre(nuevoNombre) {
-        if (nuevoNombre !== "") {
-            this.nombre = nuevoNombre;
+        if (this.#validarNombre(nuevoNombre)) {
+            this.nombre = this.#MayuculaNombre(nuevoNombre);
         }
     }
+
+    //  privado
+   #validarNombre(nombre) {
+    return /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(nombre);
+    }
+
+    #MayuculaNombre(nombre) {
+    return nombre.charAt(0).toUpperCase() + nombre.slice(1).toLowerCase();
+    }
+
 }
 
 
@@ -47,19 +57,22 @@ class Producto extends Molde {
     getDisponible() {
         return this.#disponible;
     }
-
-    setStock(nuevoStock) {
-        if (nuevoStock >= 0) {
-            this.#stock = nuevoStock;
-        }
-    }
-
+    
     setDisponible(estado) {
         this.#disponible = estado;
     }
 
     obtenerInfo() {
         return `${this.nombre} - S/ ${this.precio}`;
+    }
+
+    // PRIVADA
+    #validarNombre(nombre) {
+    return /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(nombre);
+    }
+
+    #actualizarDisponibilidad() {
+    this.#disponible = this.#stock > 0;
     }
 }
 
@@ -77,6 +90,16 @@ class Bebida extends Producto {
 
     obtenerInfo() {
         return `${this.nombre} (${this.tamano}) - ${this.tipo} - S/ ${this.precio}`;
+    }
+
+    // PRIVADO
+
+    #validarTamano(tamano) {
+    return ["Chico", "Mediano", "Grande"].includes(tamano);
+    }
+
+    #validarTipo(tipo) {
+    return ["Caliente", "Fría"].includes(tipo);
     }
 }
 
@@ -107,13 +130,24 @@ class Cliente extends Molde {
         return this.#totalGastado;
     }
 
-    agregarCompra(compra) {
-        this.#compras.push(compra);
-        this.#totalGastado += compra.calcularTotal();
+   agregarCompra(compra) {
+    this.#compras.push(compra);
+    this.#actualizarTotalGastado(compra);
     }
 
     obtenerDatos() {
         return `Cliente: ${this.nombre} - ${this.correo}`;
+    }
+
+
+    // PRIVADO
+
+    #validarCorreo(correo) {
+    return correo.includes("@") && correo.includes(".");
+    }
+
+    #actualizarTotalGastado(compra) {
+    this.#totalGastado += compra.calcularTotal();
     }
 }
 
@@ -137,6 +171,22 @@ class Compra {
     calcularTotal() {
         return this.total;
     }
+
+    // PRIVADO
+    #calcularSubtotal() {
+    let subtotal = 0;
+
+    this.productos.forEach(producto => {
+        subtotal += producto.precio;
+    });
+
+    return subtotal;
+
+    }
+
+    #actualizarTotal() {
+    this.total = this.#calcularSubtotal();
+    }
 }
 
 
@@ -158,6 +208,15 @@ class Empleado extends Molde {
 
     subirSueldo(porcentaje) {
         this.sueldo += this.sueldo * (porcentaje / 100);
+    }
+
+    // PRIVADO
+    #validarSueldo(sueldo) {
+    return typeof sueldo === "number" && sueldo > 0;
+    }
+
+    #validarTurno(turno) {
+    return ["Mañana", "Tarde", "Noche"].includes(turno);
     }
 }
 
@@ -185,6 +244,15 @@ class Categoria extends Molde {
     obtenerInfo() {
         return `Categoría: ${this.nombre} - ${this.descripcion}`;
     }
+
+    // PRIVADO
+    #validarDescripcion(descripcion) {
+    return descripcion.trim() !== "";
+    }
+
+    #contarProductos() {
+    return this.#productos.length;
+    }
 }
 
 // =======================
@@ -208,6 +276,14 @@ class Pago {
 
     obtenerInfo() {
         return `Pago: ${this.metodo} - S/ ${this.monto} - ${this.estado}`;
+    }
+
+    #validarMonto(monto) {
+    return typeof monto === "number" && monto > 0;
+    }
+
+    #cambiarEstado() {
+    this.estado = "completado";
     }
 }
 
@@ -234,11 +310,18 @@ class Inventario {
     mostrarInventario() {
         return this.productos;
     }
+
+    #contarProductos() {
+    return this.productos.length;
+    }
+
+    #verificarExistencia(id) {
+    return this.productos.some(producto => producto.getId() === id);
+    }
+
+
 }
 
-// =======================
-// DEMO DEL SISTEMA
-// =======================
 
 // Productos
 const cafe1 = new Bebida(1, "Cappuccino", 12, 20, true, "Grande", "Caliente");
@@ -269,3 +352,55 @@ console.log(compra1);
 console.log(cliente1.obtenerDatos());
 console.log(pago1.obtenerInfo());
 console.log(inventario.mostrarInventario());
+
+
+
+// prueva
+
+class Factura {
+    #numero;
+    #igv;
+    #fecha;
+    #compra;
+
+
+    constructor(numero, compra, igv, fecha) {
+        this.#compra = compra;      
+
+        this.#numero = numero;     // Privada
+        this.#igv = igv;           // Privada
+        this.fecha = fecha;       
+    }
+
+    // Getters
+    getNumero() {
+        return this.#numero;
+    }
+
+    getIGV() {
+        return this.#igv;
+    }
+
+    getCompra() {
+        return this.#compra;
+    }
+
+    // Métodos privados
+    #calcularSubtotal() {
+        return this.#compra.calcularTotal() / (1 + this.#igv);
+    }
+
+    #calcularIGV() {
+        return this.#compra.calcularTotal() - this.#calcularSubtotal();
+    }
+
+    obtenerFactura() {
+        return `
+
+Factura N°: ${this.#numero}
+Fecha: ${this.#fecha}
+Total: S/ ${this.#compra.calcularTotal().toFixed(2)}
+IGV: S/ ${this.#calcularIGV().toFixed(2)}
+`;
+    }
+}
