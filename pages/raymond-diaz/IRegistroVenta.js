@@ -1,5 +1,5 @@
 // IRegistroVenta.js
-// Clase base tipo interfaz para indicar qué métodos deberían tener las clases de clientes.
+// Clase tipo interfaz para indicar métodos que deberían implementar los clientes.
 
 class IRegistroVenta {
     registrarCompra(fechaHora) {

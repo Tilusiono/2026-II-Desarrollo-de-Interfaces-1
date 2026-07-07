@@ -1,6 +1,5 @@
 // ClienteEmpresarial.js
 // ClienteEmpresarial hereda de Persona.
-// Sirve para compras de empresas que necesitan RUC y razón social.
 
 class ClienteEmpresarial extends Persona {
     #ruc;
@@ -21,14 +20,7 @@ class ClienteEmpresarial extends Persona {
         rubro,
         contactoEmpresa
     ) {
-        super({
-            id,
-            nombre,
-            apellido,
-            edad,
-            telefono,
-            fechaNacimiento
-        });
+        super({ id, nombre, apellido, edad, telefono, fechaNacimiento });
 
         this.#ruc = ruc;
         this.#razonSocial = razonSocial;
@@ -47,12 +39,12 @@ class ClienteEmpresarial extends Persona {
 
     mostrarDatos() {
         return `
-        Cliente Empresarial<br>
-        Representante: ${this.nombreCompleto}<br>
-        Razón social: ${this.#obtenerRazonSocial()}<br>
-        RUC válido: ${this.#validarRuc()}<br>
-        Rubro: ${this.rubro}<br>
-        Contacto: ${this.contactoEmpresa}
+            Cliente Empresarial<br>
+            Representante: ${this.nombreCompleto}<br>
+            Razón social: ${this.#obtenerRazonSocial()}<br>
+            RUC válido: ${this.#validarRuc()}<br>
+            Rubro: ${this.rubro}<br>
+            Contacto: ${this.contactoEmpresa}
         `;
     }
 
@@ -61,14 +53,10 @@ class ClienteEmpresarial extends Persona {
     }
 
     registrarCompra(fechaHora) {
-        console.log(
-            `${this.#razonSocial} registró una compra empresarial (${fechaHora.toLocaleString()})`
-        );
+        console.log(`${this.#razonSocial} registró una compra empresarial (${fechaHora.toLocaleString()})`);
     }
 
     cancelarCompra(fechaHora) {
-        console.log(
-            `${this.#razonSocial} canceló una compra empresarial (${fechaHora.toLocaleString()})`
-        );
+        console.log(`${this.#razonSocial} canceló una compra empresarial (${fechaHora.toLocaleString()})`);
     }
 }

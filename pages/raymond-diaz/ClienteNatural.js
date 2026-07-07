@@ -1,6 +1,5 @@
 // ClienteNatural.js
 // ClienteNatural hereda de Persona.
-// Se mantiene la idea de id, nombre, apellido, edad, teléfono y fechaNacimiento.
 
 class ClienteNatural extends Persona {
     #dni;
@@ -21,14 +20,7 @@ class ClienteNatural extends Persona {
         tipoCliente,
         metodoPago
     ) {
-        super({
-            id,
-            nombre,
-            apellido,
-            edad,
-            telefono,
-            fechaNacimiento
-        });
+        super({ id, nombre, apellido, edad, telefono, fechaNacimiento });
 
         this.#dni = dni;
         this.#direccion = direccion;
@@ -47,12 +39,12 @@ class ClienteNatural extends Persona {
 
     mostrarDatos() {
         return `
-        Cliente Natural<br>
-        Nombre: ${this.nombreCompleto}<br>
-        DNI válido: ${this.#validarDni()}<br>
-        Dirección: ${this.#obtenerDireccion()}<br>
-        Tipo: ${this.tipoCliente}<br>
-        Pago: ${this.metodoPago}
+            Cliente Natural<br>
+            Nombre: ${this.nombreCompleto}<br>
+            DNI válido: ${this.#validarDni()}<br>
+            Dirección: ${this.#obtenerDireccion()}<br>
+            Tipo: ${this.tipoCliente}<br>
+            Pago: ${this.metodoPago}
         `;
     }
 
@@ -61,14 +53,10 @@ class ClienteNatural extends Persona {
     }
 
     registrarCompra(fechaHora) {
-        console.log(
-            `${this.nombreCompleto} registró una compra (${fechaHora.toLocaleString()})`
-        );
+        console.log(`${this.nombreCompleto} registró una compra (${fechaHora.toLocaleString()})`);
     }
 
     cancelarCompra(fechaHora) {
-        console.log(
-            `${this.nombreCompleto} canceló una compra (${fechaHora.toLocaleString()})`
-        );
+        console.log(`${this.nombreCompleto} canceló una compra (${fechaHora.toLocaleString()})`);
     }
 }

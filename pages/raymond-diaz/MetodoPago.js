@@ -1,5 +1,5 @@
 // MetodoPago.js
-// Clase para representar métodos de pago en la venta de equipos electrónicos.
+// Clase para representar métodos de pago.
 
 class MetodoPago {
     #id;
@@ -23,16 +23,11 @@ class MetodoPago {
         this.#nombre = nombre;
         this.#descripcion = descripcion;
         this.#comision = comision;
-
         this.activo = activo;
     }
 
     #tieneComision() {
         return this.#comision > 0;
-    }
-
-    get id() {
-        return this.#id;
     }
 
     get nombre() {
@@ -53,11 +48,11 @@ class MetodoPago {
 
     mostrarDatos() {
         return `
-        Método: ${this.#nombre}<br>
-        Descripción: ${this.#descripcion}<br>
-        Comisión: ${(this.#comision * 100).toFixed(1)}%<br>
-        Tiene comisión: ${this.#tieneComision()}<br>
-        Activo: ${this.activo}
+            Método: ${this.#nombre}<br>
+            Descripción: ${this.#descripcion}<br>
+            Comisión: ${(this.#comision * 100).toFixed(1)}%<br>
+            Tiene comisión: ${this.#tieneComision()}<br>
+            Activo: ${this.activo}
         `;
     }
 }

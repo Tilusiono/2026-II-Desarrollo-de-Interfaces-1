@@ -4,160 +4,110 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Venta de Equipos Electrónicos para PC</title>
-    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header class="encabezado">
-        <nav class="barra">
-            <div>
-                <p class="etiqueta">PC ELECTRONICS STORE</p>
-                <h1>Sistema de venta de equipos electrónicos para PC</h1>
-            </div>
-            <a href="#catalogo" class="boton-secundario">Ver catálogo</a>
-        </nav>
-
-        <section class="hero">
-            <div>
-                <h2>Compra componentes, periféricos y accesorios para computadora</h2>
-                <p>
-                    Esta aplicación permite consultar productos, revisar proveedores,
-                    agregar equipos al carrito y finalizar una venta de forma dinámica,
-                    sin recargar la página.
-                </p>
-
-                <div class="acciones-hero">
-                    <a href="#catalogo" class="boton-principal enlace">Explorar productos</a>
-                    <a href="#proveedores" class="boton-secundario">Ver proveedores</a>
-                </div>
-            </div>
-
-            <div class="tarjeta-vendedor" aria-label="Datos del vendedor asignado">
-                <h3>Vendedor asignado</h3>
-                <p id="datosVendedor">Cargando vendedor...</p>
-            </div>
-        </section>
+    <header>
+        <h1>Sistema de venta de equipos electrónicos para PC</h1>
+        <p>
+            Proyecto de avance sin CSS. Funciona con Live Server usando solamente
+            el archivo HTML y los archivos JavaScript en la misma carpeta.
+        </p>
     </header>
 
     <main>
-        <section class="intro-tienda" aria-labelledby="tituloTienda">
-            <h2 id="tituloTienda">Tienda de equipos electrónicos para PC</h2>
-            <p>
-                El sistema está orientado a la venta de productos como procesadores,
-                memorias RAM, discos SSD, tarjetas gráficas, teclados, mouse y otros
-                accesorios para computadora. También gestiona proveedores, stock,
-                carrito de compra, subtotal, IGV y total final.
-            </p>
+        <section>
+            <h2>Vendedor asignado</h2>
+            <div id="datosVendedor">Cargando vendedor...</div>
         </section>
 
-        <section class="panel-controles" aria-labelledby="tituloFiltros">
-            <div>
-                <h2 id="tituloFiltros">Buscar productos</h2>
-                <p>Filtra por nombre, marca, categoría o proveedor.</p>
-            </div>
+        <hr>
 
-            <div class="controles">
-                <div>
-                    <label for="busqueda">Búsqueda de producto</label>
-                    <input type="search" id="busqueda" placeholder="Ejemplo: Ryzen, SSD, teclado, NVIDIA..." autocomplete="off">
-                </div>
-
-                <div>
-                    <label for="categoria">Categoría</label>
-                    <select id="categoria">
-                        <option value="todos">Todas</option>
-                        <option value="Procesador">Procesador</option>
-                        <option value="Memoria RAM">Memoria RAM</option>
-                        <option value="Almacenamiento">Almacenamiento</option>
-                        <option value="Periférico">Periférico</option>
-                        <option value="Tarjeta gráfica">Tarjeta gráfica</option>
-                    </select>
-                </div>
-            </div>
+        <section>
+            <h2>Clientes registrados</h2>
+            <div id="listaClientes"></div>
         </section>
 
-        <section id="catalogo" class="catalogo" aria-labelledby="tituloCatalogo">
-            <h2 id="tituloCatalogo">Catálogo de equipos para PC</h2>
-            <p>
-                Selecciona los productos disponibles y agrégalos al carrito.
-            </p>
-            <div id="listaProductos" class="lista-productos" aria-live="polite"></div>
+        <hr>
+
+        <section>
+            <h2>Buscar productos</h2>
+
+            <label for="busqueda">Búsqueda:</label>
+            <input type="search" id="busqueda" placeholder="Ejemplo: Ryzen, SSD, teclado">
+
+            <br><br>
+
+            <label for="categoria">Categoría:</label>
+            <select id="categoria">
+                <option value="todos">Todas</option>
+                <option value="Procesador">Procesador</option>
+                <option value="Memoria RAM">Memoria RAM</option>
+                <option value="Almacenamiento">Almacenamiento</option>
+                <option value="Periférico">Periférico</option>
+                <option value="Tarjeta gráfica">Tarjeta gráfica</option>
+            </select>
         </section>
 
-        <aside class="carrito" aria-labelledby="tituloCarrito">
-            <h2 id="tituloCarrito">Carrito de compra</h2>
-            <p>Resumen de los equipos seleccionados por el cliente.</p>
+        <hr>
 
+        <section>
+            <h2>Catálogo de equipos electrónicos para PC</h2>
+            <div id="listaProductos"></div>
+        </section>
+
+        <hr>
+
+        <section>
+            <h2>Carrito de compra</h2>
             <ul id="listaCarrito"></ul>
 
-            <div class="resumen">
-                <p>Subtotal: <strong id="subtotal">S/ 0.00</strong></p>
-                <p>IGV 18%: <strong id="igv">S/ 0.00</strong></p>
-                <p class="total">Total: <strong id="total">S/ 0.00</strong></p>
-            </div>
+            <p>Subtotal: <strong id="subtotal">S/ 0.00</strong></p>
+            <p>IGV 18%: <strong id="igv">S/ 0.00</strong></p>
+            <p>Total: <strong id="total">S/ 0.00</strong></p>
 
-            <button id="finalizarVenta" class="boton-principal">Finalizar venta</button>
-            <p id="mensajeVenta" class="mensaje" role="status"></p>
-        </aside>
-
-        <section id="clientes" class="clientes" aria-labelledby="tituloClientes">
-            <h2 id="tituloClientes">Clientes registrados</h2>
-            <p>
-                Clientes de ejemplo para la venta de equipos electrónicos para PC.
-            </p>
-            <div id="listaClientes" class="lista-clientes"></div>
+            <button id="finalizarVenta">Finalizar venta</button>
+            <p id="mensajeVenta"></p>
         </section>
 
-        <section id="modulosExtra" class="modulos-extra" aria-labelledby="tituloModulosExtra">
-            <h2 id="tituloModulosExtra">Gestión adicional de la tienda</h2>
-            <p>
-                Módulos extra para controlar garantías, métodos de pago, inventario y comprobantes.
-            </p>
+        <hr>
 
-            <div class="grid-extra">
-                <article class="tarjeta-extra">
-                    <h3>Garantías</h3>
-                    <div id="listaGarantias"></div>
-                </article>
+        <section>
+            <h2>Gestión adicional</h2>
 
-                <article class="tarjeta-extra">
-                    <h3>Métodos de pago</h3>
-                    <div id="listaMetodosPago"></div>
-                </article>
+            <h3>Garantías</h3>
+            <div id="listaGarantias"></div>
 
-                <article class="tarjeta-extra">
-                    <h3>Inventario</h3>
-                    <div id="datosInventario"></div>
-                </article>
+            <h3>Métodos de pago</h3>
+            <div id="listaMetodosPago"></div>
 
-                <article class="tarjeta-extra">
-                    <h3>Comprobante</h3>
-                    <div id="datosFactura"></div>
-                </article>
-            </div>
+            <h3>Inventario</h3>
+            <div id="datosInventario"></div>
+
+            <h3>Comprobante</h3>
+            <div id="datosFactura"></div>
         </section>
 
-        <section id="proveedores" class="proveedores" aria-labelledby="tituloProveedores">
-            <h2 id="tituloProveedores">Proveedores de equipos electrónicos</h2>
-            <p>
-                Empresas encargadas de abastecer componentes y accesorios para PC.
-            </p>
-            <div id="listaProveedores" class="lista-proveedores"></div>
+        <hr>
+
+        <section>
+            <h2>Proveedores</h2>
+            <div id="listaProveedores"></div>
         </section>
     </main>
 
     <footer>
-        <p>Aplicación web individual - Sistema de venta de equipos electrónicos para PC.</p>
+        <p>Aplicación web individual - Venta de equipos electrónicos para PC.</p>
     </footer>
 
-    <script src="/vendedor.js"></script>
-    <script src="/IRegistroVenta.js"></script>
-    <script src="/ClienteNatural.js"></script>
-    <script src="/ClienteEmpresarial.js"></script>
-    <script src="/Garantia.js"></script>
-    <script src="/MetodoPago.js"></script>
-    <script src="/Inventario.js"></script>
-    <script src="/Factura.js"></script>
-    <script src="/productos.js"></script>
-    <script src="/proyecto.js"></script>
+    <script src="vendedor.js"></script>
+    <script src="IRegistroVenta.js"></script>
+    <script src="ClienteNatural.js"></script>
+    <script src="ClienteEmpresarial.js"></script>
+    <script src="Garantia.js"></script>
+    <script src="MetodoPago.js"></script>
+    <script src="Inventario.js"></script>
+    <script src="Factura.js"></script>
+    <script src="productos.js"></script>
+    <script src="proyecto.js"></script>
 </body>
 </html>

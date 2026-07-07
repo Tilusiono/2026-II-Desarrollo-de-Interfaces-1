@@ -1,7 +1,5 @@
 // productos.js
-// Aquí se usan proveedores y HERENCIA en productos.
-// Producto es la clase padre.
-// Procesador, MemoriaRAM, Almacenamiento, Periferico y TarjetaGrafica heredan de Producto.
+// Proveedores y productos con herencia para equipos electrónicos de PC.
 
 class Proveedor {
     #id;
@@ -24,28 +22,17 @@ class Proveedor {
         this.#correo = correo;
     }
 
-    get id() {
-        return this.#id;
-    }
-
     get empresa() {
         return this.#empresa;
     }
 
-    get ruc() {
-        return this.#ruc;
-    }
-
-    get telefono() {
-        return this.#telefono;
-    }
-
-    get correo() {
-        return this.#correo;
-    }
-
     mostrarInfo() {
-        return `${this.#empresa}<br>RUC: ${this.#ruc}<br>Tel: ${this.#telefono}<br>${this.#correo}`;
+        return `
+            Empresa: ${this.#empresa}<br>
+            RUC: ${this.#ruc}<br>
+            Teléfono: ${this.#telefono}<br>
+            Correo: ${this.#correo}
+        `;
     }
 }
 
@@ -117,7 +104,7 @@ class Producto {
 
     reducirStock(cantidad = 1) {
         if (cantidad <= 0) throw new Error("La cantidad debe ser mayor que cero.");
-        if (this.#stock < cantidad) throw new Error("No hay stock suficiente para este producto.");
+        if (this.#stock < cantidad) throw new Error("No hay stock suficiente.");
         this.#stock -= cantidad;
     }
 

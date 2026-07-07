@@ -1,5 +1,5 @@
 // Factura.js
-// Clase para representar comprobantes de venta: boleta o factura.
+// Clase para representar comprobantes de venta.
 
 class Factura {
     #id;
@@ -24,7 +24,6 @@ class Factura {
         this.#numero = numero;
         this.#tipoComprobante = tipoComprobante;
         this.#cliente = cliente;
-
         this.estado = estado;
     }
 
@@ -36,21 +35,13 @@ class Factura {
         return this.#tipoComprobante.toLowerCase() === "factura";
     }
 
-    get id() {
-        return this.#id;
-    }
-
-    get tipoComprobante() {
-        return this.#tipoComprobante;
-    }
-
     emitir(total) {
         return `
-        ${this.#tipoComprobante}: ${this.#obtenerCodigoComprobante()}<br>
-        Cliente: ${this.#cliente}<br>
-        Total: S/ ${total.toFixed(2)}<br>
-        Es factura: ${this.#esFactura()}<br>
-        Estado: ${this.estado}
+            ${this.#tipoComprobante}: ${this.#obtenerCodigoComprobante()}<br>
+            Cliente: ${this.#cliente}<br>
+            Total: S/ ${total.toFixed(2)}<br>
+            Es factura: ${this.#esFactura()}<br>
+            Estado: ${this.estado}
         `;
     }
 

@@ -26,7 +26,6 @@ class Garantia {
         this.#codigoGarantia = codigoGarantia;
         this.#mesesCobertura = mesesCobertura;
         this.#condiciones = condiciones;
-
         this.producto = producto;
         this.estado = estado;
     }
@@ -39,30 +38,14 @@ class Garantia {
         return this.#codigoGarantia.toUpperCase();
     }
 
-    get id() {
-        return this.#id;
-    }
-
-    get codigoGarantia() {
-        return this.#codigoGarantia;
-    }
-
-    get mesesCobertura() {
-        return this.#mesesCobertura;
-    }
-
-    get condiciones() {
-        return this.#condiciones;
-    }
-
     mostrarDatos() {
         return `
-        Garantía: ${this.#obtenerCodigo()}<br>
-        Producto: ${this.producto}<br>
-        Cobertura: ${this.#mesesCobertura} meses<br>
-        Cobertura amplia: ${this.#validarCobertura()}<br>
-        Estado: ${this.estado}<br>
-        Condiciones: ${this.#condiciones}
+            Garantía: ${this.#obtenerCodigo()}<br>
+            Producto: ${this.producto}<br>
+            Cobertura: ${this.#mesesCobertura} meses<br>
+            Cobertura amplia: ${this.#validarCobertura()}<br>
+            Estado: ${this.estado}<br>
+            Condiciones: ${this.#condiciones}
         `;
     }
 

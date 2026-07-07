@@ -1,5 +1,5 @@
 // proyecto.js
-// Aquí se controla el DOM, el carrito y la venta principal.
+// Archivo principal: crea objetos, gestiona el carrito y actualiza el HTML.
 
 class ProyectoVenta {
     #productos;
@@ -12,10 +12,6 @@ class ProyectoVenta {
         this.#carrito = [];
         this.#vendedor = vendedor;
         this.#proveedores = proveedores;
-    }
-
-    obtenerProductos() {
-        return this.#productos;
     }
 
     obtenerCarrito() {
@@ -42,7 +38,7 @@ class ProyectoVenta {
         const producto = this.buscarProductoPorId(idProducto);
 
         if (!producto) {
-            throw new Error("No se encontró el producto seleccionado.");
+            throw new Error("No se encontró el producto.");
         }
 
         producto.reducirStock(1);
@@ -53,7 +49,7 @@ class ProyectoVenta {
             itemExistente.cantidad += 1;
         } else {
             this.#carrito.push({
-                producto: producto,
+                producto,
                 cantidad: 1
             });
         }
@@ -76,9 +72,7 @@ class ProyectoVenta {
     }
 
     calcularSubtotal() {
-        return this.#carrito.reduce((suma, item) => {
-            return suma + item.producto.precio * item.cantidad;
-        }, 0);
+        return this.#carrito.reduce((suma, item) => suma + item.producto.precio * item.cantidad, 0);
     }
 
     calcularIGV() {
@@ -91,11 +85,12 @@ class ProyectoVenta {
 
     finalizarVenta() {
         if (this.#carrito.length === 0) {
-            throw new Error("El carrito está vacío. Agrega productos antes de finalizar.");
+            throw new Error("El carrito está vacío.");
         }
 
         const total = this.calcularTotal();
         this.#carrito = [];
+
         return `Venta registrada por ${this.#vendedor.nombreCompleto}. Total pagado: S/ ${total.toFixed(2)}`;
     }
 }
@@ -128,10 +123,12 @@ const vendedor = new Vendedor({
     id: 1,
     nombre: "Raymond",
     apellido: "Díaz",
+    edad: 18,
     telefono: "999-888-777",
+    fechaNacimiento: new Date("2008-07-07"),
     correo: "ventaspc@tienda.com",
     codigoEmpleado: "VEND-001",
-    cargo: "Asesor de ventas",
+    cargo: "Asesor de ventas de equipos para PC",
     sede: "Lima"
 });
 
@@ -255,10 +252,14 @@ const productos = [
 const proyecto = new ProyectoVenta(productos, vendedor, [proveedor1, proveedor2, proveedor3]);
 
 const datosVendedor = document.querySelector("#datosVendedor");
+const listaClientes = document.querySelector("#listaClientes");
 const listaProductos = document.querySelector("#listaProductos");
 const listaCarrito = document.querySelector("#listaCarrito");
+const listaGarantias = document.querySelector("#listaGarantias");
+const listaMetodosPago = document.querySelector("#listaMetodosPago");
+const datosInventario = document.querySelector("#datosInventario");
+const datosFactura = document.querySelector("#datosFactura");
 const listaProveedores = document.querySelector("#listaProveedores");
-const listaClientes = document.querySelector("#listaClientes");
 const busqueda = document.querySelector("#busqueda");
 const categoria = document.querySelector("#categoria");
 const subtotal = document.querySelector("#subtotal");
@@ -266,34 +267,23 @@ const igv = document.querySelector("#igv");
 const total = document.querySelector("#total");
 const finalizarVenta = document.querySelector("#finalizarVenta");
 const mensajeVenta = document.querySelector("#mensajeVenta");
-const listaGarantias = document.querySelector("#listaGarantias");
-const listaMetodosPago = document.querySelector("#listaMetodosPago");
-const datosInventario = document.querySelector("#datosInventario");
-const datosFactura = document.querySelector("#datosFactura");
 
 function formatearMoneda(valor) {
     return `S/ ${valor.toFixed(2)}`;
 }
 
-function crearTarjetaProducto(producto) {
-    const tarjeta = document.createElement("article");
-    tarjeta.className = producto.disponible ? "tarjeta-producto" : "tarjeta-producto agotado";
+function renderizarVendedor() {
+    datosVendedor.innerHTML = proyecto.obtenerVendedor().mostrarDatos();
+}
 
-    tarjeta.innerHTML = `
-        <span class="categoria">${producto.categoria}</span>
-        <h3>${producto.nombre}</h3>
-        <p><strong>Marca:</strong> ${producto.marca}</p>
-        <p class="proveedor"><strong>Proveedor:</strong> ${producto.proveedor.empresa}</p>
-        <p><strong>Detalle:</strong> ${producto.obtenerDetalleTecnico()}</p>
-        <p>${producto.descripcion}</p>
-        <p class="precio">${producto.obtenerPrecioFormateado()}</p>
-        <p class="stock"><strong>Stock:</strong> ${producto.stock}</p>
-        <button class="boton-principal" data-id="${producto.id}" ${producto.disponible ? "" : "disabled"}>
-            ${producto.disponible ? "Agregar al carrito" : "Sin stock"}
-        </button>
-    `;
+function renderizarClientes() {
+    listaClientes.innerHTML = "";
 
-    return tarjeta;
+    clientes.forEach(cliente => {
+        const contenedor = document.createElement("div");
+        contenedor.innerHTML = `<p>${cliente.mostrarDatos()}</p>`;
+        listaClientes.appendChild(contenedor);
+    });
 }
 
 function renderizarProductos() {
@@ -304,12 +294,29 @@ function renderizarProductos() {
     listaProductos.innerHTML = "";
 
     if (productosFiltrados.length === 0) {
-        listaProductos.innerHTML = "<p>No se encontraron productos con ese filtro.</p>";
+        listaProductos.innerHTML = "<p>No se encontraron productos.</p>";
         return;
     }
 
     productosFiltrados.forEach(producto => {
-        listaProductos.appendChild(crearTarjetaProducto(producto));
+        const tarjeta = document.createElement("article");
+
+        tarjeta.innerHTML = `
+            <h3>${producto.nombre}</h3>
+            <p>Categoría: ${producto.categoria}</p>
+            <p>Marca: ${producto.marca}</p>
+            <p>Proveedor: ${producto.proveedor.empresa}</p>
+            <p>Detalle: ${producto.obtenerDetalleTecnico()}</p>
+            <p>${producto.descripcion}</p>
+            <p>Precio: ${producto.obtenerPrecioFormateado()}</p>
+            <p>Stock: ${producto.stock}</p>
+            <button data-id="${producto.id}" ${producto.disponible ? "" : "disabled"}>
+                ${producto.disponible ? "Agregar al carrito" : "Sin stock"}
+            </button>
+            <hr>
+        `;
+
+        listaProductos.appendChild(tarjeta);
     });
 }
 
@@ -322,13 +329,10 @@ function renderizarCarrito() {
     } else {
         carrito.forEach(item => {
             const li = document.createElement("li");
-            li.className = "item-carrito";
 
             li.innerHTML = `
-                <span>${item.producto.nombre} x ${item.cantidad}</span>
-                <button class="boton-eliminar" data-id="${item.producto.id}" aria-label="Quitar ${item.producto.nombre}">
-                    Quitar
-                </button>
+                ${item.producto.nombre} x ${item.cantidad}
+                <button data-id="${item.producto.id}">Quitar</button>
             `;
 
             listaCarrito.appendChild(li);
@@ -340,31 +344,20 @@ function renderizarCarrito() {
     total.textContent = formatearMoneda(proyecto.calcularTotal());
 }
 
-function renderizarClientes() {
-    listaClientes.innerHTML = "";
-
-    clientes.forEach(cliente => {
-        const tarjeta = document.createElement("article");
-        tarjeta.className = "tarjeta-cliente";
-        tarjeta.innerHTML = `<h3>${cliente.nombreCompleto}</h3><p>${cliente.mostrarDatos()}</p>`;
-        listaClientes.appendChild(tarjeta);
-    });
-}
-
 function renderizarModulosExtra() {
     listaGarantias.innerHTML = "";
     listaMetodosPago.innerHTML = "";
 
     garantias.forEach(garantia => {
-        const item = document.createElement("p");
-        item.innerHTML = garantia.mostrarDatos();
-        listaGarantias.appendChild(item);
+        const p = document.createElement("p");
+        p.innerHTML = garantia.mostrarDatos();
+        listaGarantias.appendChild(p);
     });
 
     metodosPago.forEach(metodo => {
-        const item = document.createElement("p");
-        item.innerHTML = metodo.mostrarDatos();
-        listaMetodosPago.appendChild(item);
+        const p = document.createElement("p");
+        p.innerHTML = metodo.mostrarDatos();
+        listaMetodosPago.appendChild(p);
     });
 
     datosInventario.innerHTML = inventario.mostrarDatos();
@@ -375,22 +368,20 @@ function renderizarProveedores() {
     listaProveedores.innerHTML = "";
 
     proyecto.obtenerProveedores().forEach(proveedor => {
-        const tarjeta = document.createElement("article");
-        tarjeta.className = "tarjeta-proveedor";
-        tarjeta.innerHTML = `<h3>${proveedor.empresa}</h3><p>${proveedor.mostrarInfo()}</p>`;
-        listaProveedores.appendChild(tarjeta);
+        const contenedor = document.createElement("div");
+        contenedor.innerHTML = `<p>${proveedor.mostrarInfo()}</p>`;
+        listaProveedores.appendChild(contenedor);
     });
 }
 
 function actualizarInterfaz() {
+    renderizarVendedor();
+    renderizarClientes();
     renderizarProductos();
     renderizarCarrito();
-    renderizarClientes();
     renderizarModulosExtra();
     renderizarProveedores();
 }
-
-datosVendedor.innerHTML = proyecto.obtenerVendedor().mostrarDatos();
 
 listaProductos.addEventListener("click", event => {
     const boton = event.target.closest("button");

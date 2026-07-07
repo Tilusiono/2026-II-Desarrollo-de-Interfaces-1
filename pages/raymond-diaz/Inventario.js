@@ -1,5 +1,5 @@
 // Inventario.js
-// Clase para controlar movimientos de inventario de productos para PC.
+// Clase para controlar movimientos de inventario.
 
 class Inventario {
     #id;
@@ -36,14 +36,6 @@ class Inventario {
         });
     }
 
-    get id() {
-        return this.#id;
-    }
-
-    get almacen() {
-        return this.#almacen;
-    }
-
     registrarEntrada(producto, cantidad) {
         this.#registrarMovimiento("Entrada", producto, cantidad);
     }
@@ -58,9 +50,9 @@ class Inventario {
 
     mostrarDatos() {
         return `
-        Almacén: ${this.#almacen}<br>
-        Responsable: ${this.responsable}<br>
-        Movimientos registrados: ${this.#movimientos.length}
+            Almacén: ${this.#almacen}<br>
+            Responsable: ${this.responsable}<br>
+            Movimientos registrados: ${this.#movimientos.length}
         `;
     }
 }
