@@ -1,4 +1,5 @@
 
+/**CLASE 1**/
 class Gimnasio {
     nombre;
     #dirección;
@@ -34,6 +35,7 @@ class Gimnasio {
 const gimnasio1 = new Gimnasio("Power Gym", "Calle Trabajo", 200, "Ate Vitarte, San Juan de Lurigancho, San Borja y Miraflores");
 
 
+/**CLASE 2**/
 class Socio extends Gimnasio{
     nombre;
     #telefono;
@@ -41,6 +43,7 @@ class Socio extends Gimnasio{
     #direccion;
 
     constructor(nombre, telefono, correo, direccion) 
+
 {
     super("Power Gym", "Calle Trabajo", 200, "Sedes globales");
     this.nombre = nombre;
@@ -48,6 +51,7 @@ class Socio extends Gimnasio{
     this.#correo = correo;
     this.#direccion = direccion; 
 }
+
 // --- MÉTODOS DE SOCIO ---//
 
     obtenerDetalles() { return `Socio: ${this.nombre} - Email: ${this.#correo}`; }
@@ -60,6 +64,8 @@ class Socio extends Gimnasio{
 
 const socio1 = new Socio("José", "992531000", "tupapijose@soyrico.com", "San Roque Vitarte");
 
+
+/**CLASE 3**/
 class Vendedor extends Socio{
     nombreVendedor;
     #apellido;
@@ -69,12 +75,14 @@ class Vendedor extends Socio{
 
 constructor(nombre, apellido, turno, salario)
  {
+
     super("José", "992531000", "tupapijose@soyrico.com", "San Roque Vitarte");
     this.nombreVendedor = nombre;
     this.#apellido = apellido;
     this.#turno = turno;
     this.#salario = salario;
 }
+
 // --- MÉTODOS DE VENDEDOR ---//
     
     obtenerDetalles() { return `Vendedor: ${this.nombreVendedor} (Turno ${this.#turno})`; }
@@ -85,10 +93,10 @@ constructor(nombre, apellido, turno, salario)
 }
 
 
-
 const vendedor1 = new Vendedor("Tulio", "Manaure", "Tarde", 2000);
 
 
+/**CLASE 4**/
 class Membresía {
     nombreMembresía;
     #meses;
@@ -102,7 +110,9 @@ class Membresía {
     this.#meses = meses;
     this.#beneficios = beneficios;
     this.#estado = estado;
+    
 }
+
 // --- MÉTODOS DE MEMBRESÍA ---
     vigencia() { return `${this.#meses} meses`; }
     estaActiva() { return this.#validarEstado(); }
@@ -115,6 +125,7 @@ class Membresía {
 const membresia1 = new Membresía("Plan Anual Black", 12, "Acceso a todas las instalaciones durante un año", "Activa");
 
 
+/**CLASE 5**/
 class Precio {
     precioUnitario;
     #descuentoSoles;
@@ -129,7 +140,9 @@ constructor(precioUnitario, descuentoSoles, pagoTotal, moneda)
     this.#descuentoSoles = descuentoSoles;
     this.#pagoTotal = pagoTotal;
     this.#moneda = moneda;
+
 }
+
 // --- MÉTODOS DE PRECIO ---
     obtenerTotal() { return this.#calcular(); }
     tipoMoneda() { return this.#moneda; }
@@ -141,6 +154,8 @@ constructor(precioUnitario, descuentoSoles, pagoTotal, moneda)
 
 const precio1 = new Precio(350, 50, 300, "Soles");
 
+
+/**CLASE 6**/
 
 class Ubicacion {
     direccion;
@@ -169,6 +184,7 @@ constructor(direccion, distrito, referencia, codigoPostal)
 const ubicacion1 = new Ubicacion("Paradero Inca Cola", "Ate Vitarte", "A una cuadra de Idat", "15074");
 
 
+/**CLASE 7**/
 class Horario {
     horaApertura;
     #horaCierre;
@@ -183,6 +199,7 @@ constructor(horaApertura, horaCierre, diasAtencion, turnoEspecial)
     this.#diasAtencion = diasAtencion;
     this.#turnoEspecial = turnoEspecial;
 }
+
 // --- MÉTODOS DE HORARIO ---
     verApertura() { return this.horaApertura; }
     verCierre() { return this.#horaCierre; }
@@ -195,6 +212,7 @@ constructor(horaApertura, horaCierre, diasAtencion, turnoEspecial)
 const horario = new Horario("06:00", "22:00", "Lunes a Sábado", "Domingos y festivos");
 
 
+/**CLASE 8**/
 
 class Telefono {
     numeroPrincipal;
@@ -222,6 +240,7 @@ const telefono1 = new Telefono("976920560", "992587789", "+51", "101");
 
 
 
+/**CLASE 9**/
 
 class Correo {
     correoPrincipal;
@@ -249,7 +268,7 @@ constructor(correoPrincipal, correoSoporte, dominio, estado)
 const correo1 = new Correo("Powe@gym.com", "soporte@powergym.com", "powergym.com", "Activo");
 
 
-
+/**CLASE 10**/
 class Venta {
     fecha;
     #membresiaCompradas;
