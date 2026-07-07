@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Organización de Eventos</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="encabezado">
+        <nav class="barra-navegacion" aria-label="Navegación principal">
+            <div>
+                <p class="etiqueta">Organización de Eventos</p>
+                <h1>Sistema de inscripción a eventos</h1>
+            </div>
+            <a href="#eventos" class="boton-secundario">Ver eventos</a>
+        </nav>
+
+        <section class="hero">
+            <div>
+                <h2>Regístrate, revisa detalles y gestiona tus inscripciones sin recargar la página</h2>
+                <p>
+                    Aplicación web dinámica creada con HTML, CSS y JavaScript usando Programación Orientada a Objetos.
+                </p>
+            </div>
+
+            <div class="tarjeta-resumen" aria-label="Resumen de eventos inscritos">
+                <span id="contadorInscritos">0</span>
+                <p>eventos inscritos</p>
+            </div>
+        </section>
+    </header>
+
+    <main>
+        <section class="panel-controles" aria-labelledby="tituloFiltros">
+            <div>
+                <h2 id="tituloFiltros">Filtrar eventos</h2>
+                <p>Busca por nombre, ubicación o categoría.</p>
+            </div>
+
+            <div class="controles">
+                <label for="busqueda">Búsqueda</label>
+                <input type="search" id="busqueda" placeholder="Ejemplo: tecnología, Lima..." autocomplete="off">
+
+                <label for="categoria">Categoría</label>
+                <select id="categoria">
+                    <option value="todos">Todas las categorías</option>
+                    <option value="Tecnología">Tecnología</option>
+                    <option value="Negocios">Negocios</option>
+                    <option value="Educación">Educación</option>
+                    <option value="Cultura">Cultura</option>
+                </select>
+            </div>
+        </section>
+
+        <section id="eventos" class="seccion-eventos" aria-labelledby="tituloEventos">
+            <h2 id="tituloEventos">Eventos disponibles</h2>
+            <div id="listaEventos" class="lista-eventos" aria-live="polite"></div>
+        </section>
+
+        <aside class="panel-inscritos" aria-labelledby="tituloInscritos">
+            <h2 id="tituloInscritos">Mis eventos inscritos</h2>
+            <ul id="listaInscritos"></ul>
+        </aside>
+    </main>
+
+    <div id="modalDetalles" class="modal oculto" role="dialog" aria-modal="true" aria-labelledby="modalTitulo">
+        <div class="modal-contenido">
+            <button id="cerrarModal" class="cerrar" aria-label="Cerrar detalles">×</button>
+            <h2 id="modalTitulo"></h2>
+            <p id="modalDescripcion"></p>
+            <dl>
+                <dt>Fecha</dt>
+                <dd id="modalFecha"></dd>
+
+                <dt>Ubicación</dt>
+                <dd id="modalUbicacion"></dd>
+
+                <dt>Categoría</dt>
+                <dd id="modalCategoria"></dd>
+
+                <dt>Estado</dt>
+                <dd id="modalEstado"></dd>
+            </dl>
+        </div>
+    </div>
+
+    <footer>
+        <p>Trabajo individual - Aplicación web para gestión de eventos.</p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
