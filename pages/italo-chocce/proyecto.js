@@ -44,63 +44,180 @@ class usuario {
 
 
 class Billetera_virtual extends usuario {
-    constructor(id_usuario,correo_electronico,nombre,telefono,fondos_restantes,retirar_fondos,depositar_fondos) {
-        super(nombre,correo_electronico,id_usuario)
-        this.fondos_restantes = fondos_restantes;
-        this.retirar_fondos = retirar_fondos;
-        this.depositar_fondos = depositar_fondos;
+    metodo_pago; 
+    #saldo;
+    #pin_seguridad;
+    limite_diario;
 
+    constructor(id_usuario, correo_electronico, nombre, telefono, saldo, metodo_pago, pin123, limite_diario) {
+        super(nombre, correo_electronico, id_usuario, 18, telefono); // 
+        this.#saldo = saldo;
+        this.metodo_pago = metodo_pago;
+        this.limite_diario = 1000;
+        this.#pin_seguridad = pin123;
+    }
+
+    // --- MÉTODOS PÚBLICOS ---
+
+    consultar_saldo() {
+        return `Este es tu saldo actual: ${this.#saldo}`;
+    }
     
-}
+    depositar(cantidad) {
+        if (cantidad > 0) {
+            this.#saldo += cantidad;
+            console.log("Cantidad Recibida Exitosamente");
+        }
+    }
 
-}
+    retirar(cantidad, pin123) {
+        if (this.#validar_pin(pin123)) {
+            // Se usa #saldo porque es privado, y se corrigió la lógica
+            if (cantidad <= this.#saldo && cantidad <= this.limite_diario) {
+                this.#saldo -= cantidad;
+                console.log("Retiro exitoso");
+            } else {
+                console.log("Error: Fondos Insuficientes o excedes el limite diario colegita");
+            }
+        } else {
+            console.log("PIN incorrecto");
+        }
+    }
 
-class historial extends Billetera_virtual{ 
+    // MÉTODOS PRIVADOS 
 
-    constructor(id_usuario, transacciones, fecha_transaccion,monto_transaccion,tipo_transaccion,fondos_restantes,depositar_fondos,retirar_fondos) {
-
-        super(fondos_restantes,retirar_fondos,depositar_fondos)
-        this.id_usuario = id_usuario    
-        this.transacciones = transacciones;
-        this.fecha_transaccion =fecha_transaccion;
-        this.monto_transaccion =monto_transaccion;
-        this.tipo_transaccion =tipo_transaccion;
+    #validar_pin(pin123) {
+        return this.#pin_seguridad == pin123;
     }
 }
+class Cuenta_virtual extends Billetera_virtual {
+    // 4 Variables
+    tipo_cuenta;        // Pública
+    nivel_cuenta;       // Pública
+    #fecha_registro;    // Privada
+    #estado_verificacion;// Privada
 
+    constructor(id_usuario, correo, nombre, telefono, saldo, pin, tipo, nivel) {
+        super(id_usuario, correo, nombre, telefono, saldo, pin);
+        this.tipo_cuenta = tipo;
+        this.nivel_cuenta = nivel;
+        this.#fecha_registro = new Date().toLocaleDateString();// new date nos da datos mas estructurado y el tolocaledatestring nos da datos mas simplicados
+        this.#estado_verificacion = false; // 
+    }
 
+    //metodos publicos
+    ver_nivel(){
+        this.nivel_cuenta++;
+        console.log(`!Felicidade Subistes de Nivel¡: ${this.nivel_cuenta}`)
+    }
+
+    ver_cuenta(){
+        return `${this.tipo_cuenta} | ${this.nivel_cuenta}`
+    }
+
+    #validar_cuenta(documentos){
+    if(documento != null) {
+        this.#estado_verificacion = true;
+        return "Se Verifico correctamente";
+    }
+    return "Falta varios documentos, subelos"
+    }
+    
+    #getAntiguedad(){
+        return ` Registrado desde ${this.#fecha_registro}`
+    }
+}
 class recepcionista {
-    Constructor(id_empleado, nombre_empleado, turno) {
+    #salario
+    id_empleado;
+    nombre_empleado;
+    turno;
+
+
+    Constructor(id_empleado, nombre_empleado, turno,) {
         this.id_empleado = id_empleado;
         this.nombre_empleado = nombre_empleado;
         this.turno = turno;
+        this.#salario = 2000;
+
     }
-    
-}
+    //metodos publicos
+    info_rapida(){
+        return `${this.nombre_empleado} | ${this.id_empleado} | ${this.turno}`
+    }
+    //metodos privados
+    meta(meta){
+    if (meta > 100) 
+        return this.#salario * 0.10;
+    return 0;
+    }
+    }
 
 class Fichas {
-    id_usuario;//VALOR PUBLICO
-    #cantidad_fichas;//VALOR PRIVADO
+    #id_usuario;//VALOR PRIVADO
+    cantidad_fichas;//VALOR PUBLICO
     #fecha_adquision;//VALOR PRIVADO
     valor_ficha;//VALOR Publico
     Constructor(id_usuario, cantidad_fichas,valor_ficha,fecha_adquisicion) {
-        this.id_usuario = id_usuario;
-        this.#cantidad_fichas = cantidad_fichas;
+        this.#id_usuario = id_usuario;
+        this.cantidad_fichas = cantidad_fichas;
         this.valor_ficha = valor_ficha;
         this.#fecha_adquisicion = fecha_adquisicion
     }
+    //metodo publico
+    ficha(){
+    return `Las fichas tienen un valor unitario ${this.valor_ficha}`
+    }
+    //metodos privados
+    #getusuario(){
+        return `Nuestro cliente es ${this.#id_usuario}`
+    }
+   
+    #calcular_fichas(){
+        return this.cantidad_fichas * this.valor_ficha;
+    }
+
 }
 
 class Mesa {
+
+#id_mesa
+#usuariosJugando
+apuesta_maxima;
+apuesta_minima;
+juego;
+
+
     constructor(id_mesa, apuesta_maxima, apuesta_minima, juego) {
-        this.id_mesa = id_mesa;
-        this.apuesta_maxima = apuesta_maxima;
-        this.apuesta_minima = apuesta_minima;
+        this.#id_mesa = id_mesa;
+        this.apuesta_maxima = "10.000";
+        this.apuesta_minima = "0,10";
         this.juego = juego;
-        this.usuariosJugando = [];
+        this.#usuariosJugando = [];
 
 }
- 
+//metodo publico
+agregarJuagdor(usuario){
+    if (this.#esMesaLlena())
+        return "La mesa esta llena";
+    this.#usuariosJugando.push(usuario);
+        return "jugador añadido.";
+}
+
+verificarApuesra(monto){
+    if(this.#validarApuesta(monto)) {
+        return "Apuesta aceptada.";
+    }
+    return "Apuesta Fuera de limites.";
+}
+//metodo privado
+#mesallena(){
+    return this.#usuariosJugando.length >=5; // limite de jugadores por mesa
+}
+#validarLasApuestas(monto){
+   return monto >= this.apuesta_minima && monto <= this.apuesta_maxima 
+}
+
 }
 class apuesta {
     constructor(id_usuario, apuesta_realizada, estado, prediccion) {
@@ -113,6 +230,10 @@ class apuesta {
 }
 
 class Juez_mesa{
+#id_empleado
+#nombre_empleado
+mesa_asignada
+
     constructor(id_empleado, nombre_empleado, mesa_asignada) {
          this.id_empleado = id_empleado;
          this.nombre_empleado = nombre_empleado;
@@ -120,31 +241,68 @@ class Juez_mesa{
 
 }
 
+//metodo publico
+JUEZ(){
+    return`Hola Soy el Juez deL: ${this.mesa_asignada}`
+}
+//metodo privado
+#INFO_JUEZ(){
+    return `${this.#id_empleado} | ${this.#nombre_empleado}`
+}
 }
 
 class partida {
+id_partida
+id_mesa
+#usuarios_participantes;
+
     constructor(id_partida, id_mesa, usuarios_participantes) {
         this.id_partida = id_partida;
         this.id_mesa = id_mesa;
-        this.usuarios_participantes = usuarios_participantes;
+        this.usuarios_participantes = "10"
     }
 
+//metodos publico
+encontar_mesa(){
+    return `Puedes Encontrar La mesa: ${this.#id_mesa}`
 }
-    
 
+identificar_usuario(){
+    return `Los Usuarios son los siguientes: ${this.#usuarios_participantes}`
+}
+//metodos privados
+#validar_mesa(){
+    return this.#usuarios_participantes.length >=2;
+}
+
+    
+}
 
 class recompensa {
+#id_recompensa
+descripcion;
+
     constructor(id_recompensa, descripcion) {
         this.id_recompensa = id_recompensa;
         this.descripcion = descripcion;
     }
+    //metodo publico
+    ganar(){
+        this.#reclamacion();
+        return  `¡Felicidades! Has ganado ${this.descripcion} `
+
+    }
+    //metodo privado
+    #reclamo(){
+       console.log(`Registrando la recompensa #${this.recompensa} en el sistema. `);    }
+
 }
    
 
 console.log(usuario)
 console.log(recepcionista)
 console.log(Billetera_virtual)
-console.log(historial)
+console.log(Cuenta_virtual)
 console.log(Fichas)
 console.log(Mesa)
 console.log(apuesta)
