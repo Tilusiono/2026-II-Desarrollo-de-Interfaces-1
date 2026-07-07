@@ -1,6 +1,4 @@
-// =======================
-// MOLDE (CLASE BASE)
-// =======================
+
 class Molde {
     constructor(nombre) {
         this.nombre = nombre;
