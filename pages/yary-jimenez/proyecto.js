@@ -199,7 +199,7 @@ class Producto {
     #stock;
     #descripcion;
 
-    constructor(nombreProducto, categoria, stock) 
+    constructor(nombreProducto, categoria, stock, descripcion) 
 {
     this.#nombreProducto = nombreProducto;
     this.#categoria = categoria;
@@ -224,15 +224,13 @@ reponer() {
 
 
 
-
-
 class Precio {
     precioUnitario;
     #descuento;
     #precioFinal;
     #moneda;
 
-constructor(precioUnitario, descuento, precioFinal) 
+constructor(precioUnitario, descuento, precioFinal, moneda) 
 {
     this.#precioUnitario = precioUnitario;
     this.#descuento = descuento;
@@ -256,7 +254,7 @@ class Ubicacion {
     #distrito;
     #referencia;
     #codigoPostal;
-constructor(direccion, distrito, referencia) 
+constructor(direccion, distrito, referencia, codigoPostal) 
 {
     this.#direccion = direccion;
     this.#distrito = distrito;
@@ -280,7 +278,7 @@ class Horario {
     #diasAtencion;
     #turnoEspecial;
 
-constructor(horaApertura, horaCierre, diasAtencion) 
+constructor(horaApertura, horaCierre, diasAtencion, turnoEspecial) 
 {
     this.#horaApertura = horaApertura;
     this.#horaCierre = horaCierre;
@@ -305,7 +303,7 @@ class Telefono {
     #codigoPais;
     #extension;
 
-constructor(numeroPrincipal, numeroSecundario, codigoPais)
+constructor(numeroPrincipal, numeroSecundario, codigoPais, extension)
  {
     this.#numeroPrincipal = numeroPrincipal;
     this.#numeroSecundario = numeroSecundario;
@@ -326,39 +324,54 @@ mostrar() {}
 
 
 class Correo {
-    #correoPrincipal;
+    correoPrincipal;
     #correoSoporte;
     #dominio;
     #estado;
 
-constructor(correoPrincipal, correoSoporte, dominio) 
+constructor(correoPrincipal, correoSoporte, dominio, estado) 
 {
     this.#correoPrincipal = correoPrincipal;
     this.#correoSoporte = correoSoporte;
     this.#dominio = dominio;
     this.#estado = estado;
 }
+enviar() {}
+
+mostrar() {}
+
+#validarCorreo() {}
+
+#registrar() {}
 }
 
-const correo1 = new Correo("info@cafe.com", "soporte@cafe.com", "cafe.com", "Activo");
+
 
 
 
 class Venta {
-    #fecha;
+    fecha;
     #cantidad;
     #total;
     #metodoPago;
 
-constructor(fecha, cantidad, total) 
+constructor(fecha, cantidad, total, metodoPago) 
 {
     this.#fecha = fecha;
     this.#cantidad = cantidad;
     this.#total = total;
     this.#metodoPago = metodoPago;  
 }
+registrar() {}
+
+imprimir() {}
+
+#calcularTotal() {}
+
+#guardarVenta() {}
+
 }
-const venta1 = new Venta("18/06/2026", 3, 30, "Efectivo");
+
 
 
 class AlumnoTop10 extends Alumno{
