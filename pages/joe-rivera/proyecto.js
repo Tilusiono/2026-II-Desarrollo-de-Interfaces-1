@@ -196,124 +196,7 @@ class Horario {
 const horario = new Horario("06:00", "22:00", "Lunes a Sábado", "Domingos y festivos");
 
 
-
-/**CLASE 10**/
-class Membresía {
-    nombreMembresía;
-    #meses;
-    #beneficios;
-    #estado;
-
-    
-    constructor(nombreMembresía, meses, beneficios, estado) 
-    {
-    this.nombreMembresía = nombreMembresía;
-    this.#meses = meses;
-    this.#beneficios = beneficios;
-    this.#estado = estado;
-    
-}
-
-// --- MÉTODOS DE MEMBRESÍA ---
-    vigencia() { return `${this.#meses} meses`; }
-    estaActiva() { return this.#validarEstado(); }
-
-    #validarEstado() { return this.#estado === "Activa"; }
-    #auditar() { return true; }
-}
-
-
-const membresia1 = new Membresía("Plan Anual Black", 12, "Acceso a todas las instalaciones durante un año", "Activa");
-
-
-/**CLASE 11**/
-class Precio {
-    precioUnitario;
-    #descuentoSoles;
-    #pagoTotal;
-    #moneda;
-
-
-
-constructor(precioUnitario, descuentoSoles, pagoTotal, moneda) 
-{
-    this.precioUnitario = precioUnitario;
-    this.#descuentoSoles = descuentoSoles;
-    this.#pagoTotal = pagoTotal;
-    this.#moneda = moneda;
-
-}
-
-// --- MÉTODOS DE PRECIO ---
-    obtenerTotal() { return this.#calcular(); }
-    tipoMoneda() { return this.#moneda; }
-
-    #calcular() { return this.precioUnitario - this.#descuentoSoles; }
-    #validarMonto() { return this.#pagoTotal > 0; }
-}
-
-
-const precio1 = new Precio(350, 50, 300, "Soles");
-
-
-/**CLASE 12**/
-
-class Ubicacion {
-    direccion;
-    #distrito;
-    #referencia;
-    #codigoPostal;
-    
-
-constructor(direccion, distrito, referencia, codigoPostal) 
-{
-    this.direccion = direccion;
-    this.#distrito = distrito;
-    this.#referencia = referencia;
-    this.#codigoPostal = codigoPostal;
-}
-
-// --- MÉTODOS DE UBICACION ---
-    obtenerZona() { return this.#distrito; }
-    verPostal() { return this.#ocultarPostal(); }
-
-    #ocultarPostal() { return `CP: ${this.#codigoPostal}`; }
-    #verificarReferencia() { return this.#referencia !== ""; }
-}
-
-
-const ubicacion1 = new Ubicacion("Paradero Inca Cola", "Ate Vitarte", "A una cuadra de Idat", "15074");
-
-
-/**CLASE 13**/
-class Horario {
-    horaApertura;
-    #horaCierre;
-    #diasAtencion;
-    #turnoEspecial;
-
-
-constructor(horaApertura, horaCierre, diasAtencion, turnoEspecial) 
-{
-    this.horaApertura = horaApertura;
-    this.#horaCierre = horaCierre;
-    this.#diasAtencion = diasAtencion;
-    this.#turnoEspecial = turnoEspecial;
-}
-
-// --- MÉTODOS DE HORARIO ---
-    verApertura() { return this.horaApertura; }
-    verCierre() { return this.#horaCierre; }
-
-    #esFinDeSemana() { return this.#diasAtencion.includes("Domingo"); }
-    #alertaCierre() { return false; }
-}
-
-
-const horario = new Horario("06:00", "22:00", "Lunes a Sábado", "Domingos y festivos");
-
-
-/**CLASE 14**/
+/**CLASE 8**/
 
 class Correo {
     correoPrincipal;
@@ -341,7 +224,7 @@ constructor(correoPrincipal, correoSoporte, dominio, estado)
 const correo1 = new Correo("Powe@gym.com", "soporte@powergym.com", "powergym.com", "Activo");
 
 
-/**CLASE 15**/
+/**CLASE 9**/
 
 class Venta {
     fecha;
