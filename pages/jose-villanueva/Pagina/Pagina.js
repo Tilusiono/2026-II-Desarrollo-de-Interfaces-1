@@ -1,10 +1,13 @@
 class Evento {
-  constructor(id, nombre, fecha, ubicacion, categoria) {
+  constructor(id, nombre, fecha, ubicacion, categoria, capacidad, precio, organizador) {
     this.id = id;
     this.nombre = nombre;
     this.fecha = fecha;
     this.ubicacion = ubicacion;
     this.categoria = categoria;
+    this.capacidad = capacidad;
+    this.precio = precio;
+    this.organizador = organizador;
     this.inscrito = false;
   }
 
@@ -21,12 +24,12 @@ class GestorEventos {
 
   init() {
     this.eventos = [
-      new Evento(1, "España vs Austria", "2026-06-07", "Inglewood", "Deportes"),
-      new Evento(2, "Alianza Lima vs Universitario", "2026-07-15", "La Victoria", "Deportes"),
-      new Evento(3, "Barcelons vs Real Madrid", "2026-09-20", "España", "Deportes"),
-      new Evento(4, "Gonzalo genek", "2026-06-30", "Lima", "Conciertos"),
-      new Evento(5, "Armonia 10", "2026-09-30", "Lima", "Conciertos"),
-      new Evento(6, "Darrell", "2027-01-15", "Lima", "Conciertos"),
+      new Evento(1, "España vs Austria", "2026-06-07", "Inglewood", "Deportes", "100,000","$250", "FIFA"),
+      new Evento(2, "Alianza Lima vs Universitario", "2026-07-15", "La Victoria", "Deportes", "50,000","$100", "FPF"),
+      new Evento(3, "Barcelons vs Real Madrid", "2026-09-20", "España", "Deportes", "100,000","$800", "FIFA"),
+      new Evento(4, "Gonzalo genek", "2026-06-30", "Lima", "Conciertos", "20,000","$250", "MGK Producciones "),
+      new Evento(5, "Armonia 10", "2026-09-30", "Lima", "Conciertos", "15,000","$100", "One Entertainment"),
+      new Evento(6, "Darrell", "2027-01-15", "Lima", "Conciertos", "10,000","$1500", "DEA Promotora"),    
     ];
 
     this.render();
@@ -63,10 +66,13 @@ class GestorEventos {
       div.className = "evento";
 
       div.innerHTML = `
-        <strong>${ev.nombre}</strong><br>
-        📅 ${ev.fecha}<br>
-        📍 ${ev.ubicacion}<br>
-        🏷 ${ev.categoria}<br>
+      <strong>${ev.nombre}</strong><br>
+      📅 ${ev.fecha}<br>
+      📍 ${ev.ubicacion}<br>
+      🏷 ${ev.categoria}<br>
+      👥 Capacidad:  ${ev.capacidad}<br>
+      💰 Precio: S/ ${ev.precio}<br>
+      🎤 Organizador: ${ev.organizador}<br>
       `;
 
       const btn = document.createElement("button");
@@ -90,6 +96,29 @@ class GestorEventos {
       }
     });
   }
+}
+
+class Usuario {
+    constructor(id, nombre, correo, telefono, edad, dni) {
+        this.id = id;
+        this.nombre = nombre;
+        this.correo = correo;
+        this.telefono = telefono;
+        this.edad = edad;
+        this.dni = dni;
+    }
+
+    mostrarNombre() {
+        return this.nombre;
+    }
+
+    mostrarCorreo() {
+        return this.correo;
+    }
+
+    mostrarTelefono() {
+        return this.telefono;
+    }
 }
 
 new GestorEventos();

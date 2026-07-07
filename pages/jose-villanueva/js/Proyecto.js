@@ -64,8 +64,6 @@ alumnoNacional.registrarSalida(  new Date(new Date().setHours(new Date().getHour
 alumnoExtranjero.registrarEntrada( new Date());
 alumnoExtranjero.registrarSalida( new Date(new Date().setHours(new Date().getHours() + 5)));
 
-
-
 const profesor = new Profesor(
     1,
     "Bernabe",
