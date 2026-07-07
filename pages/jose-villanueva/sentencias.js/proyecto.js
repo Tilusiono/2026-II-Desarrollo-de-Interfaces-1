@@ -1,9 +1,10 @@
 //1
 class Persona {
-    #id;
-    #nombre;
-    #apellido;
-    #edad;
+   id; 
+
+   #nombre;
+   #apellido;
+  #edad;
 
     constructor(id, nombre, apellido, edad) {
         this.#id = id;
@@ -12,7 +13,7 @@ class Persona {
         this.#edad = edad;
     }
 
-    // GETTERS (encapsulamiento)
+    // GETTERS
     getNombreCompleto() {
         return `${this.#nombre} ${this.#apellido}`;
     }
@@ -32,10 +33,11 @@ class Persona {
 }
 //2
 class Alumno extends Persona {
-    #correo;
-    #telefono;
-    #grado;
-    #estado;
+   estado; 
+
+   #correo;
+   #telefono;
+   #grado;
 
     constructor(id, nombre, apellido, edad, correo, telefono, grado, estado) {
         super(id, nombre, apellido, edad);
@@ -63,17 +65,38 @@ class Alumno extends Persona {
     }
 }
 //3
-class Notas {
-    constructor(id, idAlumno, idCurso, calificacion, tipoEvaluacion, fecha) {
-        this.idNota = id;
-        this.idAlumno = idAlumno;
-        this.idCurso = idCurso;
-        this.calificacion = calificacion;
-        this.tipoEvaluacion = tipoEvaluacion;
-        this.fecha = fecha;
-    }
-}
+class Notas{
 
+    tipo;      // pública
+
+    #id;
+    #calificacion;
+    #fecha;
+
+    constructor(id,calificacion,fecha,tipo){
+        this.#id=id;
+        this.#calificacion=calificacion;
+        this.#fecha=fecha;
+        this.tipo=tipo;
+    }
+
+    mostrarNota(){
+        return this.#calificacion;
+    }
+
+    mostrarTipo(){
+        return this.tipo;
+    }
+
+    #validarNota(){
+        return this.#calificacion>=0 && this.#calificacion<=20;
+    }
+
+    #esAprobado(){
+        return this.#calificacion>=11;
+    }
+
+}
 class Profesor extends Persona {
     #correo;
     #especialidad;
@@ -106,16 +129,18 @@ class Profesor extends Persona {
 }
 
 //4
-class Curso {
+class Curso{
+
+    codigo; 
+
     #id;
     #nombre;
-    #codigo;
     #creditos;
 
     constructor(id, nombre, codigo, creditos) {
         this.#id = id;
         this.#nombre = nombre;
-        this.#codigo = codigo;
+        this.codigo = codigo;
         this.#creditos = creditos;
     }
 
@@ -241,11 +266,34 @@ class Producto {
     }
 }
 
-class Alumnotop10 extends Producto {
-    constructor(id, nombre, categoria, precio, stock, marca, fechaVencimiento) {
-        super(id, nombre, categoria, precio, stock, marca);
-        this.fechaVencimiento = fechaVencimiento;
+class AlumnoTop10 extends Alumno {
+
+    #promedio;
+    #puesto;
+    estado = "Top 10"; // pública
+
+    constructor(id,nombre,apellido,edad,correo,telefono,grado,estado,promedio,puesto){
+        super(id,nombre,apellido,edad,correo,telefono,grado,estado);
+        this.#promedio = promedio;
+        this.#puesto = puesto;
     }
+
+    mostrarRol(){
+        return "Soy un alumno Top 10";
+    }
+
+    mostrarPromedio(){
+        return this.#promedio;
+    }
+
+    #validarPromedio(){
+        return this.#promedio>=18;
+    }
+
+    #calcularMerito(){
+        return this.#puesto;
+    }
+
 }
 
 class alumnoterciosuperios extends Producto {
