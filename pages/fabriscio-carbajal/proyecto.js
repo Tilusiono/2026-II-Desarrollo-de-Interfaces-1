@@ -46,3 +46,16 @@ const comprobante = new Comprobante(1, venta1, cliente1)
 
 // imorime el comprobante
 comprobante.mostrarInformación()
+
+// mostrar los nombres originales
+console.log(colchonIndividual1.getNombre())
+console.log(colchonKing1.getNombre())
+
+// cambio en los nombres de ambos colchones
+
+colchonIndividual1.setNombre("Nuevo colchon personal")
+colchonKing1.setNombre("Nuevo colchon Gigante")
+
+// imprimir los cambios realizados
+console.log(colchonIndividual1.getNombre())
+console.log(colchonKing1.getNombre())
