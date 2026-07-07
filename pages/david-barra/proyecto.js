@@ -277,6 +277,7 @@ class Producto {                                              // Define la clase
         return "Sin Stock";                                   // Retorna "Sin Stock" si no hay unidades
     }
 
+    
     // GETTERS
 
     getIdProducto() {                                         // Getter: permite leer el ID privado del producto
