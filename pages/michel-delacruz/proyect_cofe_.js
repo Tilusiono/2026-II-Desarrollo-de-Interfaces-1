@@ -27,9 +27,9 @@ class Molde {
 }
 
 
-// =======================
+// ---------
 // PRODUCTO
-// =======================
+// ---------
 class Producto extends Molde {
     #id;
     #stock;
@@ -75,9 +75,9 @@ class Producto extends Molde {
 }
 
 
-// =======================
+// ---------
 // BEBIDA
-// =======================
+// ---------
 class Bebida extends Producto {
     constructor(id, nombre, precio, stock, disponible, tamano, tipo) {
         super(id, nombre, precio, stock, disponible);
@@ -102,9 +102,9 @@ class Bebida extends Producto {
 }
 
 
-// =======================
+// ---------
 // CLIENTE
-// =======================
+// ---------
 class Cliente extends Molde {
     #compras;
     #totalGastado;
@@ -149,9 +149,9 @@ class Cliente extends Molde {
     }
 }
 
-// =======================
+// ---------
 // COMPRA
-// =======================
+// ---------
 class Compra {
     constructor(id, cliente) {
         this.id = id;
@@ -188,9 +188,9 @@ class Compra {
 }
 
 
-// =======================
+// ---------
 // EMPLEADO
-// =======================
+// ---------
 class Empleado extends Molde {
     constructor(nombre, cargo, sueldo, turno) {
         super(nombre);
@@ -218,9 +218,9 @@ class Empleado extends Molde {
     }
 }
 
-// =======================
+// ---------
 // CATEGORIA
-// =======================
+// ---------
 class Categoria extends Molde {
     #productos;
 
@@ -253,9 +253,9 @@ class Categoria extends Molde {
     }
 }
 
-// =======================
+// ---------
 // PAGO
-// =======================
+// ---------
 class Pago {
     constructor(metodo, monto) {
         this.metodo = metodo; // Yape, efectivo, tarjeta
@@ -285,9 +285,9 @@ class Pago {
     }
 }
 
-// =======================
+// ---------
 // INVENTARIO
-// =======================
+// ---------
 class Inventario {
     constructor() {
         this.productos = [];
