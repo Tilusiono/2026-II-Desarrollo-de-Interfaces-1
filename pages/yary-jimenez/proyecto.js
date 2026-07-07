@@ -41,10 +41,10 @@ class Persona {
 
     /**
      * 
-     * @param {number} nombre 
+     * @param {String} nombre 
      * @param {string} tipoCafe 
-     * @param {string} capacidad 
-     * @param {number} sucursal 
+     * @param {Number} capacidad 
+     * @param {String} sucursal 
      */
 
     constructor(nombre, tipoCafe, capacidad, sucursal) 
@@ -71,7 +71,12 @@ cerrar() {
     return this.#capacidad;
 }
 }
-
+const cafeteria1 = new Cafeteria(
+    "Central",
+    "Arábica",
+    120,
+    "Sucursal Centro"
+);
 
 class Empleado extends Persona{
  cargo; 
@@ -188,6 +193,12 @@ consultar() {
     console.log("Compra registrada");
 }
 }
+const cliente1 = new Cliente(
+    "Luis",
+    "999999999",
+    "luis@email.com",
+    "Av. Principal 123"
+);
 
 
 
@@ -218,7 +229,12 @@ reponer() {
 #validarStock() {}
 
 }
-
+const producto1 = new Producto(
+    "Latte",
+    "Bebida",
+    20,
+    "Café con leche"
+);
 
 
 
@@ -244,7 +260,12 @@ mostrar() {}
 
 #convertir() {}
 }
-
+const precio1 = new Precio(
+    10,
+    2,
+    8,
+    "Soles"
+);
 
 
 class Ubicacion {
@@ -267,7 +288,12 @@ actualizar() {}
 
 #buscarMapa() {}
 }
-
+const ubicacion1 = new Ubicacion(
+    "Av. Principal 123",
+    "Miraflores",
+    "Frente al parque",
+    "15074"
+);
 
 
 class Horario {
@@ -291,6 +317,12 @@ cerrar() {}
 
 #cambiarTurno() {}
 }
+const horario1 = new Horario(
+    "08:00",
+    "20:00",
+    "Lunes a Sábado",
+    "Noche"
+);
 
 
 
@@ -317,7 +349,12 @@ mostrar() {}
 #registrar() {}
 }
 
-
+const telefono1 = new Telefono(
+    "987654321",
+    "912345678",
+    "+51",
+    "101"
+);
 
 
 
@@ -342,6 +379,12 @@ mostrar() {}
 
 #registrar() {}
 }
+const correo1 = new Correo(
+    "info@cafe.com",
+    "soporte@cafe.com",
+    "cafe.com",
+    "Activo"
+);
 
 
 
@@ -369,6 +412,12 @@ imprimir() {}
 #guardarVenta() {}
 
 }
+const venta1 = new Venta(
+    "18/06/2026",
+    3,
+    30,
+    "Efectivo"
+);
 
 
 
