@@ -1,210 +1,250 @@
-// CLASE 1: Cliente
-// ==========================================
-class Cliente {
-    #id;
-    #nombre;
-    #documento; 
-    #email;
+class Persona {
+  #id;
+  #nombre;
 
-    constructor(id, nombre, documento, email) {
-        this.#id = id;
-        this.#nombre = nombre;
-        this.#documento = documento;
-        this.#email = email;
-    }
+  constructor(id, nombre) {
+    this.#id = id;
+    this.#nombre = nombre;
+  }
 
-    get id() { return this.#id; }
-    get nombre() { return this.#nombre; }
-    get documento() { return this.#documento; }
-    get email() { return this.#email; }
+  get id() { return this.#id; }
+  set id(nuevoId) { this.#id = nuevoId; }
+
+  get nombre() { return this.#nombre; }
+  set nombre(nuevoNombre) { this.#nombre = nuevoNombre; }
 }
 
-// CLASE 2: Cajero
-// ==========================================
-class Cajero {
-    #id;
-    #nombre;
-    #cajaAsignada; 
-    #turno;        
+class Cliente extends Persona {
+  #documento;
+  #email;
 
-    constructor(id, nombre, cajaAsignada, turno) {
-        this.#id = id;
-        this.#nombre = nombre;
-        this.#cajaAsignada = cajaAsignada;
-        this.#turno = turno;
-    }
+  constructor(id, nombre, documento, email) {
+    super(id, nombre);
+    this.#documento = documento;
+    this.#email = email;
+  }
 
-    get id() { return this.#id; }
-    get nombre() { return this.#nombre; }
-    get cajaAsignada() { return this.#cajaAsignada; }
-    get turno() { return this.#turno; }
+  get documento() { return this.#documento; }
+  set documento(nuevoDocumento) { this.#documento = nuevoDocumento; }
+
+  get email() { return this.#email; }
+  set email(nuevoEmail) { this.#email = nuevoEmail; }
 }
 
-// CLASE 3: Categoria
-// ==========================================
+class Cajero extends Persona {
+  #cajaAsignada;
+  #turno;
+
+  constructor(id, nombre, cajaAsignada, turno) {
+    super(id, nombre);
+    this.#cajaAsignada = cajaAsignada;
+    this.#turno = turno;
+  }
+
+  get cajaAsignada() { return this.#cajaAsignada; }
+  set cajaAsignada(nuevaCaja) { this.#cajaAsignada = nuevaCaja; }
+
+  get turno() { return this.#turno; }
+  set turno(nuevoTurno) { this.#turno = nuevoTurno; }
+
+  rotarTurno() {
+    if (this.#turno === 'Mañana') this.#turno = 'Tarde';
+    else if (this.#turno === 'Tarde') this.#turno = 'Noche';
+  }
+}
+
 class Categoria {
-    #id;
-    #nombre;
-    #descripcion;
+  #id;
+  #nombre;
+  #descripcion;
 
-    constructor(id, nombre, descripcion) {
-        this.#id = id;
-        this.#nombre = nombre;
-        this.#descripcion = descripcion;
-    }
+  constructor(id, nombre, descripcion) {
+    this.#id = id;
+    this.#nombre = nombre;
+    this.#descripcion = descripcion;
+  }
 
-    get id() { return this.#id; }
-    get nombre() { return this.#nombre; }
-    get descripcion() { return this.#descripcion; }
+  get id() { return this.#id; }
+  set id(nuevoId) { this.#id = nuevoId; }
+
+  get nombre() { return this.#nombre; }
+  set nombre(nuevoNombre) { this.#nombre = nuevoNombre; }
+
+  get descripcion() { return this.#descripcion; }
+  set descripcion(nuevaDescripcion) { this.#descripcion = nuevaDescripcion; }
 }
 
-// CLASE 4: Inventario
-// ==========================================
 class Inventario {
-    #producto;    
-    #stockActual;
-    #stockMinimo; 
+  #producto;
+  #stockActual;
+  #stockMinimo;
 
-    constructor(producto, stockInicial, stockMinimo) {
-        this.#producto = producto;
-        this.#stockActual = stockInicial;
-        this.#stockMinimo = stockMinimo;
+  constructor(producto, stockInicial, stockMinimo) {
+    this.#producto = producto;
+    this.#stockActual = stockInicial;
+    this.#stockMinimo = stockMinimo;
+  }
+
+  get producto() { return this.#producto; }
+  set producto(nuevoProducto) { this.#producto = nuevoProducto; }
+
+  get stockActual() { return this.#stockActual; }
+  set stockActual(cantidad) {
+    if (cantidad < 0) throw new Error("El stock no puede ser negativo.");
+    this.#stockActual = cantidad;
+  }
+
+  get stockMinimo() { return this.#stockMinimo; }
+  set stockMinimo(cantidad) {
+    if (cantidad < 0) throw new Error("El stock mínimo no puede ser negativo.");
+    this.#stockMinimo = cantidad;
+  }
+
+  descontarStock(cantidad) {
+    if (cantidad > this.#stockActual) {
+      throw new Error(`Stock insuficiente para ${this.#producto.nombre}`);
     }
+    this.#stockActual -= cantidad;
+  }
 
-    get producto() { return this.#producto; }
-    get stockActual() { return this.#stockActual; }
-
-    descontarStock(cantidad) {
-        if (cantidad > this.#stockActual) {
-            throw new Error(`Stock insuficiente para ${this.#producto.nombre}`);
-        }
-        this.#stockActual -= cantidad;
-    }
-
-    agregarStock(cantidad) {
-        this.#stockActual += cantidad;
-    }
+  agregarStock(cantidad) {
+    if (cantidad < 0) throw new Error("No puedes agregar stock negativo.");
+    this.#stockActual += cantidad;
+  }
 }
 
-// CLASE 5: Comprobante
-// ==========================================
-class Comprobante {
-    #numeroSerie;
-    #tipoDocumento; 
-    #compra;        
-    #cliente;       
-
-    constructor(numeroSerie, tipoDocumento, compra, cliente) {
-        if (compra.estado !== 'Pagado') {
-            throw new Error("No se puede emitir un comprobante de una compra no pagada.");
-        }
-        this.#numeroSerie = numeroSerie;
-        this.#tipoDocumento = tipoDocumento;
-        this.#compra = compra;
-        this.#cliente = cliente;
-    }
-
-    get numeroSerie() { return this.#numeroSerie; }
-    get tipoDocumento() { return this.#tipoDocumento; }
-}
-
-// CLASE 6: Proveedor
-// ==========================================
 class Proveedor {
-    #id;
-    #razonSocial;
-    #ruc;
-    #telefono;
+  #id;
+  #razonSocial;
+  #ruc;
+  #telefono;
 
-    constructor(id, razonSocial, ruc, telefono) {
-        this.#id = id;
-        this.#razonSocial = razonSocial;
-        this.#ruc = ruc;
-        this.#telefono = telefono;
-    }
+  constructor(id, razonSocial, ruc, telefono) {
+    this.#id = id;
+    this.#razonSocial = razonSocial;
+    this.#ruc = ruc;
+    this.#telefono = telefono;
+  }
 
-    get id() { return this.#id; }
-    get razonSocial() { return this.#razonSocial; }
-    get ruc() { return this.#ruc; }
-    get telefono() { return this.#telefono; }
+  get id() { return this.#id; }
+  set id(nuevoId) { this.#id = nuevoId; }
+
+  get razonSocial() { return this.#razonSocial; }
+  set razonSocial(nuevaRazon) { this.#razonSocial = nuevaRazon; }
+
+  get ruc() { return this.#ruc; }
+  set ruc(nuevoRuc) { this.#ruc = nuevoRuc; }
+
+  get telefono() { return this.#telefono; }
+  set telefono(nuevoTelefono) { this.#telefono = nuevoTelefono; }
 }
 
-// CLASE 7: Almacen
-// ==========================================
 class Almacen {
-    #id;
-    #ubicacion;
-    #capacidadMaxima;
+  #id;
+  #ubicacion;
+  #capacidadMaxima;
 
-    constructor(id, ubicacion, capacidadMaxima) {
-        this.#id = id;
-        this.#ubicacion = ubicacion;
-        this.#capacidadMaxima = capacidadMaxima;
-    }
+  constructor(id, ubicacion, capacidadMaxima) {
+    this.#id = id;
+    this.#ubicacion = ubicacion;
+    this.#capacidadMaxima = capacidadMaxima;
+  }
 
-    get id() { return this.#id; }
-    get ubicacion() { return this.#ubicacion; }
-    get capacidadMaxima() { return this.#capacidadMaxima; }
+  get id() { return this.#id; }
+  set id(nuevoId) { this.#id = nuevoId; }
+
+  get ubicacion() { return this.#ubicacion; }
+  set ubicacion(nuevaUbicacion) { this.#ubicacion = nuevaUbicacion; }
+
+  get capacidadMaxima() { return this.#capacidadMaxima; }
+  set capacidadMaxima(nuevaCapacidad) {
+    if (nuevaCapacidad < 0) throw new Error("La capacidad no puede ser negativa.");
+    this.#capacidadMaxima = nuevaCapacidad;
+  }
 }
 
-// CLASE 8: Descuento
-// ==========================================
 class Descuento {
-    #codigo;
-    #porcentaje;
-    #activo;
+  #codigo;
+  #porcentaje;
+  #activo;
 
-    constructor(codigo, porcentaje) {
-        this.#codigo = codigo;
-        this.#porcentaje = porcentaje;
-        this.#activo = true;
+  constructor(codigo, porcentaje) {
+    this.#codigo = codigo;
+    this.#porcentaje = porcentaje;
+    this.#activo = true;
+  }
+
+  get codigo() { return this.#codigo; }
+  set codigo(nuevoCodigo) { this.#codigo = nuevoCodigo; }
+
+  get porcentaje() { return this.#porcentaje; }
+  set porcentaje(nuevoPorcentaje) {
+    if (nuevoPorcentaje < 0 || nuevoPorcentaje > 100) {
+      throw new Error("El porcentaje debe estar entre 0 y 100.");
     }
+    this.#porcentaje = nuevoPorcentaje;
+  }
 
-    get codigo() { return this.#codigo; }
-    get porcentaje() { return this.#porcentaje; }
-    get activo() { return this.#activo; }
+  get activo() { return this.#activo; }
+  set activo(estado) { this.#activo = Boolean(estado); }
 
-    aplicar(montoTotal) {
-        if (!this.#activo) return montoTotal;
-        return montoTotal - (montoTotal * (this.#porcentaje / 100));
-    }
+  aplicar(montoTotal) {
+    if (!this.#activo) return montoTotal;
+    return montoTotal - (montoTotal * (this.#porcentaje / 100));
+  }
 }
 
-// CLASE 9: Impuesto
-// ==========================================
 class Impuesto {
-    #nombre;
-    #tasa; 
+  #nombre;
+  #tasa;
 
-    constructor(nombre, tasa) {
-        this.#nombre = nombre;
-        this.#tasa = tasa;
-    }
+  constructor(nombre, tasa) {
+    this.#nombre = nombre;
+    this.#tasa = tasa;
+  }
 
-    get nombre() { return this.#nombre; }
-    get tasa() { return this.#tasa; }
+  get nombre() { return this.#nombre; }
+  set nombre(nuevoNombre) { this.#nombre = nuevoNombre; }
 
-    calcularImpuesto(montoBase) {
-        return montoBase * this.#tasa;
-    }
+  get tasa() { return this.#tasa; }
+  set tasa(nuevaTasa) {
+    if (nuevaTasa < 0) throw new Error("La tasa de impuesto no puede ser negativa.");
+    this.#tasa = nuevaTasa;
+  }
+
+  calcularImpuesto(montoBase) {
+    return montoBase * this.#tasa;
+  }
 }
 
-// CLASE 10: Tienda
-// ==========================================
-class Tienda {
-    #id;
-    #nombre;
-    #direccion;
 
-    constructor(id, nombre, direccion) {
-        this.#id = id;
-        this.#nombre = nombre;
-        this.#direccion = direccion;
+export class Comprobante {
+  numeroSerie;
+  tipoDocumento;
+  compra;
+  cliente;
+
+  constructor(numeroSerie, tipoDocumento, compra, cliente) {
+    if (compra.estado !== 'Pagado') {
+      throw new Error("No se puede emitir un comprobante de una compra no pagada.");
     }
+    this.numeroSerie = numeroSerie;
+    this.tipoDocumento = tipoDocumento;
+    this.compra = compra;
+    this.cliente = cliente;
+  }
+}
 
-    get id() { return this.#id; }
-    get nombre() { return this.#nombre; }
-    get direccion() { return this.#direccion; }
+export class Tienda {
+  id;
+  nombre;
+  direccion;
+
+  constructor(id, nombre, direccion) {
+    this.id = id;
+    this.nombre = nombre;
+    this.direccion = direccion;
+  }
 }
 
 // PRUEBA DE EJECUCIÓN (Simulación en Caja)
