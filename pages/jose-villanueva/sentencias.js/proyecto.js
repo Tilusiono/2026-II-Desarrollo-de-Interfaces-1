@@ -13,7 +13,6 @@ class Persona {
         this.#edad = edad;
     }
 
-    // GETTERS
     getNombreCompleto() {
         return `${this.#nombre} ${this.#apellido}`;
     }
@@ -22,7 +21,6 @@ class Persona {
         return this.#edad;
     }
 
-    // MÉTODOS PRIVADOS
     #validarEdad() {
         return this.#edad >= 0;
     }
@@ -47,7 +45,6 @@ class Alumno extends Persona {
         this.#estado = estado;
     }
 
-    // POLIMORFISMO
     mostrarRol() {
         return "Soy un alumno";
     }
@@ -67,7 +64,7 @@ class Alumno extends Persona {
 //3
 class Notas{
 
-    tipo;      // pública
+    tipo;      
 
     #id;
     #calificacion;
@@ -192,7 +189,11 @@ class Matricula {
 }
 //6
 class Asistencia {
-    #id; #estado; #fecha; #observacion;
+    #id; 
+    #estado; 
+    #fecha; 
+    #observacion;
+
     constructor(id, estado, fecha, obs) { this.#id=id; this.#estado=estado; this.#fecha=fecha; this.#observacion=obs; }
     registrar(){ return "Asistencia registrada"; }
     estado(){ return this.#estado; }
@@ -201,7 +202,11 @@ class Asistencia {
 }
 //7
 class Aula {
-    #id; #nombre; #capacidad; #pabellon;
+    #id; 
+    #nombre; 
+    #capacidad; 
+    #pabellon;
+
     constructor(id,nombre,cap,pab){ this.#id=id; this.#nombre=nombre; this.#capacidad=cap; this.#pabellon=pab; }
     mostrar(){ return this.#nombre; }
     capacidad(){ return this.#capacidad; }
@@ -210,7 +215,11 @@ class Aula {
 }
 //8
 class Carrera {
-    #id; #nombre; #duracion; #director;
+    #id; 
+    #nombre; 
+    #duracion; 
+    #director;
+
     constructor(id,nombre,duracion,director){ this.#id=id; this.#nombre=nombre; this.#duracion=duracion; this.#director=director; }
     mostrar(){ return this.#nombre; }
     duracion(){ return this.#duracion; }
@@ -219,7 +228,11 @@ class Carrera {
 }
 //9
 class Pago {
-    #id; #monto; #metodo; #estado;
+    #id; 
+    #monto; 
+    #metodo; 
+    #estado;
+
     constructor(id,monto,metodo,estado){ this.#id=id; this.#monto=monto; this.#metodo=metodo; this.#estado=estado; }
     pagar(){ return "Pago realizado"; }
     estado(){ return this.#estado; }
@@ -228,7 +241,11 @@ class Pago {
 }
 //10
 class Departamento {
-    #id; #nombre; #jefe; #ubicacion;
+    #id; 
+    #nombre; 
+    #jefe; 
+    #ubicacion;
+
     constructor(id,nombre,jefe,ubi){ this.#id=id; this.#nombre=nombre; this.#jefe=jefe; this.#ubicacion=ubi; }
     mostrar(){ return this.#nombre; }
     jefe(){ return this.#jefe; }
@@ -270,7 +287,7 @@ class AlumnoTop10 extends Alumno {
 
     #promedio;
     #puesto;
-    estado = "Top 10"; // pública
+    estado = "Top 10"; 
 
     constructor(id,nombre,apellido,edad,correo,telefono,grado,estado,promedio,puesto){
         super(id,nombre,apellido,edad,correo,telefono,grado,estado);
