@@ -18,7 +18,7 @@ class Gimnasio {
     constructor(nombre, dirección, capacidad, sedes) 
     {
         this.nombre = nombre;
-        this.#direccion = dirección; // Corregido asignación interna
+        this.#direccion = dirección; 
         this.#capacidad = capacidad;
         this.#sedes = sedes;
     }
