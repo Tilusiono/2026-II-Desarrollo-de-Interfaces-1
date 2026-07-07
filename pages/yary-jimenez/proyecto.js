@@ -312,13 +312,13 @@ constructor(numeroPrincipal, numeroSecundario, codigoPais)
     this.#codigoPais = codigoPais;
     this.#extension = extension;
 }
-abrir() {}
+llamar() {}
 
-cerrar() {}
+mostrar() {}
 
-#validarHora() {}
+#validarNumero() {}
 
-#cambiarTurno() {}
+#registrar() {}
 }
 
 
