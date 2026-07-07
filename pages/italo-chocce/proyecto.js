@@ -71,15 +71,83 @@ class usuario {
     }
 }
 
+class recepcionista extends usuario {
+    #salario
+    id_empleado;
+    nombre_empleado;
+    turno;
 
-class Billetera_virtual extends usuario {
+    constructor(id_usuario, nombre, edad, correo_electronico, telefono, id_empleado, nombre_empleado, turno) {
+        super(id_usuario, nombre, edad, correo_electronico, telefono);
+        this.id_empleado = id_empleado;
+        this.nombre_empleado = nombre_empleado;
+        this.turno = turno;
+        this.#salario = 2000;
+    }
+
+    // --- GETTERS Y SETTERS ---
+    get salario() {
+        return this.#salario;
+    }
+
+    set salario(nuevoSalario) {
+        if (nuevoSalario > 0) {
+            this.#salario = nuevoSalario;
+        }
+    }
+
+    //metodos publico
+    info_rapida(){
+        return `${this.nombre_empleado} | ${this.id_empleado} | ${this.turno}`
+    }
+
+    //metodos privados
+    meta(meta){
+        if (meta > 100) 
+            return this.#salario * 0.10;
+        return 0;
+    }
+}
+
+class Juez_mesa extends usuario {
+    #id_empleado
+    #nombre_empleado
+    mesa_asignada
+
+    constructor(id_usuario, nombre, edad, correo_electronico, telefono, id_empleado, nombre_empleado, mesa_asignada) {
+         super(id_usuario, nombre, edad, correo_electronico, telefono);
+         this.id_empleado = id_empleado;
+         this.nombre_empleado = nombre_empleado;
+         this.mesa_asignada = mesa_asignada;
+    }
+
+    // --- GETTERS Y SETTERS ---
+    get id_empleado() {
+        return this.#id_empleado;
+    }
+
+    get nombre_empleado() {
+        return this.#nombre_empleado;
+    }
+
+    //metodo publico
+    JUEZ(){
+        return`Hola Soy el Juez deL: ${this.mesa_asignada}`
+    }
+
+    //metodo privado
+    #INFO_JUEZ(){
+        return `${this.#id_empleado} | ${this.#nombre_empleado}`
+    }
+}
+
+class Billetera_virtual {
     metodo_pago; 
     #saldo;
     #pin_seguridad;
     limite_diario;
 
     constructor(id_usuario, correo_electronico, nombre, telefono, saldo, metodo_pago, pin123, limite_diario) {
-        super(nombre, correo_electronico, id_usuario, 18, telefono); // 
         this.#saldo = saldo;
         this.metodo_pago = metodo_pago;
         this.limite_diario = 1000;
@@ -125,7 +193,6 @@ class Billetera_virtual extends usuario {
         return this.#pin_seguridad == pin123;
     }
 }
-
 
 class Cuenta_virtual extends Billetera_virtual {
     // 4 Variables
@@ -178,45 +245,6 @@ class Cuenta_virtual extends Billetera_virtual {
     }
 }
 
-
-class recepcionista {
-    #salario
-    id_empleado;
-    nombre_empleado;
-    turno;
-
-    constructor(id_empleado, nombre_empleado, turno,) {
-        this.id_empleado = id_empleado;
-        this.nombre_empleado = nombre_empleado;
-        this.turno = turno;
-        this.#salario = 2000;
-    }
-
-    // --- GETTERS Y SETTERS ---
-    get salario() {
-        return this.#salario;
-    }
-
-    set salario(nuevoSalario) {
-        if (nuevoSalario > 0) {
-            this.#salario = nuevoSalario;
-        }
-    }
-
-    //metodos publicos
-    info_rapida(){
-        return `${this.nombre_empleado} | ${this.id_empleado} | ${this.turno}`
-    }
-
-    //metodos privados
-    meta(meta){
-        if (meta > 100) 
-            return this.#salario * 0.10;
-        return 0;
-    }
-}
-
-
 class Fichas {
     #id_usuario;//VALOR PRIVADO
     cantidad_fichas;//VALOR PUBLICO
@@ -253,7 +281,6 @@ class Fichas {
         return this.cantidad_fichas * this.valor_ficha;
     }
 }
-
 
 class Mesa {
     #id_mesa
@@ -304,7 +331,6 @@ class Mesa {
     }
 }
 
-
 class apuesta {
 
     #id_usuario; 
@@ -352,39 +378,6 @@ class apuesta {
     }
 }
 
-
-class Juez_mesa{
-    #id_empleado
-    #nombre_empleado
-    mesa_asignada
-
-    constructor(id_empleado, nombre_empleado, mesa_asignada) {
-         this.id_empleado = id_empleado;
-         this.nombre_empleado = nombre_empleado;
-         this.mesa_asignada = mesa_asignada;
-    }
-
-    // --- GETTERS Y SETTERS ---
-    get id_empleado() {
-        return this.#id_empleado;
-    }
-
-    get nombre_empleado() {
-        return this.#nombre_empleado;
-    }
-
-    //metodo publico
-    JUEZ(){
-        return`Hola Soy el Juez deL: ${this.mesa_asignada}`
-    }
-
-    //metodo privado
-    #INFO_JUEZ(){
-        return `${this.#id_empleado} | ${this.#nombre_empleado}`
-    }
-}
-
-
 class partida {
     id_partida
     id_mesa
@@ -415,7 +408,6 @@ class partida {
         return this.#usuarios_participantes.length >=2;
     }
 }
-
 
 class recompensa {
     #id_recompensa
