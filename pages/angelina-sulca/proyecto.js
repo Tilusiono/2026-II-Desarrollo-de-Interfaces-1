@@ -1,148 +1,54 @@
-//proyecto SchoolSupply.
+// ============================================
+// PROYECTO SchoolSupply
+// VERSIÓN FINAL - CON SUPER CORRECTO
+// ============================================
 
 // ============================================
-// NIVEL 1 - CLASE BASE (ABSTRACCIÓN)
+// CLASE PADRE: producto (NO tiene super)
 // ============================================
 
-class ObjetoBase {
-    #creadoEn;
-    #version;
-
-    constructor() {
-        this.#creadoEn = new Date();
-        this.#version = "1.0";
-    }
-
-    // Métodos públicos
-    obtenerFechaCreacion() {
-        return this.#creadoEn.toLocaleDateString();
-    }
-
-    obtenerVersion() {
-        return this.#version;
-    }
-
-    // Métodos privados (abstracción)
-    #registrarEvento(tipo) {
-        console.log("Evento: " + tipo + " - " + this.#creadoEn.toLocaleTimeString());
-    }
-
-    #validarVersion() {
-        return this.#version !== "";
-    }
-
-    // Método polimórfico (será sobrescrito)
-    obtenerTipo() {
-        return "ObjetoBase";
-    }
-
-    obtenerDescripcion() {
-        return "Objeto base del sistema";
-    }
-}
-
-class Entidad extends ObjetoBase {
+class producto {
     id;
     nombre;
-
-    constructor(id, nombre) {
-        super();
-        this.id = id;
-        this.nombre = nombre;
-    }
-
-    // Getters
-    getid() {
-        return this.id;
-    }
-
-    getnombre() {
-        return this.nombre;
-    }
-
-    // Setters
-    setid(nuevoId) {
-        if (nuevoId > 0) {
-            this.id = nuevoId;
-        }
-    }
-
-    setnombre(nuevoNombre) {
-        if (nuevoNombre !== "") {
-            this.nombre = nuevoNombre;
-        }
-    }
-
-    obtenerIdentificador() {
-        return "ID: " + this.id + " - Nombre: " + this.nombre;
-    }
-
-        obtenerTipo() {
-        return "Entidad";
-    }
-
-    obtenerDescripcion() {
-        return "Entidad con ID: " + this.id;
-    }
-
-    // Método privado (abstracción)
-    #validarEntidad() {
-        return this.id > 0 && this.nombre !== "";
-    }
-}
-
-
-
-class producto extends Entidad { 
-    #stock;
-    #activo;
-    #codigoInterno;
-     
     marca;
-    color;
-    calidad;
     precioUnitario;
     precioDocena;
+    stock;
+    activo;
 
-    constructor (cod, nom, mar, col, cal, pUni, pDoc, stk){
-        super(cod, nom);
+    #codigoInterno;
+    #fechaCreacion;
 
-        this.marca = mar;
-        this.color = col;
-        this.calidad = cal;
-        this.precioUnitario = pUni;
-        this.precioDocena = pDoc;
-        this.#stock = stk;
-        this.#activo = true;
-        this.#codigoInterno = "PROD-" + cod;
-
-    }
-
-    // Getters
-    getstock() {
-        return this.#stock;
-    }
-
-    getactivo() {
-        return this.#activo;
+    constructor(id, nombre, marca, precioUnitario, precioDocena, stock) {
+        this.id = id;
+        this.nombre = nombre;
+        this.marca = marca;
+        this.precioUnitario = precioUnitario;
+        this.precioDocena = precioDocena;
+        this.stock = stock;
+        this.activo = true;
+        this.#codigoInterno = "PROD-" + id;
+        this.#fechaCreacion = new Date();
     }
 
     getcodigoInterno() {
         return this.#codigoInterno;
     }
 
-    // Setters
+    getfechaCreacion() {
+        return this.#fechaCreacion.toLocaleDateString();
+    }
+
     setstock(nuevoStock) {
         if (nuevoStock >= 0) {
-            this.#stock = nuevoStock;
+            this.stock = nuevoStock;
         }
     }
 
     setactivo(estado) {
-        this.#activo = estado;
+        this.activo = estado;
     }
 
-    // Métodos públicos
     obtenerPrecio(cantidad) {
         let resultado = 0;
         if (cantidad >= 12) {
@@ -154,39 +60,417 @@ class producto extends Entidad {
     }
 
     obtenerInfo() {
-        return this.nombre + " - " + this.marca + " (" + this.color + ")";
+        return this.nombre + " - " + this.marca;
     }
 
     tieneStock(cantidad) {
-        return this.#stock >= cantidad;
+        return this.stock >= cantidad;
     }
 
     reducirStock(cantidad) {
         if (this.tieneStock(cantidad)) {
-            this.#stock = this.#stock - cantidad;
+            this.stock = this.stock - cantidad;
             return true;
         }
         return false;
     }
 
-    // POLIMORFISMO
     obtenerTipo() {
         return "Producto";
     }
 
     obtenerDescripcion() {
-        return "Producto: " + this.nombre + " - " + this.marca;
+        return "Producto: " + this.nombre;
     }
 
-    // Método privado
     #validarPrecio() {
         return this.precioUnitario > 0 && this.precioDocena > 0;
     }
 }
 
-const producto1 = new producto(1, "Cuaderno A4", "Norma", "Azul", "Premium", 9, 96, 100);
+// ============================================
+// CLASE HIJO 1: escolar (hereda de producto) - CON super
+// ============================================
 
-class carrito extends Entidad {
+class escolar extends producto {
+    grado;
+    materia;
+    nivel;
+    #tipoEscolar;
+
+    constructor(id, nombre, marca, precioUnitario, precioDocena, stock, grado, materia, nivel) {
+        super(id, nombre, marca, precioUnitario, precioDocena, stock);
+        this.grado = grado;
+        this.materia = materia;
+        this.nivel = nivel;
+        this.#tipoEscolar = "Escolar";
+    }
+
+    get tipoEscolar() {
+        return this.#tipoEscolar;
+    }
+
+    set grado(nuevoGrado) {
+        this.grado = nuevoGrado;
+    }
+
+    obtenerInfo() {
+        return super.obtenerInfo() + " - " + this.nivel + " - " + this.materia;
+    }
+
+    obtenerTipo() {
+        return "Escolar";
+    }
+
+    obtenerDescripcion() {
+        return "Producto Escolar: " + this.nombre + " (" + this.nivel + ")";
+    }
+
+    #validarGrado() {
+        return this.grado > 0 && this.grado <= 11;
+    }
+}
+
+// ============================================
+// CLASE HIJO 2: Papeleria (hereda de escolar) - CON super
+// ============================================
+
+class Papeleria extends escolar {
+    tipoPapel;
+    gramaje;
+    tamaño;
+    #tipoProducto;
+
+    constructor(id, nombre, marca, precioUnitario, precioDocena, stock, grado, materia, nivel, tipoPapel, gramaje, tamaño) {
+        super(id, nombre, marca, precioUnitario, precioDocena, stock, grado, materia, nivel);
+        this.tipoPapel = tipoPapel;
+        this.gramaje = gramaje;
+        this.tamaño = tamaño;
+        this.#tipoProducto = "Papeleria";
+    }
+
+    get tipoProducto() {
+        return this.#tipoProducto;
+    }
+
+    set gramaje(nuevoGramaje) {
+        if (nuevoGramaje > 0) {
+            this.gramaje = nuevoGramaje;
+        }
+    }
+
+    obtenerInfo() {
+        return super.obtenerInfo() + " - " + this.tipoPapel + " (" + this.gramaje + "g)";
+    }
+
+    obtenerTipo() {
+        return "Papeleria";
+    }
+
+    obtenerDescripcion() {
+        return "Papelería: " + this.nombre + " - " + this.tipoPapel;
+    }
+
+    #validarGramaje() {
+        return this.gramaje >= 60 && this.gramaje <= 300;
+    }
+}
+
+// ============================================
+// CLASE HIJO 3: Utiles (hereda de escolar) - CON super
+// ============================================
+
+class Utiles extends escolar {
+    color;
+    material;
+    uso;
+    #tipoUtiles;
+
+    constructor(id, nombre, marca, precioUnitario, precioDocena, stock, grado, materia, nivel, color, material, uso) {
+        super(id, nombre, marca, precioUnitario, precioDocena, stock, grado, materia, nivel);
+        this.color = color;
+        this.material = material;
+        this.uso = uso;
+        this.#tipoUtiles = "Utiles";
+    }
+
+    get tipoUtiles() {
+        return this.#tipoUtiles;
+    }
+
+    set color(nuevoColor) {
+        this.color = nuevoColor;
+    }
+
+    obtenerInfo() {
+        return super.obtenerInfo() + " - " + this.color + " (" + this.material + ")";
+    }
+
+    obtenerTipo() {
+        return "Utiles";
+    }
+
+    obtenerDescripcion() {
+        return "Útiles: " + this.nombre + " - " + this.color;
+    }
+
+    #validarMaterial() {
+        let materialesValidos = ["Plástico", "Madera", "Metal", "Tela"];
+        for (let i = 0; i < materialesValidos.length; i++) {
+            if (materialesValidos[i] === this.material) {
+                return true;
+            }
+        }
+        return false;
+    }
+}
+
+// ============================================
+// CLASE HIJO 4: Jugueteria (hereda de producto) - CON super
+// ============================================
+
+class Jugueteria extends producto {
+    edadRecomendada;
+    tipoJuguete;
+    material;
+    #tipoProducto;
+
+    constructor(id, nombre, marca, precioUnitario, precioDocena, stock, edadRecomendada, tipoJuguete, material) {
+        super(id, nombre, marca, precioUnitario, precioDocena, stock);
+        this.edadRecomendada = edadRecomendada;
+        this.tipoJuguete = tipoJuguete;
+        this.material = material;
+        this.#tipoProducto = "Jugueteria";
+    }
+
+    get tipoProducto() {
+        return this.#tipoProducto;
+    }
+
+    set edadRecomendada(nuevaEdad) {
+        if (nuevaEdad >= 0) {
+            this.edadRecomendada = nuevaEdad;
+        }
+    }
+
+    obtenerInfo() {
+        return super.obtenerInfo() + " - " + this.tipoJuguete + " (Edad: " + this.edadRecomendada + "+)";
+    }
+
+    obtenerTipo() {
+        return "Jugueteria";
+    }
+
+    obtenerDescripcion() {
+        return "Juguete: " + this.nombre + " - " + this.tipoJuguete;
+    }
+
+    #validarEdad() {
+        return this.edadRecomendada >= 0 && this.edadRecomendada <= 18;
+    }
+}
+
+// ============================================
+// CLASE PADRE: cliente (NO tiene super)
+// ============================================
+
+class cliente {
+    id;
+    nombre;
+    correo;
+    telefono;
+    direccion;
+    fechaRegistro;
+    #compras;
+    #totalGastado;
+
+    constructor(id, nombre, correo, telefono, direccion) {
+        this.id = id;
+        this.nombre = nombre;
+        this.correo = correo;
+        this.telefono = telefono;
+        this.direccion = direccion;
+        this.fechaRegistro = new Date();
+        this.#compras = [];
+        this.#totalGastado = 0;
+    }
+
+    get compras() {
+        return this.#compras;
+    }
+
+    get totalGastado() {
+        return this.#totalGastado;
+    }
+
+    set telefono(nuevoTelefono) {
+        if (nuevoTelefono.length >= 9) {
+            this.telefono = nuevoTelefono;
+        }
+    }
+
+    set direccion(nuevaDireccion) {
+        this.direccion = nuevaDireccion;
+    }
+
+    obtenerDatos() {
+        return "Cliente: " + this.nombre + " - Correo: " + this.correo;
+    }
+
+    agregarCompra(compra) {
+        this.#compras.push(compra);
+        this.#totalGastado = this.#totalGastado + compra.totalFinal;
+        return this.#compras.length;
+    }
+
+    validarCorreo() {
+        return this.correo.includes("@") && this.correo.includes(".");
+    }
+
+    obtenerTipo() {
+        return "Cliente";
+    }
+
+    obtenerDescripcion() {
+        return "Cliente: " + this.nombre;
+    }
+
+    #validarTelefono() {
+        return this.telefono.length >= 9;
+    }
+}
+
+// ============================================
+// CLASE HIJO 1: clienteunitario (hereda de cliente) - CON super
+// ============================================
+
+class clienteunitario extends cliente {
+    tipoCliente;
+    descuentoBase;
+    #cantidadComprasUnitarias;
+
+    constructor(id, nombre, correo, telefono, direccion) {
+        super(id, nombre, correo, telefono, direccion);
+        this.tipoCliente = "Unitario";
+        this.descuentoBase = 0;
+        this.#cantidadComprasUnitarias = 0;
+    }
+
+    get cantidadComprasUnitarias() {
+        return this.#cantidadComprasUnitarias;
+    }
+
+    set descuentoBase(nuevoDescuento) {
+        if (nuevoDescuento >= 0 && nuevoDescuento <= 10) {
+            this.descuentoBase = nuevoDescuento;
+        }
+    }
+
+    agregarCompra(compra) {
+        super.agregarCompra(compra);
+        this.#cantidadComprasUnitarias = this.#cantidadComprasUnitarias + 1;
+        this.actualizarDescuento();
+        return this.#cantidadComprasUnitarias;
+    }
+
+    actualizarDescuento() {
+        if (this.#cantidadComprasUnitarias >= 10) {
+            this.descuentoBase = 10;
+        } else if (this.#cantidadComprasUnitarias >= 5) {
+            this.descuentoBase = 5;
+        } else {
+            this.descuentoBase = 0;
+        }
+        return this.descuentoBase;
+    }
+
+    obtenerTipo() {
+        return "ClienteUnitario";
+    }
+
+    obtenerDescripcion() {
+        return "Cliente Unitario: " + this.nombre + " - Compras: " + this.#cantidadComprasUnitarias;
+    }
+
+    #validarCantidadCompras() {
+        return this.#cantidadComprasUnitarias >= 0;
+    }
+}
+
+// ============================================
+// CLASE HIJO 2: clientepordocena (hereda de cliente) - CON super
+// ============================================
+
+class clientepordocena extends cliente {
+    tipoCliente;
+    descuentoBase;
+    cantidadDocenas;
+    descuentoAdicional;
+    #totalDocenasCompradas;
+
+    constructor(id, nombre, correo, telefono, direccion) {
+        super(id, nombre, correo, telefono, direccion);
+        this.tipoCliente = "PorDocena";
+        this.descuentoBase = 10;
+        this.cantidadDocenas = 0;
+        this.descuentoAdicional = 0;
+        this.#totalDocenasCompradas = 0;
+    }
+
+    get totalDocenasCompradas() {
+        return this.#totalDocenasCompradas;
+    }
+
+    set descuentoBase(nuevoDescuento) {
+        if (nuevoDescuento >= 0 && nuevoDescuento <= 20) {
+            this.descuentoBase = nuevoDescuento;
+        }
+    }
+
+    agregarCompra(compra) {
+        super.agregarCompra(compra);
+        this.#totalDocenasCompradas = this.#totalDocenasCompradas + 1;
+        this.actualizarDescuento();
+        return this.#totalDocenasCompradas;
+    }
+
+    actualizarDescuento() {
+        if (this.#totalDocenasCompradas >= 20) {
+            this.descuentoAdicional = 5;
+        } else if (this.#totalDocenasCompradas >= 10) {
+            this.descuentoAdicional = 3;
+        } else if (this.#totalDocenasCompradas >= 5) {
+            this.descuentoAdicional = 1;
+        } else {
+            this.descuentoAdicional = 0;
+        }
+        return this.descuentoBase + this.descuentoAdicional;
+    }
+
+    calcularPrecioConDescuento(precio) {
+        let descuentoTotal = this.descuentoBase + this.descuentoAdicional;
+        let precioFinal = precio - (precio * descuentoTotal / 100);
+        return precioFinal;
+    }
+
+    obtenerTipo() {
+        return "ClientePorDocena";
+    }
+
+    obtenerDescripcion() {
+        return "Cliente por Docena: " + this.nombre + " - Docenas: " + this.#totalDocenasCompradas;
+    }
+
+    #validarDocenas() {
+        return this.#totalDocenasCompradas >= 0;
+    }
+}
+
+// ============================================
+// CLASE: carrito (NO hereda) - SIN super
+// ============================================
+
+class carrito {
     #cantidadItems;
     #descuentoAplicado;
 
@@ -194,10 +478,8 @@ class carrito extends Entidad {
     metodoPago;
     total;
     subtotal;
-     
-    constructor (itm, metPag, tot, subTot){
-        super(0, "Carrito");
 
+    constructor(itm, metPag, tot, subTot) {
         this.items = Array.isArray(itm) ? itm : [];
         this.metodoPago = metPag;
         this.total = tot;
@@ -206,7 +488,6 @@ class carrito extends Entidad {
         this.#descuentoAplicado = 0;
     }
 
-    // Getters
     getcantidadItems() {
         return this.#cantidadItems;
     }
@@ -215,12 +496,10 @@ class carrito extends Entidad {
         return this.#descuentoAplicado;
     }
 
-    // Setters
     setmetodoPago(nuevoMetodo) {
         this.metodoPago = nuevoMetodo;
     }
 
-    // Métodos públicos
     agregarItem(producto, cantidad) {
         let encontrado = null;
         for (let i = 0; i < this.items.length; i++) {
@@ -288,7 +567,6 @@ class carrito extends Entidad {
         return this.total;
     }
 
-    // Métodos privados
     #actualizarTotales() {
         let total = 0;
         let cantidad = 0;
@@ -318,7 +596,11 @@ class carrito extends Entidad {
 
 const carrito1 = new carrito([], "Efectivo", 0, 0);
 
-class descuento extends Entidad {
+// ============================================
+// CLASE: descuento (NO hereda) - SIN super
+// ============================================
+
+class descuento {
     #aplicado;
     #metodoPagoSeleccionado;
 
@@ -328,10 +610,8 @@ class descuento extends Entidad {
     subtotalConDescuento;
     descPago;
     total;
-     
-    constructor (porCant, porPag, desCant, subDesc, desPag, tot){
-        super(0, "Descuento");
 
+    constructor(porCant, porPag, desCant, subDesc, desPag, tot) {
         this.porcentajeCantidad = porCant;
         this.porcentajePago = porPag;
         this.descCantidad = desCant;
@@ -342,7 +622,6 @@ class descuento extends Entidad {
         this.#metodoPagoSeleccionado = "Efectivo";
     }
 
-    // Getters
     getaplicado() {
         return this.#aplicado;
     }
@@ -351,12 +630,10 @@ class descuento extends Entidad {
         return this.#metodoPagoSeleccionado;
     }
 
-    // Setters
     setmetodoPagoSeleccionado(nuevoMetodo) {
         this.#metodoPagoSeleccionado = nuevoMetodo;
     }
 
-    // Métodos públicos
     calcularPorCantidad(cantidad) {
         let descuento = 0;
         if (cantidad >= 24) {
@@ -430,7 +707,6 @@ class descuento extends Entidad {
         return this.porcentajeCantidad + this.porcentajePago;
     }
 
-    // Método privado
     #validarMetodoPago(metodo) {
         let metodosValidos = ["Efectivo", "Tarjeta", "Yape", "Plin", "Transferencia"];
         for (let i = 0; i < metodosValidos.length; i++) {
@@ -444,104 +720,11 @@ class descuento extends Entidad {
 
 const descuento1 = new descuento(0, 0, 0, 0, 0, 0);
 
-class cliente extends Entidad {
-    #tipo;
-    #compras;
-    #totalGastado;
+// ============================================
+// CLASE: compra (NO hereda) - SIN super
+// ============================================
 
-    correo;
-    telefono;
-    direccion;
-    fechaRegistro;
-
-    constructor (nomComp, corr, tel, dir, fecReg){
-        super(0, nomComp);
-
-        this.correo = corr;
-        this.telefono = tel;
-        this.direccion = dir;
-        this.fechaRegistro = fecReg;
-        this.#tipo = "Minorista";
-        this.#compras = [];
-        this.#totalGastado = 0;
-    }
-
-    // Getters
-    gettipo() {
-        return this.#tipo;
-    }
-
-    getcompras() {
-        return this.#compras;
-    }
-
-    gettotalGastado() {
-        return this.#totalGastado;
-    }
-
-    // Setters
-    setdireccion(nuevaDireccion) {
-        this.direccion = nuevaDireccion;
-    }
-
-    settelefono(nuevoTelefono) {
-        if (nuevoTelefono.length >= 9) {
-            this.telefono = nuevoTelefono;
-        }
-    }
-
-    // Métodos públicos
-    obtenerDatos() {
-        return "Cliente: " + this.nombre + " - Correo: " + this.correo;
-    }
-
-    actualizarTipo(total) {
-        if (total > 100) {
-            this.#tipo = "Mayorista";
-            return "Cliente mayorista";
-        } else {
-            this.#tipo = "Minorista";
-            return "Cliente minorista";
-        }
-    }
-
-    agregarCompra(compra) {
-        this.#compras.push(compra);
-        this.#totalGastado = this.#totalGastado + compra.gettotalFinal();
-        return this.#compras.length;
-    }
-
-    validarCorreo() {
-        return this.correo.includes("@") && this.correo.includes(".");
-    }
-
-    cambiarDireccion(nueva) {
-        this.direccion = nueva;
-        return this.direccion;
-    }
-
-    esMayorista() {
-        return this.#totalGastado > 500;
-    }
-
-    // POLIMORFISMO
-    obtenerTipo() {
-        return "Cliente";
-    }
-
-    obtenerDescripcion() {
-        return "Cliente: " + this.nombre + " - " + this.correo;
-    }
-
-    // Método privado
-    #validarTelefono() {
-        return this.telefono.length >= 9;
-    }
-}
-
-const cliente1 = new cliente("Ana Pérez", "ana@email.com", "987654321", "Av. Siempre Viva 123", new Date());
-
-class compra extends Entidad {
+class compra {
     #numeroCompra;
     #totalFinal;
     #detalles;
@@ -552,9 +735,7 @@ class compra extends Entidad {
     fecha;
     estado;
 
-    constructor (cli, car, desc, fec, est){
-        super(0, "Compra");
-
+    constructor(cli, car, desc, fec, est) {
         this.cliente = cli;
         this.carrito = car;
         this.descuento = desc;
@@ -565,7 +746,6 @@ class compra extends Entidad {
         this.#detalles = null;
     }
 
-    // Getters
     getnumeroCompra() {
         return this.#numeroCompra;
     }
@@ -578,27 +758,38 @@ class compra extends Entidad {
         return this.#detalles;
     }
 
-    // Setters
     setestado(nuevoEstado) {
         let estadosValidos = ["Pendiente", "Confirmada", "Anulada", "Entregada"];
         for (let i = 0; i < estadosValidos.length; i++) {
             if (estadosValidos[i] === nuevoEstado) {
-                this.estado = nuevoEstado;  
+                this.estado = nuevoEstado;
                 break;
             }
         }
     }
 
-    // Métodos públicos
     calcularTotal() {
         let subtotal = this.carrito.obtenerSubtotal();
         let cantidad = this.carrito.getcantidadItems();
-        this.descuento.calcularPorCantidad(cantidad);
-        this.descuento.calcularPorPago(this.carrito.obtenerPago());
-        let total = this.descuento.calcularTotal(subtotal);
-        this.#totalFinal = total;
-        this.#detalles = this.descuento.obtenerDetalles(subtotal);
-        return total;
+
+        if (this.cliente instanceof clientepordocena) {
+            let total = this.cliente.calcularPrecioConDescuento(subtotal);
+            this.#totalFinal = total;
+            this.#detalles = {
+                subtotal: subtotal,
+                total: total,
+                descuento: subtotal - total,
+                tipoCliente: this.cliente.obtenerTipo()
+            };
+            return total;
+        } else {
+            this.descuento.calcularPorCantidad(cantidad);
+            this.descuento.calcularPorPago(this.carrito.obtenerPago());
+            let total = this.descuento.calcularTotal(subtotal);
+            this.#totalFinal = total;
+            this.#detalles = this.descuento.obtenerDetalles(subtotal);
+            return total;
+        }
     }
 
     confirmar() {
@@ -618,26 +809,26 @@ class compra extends Entidad {
                 total: total,
                 numero: this.#numeroCompra,
                 fecha: this.fecha.toLocaleDateString(),
-                cliente: this.cliente.nombre
+                cliente: this.cliente.nombre,
+                tipoCliente: this.cliente.obtenerTipo()
             };
         }
     }
 
     obtenerResumen() {
         let subtotal = this.carrito.obtenerSubtotal();
-        let detalles = this.descuento.obtenerDetalles(subtotal);
-        let tipo = this.cliente.actualizarTipo(subtotal);
+        this.calcularTotal();
+        let tipo = this.cliente.obtenerTipo();
         let resumen = "=== RESUMEN DE COMPRA ===\n";
         resumen = resumen + "N°: " + this.#numeroCompra + "\n";
         resumen = resumen + "Fecha: " + this.fecha.toLocaleDateString() + "\n";
         resumen = resumen + "Cliente: " + this.cliente.nombre + "\n";
         resumen = resumen + "Tipo: " + tipo + "\n";
         resumen = resumen + "------------------------\n";
-        resumen = resumen + "Subtotal: S/ " + detalles.subtotal.toFixed(2) + "\n";
-        resumen = resumen + "Descuento: -S/ " + detalles.descCantidad.toFixed(2) + "\n";
-        resumen = resumen + "Descuento pago: -S/ " + detalles.descPago.toFixed(2) + "\n";
+        resumen = resumen + "Subtotal: S/ " + subtotal.toFixed(2) + "\n";
+        resumen = resumen + "Descuento: -S/ " + (subtotal - this.#totalFinal).toFixed(2) + "\n";
         resumen = resumen + "------------------------\n";
-        resumen = resumen + "TOTAL: S/ " + detalles.total.toFixed(2) + "\n";
+        resumen = resumen + "TOTAL: S/ " + this.#totalFinal.toFixed(2) + "\n";
         resumen = resumen + "Estado: " + this.estado + "\n";
         resumen = resumen + "========================";
         return resumen;
@@ -660,7 +851,6 @@ class compra extends Entidad {
         return this.estado === "Pendiente";
     }
 
-    // Método privado
     #generarNumero() {
         let fecha = new Date();
         let año = fecha.getFullYear();
@@ -671,19 +861,21 @@ class compra extends Entidad {
     }
 }
 
-const compra1 = new compra(cliente1, carrito1, descuento1, new Date(), "Pendiente");
+// ============================================
+// CLASE: Categoria (NO hereda) - SIN super
+// ============================================
 
-class Categoria extends Entidad {
+class Categoria {
     #productos;
     #totalProductos;
 
+    nombre;
     descripcion;
     estado;
     fechaRegistro;
 
     constructor(cod, nom, desc, est, fecReg) {
-        super(cod, nom);
-
+        this.nombre = nom;
         this.descripcion = desc;
         this.estado = est;
         this.fechaRegistro = fecReg;
@@ -691,7 +883,6 @@ class Categoria extends Entidad {
         this.#totalProductos = 0;
     }
 
-    // Getters
     getproductos() {
         return this.#productos;
     }
@@ -700,7 +891,6 @@ class Categoria extends Entidad {
         return this.#totalProductos;
     }
 
-    // Setters
     setnombre(nuevoNombre) {
         this.nombre = nuevoNombre;
     }
@@ -709,7 +899,6 @@ class Categoria extends Entidad {
         this.descripcion = nuevaDescripcion;
     }
 
-    // Métodos públicos
     agregarProducto(producto) {
         this.#productos.push(producto);
         this.#totalProductos = this.#totalProductos + 1;
@@ -750,11 +939,10 @@ class Categoria extends Entidad {
         return this.#contarProductosActivos();
     }
 
-    // Método privado
     #contarProductosActivos() {
         let activos = 0;
         for (let i = 0; i < this.#productos.length; i++) {
-            if (this.#productos[i].getactivo()) {
+            if (this.#productos[i].activo) {
                 activos++;
             }
         }
@@ -764,26 +952,28 @@ class Categoria extends Entidad {
 
 const categoria1 = new Categoria(1, "Útiles de Escritura", "Lapiceros, lápices y borradores", true, new Date());
 
+// ============================================
+// CLASE: metodoPago (NO hereda) - SIN super
+// ============================================
 
-class metodoPago extends Entidad {
+class metodoPago {
     #transacciones;
     #totalProcesado;
 
+    nombre;
     descuento;
     tipo;
     estado;
 
     constructor(cod, nom, desc, tip, est) {
-        super(cod, nom);
-
-
+        this.nombre = nom;
         this.descuento = desc;
         this.tipo = tip;
         this.estado = est;
         this.#transacciones = 0;
         this.#totalProcesado = 0;
     }
-    // Getters
+
     gettransacciones() {
         return this.#transacciones;
     }
@@ -792,7 +982,6 @@ class metodoPago extends Entidad {
         return this.#totalProcesado;
     }
 
-    // Setters
     setnombre(nuevoNombre) {
         this.nombre = nuevoNombre;
     }
@@ -803,7 +992,6 @@ class metodoPago extends Entidad {
         }
     }
 
-    // Métodos públicos
     procesarPago(monto) {
         if (this.estado && this.#validarMonto(monto)) {
             this.#transacciones = this.#transacciones + 1;
@@ -842,7 +1030,6 @@ class metodoPago extends Entidad {
         return this.descuento;
     }
 
-    // Método privado
     #validarMonto(monto) {
         return monto > 0;
     }
@@ -850,21 +1037,23 @@ class metodoPago extends Entidad {
 
 const metodoPago1 = new metodoPago(1, "Yape", 5, "Digital", true);
 
+// ============================================
+// CLASE: proveedor (NO hereda) - SIN super
+// ============================================
 
-class proveedor extends Entidad {
+class proveedor {
     #productos;
     #totalProductos;
     #activo;
 
-
+    nombre;
     telefono;
     direccion;
     correo;
     ruc;
 
     constructor(cod, nom, tel, dir, corr, rucProv) {
-        super(cod, nom);
-
+        this.nombre = nom;
         this.telefono = tel;
         this.direccion = dir;
         this.correo = corr;
@@ -874,7 +1063,6 @@ class proveedor extends Entidad {
         this.#activo = true;
     }
 
-    // Getters
     getproductos() {
         return this.#productos;
     }
@@ -887,7 +1075,6 @@ class proveedor extends Entidad {
         return this.#activo;
     }
 
-    // Setters
     setnombre(nuevoNombre) {
         this.nombre = nuevoNombre;
     }
@@ -898,7 +1085,6 @@ class proveedor extends Entidad {
         }
     }
 
-    // Métodos públicos
     agregarProducto(producto) {
         this.#productos.push(producto);
         this.#totalProductos = this.#totalProductos + 1;
@@ -939,7 +1125,6 @@ class proveedor extends Entidad {
         return "Teléfono: " + this.telefono + " - Dirección: " + this.direccion;
     }
 
-    // Método privado
     #validarRUC() {
         return this.ruc.length === 11;
     }
@@ -947,8 +1132,11 @@ class proveedor extends Entidad {
 
 const proveedor1 = new proveedor(1, "Papelera Central", "987654321", "Av. Principal 456", "ventas@papeleracentral.com", "12345678901");
 
+// ============================================
+// CLASE: inventario (NO hereda) - SIN super
+// ============================================
 
-class inventario extends Entidad {
+class inventario {
     #valorTotal;
     #productosAlmacenados;
 
@@ -959,8 +1147,6 @@ class inventario extends Entidad {
     estado;
 
     constructor(cod, prod, stk, alm, fecIng, est) {
-        super(cod, "Inventario");
-        
         this.producto = prod;
         this.stock = stk;
         this.almacen = alm;
@@ -970,7 +1156,6 @@ class inventario extends Entidad {
         this.#productosAlmacenados = [];
     }
 
-    // Getters
     getvalorTotal() {
         return this.#valorTotal;
     }
@@ -979,7 +1164,6 @@ class inventario extends Entidad {
         return this.#productosAlmacenados;
     }
 
-    // Setters
     setalmacen(nuevoAlmacen) {
         this.almacen = nuevoAlmacen;
     }
@@ -988,7 +1172,6 @@ class inventario extends Entidad {
         this.estado = nuevoEstado;
     }
 
-    // Métodos públicos
     agregarProducto(producto, cantidad) {
         this.#productosAlmacenados.push({
             producto: producto,
@@ -1044,7 +1227,6 @@ class inventario extends Entidad {
         return false;
     }
 
-    // Método privado
     #actualizarValorTotal() {
         let total = 0;
         for (let i = 0; i < this.#productosAlmacenados.length; i++) {
@@ -1058,8 +1240,11 @@ class inventario extends Entidad {
 
 const inventario1 = new inventario(1, null, 0, "Almacén Central", new Date(), true);
 
+// ============================================
+// CLASE: detalleCompra (NO hereda) - SIN super
+// ============================================
 
-class detalleCompra extends Entidad {
+class detalleCompra {
     #descuentoAplicado;
     #precioFinal;
 
@@ -1070,8 +1255,6 @@ class detalleCompra extends Entidad {
     observacion;
 
     constructor(cod, prod, cant, pUni, subTot, obs) {
-        super(cod, "DetalleCompra"); 
-        
         this.producto = prod;
         this.cantidad = cant;
         this.precioUnitario = pUni;
@@ -1081,7 +1264,6 @@ class detalleCompra extends Entidad {
         this.#precioFinal = subTot;
     }
 
-    // Getters
     getdescuentoAplicado() {
         return this.#descuentoAplicado;
     }
@@ -1090,7 +1272,6 @@ class detalleCompra extends Entidad {
         return this.#precioFinal;
     }
 
-    // Setters
     setcantidad(nuevaCantidad) {
         if (nuevaCantidad > 0) {
             this.cantidad = nuevaCantidad;
@@ -1102,7 +1283,6 @@ class detalleCompra extends Entidad {
         this.observacion = nuevaObservacion;
     }
 
-    // Métodos públicos
     calcularSubtotal() {
         this.subtotal = this.precioUnitario * this.cantidad;
         return this.subtotal;
@@ -1132,7 +1312,6 @@ class detalleCompra extends Entidad {
         return this.observacion;
     }
 
-    // Métodos privados
     #validarCantidad() {
         return this.cantidad > 0;
     }
@@ -1144,10 +1323,135 @@ class detalleCompra extends Entidad {
 
 const detalleCompra1 = new detalleCompra(1, null, 3, 9, 27, "Cuadernos A4");
 
-// DEMOSTRACIÓN DE POLIMORFISMO
+// ============================================
+// INSTANCIAS DE PRUEBA
+// ============================================
 
-console.log("=== DEMOSTRACIÓN DE POLIMORFISMO ===");
-console.log(producto1.obtenerTipo());        
-console.log(producto1.obtenerDescripcion()); 
-console.log(cliente1.obtenerTipo());        
-console.log(cliente1.obtenerDescripcion());
+const producto1 = new Papeleria(
+    1, "Cuaderno A4", "Norma", 9, 96, 100,
+    3, "Comunicación", "Primaria",
+    "Rayado", 80, "A4"
+);
+
+const producto2 = new Utiles(
+    2, "Lapicero Retráctil", "Bic", 3, 30, 200,
+    2, "Escritura", "Inicial",
+    "Azul", "Plástico", "Escribir"
+);
+
+const producto3 = new Jugueteria(
+    3, "Pelota de Fútbol", "Adidas", 45, 480, 50,
+    8, "Deportivo", "Cuero"
+);
+
+const producto4 = new Papeleria(
+    4, "Papel Bond", "Maped", 15, 150, 500,
+    4, "Arte", "Primaria",
+    "Blanco", 75, "A4"
+);
+
+const producto5 = new Utiles(
+    5, "Tijeras", "Maped", 5, 54, 80,
+    6, "Manualidades", "Primaria",
+    "Plateado", "Metal", "Cortar"
+);
+
+const cliente1 = new clienteunitario(
+    1, "Ana Pérez", "ana@email.com", "987654321", "Av. Siempre Viva 123"
+);
+
+const cliente2 = new clientepordocena(
+    2, "Colegio San José", "colegio@email.com", "987654322", "Av. Principal 456"
+);
+
+const compra1 = new compra(cliente1, carrito1, descuento1, new Date(), "Pendiente");
+
+// ============================================
+// DEMOSTRACIÓN DE FUNCIONAMIENTO
+// ============================================
+
+console.log("=== PRODUCTOS CREADOS ===");
+console.log(producto1.obtenerInfo());
+console.log("Tipo: " + producto1.obtenerTipo());
+console.log("Descripción: " + producto1.obtenerDescripcion());
+console.log("");
+
+console.log(producto2.obtenerInfo());
+console.log("Tipo: " + producto2.obtenerTipo());
+console.log("Descripción: " + producto2.obtenerDescripcion());
+console.log("");
+
+console.log(producto3.obtenerInfo());
+console.log("Tipo: " + producto3.obtenerTipo());
+console.log("Descripción: " + producto3.obtenerDescripcion());
+console.log("");
+
+console.log("=== CLIENTES CREADOS ===");
+console.log(cliente1.obtenerDatos());
+console.log("Tipo: " + cliente1.obtenerTipo());
+console.log("Descripción: " + cliente1.obtenerDescripcion());
+console.log("");
+
+console.log(cliente2.obtenerDatos());
+console.log("Tipo: " + cliente2.obtenerTipo());
+console.log("Descripción: " + cliente2.obtenerDescripcion());
+console.log("");
+
+console.log("=== SIMULACIÓN DE COMPRA (Cliente Unitario) ===");
+carrito1.agregarItem(producto1, 3);
+carrito1.agregarItem(producto2, 12);
+carrito1.agregarItem(producto3, 1);
+
+console.log("Subtotal: S/" + carrito1.obtenerSubtotal().toFixed(2));
+let resultado = compra1.confirmar();
+console.log(resultado.mensaje);
+console.log("Total: S/" + resultado.total.toFixed(2));
+console.log("Tipo de cliente: " + resultado.tipoCliente);
+console.log("");
+console.log(compra1.obtenerResumen());
+
+// ============================================
+// SIMULACIÓN CON CLIENTE POR DOCENA
+// ============================================
+
+console.log("\n=== SIMULACIÓN DE COMPRA (Cliente por Docena) ===");
+const carrito2 = new carrito([], "Efectivo", 0, 0);
+carrito2.agregarItem(producto1, 12);
+carrito2.agregarItem(producto2, 24);
+
+const compra2 = new compra(cliente2, carrito2, descuento1, new Date(), "Pendiente");
+console.log("Subtotal: S/" + carrito2.obtenerSubtotal().toFixed(2));
+let resultado2 = compra2.confirmar();
+console.log(resultado2.mensaje);
+console.log("Total: S/" + resultado2.total.toFixed(2));
+console.log("Tipo de cliente: " + resultado2.tipoCliente);
+console.log("");
+console.log(compra2.obtenerResumen());
+
+// ============================================
+// DEMOSTRACIÓN DE HERENCIA A 2 NIVELES
+// ============================================
+
+console.log("\n=== DEMOSTRACIÓN DE HERENCIA A 2 NIVELES ===");
+console.log("producto1 es instancia de Papeleria: " + (producto1 instanceof Papeleria));
+console.log("producto1 es instancia de escolar: " + (producto1 instanceof escolar));
+console.log("producto1 es instancia de producto: " + (producto1 instanceof producto));
+console.log("");
+console.log("producto3 es instancia de Jugueteria: " + (producto3 instanceof Jugueteria));
+console.log("producto3 es instancia de producto: " + (producto3 instanceof producto));
+console.log("");
+console.log("cliente1 es instancia de clienteunitario: " + (cliente1 instanceof clienteunitario));
+console.log("cliente1 es instancia de cliente: " + (cliente1 instanceof cliente));
+console.log("");
+console.log("cliente2 es instancia de clientepordocena: " + (cliente2 instanceof clientepordocena));
+console.log("cliente2 es instancia de cliente: " + (cliente2 instanceof cliente));
+
+// ============================================
+// DEMOSTRACIÓN DE POLIMORFISMO
+// ============================================
+
+console.log("\n=== DEMOSTRACIÓN DE POLIMORFISMO ===");
+console.log("producto1.obtenerTipo(): " + producto1.obtenerTipo());
+console.log("producto1.obtenerDescripcion(): " + producto1.obtenerDescripcion());
+console.log("cliente1.obtenerTipo(): " + cliente1.obtenerTipo());
+console.log("cliente1.obtenerDescripcion(): " + cliente1.obtenerDescripcion());
