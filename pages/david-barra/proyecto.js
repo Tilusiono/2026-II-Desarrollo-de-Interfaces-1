@@ -277,6 +277,10 @@ class Producto {                                              // Define la clase
         return "Sin Stock";                                   // Retorna "Sin Stock" si no hay unidades
     }
 
+<<<<<<< HEAD
+=======
+    
+>>>>>>> efe801fff3e4325b2b2c6d156f8ae0e06f7aabad
     // GETTERS
 
     getIdProducto() {                                         // Getter: permite leer el ID privado del producto
@@ -834,7 +838,11 @@ class Comprobante {                                           // Define la clase
 
         if(this.#pagado())                                    // Llama al método privado para verificar el estado de pago
             return "Comprobante Pagado";                      // Retorna confirmación si el comprobante está pagado
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> efe801fff3e4325b2b2c6d156f8ae0e06f7aabad
         return "Comprobante Pendiente";                       // Retorna alerta si el comprobante aún no está pagado
     }
 
@@ -949,4 +957,8 @@ console.log(venta1.calcularTotal());                          // Imprime el tota
 console.log(detalle1.mostrarSubtotal());                      // Imprime el subtotal calculado del detalle de venta
 console.log(comprobante1.mostrarEstadoPago());                // Imprime si el comprobante está pagado o pendiente
 
+<<<<<<< HEAD
 //profe le dije a la IA que documente mi codigo para acordarme mejor :)//   
+=======
+//Profe use IA para documentar mi codigo par acordarme mejor
+>>>>>>> efe801fff3e4325b2b2c6d156f8ae0e06f7aabad
