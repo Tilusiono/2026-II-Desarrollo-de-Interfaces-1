@@ -7,6 +7,8 @@ import { Reporte } from "./Reporte.js";
 import { Asistencia } from "./Asistencia.js";
 import { Feriado } from "./Feriado.js"
 import { horasTrabajadas } from "./HorasTrabajadas.js"
+import { Obrero } from "./Obrero.js"
+import{ Consultor } from "./Consultor.js"
 // creacion de objetos
 
 // feriado
@@ -29,6 +31,12 @@ const sector1 = new Sector(
     "Activo"
 );
 
+const sector2 = new Sector(
+    "2",
+    "Construccion Civil",
+    "Piso 2 ",
+    "Activo"
+);
 // ---------jefe
 const jefe1= new Jefe(
     "87654321",
@@ -135,6 +143,64 @@ console.log("Remover Empleado :")
 console.log(sector1.eliminarEmpleado(empleado1));
 
 
+// clase obrero
+let obrero1 = new Obrero(
+    "43412112",
+    "Jose Macalqui",
+    "987654321",
+    "Activo",
+    "EMP003",
+    "Obrero",
+    1340,
+    new Date("2022-03-25"),
+    sector2,
+    "Soldador"
+);
+
+console.log("----Obrero----")
+console.log(obrero1.mostrarDatos());
+
+
+const empleadoAsistencia2= new Asistencia(
+    new Date("2025-03-02"),
+    "7: 00 AM",
+    "2:00 PM" 
+)
+
+console.log("----Control de Entrada y Salida----")
+console.log(empleadoAsistencia2.mostrarInformacion())
+empleadoAsistencia2.registrarEntrada(obrero1.getNombre())
+empleadoAsistencia2.registrarSalida(obrero1.getNombre())
+
+const horas3 = new horasTrabajadas(8, 4, 0);
+console.log("---- Horas Trabajadas ----");
+console.log(horas3.mostrarHoras());
+
+const pago3= new Pago(1900, 500, 100);
+console.log("----Pago Obrero-----")
+console.log("Pago Total :",pago3.calcularPago())
+
+const permiso2 = new Permiso(
+    "01/07/2026",
+    "15/07/2026",
+    "Vacaciones anuales"
+);
+
+console.log("Solicitando Permiso :")
+console.log(obrero1.solicitarPermiso(permiso2));
+
+// clase consultor
+const consultor1 = new Consultor(
+    "77889966",
+    "Luis Torres",
+    "999111222",
+    "Activo",
+    "Tech Solutions"
+);
+
+console.log("----Consultor----");
+console.log(consultor1.mostrarInformacion());
+console.log(consultor1.registrarVisita("realizar una auditoría del sistema"));
 // aqui el reporte
 const reporte1=new Reporte();
 
