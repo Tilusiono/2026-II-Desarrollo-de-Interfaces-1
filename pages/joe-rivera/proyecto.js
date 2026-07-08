@@ -1,4 +1,133 @@
-/**CLASE 1**/
+class Persona {
+    nombre;
+    apellido;
+    #telefono;
+    #correo;
+
+    constructor(nombre, apellido, telefono, correo)
+    {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.#telefono = telefono;
+        this.#correo = correo;
+    }
+
+    // 2 Métodos Privados
+    #validarIdentidad() { return true; }
+    #formatearNombre() { return `${this.nombre} ${this.apellido}`; }
+
+    // 2 Métodos Públicos//
+    obtenerDetalles() {
+        // Método base (opcional, los hijos lo sobrescriben)
+        console.log(`[Persona]: ${this.nombre} ${this.apellido}`);
+    }
+
+    presentarse() {
+        if(this.#validarIdentidad()) {
+            console.log(`Hola, mi nombre es ${this.#formatearNombre()}`);
+        }
+    }
+}
+
+
+/**CLASE 1, Socio (Hereda de Persona)**/
+
+class Socio extends Persona {
+        #direccion;
+        tipoCliente;
+        #historialAccesos = [];
+        #deudaPendiente = 0;    
+
+    constructor(nombre, apellido, telefono, correo, direccion, tipoCliente = "Normal", historialAccesos = [], deudaPendiente = 0) {
+        super(nombre, apellido, telefono, correo);
+        this.#direccion = direccion;
+        this.tipoCliente = tipoCliente;
+        this.#historialAccesos = historialAccesos;
+        this.#deudaPendiente = deudaPendiente;
+    }
+    // 2 Métodos Privados
+    #verificarEstadoCuenta() { return this.#deudaPendiente === 0; }
+    #registrarVisita() { this.#historialAccesos.push(new Date()); }
+
+
+
+    // 2 Métodos Públicos //
+    obtenerDetalles() {
+        console.log(`[Socio]: ${this.nombre} ${this.apellido} (${this.tipoCliente})`);
+    }
+    intentarIngreso() {
+        if (this.#verificarEstadoCuenta()) {
+            this.#registrarVisita();
+            console.log("Ingreso autorizado al gimnasio.");
+        }
+    }
+}
+
+
+
+ /**CLASE 2: SocioPremium (Hereda de Socio)**/
+
+class SocioPremium extends Socio {
+    #casilleroAsignado;
+    beneficioExtra = "Acceso Spa"; 
+    #pasesInvitado = 5;
+    #codigoVip = "VIP-100";
+
+    constructor(nombre, apellido, telefono, correo, direccion, tipoCliente, casilleroAsignado) {
+        super(nombre, apellido, telefono, correo, direccion, "Premium");
+        this.#casilleroAsignado = casilleroAsignado;
+}
+    // 2 Métodos Privados
+
+    #consumirPase() { this.#pasesInvitado--; }
+    #validarCasillero() { return this.#casilleroAsignado != null; }
+
+    // 2 Métodos Públicos
+
+    obtenerDetalles() {
+        console.log(`[Socio Premium]: ${this.nombre} ${this.apellido} (Casillero: ${this.#casilleroAsignado})`);
+    }
+    invitarAmigo() {
+        if (this.#pasesInvitado > 0) {
+            this.#consumirPase();
+            console.log("Invitación procesada. Pases restantes: " + this.#pasesInvitado);
+        }
+    }
+}
+
+/**CLASE 3: Vendedor (Hereda de Persona)**/
+
+class Vendedor extends Persona {
+    #turno;
+    #salario;
+    codigoVendedor; 
+    #comisionAcumulada; 
+
+    constructor(nombre, apellido, telefono, correo, codigoVendedor, turno, salario) {
+        super(nombre, apellido, telefono, correo);
+        this.#turno = turno;
+        this.#salario = salario;
+        this.codigoVendedor = codigoVendedor;
+        this.#comisionAcumulada = 0;
+    }
+
+    // 2 Métodos Privados//
+
+    #calcularBono() { return this.#comisionAcumulada * 0.10; }
+    #registrarVentaInterna() { this.#comisionAcumulada += 50; }
+
+    // 2 Métodos Públicos//
+    obtenerDetalles() {
+        console.log(`[Vendedor]: ${this.nombre} ${this.apellido} (Turno: ${this.#turno})`);
+    }
+    registrarNuevaVenta() {
+        this.#registrarVentaInterna();
+        console.log(`Venta registrada por el código: ${this.codigoVendedor}`);
+    }
+}
+
+
+/**CLASE 4**/
 class Gimnasio {
     nombre;
     #direccion; 
@@ -23,68 +152,26 @@ class Gimnasio {
         this.#sedes = sedes;
     }
     
-    // POLIMORFISMO
+    // 2 Métodos Privados
+
+    #evaluarAforo() { return true; }
+    #notificarAdministrador() { return "Alerta enviada"; }
+
+    // 2 Métodos Públicos
     obtenerDetalles() {
         console.log(`[Gym]: ${this.nombre}`);
+    }
+    verificarEstadoSedes() {
+        this.#notificarAdministrador();
+        console.log(`Sedes operativas en: ${this.#sedes}`);
     }
 }
 
 const gimnasio1 = new Gimnasio("Power Gym", "Calle Trabajo", 200, "Ate Vitarte, San Juan de Lurigancho, San Borja y Miraflores");
 
 
-/**CLASE 2**/
-// HERENCIa, socio hereda de Gimnasio
-class Socio extends Gimnasio{
-    nombre;
-    #telefono;
-    #correo;
-    #direccion;
 
-    constructor(nombre, telefono, correo, direccion) 
-    {
-        super("Power Gym", "Calle Trabajo", 200, "Sedes globales");
-        this.nombre = nombre;
-        this.#telefono = telefono;
-        this.#correo = correo;
-        this.#direccion = direccion; 
-    }
-
-    // POLIMORFISMO (Sobrescribe Gimnasio)
-    obtenerDetalles() {
-        console.log(`[Socio]: ${this.nombre} - Correo: ${this.#correo}`);
-    }
-}
-
-const socio1 = new Socio("José", "992531000", "tupapijose@soyrico.com", "San Roque Vitarte");
-
-
-/**CLASE 3**/
-// HERENCIA, vendedor hereda de Socio 
-class Vendedor extends Socio{
-    nombreVendedor;
-    #apellido;
-    #turno;
-    #salario;
-
-    constructor(nombre, apellido, turno, salario)
-    {
-        super("José", "992531000", "tupapijose@soyrico.com", "San Roque Vitarte");
-        this.nombreVendedor = nombre;
-        this.#apellido = apellido;
-        this.#turno = turno;
-        this.#salario = salario;
-    }
-
-    // POLIMORFISMO (Sobrescribe Socio)
-    obtenerDetalles() {
-        console.log(`[Vendedor]: ${this.nombreVendedor} - Turno: ${this.#turno}`);
-    }
-}
-
-const vendedor1 = new Vendedor("Tulio", "Manaure", "Tarde", 2000);
-
-
-/**CLASE 4**/
+/**CLASE 5**/
 class Membresía {
     nombreMembresía;
     #meses;
@@ -99,16 +186,25 @@ class Membresía {
         this.#estado = estado;
     }
 
-    // POLIMORFISMO
+    // 2 Métodos Privados
+
+    #calcularDiasRestantes() { return this.#meses * 30; }
+    #cambiarEstadoInterno(nuevoEstado) { this.#estado = nuevoEstado; }
+
+    // 2 Métodos Públicos
     obtenerDetalles() {
         console.log(`[Membresía]: ${this.nombreMembresía} (${this.#meses} meses)`);
+    }
+    cancelarSuscripcion() {
+        this.#cambiarEstadoInterno("Inactiva");
+        console.log("La membresía ha sido cancelada.");
     }
 }
 
 const membresia1 = new Membresía("Plan Anual Black", 12, "Acceso a todas las instalaciones durante un año", "Activa");
 
 
-/**CLASE 5**/
+/**CLASE 6**/
 class Precio {
     precioUnitario;
     #descuentoSoles;
@@ -123,16 +219,23 @@ class Precio {
         this.#moneda = moneda;
     }
 
-    // POLIMORFISMO
+    // 2 Métodos Privados
+    #calcularImpuesto() { return this.precioUnitario * 0.18; }
+    #verificarDescuentoValido() { return this.#descuentoSoles >= 0; }
+
+    // 2 Métodos Públicos
     obtenerDetalles() {
         console.log(`[Precio]: ${this.precioUnitario} ${this.#moneda} (Total: ${this.#pagoTotal})`);
+    }
+    mostrarDesglose() {
+        console.log(`Impuesto estimado: S/. ${this.#calcularImpuesto()}`);
     }
 }
 
 const precio1 = new Precio(350, 50, 300, "Soles");
 
 
-/**CLASE 6**/
+/**CLASE 7**/
 class Ubicacion {
     direccion;
     #distrito;
@@ -147,16 +250,24 @@ class Ubicacion {
         this.#codigoPostal = codigoPostal;
     }
 
-    // POLIMORFISMO
+    // 2 Métodos Privados**/
+
+    #obtenerCoordenadas() { return "-12.04, -76.94"; }
+    #formatearDireccion() { return `${this.direccion}, ${this.#distrito}`; }
+
+    // 2 Métodos Públicos**/
+
     obtenerDetalles() {
         console.log(`[Ubicación]: ${this.direccion}, ${this.#distrito}`);
     }
+    imprimirFichaUbicacion() {
+        console.log(`Referencia de llegada: ${this.#referencia}`);
+    }
 }
-
 const ubicacion1 = new Ubicacion("Paradero Inca Cola", "Ate Vitarte", "A una cuadra de Idat", "15074");
 
 
-/**CLASE 7**/
+/**CLASE 8**/
 class Horario {
     horaApertura;
     #horaCierre;
@@ -171,16 +282,23 @@ class Horario {
         this.#turnoEspecial = turnoEspecial;
     }
 
-    // POLIMORFISMO
+    // 2 Métodos Privados
+    #esFinDeSemana() { return false; }
+    #calcularTotalHoras() { return 16; }
+
+    // 2 Métodos Públicos
     obtenerDetalles() {
         console.log(`[Horario]: ${this.horaApertura} - ${this.#horaCierre} (${this.#diasAtencion})`);
+    }
+    mostrarAvisoCierre() {
+        console.log(`El establecimiento cierra puntualmente a las ${this.#horaCierre}`);
     }
 }
 
 const horario = new Horario("06:00", "22:00", "Lunes a Sábado", "Domingos y festivos");
 
 
-/**CLASE 8**/
+/**CLASE 9**/
 class Correo {
     correoPrincipal;
     #correoSoporte;
@@ -195,16 +313,25 @@ class Correo {
         this.#estado = estado;
     }
 
-    // POLIMORFISMO
+    // 2 Métodos Privados//
+
+    #validarEstructura() { return true; }
+    #enviarCopiaOculta() { return "Copia enviada"; }
+
+    // 2 Métodos Públicos//
+
     obtenerDetalles() {
         console.log(`[Correo]: ${this.correoPrincipal} (Estado: ${this.#estado})`);
     }
+    cambiarEstadoCorreo(nuevoEstado) {
+        this.#estado = nuevoEstado;
+        console.log(`Estado del correo actualizado a: ${this.#estado}`);
+    }
 }
-
 const correo1 = new Correo("Powe@gym.com", "soporte@powergym.com", "powergym.com", "Activo");
 
 
-/**CLASE 9**/
+/**CLASE 10**/
 class Venta {
     fecha;
     #membresiaCompradas;
@@ -219,16 +346,23 @@ class Venta {
         this.#metodoPago = metodoPago;   
     }
 
-    // POLIMORFISMO
+    // 2 Métodos Privados
+    #generarComprobanteId() { return "NRO-44910"; }
+    #aplicarComisionBanco() { return this.#total * 0.02; }
+
+    // 2 Métodos Públicos
     obtenerDetalles() {
         console.log(`[Venta]: Fecha ${this.fecha} - Total: S/. ${this.#total}`);
+    }
+    procesarTransaccion() {
+        console.log(`Transacción completada exitosamente mediante: ${this.#metodoPago}`);
     }
 }
 
 const venta1 = new Venta("22/06/2026", membresia1, 300, "Tarjeta de Crédito");
 
 
-/**CLASE 10**/
+/**CLASE 11**/
 // Agregada explícitamente para completar las 10 clases del requisito estructural original
 class Reporte {
     tipoReporte;
@@ -243,19 +377,39 @@ class Reporte {
         this.#responsable = responsable;
     }
 
-    // POLIMORFISMO
+    // 2 Métodos Privados
+
+    #comprimirArchivo() { return true; }
+    #generarFirmaDigital() { return "FIRMA-OK"; }
+
+    // 2 Métodos Públicos
+
     obtenerDetalles() {
         console.log(`[Reporte]: Tipo ${this.tipoReporte} generado por ${this.#responsable}`);
+    }
+    exportarReporte() {
+        this.#comprimirArchivo();
+        console.log(`Reporte en formato ${this.#formato} descargado correctamente.`);
     }
 }
 
 const reporte1 = new Reporte("Ventas Diarias", "PDF", 150, "Tulio Manaure");
 
 
+
+
+//********** AGREGO ESTO xdd *****/
+
+
+const socio1 = new Socio("Osvaldo", "Sanchez", "992531000", "sideralTeAmo@mail.com", "San Roque Vitarte");
+const socioPremium1 = new SocioPremium("Josè", "Villanueva", "999888777", "chupapapi_muñaños@vip.com", "La Molina", "Premium", 104);
+const vendedor1 = new Vendedor("Tulio", "Manaure", "955444333", "tulio_dale_chupetin@gym.com", "VEND01", "Tarde", 2000);
+
 // --- PRUEBA DE POLIMORFISMO VÍA CONSOLE.LOG ---
 console.log("--- EJECUTANDO POLIMORFISMO ---");
 gimnasio1.obtenerDetalles();
 socio1.obtenerDetalles();
+socioPremium1.obtenerDetalles();
 vendedor1.obtenerDetalles();
 membresia1.obtenerDetalles();
 precio1.obtenerDetalles();
