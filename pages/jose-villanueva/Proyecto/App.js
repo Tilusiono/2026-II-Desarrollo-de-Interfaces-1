@@ -690,30 +690,154 @@ class Producto {
 let alumno1 = new AlumnoTop10(
     1,
     "Juan",
-    "Perez",
+    "Chumpitaz",
     20,
     "juan@gmail.com",
-    "999999999",
-    "Ingeniería",
+    "923131321",
+    "Ingeniería de Sistemas",
     true,
     19,
     1
 );
+let alumno2 = new AlumnoTop10(
+    2,
+    "Erick",
+    "Medina",
+    19,
+    "Erick@gmail.com",
+    "987654321",
+    "Ingeniería de Sistemas",
+    true,
+    18,
+    2
+);
+let alumno3 = new AlumnoTercioSuperior(
+    3,
+    "Jose",
+    "Villanueva",
+    20,
+    "VillaJose@gmail.com",
+    "991232121",
+    "Ingeniería de Sistemas",
+    true,
+    17
+);
+let alumno4 = new AlumnoTercioSuperior(
+    4,
+    "Tulio",
+    "Manaure",
+    21,
+    "Tuliomana@gmail.com",
+    "95231321",
+    "Ingeniería de Sistemas",
+    true,
+    16
+);
+let alumno5 = new AlumnoTercioPromedio(
+    5,
+    "Joe",
+    "Rivera",
+    22,
+    "Joerive@gmail.com",
+    "988323211",
+    "Ingeniería de Sistemas",
+    true,
+    14
+);
+let alumno6 = new AlumnoTercioPromedio(
+    6,
+    "Roy",
+    "Remigio",
+    18,
+    "RoyRemigio@gmail.com",
+    "93210321",
+    "Ingeniería de Sistemas",
+    true,
+    13
+);
 let profesor1 = new ProfesorPrincipal(
     2,
-    "Carlos",
-    "Lopez",
+    "Bernabe",
+    "Inche",
     45,
-    "carlos@gmail.com",
-    "Programación",
+    "bernabe@gmail.com",
+    "Desarrollo de Interfaces 1",
     "987654321",
     new Date(),
     "Director académico"
 );
+let profesor2 = new ProfesorPrincipal(
+    3,
+    "Herber",
+    "de la Cruz",
+    50,
+    "herber@gmail.com",
+    "Base de Datos",
+    "983220808",
+    new Date(),
+    "Coordinador de carrera"
+);
+let profesor3 = new ProfesorPrincipal(
+    4,
+    "Giomar",
+    "Bazan",
+    42,
+    "giomar@gmail.com",
+    "Lectura critica y argumentacion",
+    "932198765",
+    new Date(),
+    "profesor titular"
+);
+let profesor4 = new ProfesorInvitado(
+    5,
+    "Yenner",
+    "Mendoza",
+    39,
+    "yenner@gmail.com",
+    "Capa de Vista",
+    "931525642",
+    new Date(),
+    "Universidad Tecnológica del Perú"
+);
+let profesor5 = new ProfesorInvitado(
+    6,
+    "Kenny",
+    "Malqui",
+    37,
+    "kenny@gmail.com",
+    "Programación orientada a objetos",
+    "955555555",
+    new Date(),
+    "Universidad Tecnológica del Perú"
+);
 let curso1 = new Curso(
     1,
-    "Programación Web",
-    "PW01",
+    "Desarrollo de Interfaces 1",
+    "DI01",
+    4
+);
+let curso2 = new Curso(
+    2,
+    "Base de Datos",
+    "BD02",
+    5
+);
+let curso3 = new Curso(
+    3,
+    "Lectura critica y argumentacion",
+    "LCA03",
+    4
+);
+let curso4 = new Curso(
+    4,
+    "Capa de Vista",
+    "CV04",
+    3
+);
+let curso5 = new Curso(
+    5,
+    "Programación Orientada a Objetos",
+    "POO05",
     4
 );
 let producto1 = new Producto(
@@ -722,26 +846,64 @@ let producto1 = new Producto(
     2500,
     "Tecnología"
 );
+let producto2 = new Producto(
+    2,
+    "Libro de Programación",
+    80,
+    "Libros"
+);
+let producto3 = new Producto(
+    3,
+    "Cuaderno Universitario",
+    15,
+    "Útiles"
+);
+let producto4 = new Producto(
+    4,
+    "Mouse Gamer",
+    120,
+    "Tecnología"
+);
+let producto5 = new Producto(
+    5,
+    "Teclado Mecánico",
+    250,
+    "Tecnología"
+);
 let resultado = document.getElementById("resultado");
 
 
 resultado.innerHTML = `
 
-<h3>Alumno</h3>
-<p>${alumno1.mostrarRol()}</p>
-<p>Promedio: ${alumno1.mostrarPromedio()}</p>
+<h3>Alumnos</h3>
+<p>${alumno1.mostrarInfo()} - ${alumno1.mostrarRol()} - Promedio: ${alumno1.mostrarPromedio()}</p>
+<p>${alumno2.mostrarInfo()} - ${alumno2.mostrarRol()} - Promedio: ${alumno2.mostrarPromedio()}</p>
+<p>${alumno3.mostrarInfo()} - ${alumno3.mostrarRol()} - Promedio: ${alumno3.mostrarPromedio()}</p>
+<p>${alumno4.mostrarInfo()} - ${alumno4.mostrarRol()} - Promedio: ${alumno4.mostrarPromedio()}</p>
+<p>${alumno5.mostrarInfo()} - ${alumno5.mostrarRol()} - Promedio: ${alumno5.mostrarPromedio()}</p>
+<p>${alumno6.mostrarInfo()} - ${alumno6.mostrarRol()} - Promedio: ${alumno6.mostrarPromedio()}</p>
+
+<h3>Profesores</h3>
+<p>${profesor1.getNombreCompleto()} - ${profesor1.mostrarRol()} - Cargo: ${profesor1.mostrarCargo()}</p>
+<p>${profesor2.getNombreCompleto()} - ${profesor2.mostrarRol()} - Cargo: ${profesor2.mostrarCargo()}</p>
+<p>${profesor3.getNombreCompleto()} - ${profesor3.mostrarRol()} - Cargo: ${profesor3.mostrarCargo()}</p>
+<p>${profesor4.getNombreCompleto()} - ${profesor4.mostrarRol()} - Universidad: ${profesor4.mostrarUniversidad()}</p>
+<p>${profesor5.getNombreCompleto()} - ${profesor5.mostrarRol()} - Universidad: ${profesor5.mostrarUniversidad()}</p>
 
 
-<h3>Profesor</h3>
-<p>${profesor1.mostrarRol()}</p>
-<p>Cargo: ${profesor1.mostrarCargo()}</p>
-
-
-<h3>Curso</h3>
+<h3>Cursos</h3>
 <p>${curso1.mostrarCurso()}</p>
+<p>${curso2.mostrarCurso()}</p>
+<p>${curso3.mostrarCurso()}</p>
+<p>${curso4.mostrarCurso()}</p>
+<p>${curso5.mostrarCurso()}</p>
 
 
-<h3>Producto</h3>
+<h3>Productos</h3>
 <p>${producto1.mostrarInfo()}</p>
+<p>${producto2.mostrarInfo()}</p>
+<p>${producto3.mostrarInfo()}</p>
+<p>${producto4.mostrarInfo()}</p>
+<p>${producto5.mostrarInfo()}</p>
 
 `;
