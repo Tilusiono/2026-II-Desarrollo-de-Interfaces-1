@@ -140,6 +140,27 @@ class Juez_mesa extends usuario {
         return `${this.#id_empleado} | ${this.#nombre_empleado}`
     }
 }
+class Juez_Seguridad extends Juez_mesa {
+    #nivel_acceso;
+    sector_vigilancia;
+
+    constructor(id_usuario, nombre, edad, correo_electronico, telefono, id_empleado, nombre_empleado, mesa_asignada, nivel_acceso, sector_vigilancia) {
+        super(id_usuario, nombre, edad, correo_electronico, telefono, id_empleado, nombre_empleado, mesa_asignada);
+        this.#nivel_acceso = nivel_acceso;
+        this.sector_vigilancia = sector_vigilancia;
+    }
+}
+
+class Juez_Auditoria extends Juez_mesa {
+    #limite_autorizado;
+    moneda_gestion;
+
+    constructor(id_usuario, nombre, edad, correo_electronico, telefono, id_empleado, nombre_empleado, mesa_asignada, limite_autorizado, moneda_gestion) {
+        super(id_usuario, nombre, edad, correo_electronico, telefono, id_empleado, nombre_empleado, mesa_asignada);
+        this.#limite_autorizado = limite_autorizado;
+        this.moneda_gestion = moneda_gestion;
+    }
+}
 
 class Billetera_virtual {
     metodo_pago; 
@@ -434,6 +455,24 @@ class recompensa {
        console.log(`Registrando la recompensa #${this.recompensa} en el sistema. `);    
     }
 }
+
+const usuarioComun = new usuario(1, "Barcena ramirez", 25, "Renalero@gmail.com", "999888777");
+const recepcionistaCasino = new recepcionista(101, "Naomi alvarado", 30, "Akerman@casino.com", "912345678", "EMP001", "Naomi Recepcion", "Mañana");
+
+const juezMesaRuleta = new Juez_mesa(201, "David guevara", 40, "polarts@casino.com", "987654321", "JUEZ01", "David Juez", "Ruleta 01");
+const juezSeguridadVip = new Juez_Seguridad(301, "tristofer Sanchez", 35, "poiconsito@casino.com", "955666777", "SEG01", "tristofer Seguridad", "Mesa VIP", "Nivel Alto", "Zona VIP");
+const juezAuditorFinanzas = new Juez_Auditoria(401, "Gohan luigi", 45, "luigi@casino.com", "944333222", "AUD01", "Gohan auditor", "Mesa Poker", 50000, "USD");
+
+
+const billeteraJugador = new Billetera_virtual(1, "renalero@gmail.com", "barcena ramirez", "999888777", 1500, "Tarjeta", "1234", 1000);
+const cuentaJugador = new Cuenta_virtual(1, "renalero@gmail.com", "barcena ramirez", "999888777", 1500, "1234", "Premium", 1);
+
+const fichaCasino = new Fichas(1, 50, 10, "2026-07-07");
+
+const mesaRuleta = new Mesa("MESA-001", 10000, 0.10, "Ruleta");
+const apuestaJugador = new apuesta(1, 500, "pendiente", "Rojo-14");
+const partidaActual = new partida("PART-001", "MESA-001", "Luigi, Gohan, alonso");
+const premioEspecial = new recompensa("PREM-99", "Bono de bienvenida de 500 fichas");
    
 
 console.log(usuario)
@@ -441,6 +480,8 @@ console.log(recepcionista)
 console.log(Billetera_virtual)
 console.log(Cuenta_virtual)
 console.log(Fichas)
+console.log(Juez_Auditoria)
+console.log(Juez_Seguridad)
 console.log(Mesa)
 console.log(apuesta)
 console.log(Juez_mesa)
