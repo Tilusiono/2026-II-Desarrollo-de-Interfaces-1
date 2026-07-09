@@ -57,9 +57,9 @@ class ProyectoVenta {
     }
 }
 
-const proveedor1 = new Proveedor({ id: 1, empresa: "TecnoImport Perú", ruc: "20481234561", telefono: "987-654-321", correo: "ventas@tecnoimport.com" });
-const proveedor2 = new Proveedor({ id: 2, empresa: "PC Componentes Lima", ruc: "20679854123", telefono: "956-222-111", correo: "contacto@pccomponentes.pe" });
-const proveedor3 = new Proveedor({ id: 3, empresa: "Gaming Hardware SAC", ruc: "20555444333", telefono: "944-333-222", correo: "proveedores@gaminghardware.pe" });
+ const proveedor1 = new Proveedor({ id: 1, empresa: "TecnoImport Perú", ruc: "20481234561", telefono: "987-654-321", correo: "ventas@tecnoimport.com" });
+ const proveedor2 = new Proveedor({ id: 2, empresa: "PC Componentes Lima", ruc: "20679854123", telefono: "956-222-111", correo: "contacto@pccomponentes.pe" });
+ const proveedor3 = new Proveedor({ id: 3, empresa: "Gaming Hardware SAC", ruc: "20555444333", telefono: "944-333-222", correo: "proveedores@gaminghardware.pe" });
 
 const vendedor = new Vendedor({
     id: 1, nombre: "Raymond", apellido: "Díaz", edad: 18, telefono: "999-888-777",
