@@ -63,6 +63,11 @@ export class Reporte{
 
     // metodos
 
+    contarEmpleados(cantidad){
+        for(let i = 1; i <= cantidad; i++){
+           console.log("Empleado " + i);
+        }
+    }
     generarReporteEmpleado(empleado) {
         return empleado.mostrarInformacion();
     }

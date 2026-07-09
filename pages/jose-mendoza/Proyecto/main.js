@@ -220,3 +220,5 @@ console.log("----Reporte 1 ----")
 console.log(reporte1.generarReporteEmpleado(jefe1));
 console.log()
 
+console.log("----Contador de Empleados----");
+reporte1.contarEmpleados(3);
