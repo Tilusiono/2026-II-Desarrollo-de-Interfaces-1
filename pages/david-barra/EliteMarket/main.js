@@ -102,9 +102,9 @@ let comprobante1 = new Comprobante(                           // Crea una instan
     "Pagado"                                                  // Estado de pago del comprobante
 );
 
-console.log(inventario1.mostrarEstadoStock());                // Imprime si el inventario está bajo o disponible
+console.log(inventario1.mostrarRevisionStock());                // Imprime si el inventario está bajo o disponible
 console.log(proveedor1.mostrarProveedor());                   // Imprime el nombre del proveedor y validez de su correo
-console.log(carrito1.mostrarTotal());                         // Imprime el total del carrito o indica que está vacío
+console.log(carrito1.mostrarProductos());                     // Imprime el total del carrito o indica que está vacío
 console.log(venta1.calcularTotal());                          // Imprime el total final de la venta con/sin descuento
 console.log(detalle1.mostrarSubtotal());                      // Imprime el subtotal calculado del detalle de venta
 console.log(comprobante1.mostrarEstadoPago());                // Imprime si el comprobante está pagado o pendiente

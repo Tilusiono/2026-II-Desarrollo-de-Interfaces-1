@@ -53,7 +53,19 @@ export class CarritoCompra {                                  // Define la clase
 
         return `Total: S/ ${this.#total}`;                    // Retorna el total en soles si hay productos
     }
+    /**
+     * Método público
+     * Muestra la cantidad de productos del carrito 
+     * utilizando un ciclo for.
+     */
+    mostrarProductos() {                                      // Método público: recorre los productos registrados en el carrito
 
+        for(let i = 1; i <= this.cantidadProductos; i++) {    // Recorre desde el primer producto hasta la cantidad registrada
+            console.log(`Producto ${i}`);                     // Muestra cada producto en la consola
+        }
+
+        return `Se registraron ${this.cantidadProductos} productos`; // Retorna la cantidad total de productos
+    }
     // GETTERS
 
     getIdCarrito() {                                          // Getter: permite leer el ID privado del carrito

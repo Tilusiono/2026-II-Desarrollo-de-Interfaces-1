@@ -59,7 +59,23 @@
 
         return "Stock Disponible";                            // Retorna estado normal si hay suficiente stock
     }
+    /**
+     * Método público
+     * Muestra una revisión del inventario 
+     * utilizando un ciclo do...while.
+     */
+    mostrarRevisionStock() {                                  // Método público: realiza una revisión del stock
 
+        let contador = 1;                                     // Inicializa el contador
+
+        do {
+            console.log(`Revisión ${contador}`);              // Muestra el número de revisión
+            contador++;                                       // Incrementa el contador
+
+        } while(contador <= 3);                               // Repite hasta completar 3 revisiones
+
+        return "Revisión de inventario finalizada";           // Retorna mensaje al finalizar
+    }
     // GETTERS
 
     getIdInventario() {                                       // Getter: permite leer el ID privado del inventario

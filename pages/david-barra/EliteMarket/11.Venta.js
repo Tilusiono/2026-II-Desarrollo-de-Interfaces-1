@@ -16,9 +16,9 @@ export class Venta {                                          // Define la clase
     impuesto;                                                 // Atributo público: monto de impuesto (IGV) aplicado
     estado;                                                   // Atributo público: estado de la venta (Completada, etc.)
 
-    /**
-     * Constructor Venta
-     */
+    
+    //Constructor Venta
+     
     constructor(
         idVenta,                                              // ID único de la venta
         total,                                                // Monto total de la venta
@@ -45,11 +45,11 @@ export class Venta {                                          // Define la clase
         this.estado = estado;                                 // Asigna el estado al atributo público
     }
 
-    /**
-     * Método privado
-     */
+    
+    //Método privado
+    
     #aplicaDescuento() {                                      // Método privado: verifica si se aplicó algún descuento
-        return this.descuento > 0;                            // Retorna true si el descuento es mayor a cero
+        return this.descuento > 0;                            // Retorna true si el descuento es mayor que cero
     }
 
     /**
@@ -68,6 +68,34 @@ export class Venta {                                          // Define la clase
         return `Total: ${totalFinal}`;                        // Retorna total sin mención de descuento
     }
 
+    /**
+     * Método público
+     * Muestra el método de pago utilizando una estructura switch.
+     * metodo ciclo
+     */
+    mostrarMetodoPago() {                                     // Método público: identifica el método de pago registrado
+
+        switch(this.metodoPago) {                             // Evalúa el método de pago
+
+            case "Efectivo":
+                return "Pago en efectivo";                    // Retorna si el pago fue en efectivo
+
+            case "Tarjeta":
+                return "Pago con tarjeta";                    // Retorna si el pago fue con tarjeta
+
+            case "Yape":
+                return "Pago mediante Yape";                  // Retorna si el pago fue mediante Yape
+
+            case "Plin":
+                return "Pago mediante Plin";                  // Retorna si el pago fue mediante Plin
+
+            default:
+                return "Método de pago desconocido";          // Retorna si el método no coincide con ninguno
+        }
+    }
+
+    // GETTERS
+
     getIdVenta() {                                            // Getter: permite leer el ID privado de la venta
         return this.#idVenta;                                 // Retorna el valor del campo privado #idVenta
     }
@@ -75,6 +103,8 @@ export class Venta {                                          // Define la clase
     getTotal() {                                              // Getter: permite leer el total privado de la venta
         return this.#total;                                   // Retorna el valor del campo privado #total
     }
+
+    // SETTERS
 
     setTotal(total) {                                         // Setter: permite actualizar el total de la venta con validación
 
