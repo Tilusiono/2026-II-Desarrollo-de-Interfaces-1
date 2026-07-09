@@ -86,10 +86,9 @@ export class Pago{
 
         case (total >= 1500):
             return "Pago Básico";
-            
+
         default:
             return "Pago Bajo";
         }
     }
-
 }
