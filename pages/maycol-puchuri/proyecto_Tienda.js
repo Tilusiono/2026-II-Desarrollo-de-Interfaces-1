@@ -32,7 +32,7 @@ class Cliente extends Persona {
 }
 
 class Cajero extends Persona {
-  #cajaAsignada; // <--- [SOLICITADO: 1. Parámetro Privado]
+  #cajaAsignada; 
   #turno;
 
   constructor(id, nombre, cajaAsignada, turno) {
