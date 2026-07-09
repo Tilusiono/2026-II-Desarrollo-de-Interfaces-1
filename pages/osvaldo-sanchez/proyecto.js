@@ -1,14 +1,26 @@
 class Alumno {
+
     nombre;
+    carrera;
+    ciclo;
+    correo;
+
     #apellido;
     #edad;
     #telmovil;
+    #codigo;
 
     constructor(nom, ape, edad, tel) {
         this.nombre = nom;
         this.#apellido = ape;
         this.#edad = edad;
         this.#telmovil = tel;
+
+        // Agregados
+        this.carrera = "";
+        this.ciclo = "";
+        this.correo = "";
+        this.#codigo = "";
     }
 
     mostrarAlumno() {
@@ -48,11 +60,19 @@ class Alumno {
 }
 
 class Profesor {
+
+    // 
+    Públicos
     nombre;
     curso;
+    especialidad;
+    correo;
+
+    // Privados
     #apellido;
     #fechaNac;
     #gradoAcademico;
+    #telefono;
 
     constructor(nombre, apellido, fechaNac, gradoAcademico) {
         this.nombre = nombre;
@@ -60,6 +80,13 @@ class Profesor {
         this.#fechaNac = fechaNac;
         this.#gradoAcademico = gradoAcademico;
     }
+    
+    // Agredados
+    this.curso = "";
+    this.especialidad = "";
+    this.correo = "";
+    this.#telefono = "";
+
 
     // Métodos públicos
     mostrarProfesor() {
