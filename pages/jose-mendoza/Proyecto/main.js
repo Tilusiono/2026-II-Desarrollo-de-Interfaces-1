@@ -80,6 +80,9 @@ const pago2= new Pago(4500, 300, 200);
 console.log("----Pago Jefe-----")
 console.log("Pago Total :",pago2.calcularPago())
 
+console.log("----Clasificación del Pago del Jefe----");
+console.log(pago2.clasificarPago());
+
 
 // ---------empleado
 const empleado1= new Empleado(
@@ -120,6 +123,8 @@ console.log(horas1.mostrarHoras());
 const pago1= new Pago(2500, 500, 100);
 console.log("----Pago Empleado-----")
 console.log("Pago Total :",pago1.calcularPago())
+console.log("----Clasificación del Pago del Empleado----");
+console.log(pago1.clasificarPago());
 
 // permiso
 const permiso1 = new Permiso(
@@ -179,6 +184,8 @@ console.log(horas3.mostrarHoras());
 const pago3= new Pago(1900, 500, 100);
 console.log("----Pago Obrero-----")
 console.log("Pago Total :",pago3.calcularPago())
+console.log("----Clasificación del Pago del Obrero----");
+console.log(pago3.clasificarPago());
 
 const permiso2 = new Permiso(
     "01/07/2026",
@@ -188,6 +195,8 @@ const permiso2 = new Permiso(
 
 console.log("Solicitando Permiso :")
 console.log(obrero1.solicitarPermiso(permiso2));
+console.log("----Recordatorio de Permiso----");
+permiso1.recordatorioPermiso();
 
 // clase consultor
 const consultor1 = new Consultor(
@@ -201,6 +210,9 @@ const consultor1 = new Consultor(
 console.log("----Consultor----");
 console.log(consultor1.mostrarInformacion());
 console.log(consultor1.registrarVisita("realizar una auditoría del sistema"));
+// motivo
+console.log(consultor1.clasificarConsulta("Tecnologia"));
+
 // aqui el reporte
 const reporte1=new Reporte();
 

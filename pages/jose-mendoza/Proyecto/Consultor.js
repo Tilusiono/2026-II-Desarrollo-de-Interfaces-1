@@ -32,6 +32,19 @@ export class Consultor extends Persona{
         return `El consultor ${this.getNombre()} vino a ${motivo}.`;
     } 
 
+    clasificarConsulta(tipo){
+        switch(tipo){
+            case "Tecnologia":
+                return "Consulta de Tecnologia";
+            case "Seguridad":
+                return "Consulta de Seguridad";
+            case "Base de Datos":
+                return "Consulta de Base de Datos";
+            default:
+                return "Consulta General";
+        }
+    }
+
     // Método
     mostrarInformacion(){
         return `

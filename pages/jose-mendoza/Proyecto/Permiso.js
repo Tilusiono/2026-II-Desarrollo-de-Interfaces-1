@@ -67,6 +67,15 @@ export class Permiso{
         this.aprobado = false;
     }
 
+    recordatorioPermiso(){
+        let i = 1;
+
+        do{
+            console.log("Recordatorio " + i + ": El permiso sigue pendiente.");
+            i++;
+        }while(i <= 1);
+    }
+
     mostrarPermiso(){
         return `
         Motivo : ${this.getMotivo()}

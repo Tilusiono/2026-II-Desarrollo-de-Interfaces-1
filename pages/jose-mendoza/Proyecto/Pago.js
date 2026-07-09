@@ -74,4 +74,22 @@ export class Pago{
         this.setDescuento(monto);
     }
 
+    clasificarPago(){
+    let total = this.calcularPago();
+
+    switch(true){
+        case (total >= 4000):
+            return "Pago Alto";
+            
+         case (total >= 2500):
+            return "Pago Medio";
+
+        case (total >= 1500):
+            return "Pago Básico";
+            
+        default:
+            return "Pago Bajo";
+        }
+    }
+
 }
