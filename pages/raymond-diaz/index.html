@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Venta de Equipos Electrónicos para PC</title>
+</head>
+<body>
+    <h1>Sistema de venta de equipos electrónicos para PC</h1>
+    <p>Avance sin CSS. Funciona con Live Server. Nueva rama de herencia:</p>
+    <pre>
+Persona
+├── Cliente
+│   ├── ClienteNatural
+│   └── ClienteEmpresarial
+└── Empleado
+    └── Vendedor
+    </pre>
+
+    <hr>
+    <h2>Vendedor asignado</h2>
+    <div id="datosVendedor"></div>
+
+    <hr>
+    <h2>Clientes registrados</h2>
+    <div id="listaClientes"></div>
+
+    <hr>
+    <h2>Buscar productos</h2>
+    <label for="busqueda">Búsqueda:</label>
+    <input type="search" id="busqueda" placeholder="Ejemplo: Ryzen, SSD, teclado">
+
+    <br><br>
+
+    <label for="categoria">Categoría:</label>
+    <select id="categoria">
+        <option value="todos">Todas</option>
+        <option value="Procesador">Procesador</option>
+        <option value="Memoria RAM">Memoria RAM</option>
+        <option value="Almacenamiento">Almacenamiento</option>
+        <option value="Periférico">Periférico</option>
+        <option value="Tarjeta gráfica">Tarjeta gráfica</option>
+    </select>
+
+    <hr>
+    <h2>Catálogo de productos</h2>
+    <div id="listaProductos"></div>
+
+    <hr>
+    <h2>Carrito de compra</h2>
+    <ul id="listaCarrito"></ul>
+    <p>Subtotal: <strong id="subtotal">S/ 0.00</strong></p>
+    <p>IGV 18%: <strong id="igv">S/ 0.00</strong></p>
+    <p>Total: <strong id="total">S/ 0.00</strong></p>
+    <button id="finalizarVenta">Finalizar venta</button>
+    <p id="mensajeVenta"></p>
+
+    <hr>
+    <h2>Gestión adicional</h2>
+    <h3>Garantías</h3>
+    <div id="listaGarantias"></div>
+    <h3>Métodos de pago</h3>
+    <div id="listaMetodosPago"></div>
+    <h3>Inventario</h3>
+    <div id="datosInventario"></div>
+    <h3>Comprobante</h3>
+    <div id="datosFactura"></div>
+
+    <hr>
+    <h2>Proveedores</h2>
+    <div id="listaProveedores"></div>
+
+    <script src="Persona.js"></script>
+    <script src="IRegistroVenta.js"></script>
+    <script src="Cliente.js"></script>
+    <script src="ClienteNatural.js"></script>
+    <script src="ClienteEmpresarial.js"></script>
+    <script src="Empleado.js"></script>
+    <script src="vendedor.js"></script>
+    <script src="Garantia.js"></script>
+    <script src="MetodoPago.js"></script>
+    <script src="Inventario.js"></script>
+    <script src="Factura.js"></script>
+    <script src="productos.js"></script>
+    <script src="proyecto.js"></script>
+</body>
+</html>
