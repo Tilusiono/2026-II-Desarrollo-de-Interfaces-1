@@ -55,14 +55,14 @@ console.log(alumnoIntercambio.mostrarDatos());
 alumnoIntercambio.setNombre("Diani")
 console.trace(alumnoIntercambio)
 
-alumnoIntercambio.registrarEntrada( new Date());
-alumnoIntercambio.registrarSalida( new Date(new Date().setHours(new Date().getHours() + 3)));
+alumnoIntercambio.registrarEntrada( new Date(), "Casa" );
+alumnoIntercambio.registrarSalida( new Date(new Date().setHours(new Date().getHours() + 3)), 4, "buena");
 
-alumnoNacional.registrarEntrada( new Date());
-alumnoNacional.registrarSalida(  new Date(new Date().setHours(new Date().getHours() + 4)));
+alumnoNacional.registrarEntrada( new Date(),3);
+alumnoNacional.registrarSalida(  new Date(new Date().setHours(new Date().getHours() + 4)),"Juegos Olimpicos", "SI");
 
-alumnoExtranjero.registrarEntrada( new Date());
-alumnoExtranjero.registrarSalida( new Date(new Date().setHours(new Date().getHours() + 5)));
+alumnoExtranjero.registrarEntrada( new Date(),"Python");
+alumnoExtranjero.registrarSalida( new Date(new Date().setHours(new Date().getHours() + 5)), "Medica", 12);
 
 
 
@@ -79,6 +79,6 @@ const profesor = new Profesor(
 );
 
 profesor.mostrarDatos();
-profesor.registrarEntrada(new Date());
-profesor.registrarSalida(new Date(new Date().setHours(new Date().getHours() + 5)));
+profesor.registrarEntrada(new Date(), "Aula 102" , "Programacion");
+profesor.registrarSalida(new Date(new Date().setHours(new Date().getHours() + 5)),4,"Introduccion a javascript");
 
