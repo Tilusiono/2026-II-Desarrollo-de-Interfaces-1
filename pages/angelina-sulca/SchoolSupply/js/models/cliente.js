@@ -51,6 +51,19 @@ export class cliente {
         return this.#compras.length;
     }
 
+    // 🔥 MÉTODO CON FOR PARA EL HISTORIAL
+    obtenerResumenCompras() {
+        let resumen = "=== HISTORIAL DE COMPRAS ===\n";
+        for (let i = 0; i < this.#compras.length; i++) {
+            let compra = this.#compras[i];
+            resumen = resumen + `Compra #${i+1}: S/ ${compra.totalFinal.toFixed(2)} - ${compra.estado}\n`;
+        }
+        if (this.#compras.length === 0) {
+            resumen = resumen + "No hay compras registradas\n";
+        }
+        return resumen;
+    }
+
     validarCorreo() {
         return this.correo.includes("@") && this.correo.includes(".");
     }

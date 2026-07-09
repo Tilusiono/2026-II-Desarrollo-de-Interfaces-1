@@ -39,11 +39,6 @@ export class compra {
         return this.#detalles;
     }
 
-    // 🔥 GETTER PARA QUE mostrarRecibo LO USE
-    get totalFinal() {
-        return this.#totalFinal;
-    }
-
     setestado(nuevoEstado) {
         let estadosValidos = ["Pendiente", "Confirmada", "Anulada", "Entregada"];
         for (let i = 0; i < estadosValidos.length; i++) {
@@ -137,7 +132,34 @@ export class compra {
         return this.estado === "Pendiente";
     }
 
-    // Método privado
+    // ==========================================
+    // 🔥 MÉTODO PÚBLICO CON SWITCH
+    // ==========================================
+    obtenerEstadoTexto() {
+        let texto = "";
+        switch (this.estado) {
+            case "Pendiente":
+                texto = "⏳ Pendiente de confirmación";
+                break;
+            case "Confirmada":
+                texto = "✅ Confirmada";
+                break;
+            case "Anulada":
+                texto = "❌ Anulada";
+                break;
+            case "Entregada":
+                texto = "📦 Entregada";
+                break;
+            default:
+                texto = "⚠️ Estado desconocido";
+                break;
+        }
+        return texto;
+    }
+
+    // ==========================================
+    // MÉTODO PRIVADO
+    // ==========================================
     #generarNumero() {
         let fecha = new Date();
         let año = fecha.getFullYear();
