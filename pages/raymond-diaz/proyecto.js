@@ -265,3 +265,85 @@ finalizarVenta.addEventListener("click", () => {
 });
 
 actualizarInterfaz();
+
+function mostrarTodoEnConsola() {
+    console.clear();
+
+    console.log("=== SISTEMA DE VENTA DE EQUIPOS ELECTRÓNICOS PARA PC ===");
+
+    console.log("=== RAMA DE HERENCIA ===");
+    console.log(`
+Persona
+├── Cliente
+│   ├── ClienteNatural
+│   └── ClienteEmpresarial
+└── Empleado
+    └── Vendedor
+`);
+
+    console.log("=== VENDEDOR ===");
+    console.log(vendedor);
+    console.log(vendedor.mostrarDatos().replaceAll("<br>", "\n"));
+
+    console.log("=== CLIENTES REGISTRADOS ===");
+    clientes.forEach((cliente, indice) => {
+        console.log(`Cliente ${indice + 1}:`);
+        console.log(cliente);
+        console.log(cliente.mostrarDatos().replaceAll("<br>", "\n"));
+    });
+
+    console.log("=== PRODUCTOS ===");
+    productos.forEach((producto, indice) => {
+        console.log(`Producto ${indice + 1}:`);
+        console.log(producto);
+        console.log("Nombre:", producto.nombre);
+        console.log("Marca:", producto.marca);
+        console.log("Categoría:", producto.categoria);
+        console.log("Proveedor:", producto.proveedor.empresa);
+        console.log("Precio:", producto.obtenerPrecioFormateado());
+        console.log("Stock:", producto.stock);
+        console.log("Detalle técnico:", producto.obtenerDetalleTecnico());
+        console.log("-------------------------");
+    });
+
+    console.log("=== PROVEEDORES ===");
+    proyecto.obtenerProveedores().forEach((proveedor, indice) => {
+        console.log(`Proveedor ${indice + 1}:`);
+        console.log(proveedor);
+        console.log(proveedor.mostrarInfo().replaceAll("<br>", "\n"));
+    });
+
+    console.log("=== GARANTÍAS ===");
+    garantias.forEach((garantia, indice) => {
+        console.log(`Garantía ${indice + 1}:`);
+        console.log(garantia);
+        console.log(garantia.mostrarDatos().replaceAll("<br>", "\n"));
+    });
+
+    console.log("=== MÉTODOS DE PAGO ===");
+    metodosPago.forEach((metodo, indice) => {
+        console.log(`Método de pago ${indice + 1}:`);
+        console.log(metodo);
+        console.log(metodo.mostrarDatos().replaceAll("<br>", "\n"));
+    });
+
+    console.log("=== INVENTARIO ===");
+    console.log(inventario);
+    console.log(inventario.mostrarDatos().replaceAll("<br>", "\n"));
+
+    console.log("=== FACTURA / COMPROBANTE ===");
+    console.log(comprobanteDemo);
+    console.log(comprobanteDemo.emitir(proyecto.calcularTotal()).replaceAll("<br>", "\n"));
+
+    console.log("=== CARRITO ACTUAL ===");
+    console.log(proyecto.obtenerCarrito());
+
+    console.log("=== PRUEBA DE MÉTODOS ===");
+    vendedor.registrarEntrada(new Date());
+    clientes[0].registrarCompra(new Date());
+    clientes[1].registrarCompra(new Date());
+
+    console.log("=== FIN DE LA CARGA AUTOMÁTICA EN CONSOLA ===");
+}
+
+mostrarTodoEnConsola();
