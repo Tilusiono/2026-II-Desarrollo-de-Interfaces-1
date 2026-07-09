@@ -32,7 +32,7 @@ class Cliente extends Persona {
 }
 
 class Cajero extends Persona {
-  #cajaAsignada;
+  #cajaAsignada; // <--- [SOLICITADO: 1. Parámetro Privado]
   #turno;
 
   constructor(id, nombre, cajaAsignada, turno) {
@@ -47,6 +47,7 @@ class Cajero extends Persona {
   get turno() { return this.#turno; }
   set turno(nuevoTurno) { this.#turno = nuevoTurno; }
 
+  // <--- [SOLICITADO: 1. Método Público]
   rotarTurno() {
     if (this.#turno === 'Mañana') this.#turno = 'Tarde';
     else if (this.#turno === 'Tarde') this.#turno = 'Noche';
@@ -219,26 +220,30 @@ class Impuesto {
 
 
 export class Comprobante {
-  numeroSerie;
+  numeroSerie; 
   tipoDocumento;
   compra;
   cliente;
 
   constructor(numeroSerie, tipoDocumento, compra, cliente) {
-    if (compra.estado !== 'Pagado') {
-      throw new Error("No se puede emitir un comprobante de una compra no pagada.");
-    }
+    this.#verificarCompraPagada(compra); // Uso del método privado
     this.numeroSerie = numeroSerie;
     this.tipoDocumento = tipoDocumento;
     this.compra = compra;
     this.cliente = cliente;
+  }
+  
+  #verificarCompraPagada(compra) {
+    if (compra.estado !== 'Pagado') {
+      throw new Error("No se puede emitir un comprobante de una compra no pagada.");
+    }
   }
 }
 
 export class Tienda {
   id;
   nombre;
-  direccion;
+  direccion; 
 
   constructor(id, nombre, direccion) {
     this.id = id;
