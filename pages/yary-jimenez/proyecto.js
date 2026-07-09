@@ -63,8 +63,24 @@ class Cliente  extends Persona {
     }
 
     comprar() {
-        console.log("Cliente comprando");
+       const productos = ["Latte", "Capuccino", "Espresso"];
+
+    console.log("Productos comprados:");
+
+    for (let i = 0; i < productos.length; i++) {
+        switch (productos[i]) {
+            case "Latte":
+                console.log("- Latte: S/10");
+                break;
+            case "Capuccino":
+                console.log("- Capuccino: S/12");
+                break;
+            case "Espresso":
+                console.log("- Espresso: S/8");
+                break;
+        }
     }
+}
 
     consultar() {
         console.log("Consulta realizada");
@@ -119,9 +135,13 @@ class Conserje extends Empleado {
     }
 
     limpiar() {
-        console.log("Área limpia.");
-    }
+       let area = 1;
 
+    while (area <= 3) {
+        console.log("Limpiando área " + area);
+        area++;
+    }
+}
     #revisarMateriales() {
         console.log("Materiales revisados.");
     }
@@ -221,8 +241,13 @@ class Sede {
     }
 
     abrir() {
-        console.log("La sede abrió.");
-    }
+         let hora = 8;
+
+    do {
+        console.log("Atendiendo desde las " + hora + ":00");
+        hora++;
+    } while (hora <= 10);
+}
 
     cerrar() {
         console.log("La sede cerró.");
