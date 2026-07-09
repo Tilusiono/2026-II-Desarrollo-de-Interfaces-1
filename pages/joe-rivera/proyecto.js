@@ -4,8 +4,7 @@ class Persona {
     #telefono;
     #correo;
 
-    constructor(nombre, apellido, telefono, correo)
-    {
+    constructor(nombre, apellido, telefono, correo) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.#telefono = telefono;
@@ -23,7 +22,7 @@ class Persona {
     }
 
     presentarse() {
-        if(this.#validarIdentidad()) {
+        if (this.#validarIdentidad()) {
             console.log(`Hola, mi nombre es ${this.#formatearNombre()}`);
         }
     }
@@ -33,28 +32,50 @@ class Persona {
 /**CLASE 1, Socio (Hereda de Persona)**/
 
 class Socio extends Persona {
-        #direccion;
-        tipoCliente;
-        #historialAccesos = [];
-        #deudaPendiente = 0;    
+    #direccion;
+    tipoCliente;
+    #historialAccesos = [];
+    #deudaPendiente = 0;
 
     constructor(nombre, apellido, telefono, correo, direccion, tipoCliente = "Normal", historialAccesos = [], deudaPendiente = 0) {
         super(nombre, apellido, telefono, correo);
         this.#direccion = direccion;
         this.tipoCliente = tipoCliente;
-        this.#historialAccesos = historialAccesos;
+        // Inicializamos con algunas fechas de ejemplo para el ciclo
+        this.#historialAccesos = historialAccesos.length > 0 ? historialAccesos : [new Date(), new Date()];
         this.#deudaPendiente = deudaPendiente;
     }
     // 2 Métodos Privados
     #verificarEstadoCuenta() { return this.#deudaPendiente === 0; }
     #registrarVisita() { this.#historialAccesos.push(new Date()); }
 
-
-
     // 2 Métodos Públicos //
     obtenerDetalles() {
         console.log(`[Socio]: ${this.nombre} ${this.apellido} (${this.tipoCliente})`);
     }
+
+    // PRIMER MÉTODO CON CICLOS (for...of y switch)
+    mostrarHistorialYResumen() {
+        console.log(`--- Historial de accesos de ${this.nombre} ---`);
+
+        // Uso de ciclo FOR para recorrer los accesos
+        for (const fecha of this.#historialAccesos) {
+            console.log(`Acceso registrado el: ${fecha.toLocaleDateString()}`);
+        }
+
+        // Uso de SWITCH basado en el tipo de cliente
+        switch (this.tipoCliente) {
+            case "Normal":
+                console.log("Sugerencia: Pásate a Premium para obtener pases de invitados.");
+                break;
+            case "Premium":
+                console.log("¡Gracias por ser miembro VIP!");
+                break;
+            default:
+                console.log("Tipo de cliente no reconocido.");
+        }
+    }
+
     intentarIngreso() {
         if (this.#verificarEstadoCuenta()) {
             this.#registrarVisita();
@@ -65,20 +86,18 @@ class Socio extends Persona {
 
 
 
- /**CLASE 2: SocioPremium (Hereda de Socio)**/
+/**CLASE 2: SocioPremium (Hereda de Socio)**/
 
 class SocioPremium extends Socio {
     #casilleroAsignado;
-    beneficioExtra = "Acceso Spa"; 
+    beneficioExtra = "Acceso Spa";
     #pasesInvitado = 5;
     #codigoVip = "VIP-100";
 
     constructor(nombre, apellido, telefono, correo, direccion, tipoCliente, casilleroAsignado) {
         super(nombre, apellido, telefono, correo, direccion, "Premium");
         this.#casilleroAsignado = casilleroAsignado;
-}
-    // 2 Métodos Privados
-
+    }
     #consumirPase() { this.#pasesInvitado--; }
     #validarCasillero() { return this.#casilleroAsignado != null; }
 
@@ -87,6 +106,26 @@ class SocioPremium extends Socio {
     obtenerDetalles() {
         console.log(`[Socio Premium]: ${this.nombre} ${this.apellido} (Casillero: ${this.#casilleroAsignado})`);
     }
+
+    // SEGUNDO MÉTODO CON CICLOS (do...while)
+    gastarMultiplesPases(cantidad) {
+        console.log(`Intentando gastar ${cantidad} pases de invitado...`);
+        let pasesGastados = 0;
+
+        // Uso de ciclo DO...WHILE
+        do {
+            if (this.#pasesInvitado > 0) {
+                this.#consumirPase();
+                pasesGastados++;
+            } else {
+                console.log("¡Te has quedado sin pases!");
+                break;
+            }
+        } while (pasesGastados < cantidad);
+
+        console.log(`Se procesaron ${pasesGastados} invitaciones. Pases restantes: ${this.#pasesInvitado}`);
+    }
+
     invitarAmigo() {
         if (this.#pasesInvitado > 0) {
             this.#consumirPase();
@@ -100,8 +139,8 @@ class SocioPremium extends Socio {
 class Vendedor extends Persona {
     #turno;
     #salario;
-    codigoVendedor; 
-    #comisionAcumulada; 
+    codigoVendedor;
+    #comisionAcumulada;
 
     constructor(nombre, apellido, telefono, correo, codigoVendedor, turno, salario) {
         super(nombre, apellido, telefono, correo);
@@ -130,7 +169,7 @@ class Vendedor extends Persona {
 /**CLASE 4**/
 class Gimnasio {
     nombre;
-    #direccion; 
+    #direccion;
     #capacidad;
     #sedes;
 
@@ -144,14 +183,13 @@ class Gimnasio {
      * @param {string} sedes 
      */
 
-    constructor(nombre, dirección, capacidad, sedes) 
-    {
+    constructor(nombre, dirección, capacidad, sedes) {
         this.nombre = nombre;
-        this.#direccion = dirección; 
+        this.#direccion = dirección;
         this.#capacidad = capacidad;
         this.#sedes = sedes;
     }
-    
+
     // 2 Métodos Privados
 
     #evaluarAforo() { return true; }
@@ -178,8 +216,7 @@ class Membresía {
     #beneficios;
     #estado;
 
-    constructor(nombreMembresía, meses, beneficios, estado) 
-    {
+    constructor(nombreMembresía, meses, beneficios, estado) {
         this.nombreMembresía = nombreMembresía;
         this.#meses = meses;
         this.#beneficios = beneficios;
@@ -211,8 +248,7 @@ class Precio {
     #pagoTotal;
     #moneda;
 
-    constructor(precioUnitario, descuentoSoles, pagoTotal, moneda) 
-    {
+    constructor(precioUnitario, descuentoSoles, pagoTotal, moneda) {
         this.precioUnitario = precioUnitario;
         this.#descuentoSoles = descuentoSoles;
         this.#pagoTotal = pagoTotal;
@@ -242,8 +278,7 @@ class Ubicacion {
     #referencia;
     #codigoPostal;
 
-    constructor(direccion, distrito, referencia, codigoPostal) 
-    {
+    constructor(direccion, distrito, referencia, codigoPostal) {
         this.direccion = direccion;
         this.#distrito = distrito;
         this.#referencia = referencia;
@@ -274,8 +309,7 @@ class Horario {
     #diasAtencion;
     #turnoEspecial;
 
-    constructor(horaApertura, horaCierre, diasAtencion, turnoEspecial) 
-    {
+    constructor(horaApertura, horaCierre, diasAtencion, turnoEspecial) {
         this.horaApertura = horaApertura;
         this.#horaCierre = horaCierre;
         this.#diasAtencion = diasAtencion;
@@ -305,8 +339,7 @@ class Correo {
     #dominio;
     #estado;
 
-    constructor(correoPrincipal, correoSoporte, dominio, estado) 
-    {
+    constructor(correoPrincipal, correoSoporte, dominio, estado) {
         this.correoPrincipal = correoPrincipal;
         this.#correoSoporte = correoSoporte;
         this.#dominio = dominio;
@@ -338,12 +371,11 @@ class Venta {
     #total;
     #metodoPago;
 
-    constructor(fecha, membresiaCompradas, total, metodoPago) 
-    {
+    constructor(fecha, membresiaCompradas, total, metodoPago) {
         this.fecha = fecha;
         this.#membresiaCompradas = membresiaCompradas;
         this.#total = total;
-        this.#metodoPago = metodoPago;   
+        this.#metodoPago = metodoPago;
     }
 
     // 2 Métodos Privados
