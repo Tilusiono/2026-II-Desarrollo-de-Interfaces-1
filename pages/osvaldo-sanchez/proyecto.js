@@ -1,7 +1,7 @@
 class Alumno {
     nombre;
     #apellido;
-  #edad;
+    #edad;
     #telmovil;
 
     constructor(nom, ape, edad, tel) {
@@ -11,7 +11,6 @@ class Alumno {
         this.#telmovil = tel;
     }
 
-    // Métodos públicos
     mostrarAlumno() {
         console.log("Nombre: " + this.nombre);
     }
@@ -20,7 +19,25 @@ class Alumno {
         console.log(this.nombre + " está estudiando.");
     }
 
-    // Métodos privados
+    mostrarSemanas() {
+
+        for (let i = 1; i <= 16; i++) {
+            console.log("Semana " + i + " de clases.");
+        }
+
+    }
+
+    mostrarDias() {
+
+        let dia = 1;
+
+        do {
+            console.log("Día de estudio " + dia);
+            dia++;
+        } while (dia <= 5);
+
+    }
+
     #validarEdad() {
         return this.#edad >= 18;
     }
@@ -31,7 +48,6 @@ class Alumno {
 }
 
 class Profesor {
-
     nombre;
     curso;
     #apellido;
@@ -52,6 +68,19 @@ class Profesor {
 
     enseñar() {
         console.log(this.nombre + " está enseñando.");
+    }
+
+    // Métodos para las clases hijas
+    explicarTema() {
+        console.log(this.nombre + " está explicando un tema.");
+    }
+
+    evaluarAlumnos() {
+        console.log(this.nombre + " está evaluando a los alumnos.");
+    }
+
+    asignarTarea() {
+        console.log(this.nombre + " ha asignado una tarea.");
     }
 
     // Métodos privados
@@ -77,6 +106,18 @@ class ProfesorMatematicas extends Profesor {
     resolverEjercicios() {
         console.log(this.nombre + " está resolviendo ejercicios de Matemáticas.");
     }
+
+    explicarTema() {
+        console.log(this.nombre + " está explicando ecuaciones.");
+    }
+
+    evaluarAlumnos() {
+        console.log(this.nombre + " está evaluando problemas matemáticos.");
+    }
+
+    asignarTarea() {
+        console.log(this.nombre + " dejó ejercicios de Matemáticas.");
+    }
 }
 
 // Clase hija 2
@@ -92,9 +133,144 @@ class ProfesorProgramacion extends Profesor {
     programar() {
         console.log(this.nombre + " enseña " + this.lenguaje + ".");
     }
+
+    explicarTema() {
+        console.log(this.nombre + " está explicando programación en " + this.lenguaje + ".");
+    }
+
+    evaluarAlumnos() {
+        console.log(this.nombre + " está revisando el código de los alumnos.");
+    }
+
+    asignarTarea() {
+        console.log(this.nombre + " dejó un proyecto de programación.");
+    }
 }
 
 // Clase hija 3
+class ProfesorIngles extends Profesor {
+
+    nivel;
+
+    constructor(nombre, apellido, fechaNac, gradoAcademico, nivel) {
+        super(nombre, apellido, fechaNac, gradoAcademico);
+        this.nivel = nivel;
+    }
+
+    hablarIngles() {
+        console.log(this.nombre + " enseña inglés nivel " + this.nivel + ".");
+    }
+
+    explicarTema() {
+        console.log(this.nombre + " está explicando gramática inglesa.");
+    }
+
+    evaluarAlumnos() {
+        console.log(this.nombre + " está evaluando la pronunciación.");
+    }
+
+    asignarTarea() {
+        console.log(this.nombre + " dejó una práctica de inglés.");
+    }
+
+
+    pasarLista(totalAlumnos) {
+
+        for (let i = 1; i <= totalAlumnos; i++) {
+            console.log("Alumno " + i + ": Presente");
+        }
+
+    }
+
+
+    seleccionarCurso() {
+
+        switch (this.curso) {
+
+            case "Matemáticas":
+                console.log("El profesor dicta el curso de Matemáticas.");
+                break;
+
+            case "Programación":
+                console.log("El profesor dicta el curso de Programación.");
+                break;
+
+            case "Inglés":
+                console.log("El profesor dicta el curso de Inglés.");
+                break;
+
+            default:
+                console.log("Curso no registrado.");
+        }
+
+    }
+
+}
+class ProfesorMatematicas extends Profesor {
+
+    salon;
+
+    constructor(nombre, apellido, fechaNac, gradoAcademico, salon) {
+        super(nombre, apellido, fechaNac, gradoAcademico);
+        this.salon = salon;
+    }
+
+    resolverEjercicios() {
+        console.log(this.nombre + " está resolviendo ejercicios de Matemáticas.");
+    }
+
+    usarCiclos() {
+        console.log("Ejemplo de ciclo FOR:");
+
+        for (let i = 1; i <= 5; i++) {
+            console.log("Ejercicio número: " + i);
+        }
+
+        console.log("Ejemplo de ciclo DO WHILE:");
+
+        let contador = 1;
+        do {
+            console.log("Resolviendo ejercicio " + contador);
+            contador++;
+        } while (contador <= 3);
+    }
+
+    elegirTema(numero) {
+        
+        switch (numero) {
+            case 1:
+                console.log("Tema seleccionado: Álgebra");
+                break;
+
+            case 2:
+                console.log("Tema seleccionado: Geometría");
+                break;
+
+            case 3:
+                console.log("Tema seleccionado: Cálculo");
+                break;
+
+            default:
+                console.log("Tema no encontrado.");
+        }
+    }
+}
+
+class ProfesorProgramacion extends Profesor {
+
+    lenguaje;
+
+    constructor(nombre, apellido, fechaNac, gradoAcademico, lenguaje) {
+        super(nombre, apellido, fechaNac, gradoAcademico);
+        this.lenguaje = lenguaje;
+    }
+
+    programar() {
+        console.log(this.nombre + " enseña " + this.lenguaje + ".");
+    }
+}
+
+
 class ProfesorIngles extends Profesor {
 
     nivel;
@@ -124,7 +300,6 @@ class Notas {
         this.#notaPrevia = notaPrevia;
     }
 
-    // Métodos públicos
     mostrarNota() {
         console.log("Fecha de Registro: " + this.fechaRegistro);
     }
@@ -133,7 +308,6 @@ class Notas {
         return (this.#nota + this.#notaPrevia) / 2;
     }
 
-    // Métodos privados
     #validarNota() {
         return this.#nota >= 0 && this.#nota <= 20;
     }
@@ -142,6 +316,8 @@ class Notas {
         return this.#nota > this.#notaPrevia;
     }
 }
+
+
 class Cursos {
 
     nombre;
@@ -167,7 +343,6 @@ class Cursos {
         this.nombre = nombre;
     }
 
-    // Métodos privados
     #validarCodigo() {
         return this.#codigo.length > 0;
     }
@@ -176,6 +351,7 @@ class Cursos {
         return this.#creditos * 16;
     }
 }
+
 
 class Producto {
 
@@ -191,7 +367,6 @@ class Producto {
         this.#categoria = categoria;
     }
 
-    // Métodos públicos
     mostrarProducto() {
         console.log("Nombre: " + this.nombre);
         console.log("Precio: S/ " + this.#precio);
@@ -200,6 +375,7 @@ class Producto {
     }
 
     vender(cantidad) {
+
         if (cantidad <= this.#stock) {
             this.#stock -= cantidad;
             console.log("Venta realizada.");
@@ -208,7 +384,6 @@ class Producto {
         }
     }
 
-    // Métodos privados
     #validarStock() {
         return this.#stock > 0;
     }
@@ -217,6 +392,7 @@ class Producto {
         return this.#precio * this.#stock;
     }
 }
+
 
 class Aula {
 
@@ -247,7 +423,6 @@ class Aula {
     #mostrarCodigo() {
         return this.#codigo;
     }
-
 }
 
 class Carrera {
@@ -279,8 +454,8 @@ class Carrera {
     #calcularCiclos() {
         return this.#duracion;
     }
-
 }
+
 
 class Facultad {
 
@@ -311,8 +486,8 @@ class Facultad {
     #mostrarUbicacion() {
         return this.#ubicacion;
     }
-
 }
+
 
 class Matricula {
 
@@ -343,8 +518,8 @@ class Matricula {
     #calcularCosto() {
         return this.#costo;
     }
-
 }
+
 
 class Asistencia {
 
@@ -375,19 +550,27 @@ class Asistencia {
     #mostrarEstado() {
         return this.#estado;
     }
-
 }
 
-let alumno1 = new alumno("Osvaldo", "Sanchez", 18, "123456789");
+
+
+let alumno1 = new Alumno(
+    "Osvaldo",
+    "Sanchez",
+    18,
+    "123456789"
+);
+
 console.log(alumno1);
 
 
+let igv2024 = -19.4;
 
-let igv2024 = -19.4
-console.log(igv2024)
+console.log(igv2024);
+
 igv2024 = 20;
-console.log(igv2024)
 
+console.log(igv2024);
 
 class Persona {
 
