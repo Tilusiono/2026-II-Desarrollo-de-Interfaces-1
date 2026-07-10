@@ -84,7 +84,40 @@ class Socio extends Persona {
     }
 }
 
+/**CLASE 1: SocioNormal (Hereda de Socio) - CREO QUE ES LO QUE ME FALTABA PROFE (SOCIO NORMAL Y PREMIUM)**/
 
+class SocioNormal extends Socio {
+    #limiteAsistenciasMes;
+    beneficioExtra = "Ninguno";
+    #seguroMedicoActivo = true;
+    #codigoEstandar = "STD-200";
+
+    constructor(nombre, apellido, telefono, correo, direccion, limiteAsistenciasMes = 30) {
+        // Enviamos "Normal" fijado en el tipoCliente hacia la clase Socio
+        super(nombre, apellido, telefono, correo, direccion, "Normal");
+        this.#limiteAsistenciasMes = limiteAsistenciasMes;
+    }
+
+    // 2 Métodos Privados
+
+    #verificarSeguro() { return this.#seguroMedicoActivo; }
+    #reducirAsistencia() { this.#limiteAsistenciasMes--; }
+
+
+    // 2 Métodos Públicos
+
+
+    obtenerDetalles() {
+        console.log(`[Socio Normal]: ${this.nombre} ${this.apellido} (Asistencias disponibles: ${this.#limiteAsistenciasMes})`);
+    }
+
+    asistirAClase() {
+        if (this.#verificarSeguro() && this.#limiteAsistenciasMes > 0) {
+            this.#reducirAsistencia();
+            console.log("Clase registrada. Te quedan " + this.#limiteAsistenciasMes + " asistencias este mes.");
+        }
+    }
+}
 
 /**CLASE 2: SocioPremium (Hereda de Socio)**/
 
@@ -94,14 +127,18 @@ class SocioPremium extends Socio {
     #pasesInvitado = 5;
     #codigoVip = "VIP-100";
 
-    constructor(nombre, apellido, telefono, correo, direccion, tipoCliente, casilleroAsignado) {
+    constructor(nombre, apellido, telefono, correo, direccion, casilleroAsignado) {
+        // Pasamos "Premium" fijado en el tipoCliente hacia la clase Socio
         super(nombre, apellido, telefono, correo, direccion, "Premium");
         this.#casilleroAsignado = casilleroAsignado;
     }
+
     #consumirPase() { this.#pasesInvitado--; }
     #validarCasillero() { return this.#casilleroAsignado != null; }
 
+
     // 2 Métodos Públicos
+
 
     obtenerDetalles() {
         console.log(`[Socio Premium]: ${this.nombre} ${this.apellido} (Casillero: ${this.#casilleroAsignado})`);
@@ -111,6 +148,7 @@ class SocioPremium extends Socio {
     gastarMultiplesPases(cantidad) {
         console.log(`Intentando gastar ${cantidad} pases de invitado...`);
         let pasesGastados = 0;
+
 
         // Uso de ciclo DO...WHILE
         do {
@@ -123,8 +161,10 @@ class SocioPremium extends Socio {
             }
         } while (pasesGastados < cantidad);
 
+
         console.log(`Se procesaron ${pasesGastados} invitaciones. Pases restantes: ${this.#pasesInvitado}`);
     }
+    
 
     invitarAmigo() {
         if (this.#pasesInvitado > 0) {
@@ -133,6 +173,7 @@ class SocioPremium extends Socio {
         }
     }
 }
+
 
 /**CLASE 3: Vendedor (Hereda de Persona)**/
 
