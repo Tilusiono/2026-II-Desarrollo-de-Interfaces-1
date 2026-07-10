@@ -436,7 +436,7 @@ const venta1 = new Venta("22/06/2026", membresia1, 300, "Tarjeta de Crédito");
 
 
 /**CLASE 11**/
-// Agregada explícitamente para completar las 10 clases del requisito estructural original
+
 class Reporte {
     tipoReporte;
     #formato;
@@ -474,8 +474,9 @@ const reporte1 = new Reporte("Ventas Diarias", "PDF", 150, "Tulio Manaure");
 //********** AGREGO ESTO xdd *****/
 
 
-const socio1 = new Socio("Osvaldo", "Sanchez", "992531000", "sideralTeAmo@mail.com", "San Roque Vitarte");
-const socioPremium1 = new SocioPremium("Josè", "Villanueva", "999888777", "chupapapi_muñaños@vip.com", "La Molina", "Premium", 104);
+// Ahora cambiamos la instancia de Osvaldo para que pertenezca a la clase SocioNormal
+const socio1 = new SocioNormal("Osvaldo", "Sanchez", "992531000", "sideralTeAmo@mail.com", "San Roque Vitarte");
+const socioPremium1 = new SocioPremium("Josè", "Villanueva", "999888777", "chupapapi_muñaños@vip.com", "La Molina", 104);
 const vendedor1 = new Vendedor("Tulio", "Manaure", "955444333", "tulio_dale_chupetin@gym.com", "VEND01", "Tarde", 2000);
 
 // --- PRUEBA DE POLIMORFISMO VÍA CONSOLE.LOG ---
