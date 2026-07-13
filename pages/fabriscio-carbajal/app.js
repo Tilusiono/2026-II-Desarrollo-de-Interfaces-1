@@ -5,7 +5,11 @@ const app = express();
 const PORT = 5005;
  
 // Publicar los archivos HTML, CSS y JS de la carpeta public
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "public"), 
+{ index: false }
+));
+
+app.use(express.static(path.join(__dirname, "src")));
  
 // Publicar Bootstrap instalado mediante NPM
 app.use(
