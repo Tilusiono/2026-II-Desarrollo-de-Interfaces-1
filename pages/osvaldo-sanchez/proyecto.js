@@ -61,8 +61,7 @@ class Alumno {
 
 class Profesor {
 
-    // 
-    Públicos
+    // Públicos
     nombre;
     curso;
     especialidad;
@@ -74,19 +73,17 @@ class Profesor {
     #gradoAcademico;
     #telefono;
 
-    constructor(nombre, apellido, fechaNac, gradoAcademico) {
+    constructor(nombre, apellido, fechaNac, gradoAcademico, curso) {
         this.nombre = nombre;
         this.#apellido = apellido;
         this.#fechaNac = fechaNac;
         this.#gradoAcademico = gradoAcademico;
-    }
-    
-    // Agredados
-    this.curso = "";
-    this.especialidad = "";
-    this.correo = "";
-    this.#telefono = "";
 
+        this.curso = curso;
+        this.especialidad = "";
+        this.correo = "";
+        this.#telefono = "";
+    }
 
     // Métodos públicos
     mostrarProfesor() {
@@ -112,14 +109,13 @@ class Profesor {
 
     // Métodos privados
     #validarFecha() {
-        return this.#fechaNac != "";
+        return this.#fechaNac !== "";
     }
 
     #mostrarGrado() {
         return this.#gradoAcademico;
     }
 }
-
 // Clase hija 1
 class ProfesorMatematicas extends Profesor {
 
