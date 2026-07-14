@@ -32,6 +32,8 @@ class Persona {
         return this.#telefono.length >= 9;
     }
 }
+
+
  class Cafeteria {
     nombre;
     #tipoCafe;
@@ -76,6 +78,8 @@ const cafeteria1 = new Cafeteria(
     120,
     "Sucursal Centro"
 );
+
+
 
 class Empleado extends Persona{
  cargo; 
