@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 class Persona {
     nombre; 
     #dni;
@@ -37,10 +37,7 @@ class Persona {
 
  class Cafeteria {
     nombre;
-=======
-class Cafeteria {
     #nombre;
->>>>>>> a9fbda3d5cfcc67942c9b9d10dc325ebb3f2522b
     #tipoCafe;
     #capacidad;
     #sucursal;
@@ -66,17 +63,27 @@ const cafeteria1 = new Cafeteria("Central", "Arábica", 120, "Sucursal Centro");
 
 
 
-<<<<<<< HEAD
-
-
 class Empleado extends Persona{
- cargo; 
-    #salario;
-=======
+   cargo; 
+   #salario;
+    #turno;
+    #codigo;
+
+    constructor(nombre, dni, telefono, correo,
+                cargo, salario, turno, codigo) {
+
+        super(nombre, dni, telefono, correo);
+
+        this.cargo = cargo;
+        this.#salario = salario;
+        this.#turno = turno;
+        this.#codigo = codigo;
+    }
+}
+
 class Vendedor {
     #nombre;
     #apellido;
->>>>>>> a9fbda3d5cfcc67942c9b9d10dc325ebb3f2522b
     #turno;
     #salario;
 constructor(nombre, apellido, turno, salario)
@@ -377,18 +384,6 @@ constructor(fecha, cantidad, total)
 }
 const venta1 = new Venta("18/06/2026", 3, 30, "Efectivo");
 
-
-class AlumnoTop10 extends Alumno{
-
-}
-
-class AlumnoTercioSuperior extends Alumno{
-
-}
-
-class AlumnoGeneral extends Alumno{
-
-}
 
 
 
