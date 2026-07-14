@@ -47,7 +47,7 @@ class AlumnoNacional extends Alumno {
     return `Alumno Nacional
     Nombre: ${this.getNombre()}
     Departamento: ${this.#obtenerDepartamento()}
-    Código válido: ${this.#validarCodigo()}
+    Código vánlido: ${this.#validarCodigo()}
     `;
     }
 
