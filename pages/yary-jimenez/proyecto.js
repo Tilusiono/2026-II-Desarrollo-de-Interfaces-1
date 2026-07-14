@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 class Persona {
     nombre; 
     #dni;
@@ -36,394 +37,358 @@ class Persona {
 
  class Cafeteria {
     nombre;
+=======
+class Cafeteria {
+    #nombre;
+>>>>>>> a9fbda3d5cfcc67942c9b9d10dc325ebb3f2522b
     #tipoCafe;
     #capacidad;
     #sucursal;
 
     /**
      * 
-     * @param {String} nombre 
+     * @param {number} nombre 
      * @param {string} tipoCafe 
-     * @param {Number} capacidad 
-     * @param {String} sucursal 
+     * @param {string} capacidad 
+     * @param {number} sucursal 
      */
 
     constructor(nombre, tipoCafe, capacidad, sucursal) 
 {
-    this.nombre = nombre;
+    this.#nombre = nombre;
     this.#tipoCafe = tipoCafe;
     this.#capacidad = capacidad;
     this.#sucursal = sucursal;
 }
-abrir() {
-    console.log("La cafetería abrió.");
 }
 
-cerrar() {
-    console.log("La cafetería cerró.");
-}
+const cafeteria1 = new Cafeteria("Central", "Arábica", 120, "Sucursal Centro");
 
-// Métodos privados
-#limpiar() {
-    console.log("Limpiando...");
-}
 
-#contarMesas() {
-    return this.#capacidad;
-}
-}
-const cafeteria1 = new Cafeteria(
-    "Central",
-    "Arábica",
-    120,
-    "Sucursal Centro"
-);
 
+<<<<<<< HEAD
 
 
 class Empleado extends Persona{
  cargo; 
     #salario;
+=======
+class Vendedor {
+    #nombre;
+    #apellido;
+>>>>>>> a9fbda3d5cfcc67942c9b9d10dc325ebb3f2522b
     #turno;
-    #codigo;
+    #salario;
+constructor(nombre, apellido, turno, salario)
+ {
+    this.#nombre = nombre;
+    this.#apellido = apellido;
+    this.#turno = turno;
+    this.#salario = salario;
+}
 
-    constructor(nombre, dni, telefono, correo, cargo, salario, turno, codigo) {
+}
+
+
+const vendedor1 = new Vendedor("Luis", "Gómez", "Mañana", 1500);
+
+
+class Cliente  extends Persona {
+
+    categoria;
+    #direccion;
+    #puntos;
+    #codigoCliente;
+
+    constructor(nombre, dni, telefono, correo,
+                categoria, direccion, puntos, codigoCliente) {
 
         super(nombre, dni, telefono, correo);
 
-        this.cargo = cargo;
-        this.#salario = salario;
-        this.#turno = turno;
-        this.#codigo = codigo;
+        this.categoria = categoria;
+        this.#direccion = direccion;
+        this.#puntos = puntos;
+        this.#codigoCliente = codigoCliente;
     }
 
-    mostrarCargo() {
-        console.log(this.cargo);
-    }
+    comprar() {
+       const productos = ["Latte", "Capuccino", "Espresso"];
 
-    trabajar() {
-        console.log("El empleado trabaja.");
-    }
+    console.log("Productos comprados:");
 
-    #calcularBono() {
-        return this.#salario * 0.10;
-    }
-
-    #registrarEntrada() {
-        console.log("Entrada registrada");
+    for (let i = 0; i < productos.length; i++) {
+        switch (productos[i]) {
+            case "Latte":
+                console.log("- Latte: S/10");
+                break;
+            case "Capuccino":
+                console.log("- Capuccino: S/12");
+                break;
+            case "Espresso":
+                console.log("- Espresso: S/8");
+                break;
+        }
     }
 }
 
-class Vendedor extends Empleado {
-
-    sucursal; // Pública
-    #ventas;
-    #comision;
-    #zona;
-
-    constructor(nombre, dni, telefono, correo, cargo, salario, turno, codigo,
-        sucursal, ventas, comision, zona) {
-
-        super(nombre, dni, telefono, correo, cargo, salario, turno, codigo);
-
-        this.sucursal = sucursal;
-        this.#ventas = ventas;
-        this.#comision = comision;
-        this.#zona = zona;
+    consultar() {
+        console.log("Consulta realizada");
     }
 
     trabajar() {
-        console.log("El vendedor vende café.");
+        console.log("El cliente no trabaja en la cafetería.");
     }
 
-    vender() {
-        console.log("Venta realizada.");
+    #registrarCompra() {
+        console.log("Compra registrada");
     }
 
-    #calcularComision() {
-        return this.#ventas * this.#comision;
+    #actualizarPuntos() {
+        this.#puntos += 10;
     }
-
-    #actualizarVentas() {
-        this.#ventas++;
-    }
-  
 }
-const vendedor1 = new Vendedor(
+
+const cliente1 = new Cliente(
     "Luis",
     "12345678",
     "999999999",
     "luis@email.com",
-    "Vendedor",
-    1500,
-    "Mañana",
-    "EMP001",
-    "Sucursal Centro",
-    20,
-    5,
-    "Zona Norte"
+    "Frecuente",
+    "Av. Principal 123",
+    120,
+    "CLI001"
 );
 
+class Conserje extends Empleado {
 
+    area;
+    #productosLimpieza;
+    #horarioLimpieza;
+    #sector;
 
+    constructor(nombre, dni, telefono, correo,
+        cargo, salario, turno, codigo,
+        area, productosLimpieza, horarioLimpieza, sector) {
 
-class Cliente {
-    nombre;
-    #telefono;
-    #correo;
-    #direccion;
+        super(nombre, dni, telefono, correo,
+            cargo, salario, turno, codigo);
 
-    constructor(nombre, telefono, correo, direccion) 
-{
-    this.nombre = nombre;
-    this.#telefono = telefono;
-    this.#correo = correo;
-    this.#direccion = direccion;    
+        this.area = area;
+        this.#productosLimpieza = productosLimpieza;
+        this.#horarioLimpieza = horarioLimpieza;
+        this.#sector = sector;
+    }
+
+    trabajar() {
+        console.log("El conserje realiza labores de limpieza.");
+    }
+
+    limpiar() {
+       let area = 1;
+
+    while (area <= 3) {
+        console.log("Limpiando área " + area);
+        area++;
+    }
 }
-comprar() {
-    console.log("Cliente comprando");
+    #revisarMateriales() {
+        console.log("Materiales revisados.");
+    }
+
+    #registrarLimpieza() {
+        console.log("Limpieza registrada.");
+    }
 }
 
-consultar() {
-    console.log("Consulta realizada");
-}
-
-#validarCorreo() {
-    return true;
-}
-
-#registrarCompra() {
-    console.log("Compra registrada");
-}
-}
-const cliente1 = new Cliente(
-    "Luis",
-    "999999999",
-    "luis@email.com",
-    "Av. Principal 123"
+const conserje1 = new Conserje(
+    "Carlos",
+    "87654321",
+    "988888888",
+    "carlos@email.com",
+    "Conserje",
+    1300,
+    "Tarde",
+    "EMP010",
+    "Área de mesas",
+    "Detergente",
+    "18:00",
+    "Primer piso"
 );
-
-
 
 class Producto {
-    nombreProducto;
+    #nombreProducto;
     #categoria;
     #stock;
     #descripcion;
 
-    constructor(nombreProducto, categoria, stock, descripcion) 
+    constructor(nombreProducto, categoria, stock) 
 {
-    this.nombreProducto = nombreProducto;
+    this.#nombreProducto = nombreProducto;
     this.#categoria = categoria;
     this.#stock = stock;
     this.#descripcion = descripcion;
 }
 
-vender() {
-    console.log("Producto vendido");
 }
 
-reponer() {
-    console.log("Stock actualizado");
-}
+const producto1 = new Producto("Latte", "Bebida", 20, "Café con leche");
 
-#actualizarStock() {}
 
-#validarStock() {}
-
-}
-const producto1 = new Producto(
-    "Latte",
-    "Bebida",
-    20,
-    "Café con leche"
-);
 
 
 
 class Precio {
-    precioUnitario;
+    #precioUnitario;
     #descuento;
     #precioFinal;
     #moneda;
 
-constructor(precioUnitario, descuento, precioFinal, moneda) 
+constructor(precioUnitario, descuento, precioFinal) 
 {
-    this.precioUnitario = precioUnitario;
+    this.#precioUnitario = precioUnitario;
     this.#descuento = descuento;
     this.#precioFinal = precioFinal;
     this.#moneda = moneda;
 }
 
-calcular() {}
-
-mostrar() {}
-
-#aplicarDescuento() {}
-
-#convertir() {}
 }
-const precio1 = new Precio(
-    10,
-    2,
-    8,
-    "Soles"
-);
+
+const precio1 = new Precio(10, 2, 8, "Soles");
 
 
 class Ubicacion {
-    direccion;
+    #direccion;
     #distrito;
     #referencia;
     #codigoPostal;
-constructor(direccion, distrito, referencia, codigoPostal) 
+constructor(direccion, distrito, referencia) 
 {
-    this.direccion = direccion;
+    this.#direccion = direccion;
     this.#distrito = distrito;
     this.#referencia = referencia;
     this.#codigoPostal = codigoPostal;
 }
-mostrar() {}
-
-actualizar() {}
-
-#validar() {}
-
-#buscarMapa() {}
 }
-const ubicacion1 = new Ubicacion(
+
+
+const ubicacion1 = new Ubicacion("Av. Principal 123", "Miraflores", "Frente al parque", "15074");
+
+
+class Sede {
+
+    nombre;
+    #direccion;
+    #horarioAtencion;
+    #capacidad;
+
+    constructor(nombre, direccion, horarioAtencion, capacidad) {
+
+        this.nombre = nombre;
+        this.#direccion = direccion;
+        this.#horarioAtencion = horarioAtencion;
+        this.#capacidad = capacidad;
+    }
+
+    abrir() {
+         let hora = 8;
+
+    do {
+        console.log("Atendiendo desde las " + hora + ":00");
+        hora++;
+    } while (hora <= 10);
+}
+
+    cerrar() {
+        console.log("La sede cerró.");
+    }
+
+    mostrarHorario() {
+        console.log("Horario: " + this.#horarioAtencion);
+    }
+
+    #validarCapacidad() {
+        return this.#capacidad > 0;
+    }
+
+    #actualizarHorario(nuevoHorario) {
+        this.#horarioAtencion = nuevoHorario;
+    }
+}
+
+const sede1 = new Sede(
+    "Sucursal Centro",
     "Av. Principal 123",
-    "Miraflores",
-    "Frente al parque",
-    "15074"
+    "Lunes a Sábado 08:00 - 20:00",
+    120
 );
-
-
-class Horario {
-    horaApertura;
-    #horaCierre;
-    #diasAtencion;
-    #turnoEspecial;
-
-constructor(horaApertura, horaCierre, diasAtencion, turnoEspecial) 
-{
-    this.horaApertura = horaApertura;
-    this.#horaCierre = horaCierre;
-    this.#diasAtencion = diasAtencion;
-    this.#turnoEspecial = turnoEspecial;
-}
-abrir() {}
-
-cerrar() {}
-
-#validarHora() {}
-
-#cambiarTurno() {}
-}
-const horario1 = new Horario(
-    "08:00",
-    "20:00",
-    "Lunes a Sábado",
-    "Noche"
-);
-
-
-
 
 class Telefono {
-    numeroPrincipal;
+    #numeroPrincipal;
     #numeroSecundario;
     #codigoPais;
     #extension;
 
-constructor(numeroPrincipal, numeroSecundario, codigoPais, extension)
+constructor(numeroPrincipal, numeroSecundario, codigoPais)
  {
-    this.numeroPrincipal = numeroPrincipal;
+    this.#numeroPrincipal = numeroPrincipal;
     this.#numeroSecundario = numeroSecundario;
     this.#codigoPais = codigoPais;
     this.#extension = extension;
 }
-llamar() {}
-
-mostrar() {}
-
-#validarNumero() {}
-
-#registrar() {}
 }
 
-const telefono1 = new Telefono(
-    "987654321",
-    "912345678",
-    "+51",
-    "101"
-);
+const telefono1 = new Telefono("987654321", "912345678", "+51", "101");
+
 
 
 
 class Correo {
-    correoPrincipal;
+    #correoPrincipal;
     #correoSoporte;
     #dominio;
     #estado;
 
-constructor(correoPrincipal, correoSoporte, dominio, estado) 
+constructor(correoPrincipal, correoSoporte, dominio) 
 {
-    this.correoPrincipal = correoPrincipal;
+    this.#correoPrincipal = correoPrincipal;
     this.#correoSoporte = correoSoporte;
     this.#dominio = dominio;
     this.#estado = estado;
 }
-enviar() {}
-
-mostrar() {}
-
-#validarCorreo() {}
-
-#registrar() {}
 }
-const correo1 = new Correo(
-    "info@cafe.com",
-    "soporte@cafe.com",
-    "cafe.com",
-    "Activo"
-);
 
-
+const correo1 = new Correo("info@cafe.com", "soporte@cafe.com", "cafe.com", "Activo");
 
 
 
 class Venta {
-    fecha;
+    #fecha;
     #cantidad;
     #total;
     #metodoPago;
 
-constructor(fecha, cantidad, total, metodoPago) 
+constructor(fecha, cantidad, total) 
 {
-    this.fecha = fecha;
+    this.#fecha = fecha;
     this.#cantidad = cantidad;
     this.#total = total;
     this.#metodoPago = metodoPago;  
 }
-registrar() {}
+}
+const venta1 = new Venta("18/06/2026", 3, 30, "Efectivo");
 
-imprimir() {}
 
-#calcularTotal() {}
-
-#guardarVenta() {}
+class AlumnoTop10 extends Alumno{
 
 }
-const venta1 = new Venta(
-    "18/06/2026",
-    3,
-    30,
-    "Efectivo"
-);
 
+class AlumnoTercioSuperior extends Alumno{
 
+}
 
+class AlumnoGeneral extends Alumno{
+
+}
 
 
 
