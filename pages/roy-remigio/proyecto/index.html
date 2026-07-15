@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RVEVENTS - Sistema de Eventos por Roy Remigio Villanueva</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <div id="app">
         <header class="header">
@@ -30,12 +32,13 @@
         </header>
 
         <main class="main">
-     
+
             <div id="homePage" class="page">
                 <section class="hero">
                     <div class="container">
                         <h2 class="hero-title">Bienvenido a RVEVENTS</h2>
-                        <p class="hero-subtitle">Sistema de eventos creado por <strong>Roy Remigio Villanueva</strong>. Encuentra y regístrate en los mejores eventos.</p>
+                        <p class="hero-subtitle">Sistema de eventos creado por <strong>Roy Remigio Villanueva</strong>.
+                            Encuentra y regístrate en los mejores eventos.</p>
                         <button onclick="showPage('events')" class="btn btn-large btn-primary">Explorar Eventos</button>
                     </div>
                 </section>
@@ -51,7 +54,7 @@
             <div id="eventsPage" class="page" style="display: none;">
                 <div class="container">
                     <h2 class="page-title">Todos los Eventos</h2>
-                    
+
                     <div class="filters">
                         <input type="text" id="searchInput" placeholder="Buscar eventos..." class="search-input">
                         <select id="categoryFilter" class="filter-select">
@@ -100,7 +103,8 @@
                             <input type="text" id="registerName" placeholder="Nombre completo" required>
                             <input type="email" id="registerEmail" placeholder="Correo electrónico" required>
                             <input type="password" id="registerPassword" placeholder="Contraseña" required>
-                            <input type="password" id="registerConfirmPassword" placeholder="Confirmar contraseña" required>
+                            <input type="password" id="registerConfirmPassword" placeholder="Confirmar contraseña"
+                                required>
                             <button type="submit" class="btn btn-primary btn-full">Registrarse</button>
                         </form>
                         <p class="auth-footer">
@@ -128,4 +132,5 @@
     <script src="classes.js"></script>
     <script src="app.js"></script>
 </body>
+
 </html>
