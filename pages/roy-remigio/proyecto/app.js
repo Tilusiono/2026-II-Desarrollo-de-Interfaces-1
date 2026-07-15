@@ -1,3 +1,5 @@
+import { sistema } from './classes.js';
+
 let paginaActual = 'home';
 
 function showPage(page) {
@@ -327,6 +329,14 @@ function cancelarRegistro(eventoId) {
 document.getElementById('searchInput').addEventListener('input', cargarTodosLosEventos);
 document.getElementById('categoryFilter').addEventListener('change', cargarTodosLosEventos);
 document.getElementById('dateFilter').addEventListener('change', cargarTodosLosEventos);
+
+window.showPage = showPage;
+window.logout = logout;
+window.registrarse = registrarse;
+window.cancelarRegistro = cancelarRegistro;
+window.verDetalle = verDetalle;
+window.promptSetImage = promptSetImage;
+window.sistema = sistema;
 
 document.addEventListener('DOMContentLoaded', function() {
     showPage('home');
