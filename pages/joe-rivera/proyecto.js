@@ -1,4 +1,211 @@
 
+<<<<<<< HEAD
+=======
+    constructor(nombre, apellido, telefono, correo) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.#telefono = telefono;
+        this.#correo = correo;
+    }
+
+    // 2 Métodos Privados
+    #validarIdentidad() { return true; }
+    #formatearNombre() { return `${this.nombre} ${this.apellido}`; }
+
+    // 2 Métodos Públicos//
+    obtenerDetalles() {
+        // Método base (opcional, los hijos lo sobrescriben)
+        console.log(`[Persona]: ${this.nombre} ${this.apellido}`);
+    }
+
+    presentarse() {
+        if (this.#validarIdentidad()) {
+            console.log(`Hola, mi nombre es ${this.#formatearNombre()}`);
+        }
+    }
+}
+
+
+/**CLASE 1, Socio (Hereda de Persona)**/
+
+class Socio extends Persona {
+    #direccion;
+    tipoCliente;
+    #historialAccesos = [];
+    #deudaPendiente = 0;
+
+    constructor(nombre, apellido, telefono, correo, direccion, tipoCliente = "Normal", historialAccesos = [], deudaPendiente = 0) {
+        super(nombre, apellido, telefono, correo);
+        this.#direccion = direccion;
+        this.tipoCliente = tipoCliente;
+        // Inicializamos con algunas fechas de ejemplo para el ciclo
+        this.#historialAccesos = historialAccesos.length > 0 ? historialAccesos : [new Date(), new Date()];
+        this.#deudaPendiente = deudaPendiente;
+    }
+    // 2 Métodos Privados
+    #verificarEstadoCuenta() { return this.#deudaPendiente === 0; }
+    #registrarVisita() { this.#historialAccesos.push(new Date()); }
+
+    // 2 Métodos Públicos //
+    obtenerDetalles() {
+        console.log(`[Socio]: ${this.nombre} ${this.apellido} (${this.tipoCliente})`);
+    }
+
+    // PRIMER MÉTODO CON CICLOS (for...of y switch)
+    mostrarHistorialYResumen() {
+        console.log(`--- Historial de accesos de ${this.nombre} ---`);
+
+        // Uso de ciclo FOR para recorrer los accesos
+        for (const fecha of this.#historialAccesos) {
+            console.log(`Acceso registrado el: ${fecha.toLocaleDateString()}`);
+        }
+
+        // Uso de SWITCH basado en el tipo de cliente
+        switch (this.tipoCliente) {
+            case "Normal":
+                console.log("Sugerencia: Pásate a Premium para obtener pases de invitados.");
+                break;
+            case "Premium":
+                console.log("¡Gracias por ser miembro VIP!");
+                break;
+            default:
+                console.log("Tipo de cliente no reconocido.");
+        }
+    }
+
+    intentarIngreso() {
+        if (this.#verificarEstadoCuenta()) {
+            this.#registrarVisita();
+            console.log("Ingreso autorizado al gimnasio.");
+        }
+    }
+}
+
+/**CLASE 1: SocioNormal (Hereda de Socio) - CREO QUE ES LO QUE ME FALTABA PROFE (SOCIO NORMAL Y PREMIUM)**/
+
+class SocioNormal extends Socio {
+    #limiteAsistenciasMes;
+    beneficioExtra = "Ninguno";
+    #seguroMedicoActivo = true;
+    #codigoEstandar = "STD-200";
+
+    constructor(nombre, apellido, telefono, correo, direccion, limiteAsistenciasMes = 30) {
+        // Enviamos "Normal" fijado en el tipoCliente hacia la clase Socio
+        super(nombre, apellido, telefono, correo, direccion, "Normal");
+        this.#limiteAsistenciasMes = limiteAsistenciasMes;
+    }
+
+    // 2 Métodos Privados
+
+    #verificarSeguro() { return this.#seguroMedicoActivo; }
+    #reducirAsistencia() { this.#limiteAsistenciasMes--; }
+
+
+    // 2 Métodos Públicos
+
+
+    obtenerDetalles() {
+        console.log(`[Socio Normal]: ${this.nombre} ${this.apellido} (Asistencias disponibles: ${this.#limiteAsistenciasMes})`);
+    }
+
+    asistirAClase() {
+        if (this.#verificarSeguro() && this.#limiteAsistenciasMes > 0) {
+            this.#reducirAsistencia();
+            console.log("Clase registrada. Te quedan " + this.#limiteAsistenciasMes + " asistencias este mes.");
+        }
+    }
+}
+
+/**CLASE 2: SocioPremium (Hereda de Socio)**/
+
+class SocioPremium extends Socio {
+    #casilleroAsignado;
+    beneficioExtra = "Acceso Spa";
+    #pasesInvitado = 5;
+    #codigoVip = "VIP-100";
+
+    constructor(nombre, apellido, telefono, correo, direccion, casilleroAsignado) {
+        // Pasamos "Premium" fijado en el tipoCliente hacia la clase Socio
+        super(nombre, apellido, telefono, correo, direccion, "Premium");
+        this.#casilleroAsignado = casilleroAsignado;
+    }
+
+    #consumirPase() { this.#pasesInvitado--; }
+    #validarCasillero() { return this.#casilleroAsignado != null; }
+
+
+    // 2 Métodos Públicos
+
+
+    obtenerDetalles() {
+        console.log(`[Socio Premium]: ${this.nombre} ${this.apellido} (Casillero: ${this.#casilleroAsignado})`);
+    }
+
+    // SEGUNDO MÉTODO CON CICLOS (do...while)
+    gastarMultiplesPases(cantidad) {
+        console.log(`Intentando gastar ${cantidad} pases de invitado...`);
+        let pasesGastados = 0;
+
+
+        // Uso de ciclo DO...WHILE
+        do {
+            if (this.#pasesInvitado > 0) {
+                this.#consumirPase();
+                pasesGastados++;
+            } else {
+                console.log("¡Te has quedado sin pases!");
+                break;
+            }
+        } while (pasesGastados < cantidad);
+
+
+        console.log(`Se procesaron ${pasesGastados} invitaciones. Pases restantes: ${this.#pasesInvitado}`);
+    }
+    
+
+    invitarAmigo() {
+        if (this.#pasesInvitado > 0) {
+            this.#consumirPase();
+            console.log("Invitación procesada. Pases restantes: " + this.#pasesInvitado);
+        }
+    }
+}
+
+
+/**CLASE 3: Vendedor (Hereda de Persona)**/
+
+class Vendedor extends Persona {
+    #turno;
+    #salario;
+    codigoVendedor;
+    #comisionAcumulada;
+
+    constructor(nombre, apellido, telefono, correo, codigoVendedor, turno, salario) {
+        super(nombre, apellido, telefono, correo);
+        this.#turno = turno;
+        this.#salario = salario;
+        this.codigoVendedor = codigoVendedor;
+        this.#comisionAcumulada = 0;
+    }
+
+    // 2 Métodos Privados//
+
+    #calcularBono() { return this.#comisionAcumulada * 0.10; }
+    #registrarVentaInterna() { this.#comisionAcumulada += 50; }
+
+    // 2 Métodos Públicos//
+    obtenerDetalles() {
+        console.log(`[Vendedor]: ${this.nombre} ${this.apellido} (Turno: ${this.#turno})`);
+    }
+    registrarNuevaVenta() {
+        this.#registrarVentaInterna();
+        console.log(`Venta registrada por el código: ${this.codigoVendedor}`);
+    }
+}
+
+
+/**CLASE 4**/
+>>>>>>> 21209d3c4bf9413aab0b00348197d01ac91c542e
 class Gimnasio {
     #nombre;
     #dirección;
@@ -264,7 +471,17 @@ const venta1 = new Venta("22/06/2026", membresia1, 300, "Tarjeta de Crédito");
 
 /*****PRUEBA EN CLASEEEEEEEEEEE******* */
 
+<<<<<<< HEAD
 class alumnoTop10 extends Alumno{
+=======
+/**CLASE 11**/
+
+class Reporte {
+    tipoReporte;
+    #formato;
+    #registros;
+    #responsable;
+>>>>>>> 21209d3c4bf9413aab0b00348197d01ac91c542e
 
 
 }
@@ -279,3 +496,25 @@ class AlumnoGeneral extends Alumno{
 
 }
 
+<<<<<<< HEAD
+=======
+
+// Ahora cambiamos la instancia de Osvaldo para que pertenezca a la clase SocioNormal
+const socio1 = new SocioNormal("Osvaldo", "Sanchez", "992531000", "sideralTeAmo@mail.com", "San Roque Vitarte");
+const socioPremium1 = new SocioPremium("Josè", "Villanueva", "999888777", "chupapapi_muñaños@vip.com", "La Molina", 104);
+const vendedor1 = new Vendedor("Tulio", "Manaure", "955444333", "tulio_dale_chupetin@gym.com", "VEND01", "Tarde", 2000);
+
+// --- PRUEBA DE POLIMORFISMO VÍA CONSOLE.LOG ---
+console.log("--- EJECUTANDO POLIMORFISMO ---");
+gimnasio1.obtenerDetalles();
+socio1.obtenerDetalles();
+socioPremium1.obtenerDetalles();
+vendedor1.obtenerDetalles();
+membresia1.obtenerDetalles();
+precio1.obtenerDetalles();
+ubicacion1.obtenerDetalles();
+horario.obtenerDetalles();
+correo1.obtenerDetalles();
+venta1.obtenerDetalles();
+reporte1.obtenerDetalles();
+>>>>>>> 21209d3c4bf9413aab0b00348197d01ac91c542e
