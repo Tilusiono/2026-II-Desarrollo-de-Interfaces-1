@@ -1,0 +1,73 @@
+### ============================================
+### SCHOOLSUPPLY API - PETICIONES
+### ============================================
+
+@baseUrl = http://localhost:7878/api
+
+### ============================================
+### PRODUCTOS
+### ============================================
+
+### Obtener todos los productos
+GET {{baseUrl}}/productos
+
+### Obtener producto por ID
+GET {{baseUrl}}/productos/1
+
+### Crear un producto
+POST {{baseUrl}}/productos
+Content-Type: application/json
+
+{
+    "nombre": "Cuaderno de Prueba",
+    "marca": "Norma",
+    "color": "Azul",
+    "calidad": "Premium",
+    "precio_unitario": 9.00,
+    "precio_docena": 96.00,
+    "stock": 100,
+    "categoria": "Papelería",
+    "en_oferta": 1
+}
+
+### Actualizar un producto
+PUT {{baseUrl}}/productos/1
+Content-Type: application/json
+
+{
+    "nombre": "Cuaderno A4 Actualizado",
+    "marca": "Norma",
+    "color": "Azul",
+    "calidad": "Premium",
+    "precio_unitario": 10.00,
+    "precio_docena": 100.00,
+    "stock": 50,
+    "categoria": "Papelería",
+    "en_oferta": 1
+}
+
+### Eliminar un producto
+DELETE {{baseUrl}}/productos/1
+
+### ============================================
+### SEDES
+### ============================================
+
+### Obtener todas las sedes
+GET {{baseUrl}}/sedes
+
+### Crear una sede
+POST {{baseUrl}}/sedes
+Content-Type: application/json
+
+{
+    "codigo": "S006",
+    "nombre": "Sede Los Olivos",
+    "direccion": "Av. Nueva 789, Los Olivos",
+    "distrito": "Los Olivos",
+    "telefono": "01-555-1006",
+    "encargado": "Ana Torres",
+    "capacidad": 25,
+    "horario_apertura": "08:00",
+    "horario_cierre": "18:00"
+}
