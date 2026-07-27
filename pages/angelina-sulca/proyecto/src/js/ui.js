@@ -2,7 +2,6 @@
 // ui.js - INTERFAZ DE USUARIO COMPLETA
 // ============================================
 
-import { productos } from './data/instancias.js';
 import { carrito1, descuento1, cliente1, cliente2 } from './main.js';
 import { compra } from './models/compra.js';
 
@@ -10,11 +9,55 @@ import { compra } from './models/compra.js';
 // VARIABLE GLOBAL
 // ============================================
 
+let productos = [];
+let sedes = [];
 let clienteActual = cliente2;
 let compraActual = new compra(clienteActual, carrito1, descuento1, new Date(), "Pendiente");
 let modoOfertas = false;
 
 const CANTIDADES_RAPIDAS = [1, 6, 12, 24];
+
+// ============================================
+// 0. CARGAR PRODUCTOS DESDE LA API
+// ============================================
+
+async function cargarProductos() {
+    try {
+        const response = await fetch('/api/productos');
+        const result = await response.json();
+        if (result.success) {
+            productos = result.data;
+            console.log(`✅ ${productos.length} productos cargados desde la base de datos`);
+            renderizarProductos();
+            actualizarCarrito();
+            actualizarDropdown();
+        } else {
+            console.error('❌ Error al cargar productos:', result.error);
+        }
+    } catch (error) {
+        console.error('❌ Error de conexión:', error);
+    }
+}
+
+// ============================================
+// 0.1 CARGAR SEDES DESDE LA API
+// ============================================
+
+async function cargarSedes() {
+    try {
+        const response = await fetch('/api/sedes');
+        const result = await response.json();
+        if (result.success) {
+            sedes = result.data;
+            console.log(`✅ ${sedes.length} sedes cargadas desde la base de datos`);
+            renderizarSedes();
+        } else {
+            console.error('❌ Error al cargar sedes:', result.error);
+        }
+    } catch (error) {
+        console.error('❌ Error de conexión:', error);
+    }
+}
 
 // ============================================
 // 1. RENDERIZAR PRODUCTOS
@@ -31,7 +74,7 @@ function renderizarProductos(termino = '') {
 
     // Filtrar por ofertas
     if (modoOfertas) {
-        filtrados = filtrados.filter(p => p.enOferta === true);
+        filtrados = filtrados.filter(p => p.en_oferta === 1);
     }
 
     // Filtrar por búsqueda
@@ -40,8 +83,7 @@ function renderizarProductos(termino = '') {
         filtrados = filtrados.filter(p =>
             p.nombre.toLowerCase().includes(searchTerm) ||
             p.marca.toLowerCase().includes(searchTerm) ||
-            (p.color && p.color.toLowerCase().includes(searchTerm)) ||
-            (p.materia && p.materia.toLowerCase().includes(searchTerm))
+            (p.color && p.color.toLowerCase().includes(searchTerm))
         );
     }
 
@@ -75,7 +117,7 @@ function renderizarProductos(termino = '') {
             `;
         });
 
-        const ofertaTag = producto.enOferta ?
+        const ofertaTag = producto.en_oferta === 1 ?
             `<span class="oferta-tag"><i class="fas fa-tag"></i> OFERTA</span>` :
             '';
 
@@ -88,11 +130,11 @@ function renderizarProductos(termino = '') {
                 <div class="card-body">
                     <p class="product-brand">${producto.marca}</p>
                     <h5 class="product-name">${producto.nombre}</h5>
-                    <p class="product-desc">${producto.obtenerInfo()}</p>
+                    <p class="product-desc">${producto.categoria || 'Sin categoría'}</p>
                     <p class="product-color"><i class="fas fa-palette"></i> Color: ${producto.color || 'N/A'}</p>
                     <p class="product-stock ${stockClass}"><i class="fas fa-box"></i> ${stockText}</p>
-                    <p class="product-price">S/ ${producto.precioUnitario}</p>
-                    <p class="product-docena">Por docena: S/ ${producto.precioDocena}</p>
+                    <p class="product-price">S/ ${producto.precio_unitario}</p>
+                    <p class="product-docena">Por docena: S/ ${producto.precio_docena || 'N/A'}</p>
 
                     <div class="cantidad-selector">
                         <label>Cant:</label>
@@ -143,6 +185,119 @@ function renderizarProductos(termino = '') {
 }
 
 // ============================================
+// 1.1 RENDERIZAR SEDES
+// ============================================
+
+function renderizarSedes(termino = '') {
+    const container = document.getElementById('sedes-container');
+    if (!container) {
+        console.warn('No se encontró el contenedor de sedes');
+        return;
+    }
+
+    let filtrados = [...sedes];
+
+    // Filtrar por búsqueda
+    const searchTerm = termino.toLowerCase().trim();
+    if (searchTerm !== '') {
+        filtrados = filtrados.filter(s =>
+            s.nombre.toLowerCase().includes(searchTerm) ||
+            (s.distrito && s.distrito.toLowerCase().includes(searchTerm)) ||
+            s.direccion.toLowerCase().includes(searchTerm)
+        );
+    }
+
+    const countSpan = document.getElementById('sedes-count');
+    if (countSpan) countSpan.textContent = `${filtrados.length} sedes`;
+
+    if (filtrados.length === 0) {
+        container.innerHTML = `
+            <div class="col-12 text-center py-5">
+                <i class="fas fa-store-alt-slash fa-3x text-muted mb-3"></i>
+                <h4>No hay tiendas disponibles</h4>
+                <p class="text-muted">Pronto abriremos nuevas sedes</p>
+            </div>
+        `;
+        return;
+    }
+
+    container.innerHTML = '';
+
+    filtrados.forEach(sede => {
+        const col = document.createElement('div');
+        col.className = 'col-md-6 col-lg-4 mb-4';
+
+        const horario = sede.horario_apertura && sede.horario_cierre ?
+            `${sede.horario_apertura} - ${sede.horario_cierre}` :
+            'Horario no disponible';
+
+        col.innerHTML = `
+            <div class="card sede-card h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <h5 class="card-title">${sede.nombre}</h5>
+                        <span class="badge bg-success">${sede.codigo}</span>
+                    </div>
+                    <p class="card-text text-muted"><i class="fas fa-map-marker-alt me-1"></i> ${sede.direccion}</p>
+                    <p class="card-text"><i class="fas fa-city me-1"></i> ${sede.distrito || 'Distrito no especificado'}</p>
+                    <p class="card-text"><i class="fas fa-phone me-1"></i> ${sede.telefono || 'Teléfono no disponible'}</p>
+                    <p class="card-text"><i class="fas fa-user me-1"></i> Encargado: ${sede.encargado || 'No asignado'}</p>
+                    <p class="card-text"><i class="fas fa-users me-1"></i> Capacidad: ${sede.capacidad || 'N/A'} personas</p>
+                    <p class="card-text"><i class="fas fa-clock me-1"></i> ${horario}</p>
+                </div>
+                <div class="card-footer bg-transparent">
+                    <small class="text-muted"><i class="fas fa-calendar-alt me-1"></i> Registrada: ${new Date(sede.fecha_registro).toLocaleDateString()}</small>
+                </div>
+            </div>
+        `;
+
+        container.appendChild(col);
+    });
+}
+
+// ============================================
+// 1.2 MOSTRAR SECCIÓN DE SEDES
+// ============================================
+
+function mostrarSedes() {
+    // Ocultar productos
+    const productosSection = document.querySelector('.container-fluid.py-4');
+    if (productosSection) {
+        productosSection.style.display = 'none';
+    }
+
+    // Mostrar sedes
+    const sedesSection = document.getElementById('seccion-sedes');
+    if (sedesSection) {
+        sedesSection.style.display = 'block';
+        // Cargar sedes si no están cargadas
+        if (sedes.length === 0) {
+            cargarSedes();
+        } else {
+            renderizarSedes();
+        }
+    }
+}
+
+// ============================================
+// 1.3 MOSTRAR PRODUCTOS
+// ============================================
+
+function mostrarProductos() {
+    // Mostrar productos
+    const productosSection = document.querySelector('.container-fluid.py-4');
+    if (productosSection) {
+        productosSection.style.display = 'block';
+    }
+
+    // Ocultar sedes
+    const sedesSection = document.getElementById('seccion-sedes');
+    if (sedesSection) {
+        sedesSection.style.display = 'none';
+    }
+}
+
+// ============================================
 // 2. AGREGAR AL CARRITO
 // ============================================
 
@@ -187,7 +342,6 @@ function actualizarDropdown() {
     const totalSpan = document.getElementById('dropdown-total');
     const descuentoSpan = document.getElementById('dropdown-descuento');
 
-    // Verificar que todos los elementos existan
     if (!body || !subtotalSpan || !totalSpan) {
         console.warn('Elementos del dropdown no encontrados');
         return;
@@ -209,7 +363,7 @@ function actualizarDropdown() {
 
     let html = '';
     carrito1.items.forEach(item => {
-        const subtotal = (item.producto.precioUnitario * item.cantidad).toFixed(2);
+        const subtotal = (item.producto.precio_unitario * item.cantidad).toFixed(2);
         html += `
             <div class="cart-dropdown-item">
                 <div class="item-info">
@@ -327,9 +481,7 @@ document.getElementById('btn-comprar-dropdown')?.addEventListener('click', funct
     const resultado = compraActual.confirmar();
 
     if (resultado.exitoso) {
-        // Mostrar recibo en consola
         mostrarRecibo(compraActual);
-
         alert(`✅ ${resultado.mensaje}\nTotal: S/ ${resultado.total.toFixed(2)}\nCliente: ${resultado.cliente}\nTipo: ${resultado.tipoCliente}`);
         actualizarCarrito();
         actualizarDropdown();
@@ -341,7 +493,7 @@ document.getElementById('btn-comprar-dropdown')?.addEventListener('click', funct
 });
 
 // ============================================
-// 10. RECIBO EN CONSOLA (CORREGIDO)
+// 10. RECIBO EN CONSOLA
 // ============================================
 
 function mostrarRecibo(compra) {
@@ -358,15 +510,13 @@ function mostrarRecibo(compra) {
     console.log('-'.repeat(60));
 
     compra.carrito.items.forEach(item => {
-        const subtotal = (item.producto.precioUnitario * item.cantidad).toFixed(2);
+        const subtotal = (item.producto.precio_unitario * item.cantidad).toFixed(2);
         console.log(`  ${item.cantidad}x ${item.producto.nombre}`);
         console.log(`     ${item.producto.marca} - ${item.producto.color || 'N/A'}`);
-        console.log(`     S/ ${item.producto.precioUnitario} c/u → S/ ${subtotal}`);
+        console.log(`     S/ ${item.producto.precio_unitario} c/u → S/ ${subtotal}`);
     });
 
     console.log('-'.repeat(60));
-
-    // 🔥 CALCULAR SUBTOTAL Y TOTAL DIRECTAMENTE
     const subtotal = compra.carrito.obtenerSubtotal();
     const total = compra.totalFinal !== undefined && compra.totalFinal !== null ? compra.totalFinal : subtotal;
     const descuento = subtotal - total;
@@ -410,6 +560,7 @@ document.getElementById('link-inicio')?.addEventListener('click', function(e) {
     const input = document.getElementById('input-buscar');
     if (input) input.value = '';
     renderizarProductos('');
+    mostrarProductos(); // 🔥 VOLVER A PRODUCTOS
     window.scrollTo({ top: 0, behavior: 'smooth' });
     mostrarNotificacion('Mostrando todos los productos', 'info');
 });
@@ -420,6 +571,7 @@ document.getElementById('link-inicio-nav')?.addEventListener('click', function(e
     const input = document.getElementById('input-buscar');
     if (input) input.value = '';
     renderizarProductos('');
+    mostrarProductos(); // 🔥 VOLVER A PRODUCTOS
     window.scrollTo({ top: 0, behavior: 'smooth' });
     mostrarNotificacion('Mostrando todos los productos', 'info');
 });
@@ -430,14 +582,17 @@ document.getElementById('link-ofertas')?.addEventListener('click', function(e) {
     const input = document.getElementById('input-buscar');
     if (input) input.value = '';
     renderizarProductos('');
+    mostrarProductos(); // 🔥 VOLVER A PRODUCTOS
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    const ofertasCount = productos.filter(p => p.enOferta).length;
+    const ofertasCount = productos.filter(p => p.en_oferta === 1).length;
     mostrarNotificacion(`Mostrando ${ofertasCount} productos en oferta`, 'info');
 });
 
 document.getElementById('link-tiendas')?.addEventListener('click', function(e) {
     e.preventDefault();
-    mostrarNotificacion('📍 Próximamente: Encuentra nuestras tiendas físicas', 'info');
+    mostrarSedes(); // 🔥 MOSTRAR SEDES
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    mostrarNotificacion('Mostrando nuestras tiendas', 'info');
 });
 
 // ============================================
@@ -474,9 +629,12 @@ function mostrarNotificacion(mensaje, tipo = 'info') {
 
 console.log('✅ UI inicializada correctamente');
 console.log(`Cliente actual: ${clienteActual.obtenerTipo()}`);
-console.log(`Productos disponibles: ${productos.length}`);
-console.log(`Productos en oferta: ${productos.filter(p => p.enOferta).length}`);
 
-renderizarProductos();
-actualizarCarrito();
-actualizarDropdown();
+// Cargar productos desde la API
+cargarProductos();
+
+// Ocultar sedes al inicio
+const sedesSection = document.getElementById('seccion-sedes');
+if (sedesSection) {
+    sedesSection.style.display = 'none';
+}
