@@ -1,0 +1,548 @@
+/*======================================================
+            ELITE MARKET
+    Autor: Maikol Barra
+    Proyecto: Sistema de Gestión para Supermercados
+======================================================*/
+
+/*=========================
+        VARIABLES
+=========================*/
+
+:root{
+
+    --azul:#0D1B2A;
+    --azul2:#1B263B;
+    --dorado:#D4AF37;
+    --mostaza:#D97706;
+    --gris:#F5F7FA;
+    --gris2:#E5E7EB;
+    --texto:#1F2937;
+    --blanco:#FFFFFF;
+
+}
+
+/*=========================
+        GENERAL
+=========================*/
+
+*{
+
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+
+}
+
+html{
+
+    scroll-behavior:smooth;
+
+}
+
+body{
+
+    font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+
+    background:var(--gris);
+
+    color:var(--texto);
+
+    overflow-x:hidden;
+
+}
+
+a{
+
+    text-decoration:none;
+
+}
+
+section{
+
+    padding:90px 0;
+
+}
+
+/*=========================
+        NAVBAR
+=========================*/
+
+.navbar{
+
+    background:rgba(13,27,42,.95)!important;
+
+    backdrop-filter:blur(10px);
+
+    border-bottom:2px solid var(--dorado);
+
+    box-shadow:0 6px 18px rgba(0,0,0,.25);
+
+    transition:.4s;
+
+}
+
+.navbar-brand{
+
+    color:white!important;
+
+    font-size:30px;
+
+    font-weight:700;
+
+    letter-spacing:1px;
+
+}
+
+.navbar-brand img{
+
+    border-radius:50%;
+
+}
+
+.nav-link{
+
+    color:white!important;
+
+    font-size:17px;
+
+    margin-left:20px;
+
+    transition:.3s;
+
+    position:relative;
+
+}
+
+.nav-link::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+
+    bottom:-5px;
+
+    width:0;
+
+    height:2px;
+
+    background:var(--dorado);
+
+    transition:.3s;
+
+}
+
+.nav-link:hover{
+
+    color:var(--dorado)!important;
+
+}
+
+.nav-link:hover::after{
+
+    width:100%;
+
+}
+
+/*=========================
+        HERO
+=========================*/
+
+.hero{
+
+    min-height:100vh;
+
+    background:
+
+    linear-gradient(
+
+        rgba(13,27,42,.72),
+
+        rgba(13,27,42,.72)
+
+    ),
+
+    url("../img/hero-supermercado.jpg");
+
+    background-size:cover;
+
+    background-position:center;
+
+    display:flex;
+
+    align-items:center;
+
+}
+
+.hero h1{
+
+    color:white;
+
+    font-size:78px;
+
+    font-weight:800;
+
+    margin-bottom:25px;
+
+}
+
+.hero span{
+
+    color:var(--dorado);
+
+}
+
+.hero h3{
+
+    color:#ECECEC;
+
+    font-size:33px;
+
+    font-weight:300;
+
+}
+
+.hero p{
+
+    color:#D6D6D6;
+
+    font-size:20px;
+
+    line-height:35px;
+
+    max-width:760px;
+
+    margin:30px auto;
+
+}
+
+/*=========================
+        BOTONES
+=========================*/
+
+.btn-warning{
+
+    background:var(--mostaza)!important;
+
+    border:none!important;
+
+    color:white!important;
+
+    font-size:18px;
+
+    padding:15px 40px;
+
+    border-radius:40px;
+
+    transition:.35s;
+
+}
+
+.btn-warning:hover{
+
+    transform:translateY(-5px);
+
+    box-shadow:0 15px 30px rgba(217,119,6,.35);
+
+}
+
+.btn-outline-light{
+
+    border:2px solid white;
+
+    border-radius:40px;
+
+    padding:15px 40px;
+
+    transition:.35s;
+
+}
+
+.btn-outline-light:hover{
+
+    background:white;
+
+    color:var(--azul);
+
+}
+
+/*=========================
+        HERO CARD
+=========================*/
+
+.hero-box{
+
+    background:rgba(255,255,255,.08);
+
+    backdrop-filter:blur(12px);
+
+    border:1px solid rgba(255,255,255,.15);
+
+    padding:50px;
+
+    border-radius:25px;
+
+    box-shadow:0 20px 60px rgba(0,0,0,.25);
+
+}
+
+/*=========================
+        TITULOS
+=========================*/
+
+.section-title{
+
+    text-align:center;
+
+    margin-bottom:70px;
+
+}
+
+.section-title h2{
+
+    color:var(--azul);
+
+    font-size:45px;
+
+    font-weight:bold;
+
+}
+
+.section-title p{
+
+    color:#6B7280;
+
+    margin-top:15px;
+
+    font-size:18px;
+
+}
+
+/*=========================
+        SCROLLBAR
+=========================*/
+
+::-webkit-scrollbar{
+
+    width:10px;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:var(--mostaza);
+
+    border-radius:30px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:white;
+
+}
+/*======================================================
+                CATEGORÍAS
+======================================================*/
+
+#categorias{
+
+    background:linear-gradient(to bottom,#F8F9FA,#EEF2F7);
+
+}
+
+#categorias .card{
+
+    border:none;
+
+    border-radius:22px;
+
+    overflow:hidden;
+
+    transition:.4s;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+
+    background:white;
+
+}
+
+#categorias .card:hover{
+
+    transform:translateY(-12px);
+
+    box-shadow:0 20px 40px rgba(0,0,0,.18);
+
+}
+
+#categorias .card img{
+
+    height:220px;
+
+    width:100%;
+
+    object-fit:cover;
+
+    transition:.5s;
+
+}
+
+#categorias .card:hover img{
+
+    transform:scale(1.08);
+
+}
+
+#categorias .card-body{
+
+    padding:30px;
+
+}
+
+#categorias .card-title{
+
+    color:var(--azul);
+
+    font-weight:700;
+
+    font-size:24px;
+
+}
+
+#categorias .card p{
+
+    color:#666;
+
+    line-height:28px;
+
+}
+
+/*======================================================
+                SERVICIOS
+======================================================*/
+
+#servicios{
+
+    background:white;
+
+}
+
+.service-card{
+
+    background:white;
+
+    border-radius:20px;
+
+    padding:40px 30px;
+
+    text-align:center;
+
+    transition:.4s;
+
+    height:100%;
+
+    border:1px solid #E5E7EB;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.05);
+
+}
+
+.service-card:hover{
+
+    transform:translateY(-12px);
+
+    border-color:var(--dorado);
+
+    box-shadow:0 20px 45px rgba(0,0,0,.15);
+
+}
+
+.service-icon{
+
+    width:90px;
+
+    height:90px;
+
+    margin:auto;
+
+    margin-bottom:25px;
+
+    border-radius:50%;
+
+    background:linear-gradient(135deg,var(--mostaza),var(--dorado));
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    color:white;
+
+    font-size:42px;
+
+}
+
+.service-card h4{
+
+    color:var(--azul);
+
+    font-weight:bold;
+
+    margin-bottom:20px;
+
+}
+
+.service-card p{
+
+    color:#666;
+
+    line-height:28px;
+
+}
+
+/*======================================================
+                EFECTOS
+======================================================*/
+
+.card,
+.service-card{
+
+    cursor:pointer;
+
+}
+
+.card::after{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+
+    left:-120%;
+
+    width:60%;
+
+    height:100%;
+
+    background:rgba(255,255,255,.35);
+
+    transform:skewX(-20deg);
+
+    transition:.8s;
+
+}
+
+.card:hover::after{
+
+    left:140%;
+
+}
+
+.card{
+
+    position:relative;
+
+}
