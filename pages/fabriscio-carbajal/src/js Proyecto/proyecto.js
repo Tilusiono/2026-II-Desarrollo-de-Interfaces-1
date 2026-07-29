@@ -35,7 +35,7 @@ carrito1.push(cliente1.añadirCarrito(estante1, 10));
 console.log(carrito1);
 
 // crea un vendedor
-const vendedor1 = new Vendedor(1, "Carlos", "Lopez", "45678876", "900000123", 1130);
+const vendedor1 = new Vendedor(1, "Carlos", "Lopez", "45678876", "900000123", 1130, "Ate", "08:00", "17:00", true, "2024/06/15");
 
 // registra los detalles de la venta en un string
 const venta1 = vendedor1.registrarVenta(cliente1, carrito1, productosAlmacenados); 

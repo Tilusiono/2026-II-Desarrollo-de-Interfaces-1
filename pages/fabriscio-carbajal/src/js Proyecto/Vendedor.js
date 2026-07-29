@@ -5,6 +5,11 @@ class Vendedor {
     #dni;
     #telefono;
     #salario;
+    #direccion;
+    #Hora_ingreso;
+    #Hora_salida;
+    #disponible;
+    #fecha_registro;
     
     /**
      * 
@@ -14,9 +19,14 @@ class Vendedor {
      * @param {string} dni DNI del vendedor
      * @param {string} tel Numero de teléfono del vendedor.
      * @param {number} sal Salario del vendedor.
+     * @param {string} dir Dirección del vendedor.
+     * @param {string} hora_ingreso Hora de ingreso del vendedor.
+     * @param {string} hora_salida Hora de salida del vendedor.
+     * @param {boolean} disponible Estado de disponibilidad del vendedor.
+     * @param {string} fecha_registro Fecha de registro del vendedor.
      */
 
-    constructor(id, nom, ape, dni, tel, sal) {
+    constructor(id, nom, ape, dni, tel, sal, dir, hr_ingre, hr_sld, dispo, fecha_reg) { 
 
         if (typeof id !== "number")
             throw new Error("El ID debe ser un número");
@@ -30,6 +40,16 @@ class Vendedor {
             throw new Error("El teléfono debe ser una cadena de texto");
         if (typeof sal !== "number")
             throw new Error("El salario debe ser un número")
+        if (typeof dir !== "string")
+            throw new Error("La dirección debe ser una cadena de texto");
+        if (typeof hr_ingre !== "string")
+            throw new Error("La hora de ingreso debe ser una cadena de texto");
+        if (typeof hr_sld !== "string")
+            throw new Error("La hora de salida debe ser una cadena de texto");
+        if (typeof dispo !== "boolean")
+            throw new Error("La disponibilidad debe ser un valor booleano");
+        if (typeof fecha_reg !== "string")
+            throw new Error("La fecha de registro debe ser una cadena de texto");
 
         this.#idVendedor = id;
         this.#nombre = nom;
@@ -37,6 +57,11 @@ class Vendedor {
         this.#dni = dni;
         this.#telefono = tel;
         this.#salario = sal;
+        this.#direccion = dir;
+        this.#Hora_ingreso = hr_ingre;
+        this.#Hora_salida = hr_sld;
+        this.#disponible = dispo;
+        this.#fecha_registro = fecha_reg;
     }
 
     registrarVenta(cliente, carrito, productosAlmacenados){
