@@ -17,10 +17,10 @@ git rm -r --ignore-unmatch pages
 
 # 4. TRAER SOLO lo permitido (NO usar ".")
 git checkout main -- $path
-git checkout main -- assets js css database docs
+git checkout main -- assets demo css database docs
 
 # 5. agregar SOLO lo necesario
-git add $path assets js css database docs
+git add $path assets demo css database docs
 
 # 6. commit
 if (git status --porcelain) {
