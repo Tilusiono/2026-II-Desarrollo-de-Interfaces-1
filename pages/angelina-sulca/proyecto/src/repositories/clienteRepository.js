@@ -1,47 +1,38 @@
 import db from '../../database/db.js';
 
 export const clienteRepository = {
-    // Obtener todos los clientes
-    getAll() {
-        const stmt = db.prepare('SELECT * FROM clientes');
-        return stmt.all();
+    async getAll() {
+        return await db.all('SELECT * FROM clientes');
     },
 
-    // Obtener cliente por ID
-    getById(id) {
-        const stmt = db.prepare('SELECT * FROM clientes WHERE id = ?');
-        return stmt.get(id);
+    async getById(id) {
+        return await db.get('SELECT * FROM clientes WHERE id = ?', id);
     },
 
-    // Buscar cliente por nombre o correo
-    search(termino) {
-        const stmt = db.prepare(`
-            SELECT * FROM clientes 
-            WHERE nombre LIKE ? OR correo LIKE ?
-        `);
+    async search(termino) {
         const likeTerm = `%${termino}%`;
-        return stmt.all(likeTerm, likeTerm);
+        return await db.all(
+            'SELECT * FROM clientes WHERE nombre LIKE ? OR correo LIKE ?',
+            [likeTerm, likeTerm]
+        );
     },
 
-    // Crear cliente
-    create(cliente) {
-        const stmt = db.prepare(`
+    async create(cliente) {
+        const result = await db.run(`
             INSERT INTO clientes (nombre, correo, telefono, direccion, tipo_cliente)
             VALUES (?, ?, ?, ?, ?)
-        `);
-        const info = stmt.run(
+        `, [
             cliente.nombre,
             cliente.correo,
             cliente.telefono || null,
             cliente.direccion || null,
             cliente.tipo_cliente || 'Unitario'
-        );
-        return this.getById(info.lastInsertRowid);
+        ]);
+        return await this.getById(result.lastID);
     },
 
-    // Actualizar cliente
-    update(id, cliente) {
-        const stmt = db.prepare(`
+    async update(id, cliente) {
+        await db.run(`
             UPDATE clientes SET
                 nombre = ?,
                 correo = ?,
@@ -49,27 +40,22 @@ export const clienteRepository = {
                 direccion = ?,
                 tipo_cliente = ?
             WHERE id = ?
-        `);
-        stmt.run(
+        `, [
             cliente.nombre,
             cliente.correo,
             cliente.telefono || null,
             cliente.direccion || null,
             cliente.tipo_cliente || 'Unitario',
             id
-        );
-        return this.getById(id);
+        ]);
+        return await this.getById(id);
     },
 
-    // Eliminar cliente
-    delete(id) {
-        const stmt = db.prepare('DELETE FROM clientes WHERE id = ?');
-        return stmt.run(id);
+    async delete(id) {
+        return await db.run('DELETE FROM clientes WHERE id = ?', id);
     },
 
-    // Obtener ventas de un cliente
-    getVentas(clienteId) {
-        const stmt = db.prepare('SELECT * FROM ventas WHERE cliente_id = ?');
-        return stmt.all(clienteId);
+    async getVentas(clienteId) {
+        return await db.all('SELECT * FROM ventas WHERE cliente_id = ?', clienteId);
     }
 };
