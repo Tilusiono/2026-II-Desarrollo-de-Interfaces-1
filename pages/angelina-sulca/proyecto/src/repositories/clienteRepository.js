@@ -1,4 +1,4 @@
-import db from '../../database/db.js';
+import { db } from '../../database/db.js';
 
 export const clienteRepository = {
     async getAll() {
@@ -7,14 +7,6 @@ export const clienteRepository = {
 
     async getById(id) {
         return await db.get('SELECT * FROM clientes WHERE id = ?', id);
-    },
-
-    async search(termino) {
-        const likeTerm = `%${termino}%`;
-        return await db.all(
-            'SELECT * FROM clientes WHERE nombre LIKE ? OR correo LIKE ?',
-            [likeTerm, likeTerm]
-        );
     },
 
     async create(cliente) {
@@ -53,9 +45,5 @@ export const clienteRepository = {
 
     async delete(id) {
         return await db.run('DELETE FROM clientes WHERE id = ?', id);
-    },
-
-    async getVentas(clienteId) {
-        return await db.all('SELECT * FROM ventas WHERE cliente_id = ?', clienteId);
     }
 };

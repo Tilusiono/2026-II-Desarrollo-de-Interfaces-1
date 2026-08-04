@@ -1,12 +1,8 @@
-import db from '../../database/db.js';
+import { db } from '../../database/db.js';
 
 export const sedeRepository = {
     async getAll() {
         return await db.all('SELECT * FROM sedes WHERE activo = 1');
-    },
-
-    async getAllIncludingInactive() {
-        return await db.all('SELECT * FROM sedes');
     },
 
     async getById(id) {
@@ -15,15 +11,6 @@ export const sedeRepository = {
 
     async getByCodigo(codigo) {
         return await db.get('SELECT * FROM sedes WHERE codigo = ?', codigo);
-    },
-
-    async search(termino) {
-        const likeTerm = `%${termino}%`;
-        return await db.all(
-            `SELECT * FROM sedes 
-             WHERE (nombre LIKE ? OR distrito LIKE ? OR direccion LIKE ?) AND activo = 1`,
-            [likeTerm, likeTerm, likeTerm]
-        );
     },
 
     async create(sede) {
@@ -78,13 +65,5 @@ export const sedeRepository = {
 
     async delete(id) {
         return await db.run('UPDATE sedes SET activo = 0 WHERE id = ?', id);
-    },
-
-    async deletePermanent(id) {
-        return await db.run('DELETE FROM sedes WHERE id = ?', id);
-    },
-
-    async getEmpleados(sedeId) {
-        return await db.all('SELECT * FROM empleados WHERE sede_id = ? AND activo = 1', sedeId);
     }
 };
