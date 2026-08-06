@@ -1,5 +1,6 @@
 import { createRequire } from "node:module";
 import { sqlitePath } from "../config/storage.config.js";
+import Producto from "../models/Producto.js";
 
 const require = createRequire(import.meta.url);
 
@@ -27,4 +28,87 @@ export class ProductoRepository {
       )
     `);
   }
+  //GET ALL
+   async listar() {
+    const filas = this.db.prepare("SELECT * FROM productos ORDER BY id").all();
+
+    return filas.map(
+      (fila) =>
+        new Producto(
+          fila.id,
+          fila.codigo,
+          fila.nombre,
+          fila.categoria,
+          fila.stock,
+          fila.precio,
+          fila.peso,
+          fila.descripcion,
+          fila.activo,
+          fila.fechaVencimiento,
+          fila.horaRegistro,
+          fila.fechaHoraRegistro,
+          fila.imagen ? Buffer.from(fila.imagen) : null,
+          fila.imagenMimeType,
+        ),
+    );
+  }
+
+  //GET BY ID
+  async buscarPorId(id) {
+    const fila = this.db
+      .prepare("SELECT * FROM productos WHERE id = ?")
+      .get(Number(id));
+
+    if (!fila) return null;
+
+    return new Producto(
+      fila.id,
+      fila.codigo,
+      fila.nombre,
+      fila.categoria,
+      fila.stock,
+      fila.precio,
+      fila.peso,
+      fila.descripcion,
+      fila.activo,
+      fila.fechaVencimiento,
+      fila.horaRegistro,
+      fila.fechaHoraRegistro,
+      fila.imagen ? Buffer.from(fila.imagen) : null,
+      fila.imagenMimeType,
+    );
+  }
+  //POST
+  async crear(productoModel) {
+    const resultado = this.db
+      .prepare(
+        `
+        INSERT INTO productos (
+          codigo, nombre, categoria, stock, precio, peso, descripcion,
+          activo, fechaVencimiento, horaRegistro, fechaHoraRegistro,
+          imagen, imagenMimeType
+        )
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      `,
+      )
+      .run(
+        productoModel.codigo,
+        productoModel.nombre,
+        productoModel.categoria,
+        productoModel.stock,
+        productoModel.precio,
+        productoModel.peso,
+        productoModel.descripcion,
+        Number(productoModel.activo),
+        productoModel.fechaVencimiento,
+        productoModel.horaRegistro,
+        productoModel.fechaHoraRegistro,
+        productoModel.imagen,
+        productoModel.imagenMimeType,
+      );
+
+    return this.buscarPorId(Number(resultado.lastInsertRowid));
+  }
+
+
 }

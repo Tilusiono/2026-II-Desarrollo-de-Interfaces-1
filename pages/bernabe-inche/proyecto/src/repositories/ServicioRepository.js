@@ -1,5 +1,6 @@
 import { createRequire } from "node:module";
 import { sqlitePath } from "../config/storage.config.js";
+import Servicio from "../models/Servicio.js";
 
 const require = createRequire(import.meta.url);
 
@@ -25,6 +26,87 @@ export class ServicioRepository {
         imagenMimeType VARCHAR(100)
         );
     `);
+  }
+
+
+    //GET ALL
+   async listar() {
+    const filas = this.db.prepare("SELECT * FROM servicios ORDER BY id").all();
+
+    return filas.map(
+      (fila) =>
+        new Servicio(
+          fila.id,
+          fila.codigo,
+          fila.nombre,
+          fila.tipoServicio,
+          fila.precio,
+          fila.duracionMinutos,
+          fila.fechaInicio,
+          fila.descripcion,
+          fila.activo,
+          fila.horaRegistro,
+          fila.fechaHoraRegistro,
+          fila.imagen ? Buffer.from(fila.imagen) : null,
+          fila.imagenMimeType,
+        ),
+    );
+  }
+
+  //GET BY ID
+  async buscarPorId(id) {
+    const fila = this.db
+      .prepare("SELECT * FROM servicios WHERE id = ?")
+      .get(Number(id));
+
+    if (!fila) return null;
+
+    return new Servicio(
+      fila.id,
+      fila.codigo,
+      fila.nombre,
+      fila.tipoServicio,
+      fila.precio,
+      fila.duracionMinutos,
+      fila.fechaInicio,
+      fila.descripcion,
+      fila.activo,
+      fila.horaRegistro,
+      fila.fechaHoraRegistro,
+      fila.imagen ? Buffer.from(fila.imagen) : null,
+      fila.imagenMimeType,
+    );
+  }
+  
+  //POST
+  async crear(x) {
+    const resultado = this.db
+      .prepare(
+        `
+        INSERT INTO servicios (
+          codigo, nombre, tipoServicio, precio, 
+          duracionMinutos, fechaInicio, descripcion,activo,
+          horaRegistro, fechaHoraRegistro,imagen, imagenMimeType
+        )
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      `,
+      )
+      .run(
+        x.codigo,
+        x.nombre,
+        x.tipoServicio,
+        x.precio,
+        x.duracionMinutos,
+        x.fechaInicio,
+        x.descripcion,
+        Number(x.activo),
+        x.horaRegistro,
+        x.fechaHoraRegistro,
+        x.imagen,
+        x.imagenMimeType,
+      );
+
+    return this.buscarPorId(Number(resultado.lastInsertRowid));
   }
 }
 
