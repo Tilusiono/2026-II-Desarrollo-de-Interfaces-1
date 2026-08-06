@@ -3,7 +3,7 @@ import { normalizarTexto } from "../utils/texto.js";
 
 
 import Servicio from "../models/Servicio.js";
-import {ServicioRequestDto,ServicioResponseDto,} from "../dtos/servicio.dto.js";
+import {ServicioRequestDto,ServicioResponseDto,} from "../dtos/servicioDto.js";
 import { ServicioRepository } from "../repositories/ServicioRepository.js";
 
 

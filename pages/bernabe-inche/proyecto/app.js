@@ -7,11 +7,15 @@ import { normalizarBody } from "./src/middlewares/normalizacion.middleware.js";
 import { rutaNoEncontrada } from "./src/middlewares/notFound.middleware.js";
 import { manejarErrores } from "./src/middlewares/error.middleware.js";
 
+import productosRoutes from "./src/routes/productos.routes.js";
+import serviciosRoutes from "./src/routes/servicios.routes.js";
+
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const app = express();
 //>= 0 and < 65536.
-const PORT = process.env.PORT ?? 65535;
+const PORT = process.env.PORT ?? 4214;
 
 app.use(express.json({ limit: "2mb" }));
 app.use(express.urlencoded({ extended: true }));
@@ -30,6 +34,12 @@ app.get("/api", (request, response) => {
     recursos: ["productos,servicios"],
   });
 });
+
+//RUTAS
+
+
+app.use("/api/productos", productosRoutes);
+app.use("/api/servicios", serviciosRoutes);
 
 app.use(rutaNoEncontrada);
 app.use(manejarErrores);

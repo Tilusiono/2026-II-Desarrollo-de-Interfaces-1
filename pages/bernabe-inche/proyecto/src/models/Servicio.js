@@ -80,3 +80,5 @@ export class Servicio {
     this.#precio = Number(precio);
   }
 }
+
+export default Servicio;
