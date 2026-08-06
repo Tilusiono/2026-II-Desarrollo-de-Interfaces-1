@@ -14,7 +14,7 @@ export class EmpleadoRepository {
         nombre TEXT NOT NULL,
         apellido_paterno TEXT NOT NULL,
         dni INTEGER UNIQUE,
-        teléfono TEXT,
+        telefono TEXT,
         salario NUMERIC(8,2),
         direccion TEXT,
         hora_ingreso TIME,
