@@ -9,7 +9,11 @@ const __dirname = path.dirname(__filename);
 
 const dbPath = path.join(__dirname, 'schoolsupply.db');
 
+<<<<<<< HEAD
 // Abrir la base de datos (modo async/await)
+=======
+// Abrir la base de datos
+>>>>>>> a065db753abe1e9e9488b20bb8bae06a06b456fb
 const db = await open({
     filename: dbPath,
     driver: sqlite3.Database
@@ -34,6 +38,10 @@ try {
     console.error('❌ Error al inicializar la base de datos:', error.message);
 }
 
+<<<<<<< HEAD
 console.log('✅ Base de datos SchoolSupply inicializada');
 
+=======
+// ✅ EXPORTAR CORRECTAMENTE
+>>>>>>> a065db753abe1e9e9488b20bb8bae06a06b456fb
 export { db };

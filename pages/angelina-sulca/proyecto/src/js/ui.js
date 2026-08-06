@@ -64,6 +64,8 @@ async function cargarSedes() {
 // ============================================
 
 function renderizarProductos(termino = '') {
+    console.log(`🔄 Renderizando ${productos.length} productos...`);
+    
     const container = document.getElementById('productos-container');
     if (!container) {
         console.warn('No se encontró el contenedor de productos');
@@ -72,12 +74,10 @@ function renderizarProductos(termino = '') {
 
     let filtrados = [...productos];
 
-    // Filtrar por ofertas
     if (modoOfertas) {
         filtrados = filtrados.filter(p => p.en_oferta === 1);
     }
 
-    // Filtrar por búsqueda
     const searchTerm = termino.toLowerCase().trim();
     if (searchTerm !== '') {
         filtrados = filtrados.filter(p =>
@@ -152,7 +152,6 @@ function renderizarProductos(termino = '') {
         container.appendChild(col);
     });
 
-    // Eventos de cantidad
     document.querySelectorAll('.btn-cantidad').forEach(btn => {
         btn.addEventListener('click', function() {
             const id = parseInt(this.dataset.id);
@@ -164,7 +163,6 @@ function renderizarProductos(termino = '') {
         });
     });
 
-    // Eventos de agregar
     document.querySelectorAll('.btn-agregar').forEach(btn => {
         btn.addEventListener('click', function() {
             const id = parseInt(this.dataset.id);
@@ -197,7 +195,6 @@ function renderizarSedes(termino = '') {
 
     let filtrados = [...sedes];
 
-    // Filtrar por búsqueda
     const searchTerm = termino.toLowerCase().trim();
     if (searchTerm !== '') {
         filtrados = filtrados.filter(s =>
@@ -260,17 +257,14 @@ function renderizarSedes(termino = '') {
 // ============================================
 
 function mostrarSedes() {
-    // Ocultar productos
     const productosSection = document.querySelector('.container-fluid.py-4');
     if (productosSection) {
         productosSection.style.display = 'none';
     }
 
-    // Mostrar sedes
     const sedesSection = document.getElementById('seccion-sedes');
     if (sedesSection) {
         sedesSection.style.display = 'block';
-        // Cargar sedes si no están cargadas
         if (sedes.length === 0) {
             cargarSedes();
         } else {
@@ -284,13 +278,11 @@ function mostrarSedes() {
 // ============================================
 
 function mostrarProductos() {
-    // Mostrar productos
     const productosSection = document.querySelector('.container-fluid.py-4');
     if (productosSection) {
         productosSection.style.display = 'block';
     }
 
-    // Ocultar sedes
     const sedesSection = document.getElementById('seccion-sedes');
     if (sedesSection) {
         sedesSection.style.display = 'none';
@@ -560,7 +552,7 @@ document.getElementById('link-inicio')?.addEventListener('click', function(e) {
     const input = document.getElementById('input-buscar');
     if (input) input.value = '';
     renderizarProductos('');
-    mostrarProductos(); // 🔥 VOLVER A PRODUCTOS
+    mostrarProductos();
     window.scrollTo({ top: 0, behavior: 'smooth' });
     mostrarNotificacion('Mostrando todos los productos', 'info');
 });
@@ -571,7 +563,7 @@ document.getElementById('link-inicio-nav')?.addEventListener('click', function(e
     const input = document.getElementById('input-buscar');
     if (input) input.value = '';
     renderizarProductos('');
-    mostrarProductos(); // 🔥 VOLVER A PRODUCTOS
+    mostrarProductos();
     window.scrollTo({ top: 0, behavior: 'smooth' });
     mostrarNotificacion('Mostrando todos los productos', 'info');
 });
@@ -582,7 +574,7 @@ document.getElementById('link-ofertas')?.addEventListener('click', function(e) {
     const input = document.getElementById('input-buscar');
     if (input) input.value = '';
     renderizarProductos('');
-    mostrarProductos(); // 🔥 VOLVER A PRODUCTOS
+    mostrarProductos();
     window.scrollTo({ top: 0, behavior: 'smooth' });
     const ofertasCount = productos.filter(p => p.en_oferta === 1).length;
     mostrarNotificacion(`Mostrando ${ofertasCount} productos en oferta`, 'info');
@@ -590,7 +582,7 @@ document.getElementById('link-ofertas')?.addEventListener('click', function(e) {
 
 document.getElementById('link-tiendas')?.addEventListener('click', function(e) {
     e.preventDefault();
-    mostrarSedes(); // 🔥 MOSTRAR SEDES
+    mostrarSedes();
     window.scrollTo({ top: 0, behavior: 'smooth' });
     mostrarNotificacion('Mostrando nuestras tiendas', 'info');
 });
@@ -630,10 +622,8 @@ function mostrarNotificacion(mensaje, tipo = 'info') {
 console.log('✅ UI inicializada correctamente');
 console.log(`Cliente actual: ${clienteActual.obtenerTipo()}`);
 
-// Cargar productos desde la API
 cargarProductos();
 
-// Ocultar sedes al inicio
 const sedesSection = document.getElementById('seccion-sedes');
 if (sedesSection) {
     sedesSection.style.display = 'none';

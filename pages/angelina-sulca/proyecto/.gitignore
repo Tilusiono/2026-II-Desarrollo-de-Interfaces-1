@@ -1,0 +1,3 @@
+database/schoolsupply.db 
+database/*.db-shm 
+database/*.db-wal 

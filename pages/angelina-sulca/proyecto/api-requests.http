@@ -71,3 +71,18 @@ Content-Type: application/json
     "horario_apertura": "08:00",
     "horario_cierre": "18:00"
 }
+
+
+### Crear un producto
+POST {{baseUrl}}/productos
+Content-Type: application/json
+
+{
+    "nombre": "Producto desde REST",
+    "marca": "Test",
+    "color": "Verde",
+    "precio_unitario": 15.00,
+    "stock": 30,
+    "categoria": "Prueba",
+    "en_oferta": 1
+}
