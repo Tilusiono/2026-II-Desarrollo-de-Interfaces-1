@@ -1,0 +1,187 @@
+/* ============================================================ */
+/* CARRITO DESPLEGABLE - VERSIÓN CORREGIDA */
+/* ============================================================ */
+
+.cart-dropdown-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+/* El contenedor del carrito */
+.cart-dropdown {
+    position: fixed;
+    /* 🔥 Cambiado de absolute a fixed */
+    top: 70px;
+    /* 🔥 Fijo desde la parte superior */
+    right: 20px;
+    /* 🔥 Fijo desde la derecha */
+    width: 380px;
+    max-width: 90vw;
+    max-height: 80vh;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    z-index: 9999;
+    display: none;
+    overflow: hidden;
+    flex-direction: column;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.cart-dropdown.visible {
+    display: flex;
+}
+
+/* Flechita indicadora */
+.cart-dropdown::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    right: 30px;
+    width: 16px;
+    height: 16px;
+    background: white;
+    transform: rotate(45deg);
+    box-shadow: -3px -3px 5px rgba(0, 0, 0, 0.05);
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    border-left: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* Header del carrito */
+.cart-dropdown-header {
+    padding: 12px 16px;
+    background: #f8f9fa;
+    border-bottom: 1px solid #e9ecef;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.cart-dropdown-header h6 {
+    font-weight: 600;
+}
+
+/* Cuerpo del carrito (scroll) */
+.cart-dropdown-body {
+    padding: 12px 16px;
+    overflow-y: auto;
+    flex: 1;
+    max-height: 350px;
+}
+
+/* Footer del carrito */
+.cart-dropdown-footer {
+    padding: 12px 16px;
+    background: #f8f9fa;
+    border-top: 1px solid #e9ecef;
+    flex-shrink: 0;
+}
+
+/* Items dentro del carrito */
+.cart-dropdown-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.cart-dropdown-item:last-child {
+    border-bottom: none;
+}
+
+.cart-dropdown-item .item-info {
+    flex: 1;
+}
+
+.cart-dropdown-item .item-name {
+    font-weight: 500;
+    font-size: 0.85rem;
+}
+
+.cart-dropdown-item .item-detail {
+    font-size: 0.7rem;
+    color: #6c757d;
+}
+
+.cart-dropdown-item .item-price {
+    font-weight: 600;
+    color: #0d6efd;
+    margin-left: 10px;
+    font-size: 0.85rem;
+}
+
+.cart-dropdown-item .btn-remove {
+    background: none;
+    border: none;
+    color: #dc3545;
+    padding: 0 6px;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+
+.cart-dropdown-item .btn-remove:hover {
+    color: #a71d2a;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .cart-dropdown {
+        top: 60px;
+        right: 10px;
+        width: calc(100vw - 20px);
+        max-width: calc(100vw - 20px);
+        border-radius: 8px;
+    }
+
+    .cart-dropdown::before {
+        right: 20px;
+    }
+}
+
+/* Scrollbar personalizada */
+.cart-dropdown-body::-webkit-scrollbar {
+    width: 4px;
+}
+
+.cart-dropdown-body::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.cart-dropdown-body::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 10px;
+}
+
+.cart-dropdown-body::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
+
+/* TARJETAS DE SEDES */
+.sede-card {
+    transition: all 0.3s ease;
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.sede-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.sede-card .card-title {
+    font-weight: 600;
+    color: #0d6efd;
+}
+
+.sede-card .card-footer {
+    border-top: 1px solid #f0f0f0;
+}
+
+.sede-card .badge {
+    font-size: 0.7rem;
+    padding: 4px 10px;
+}

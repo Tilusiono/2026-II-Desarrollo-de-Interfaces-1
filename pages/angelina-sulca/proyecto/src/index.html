@@ -59,6 +59,16 @@
                             <i class="fas fa-store-alt"></i> Nuestras Tiendas
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="link-agregar-producto">
+                            <i class="fas fa-plus-circle text-success"></i> Agregar Producto
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="link-agregar-sede">
+                            <i class="fas fa-plus-circle text-primary"></i> Agregar Sede
+                        </a>
+                    </li>
                 </ul>
 
                 <!-- BARRA DE BÚSQUEDA -->
@@ -82,10 +92,9 @@
                 </div>
 
                 <!-- ========================================================== -->
-                <!-- CARRITO DESPLEGABLE (CORREGIDO Y COMPLETO) -->
+                <!-- CARRITO DESPLEGABLE -->
                 <!-- ========================================================== -->
                 <div class="cart-dropdown-wrapper">
-                    <!-- BOTÓN DEL CARRITO -->
                     <button class="btn btn-outline-light position-relative" id="cart-toggle" type="button">
                         <i class="fas fa-shopping-cart fa-lg"></i>
                         <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
@@ -94,16 +103,11 @@
                         </span>
                     </button>
 
-                    <!-- DROPDOWN DEL CARRITO -->
                     <div class="cart-dropdown" id="cart-dropdown">
-
-                        <!-- HEADER -->
                         <div class="cart-dropdown-header">
                             <h6 class="mb-0"><i class="fas fa-shopping-cart text-primary"></i> Mi Carrito</h6>
                             <button class="btn-close btn-close-white" id="cart-close"></button>
                         </div>
-
-                        <!-- BODY (lista de productos) -->
                         <div class="cart-dropdown-body" id="cart-dropdown-body">
                             <div class="text-center text-muted py-4">
                                 <i class="fas fa-cart-plus fa-3x mb-2"></i>
@@ -111,27 +115,21 @@
                                 <small>Agrega productos para comenzar</small>
                             </div>
                         </div>
-
-                        <!-- FOOTER (totales y botones) -->
                         <div class="cart-dropdown-footer">
-                            <!-- Subtotal -->
                             <div class="d-flex justify-content-between">
                                 <span>Subtotal:</span>
                                 <span>S/ <span id="dropdown-subtotal">0.00</span></span>
                             </div>
-                            <!-- Descuento -->
                             <div class="d-flex justify-content-between text-success">
                                 <span>Descuento:</span>
                                 <span>-S/ <span id="dropdown-descuento">0.00</span></span>
                             </div>
                             <hr />
-                            <!-- Total -->
                             <div class="d-flex justify-content-between fs-6 fw-bold">
                                 <span>Total:</span>
                                 <span class="text-primary">S/ <span id="dropdown-total">0.00</span></span>
                             </div>
 
-                            <!-- MÉTODO DE PAGO -->
                             <div class="mt-2">
                                 <label class="form-label fw-bold small">
                                     <i class="fas fa-credit-card"></i> Método de pago
@@ -145,7 +143,6 @@
                                 </select>
                             </div>
 
-                            <!-- BOTONES -->
                             <button class="btn btn-success w-100 mt-2" id="btn-comprar-dropdown">
                                 <i class="fas fa-check-circle me-2"></i>Confirmar compra
                             </button>
@@ -153,19 +150,12 @@
                                 <i class="fas fa-trash-alt me-2"></i>Vaciar carrito
                             </button>
                         </div>
-                        <!-- FIN FOOTER -->
-
                     </div>
-                    <!-- FIN DROPDOWN -->
                 </div>
-                <!-- FIN CARRITO DESPLEGABLE -->
 
             </div>
-            <!-- FIN COLLAPSE -->
         </div>
-        <!-- FIN CONTAINER -->
     </nav>
-    <!-- FIN NAVBAR -->
 
 
     <!-- ============================================================ -->
@@ -185,13 +175,10 @@
     <div class="container-fluid py-4">
         <div class="row">
             <div class="col-12">
-                <!-- Título y contador -->
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h2><i class="fas fa-boxes text-primary"></i> Productos</h2>
                     <span class="badge bg-secondary" id="productos-count">0 productos</span>
                 </div>
-
-                <!-- Contenedor donde se renderizan los productos -->
                 <div class="row" id="productos-container">
                     <!-- Generado por ui.js -->
                 </div>
@@ -199,8 +186,9 @@
         </div>
     </div>
 
-        <!-- ============================================================ -->
-    <!-- 🔥 NUEVA SECCIÓN: SEDES / NUESTRAS TIENDAS -->
+
+    <!-- ============================================================ -->
+    <!-- SECCIÓN: SEDES / NUESTRAS TIENDAS -->
     <!-- ============================================================ -->
     <section id="seccion-sedes" class="container-fluid py-4 bg-light" style="display: none;">
         <div class="row">
@@ -209,14 +197,125 @@
                     <h2><i class="fas fa-store-alt text-primary"></i> Nuestras Tiendas</h2>
                     <span class="badge bg-secondary" id="sedes-count">0 sedes</span>
                 </div>
-
-                <!-- Contenedor donde se renderizan las sedes -->
                 <div class="row" id="sedes-container">
                     <!-- Generado por ui.js -->
                 </div>
             </div>
         </div>
     </section>
+
+
+    <!-- ============================================================ -->
+    <!-- MODAL: AGREGAR PRODUCTO -->
+    <!-- ============================================================ -->
+    <div class="modal fade" id="modal-producto" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-box text-success"></i> Agregar Producto</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="form-producto">
+                        <div class="mb-2">
+                            <label class="form-label">Nombre *</label>
+                            <input type="text" class="form-control" id="prod-nombre" required>
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label">Marca *</label>
+                            <input type="text" class="form-control" id="prod-marca" required>
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label">Color</label>
+                            <input type="text" class="form-control" id="prod-color">
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label">Precio Unitario *</label>
+                            <input type="number" class="form-control" id="prod-precio" step="0.01" required>
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label">Stock</label>
+                            <input type="number" class="form-control" id="prod-stock" value="0">
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label">Categoría</label>
+                            <input type="text" class="form-control" id="prod-categoria">
+                        </div>
+                        <div class="mb-2 form-check">
+                            <input type="checkbox" class="form-check-input" id="prod-oferta">
+                            <label class="form-check-label">En oferta</label>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button class="btn btn-success" id="btn-guardar-producto">Guardar Producto</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ============================================================ -->
+    <!-- MODAL: AGREGAR SEDE -->
+    <!-- ============================================================ -->
+    <div class="modal fade" id="modal-sede" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-store-alt text-primary"></i> Agregar Sede</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="form-sede">
+                        <div class="mb-2">
+                            <label class="form-label">Código *</label>
+                            <input type="text" class="form-control" id="sede-codigo" placeholder="Ej: S007" required>
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label">Nombre *</label>
+                            <input type="text" class="form-control" id="sede-nombre" required>
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label">Dirección *</label>
+                            <input type="text" class="form-control" id="sede-direccion" required>
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label">Distrito</label>
+                            <input type="text" class="form-control" id="sede-distrito">
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label">Teléfono</label>
+                            <input type="text" class="form-control" id="sede-telefono">
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label">Encargado</label>
+                            <input type="text" class="form-control" id="sede-encargado">
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label">Capacidad</label>
+                            <input type="number" class="form-control" id="sede-capacidad" value="0">
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label">Horario</label>
+                            <div class="row">
+                                <div class="col-6">
+                                    <input type="time" class="form-control" id="sede-apertura" value="08:00">
+                                </div>
+                                <div class="col-6">
+                                    <input type="time" class="form-control" id="sede-cierre" value="18:00">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button class="btn btn-primary" id="btn-guardar-sede">Guardar Sede</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
     <!-- ============================================================ -->
