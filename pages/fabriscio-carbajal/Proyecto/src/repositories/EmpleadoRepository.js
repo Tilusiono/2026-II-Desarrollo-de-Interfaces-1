@@ -1,5 +1,6 @@
 import { createRequire } from "node:module";
 import { sqlitePath } from "../config/storage.config.js";
+import Empleado from "../models/Empleado.js";
 
 const require = createRequire(import.meta.url);
 
@@ -24,6 +25,88 @@ export class EmpleadoRepository {
         fecha_nacimiento DATE
         )
     `);
+  } 
+
+  // GET ALL
+  async listar() {
+    const filas = this.db.prepare("SELECT * FROM empleado ORDER BY id").all();
+
+    return filas.map(
+      (fila) =>
+        new Producto(
+          fila.id,
+          fila.nombre,
+          fila.apellidoPaterno,
+          fila.dni,
+          fila.telefono,
+          fila.salario,
+          fila.direccion,
+          fila.horaIngreso,
+          fila.horaSalida,
+          fila.disponible,
+          fila.fechaIngreso,
+          fila.fechaNacimiento,
+        ),
+    );
+  }
+
+  // GET POR ID
+  async buscarPorId(id) {
+    const fila = this.db
+      .prepare("SELECT * FROM empleado WHERE id = ?")
+      .get(Number(id));
+
+    if (!fila) return null;
+
+    return new Producto(
+        fila.id,
+        fila.nombre,
+        fila.apellidoPaterno,
+        fila.dni,
+        fila.telefono,
+        fila.salario,
+        fila.direccion,
+        fila.horaIngreso,
+        fila.horaSalida,
+        fila.disponible,
+        fila.fechaIngreso,
+        fila.fechaNacimiento,
+    );
+  }
+
+  // POST
+  async crear(empleado) {
+    const resultado = this.db
+      .prepare(
+        `
+        INSERT INTO empleado (
+          nombre, apellido_paterno, dni, telefono,
+          salario, direccion, hora_ingreso, hora_salida,
+          disponible, fecha_ingreso, fecha_nacimiento
+        )
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      `,
+      )
+      .run(
+        empleado.nombre,
+        empleado.apellidoPaterno,
+        empleado.dni,
+        empleado.telefono,
+        empleado.salario,
+        empleado.direccion,
+        empleado.horaIngreso,
+        empleado.horaSalida,
+        Number(empleado.disponible),
+        empleado.fechaIngreso,
+        empleado.fechaNacimiento
+      );
+
+    return this.buscarPorId(Number(resultado.lastInsertRowid));
   }
 }
+
+
+  
+
+
 
