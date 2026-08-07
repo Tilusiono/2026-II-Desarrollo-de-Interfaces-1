@@ -265,11 +265,34 @@
       "fecha_registro": "2026-08-06T18:41:37.830Z"
     },
     {
-      "id": 21,
-      "marca": "Test",
-      "precio_unitario": 10,
+      "id": 22,
+      "nombre": "Silicona",
+      "marca": "Artesco",
+      "color": "Trasparente",
+      "calidad": null,
+      "precio_unitario": 12,
+      "precio_docena": null,
+      "stock": 32,
+      "categoria": "Papeleria",
+      "descripcion": null,
+      "en_oferta": 0,
       "activo": 1,
-      "fecha_registro": "2026-08-06T19:18:08.915Z"
+      "fecha_registro": "2026-08-07T02:36:18.417Z"
+    },
+    {
+      "id": 23,
+      "nombre": "Mochila Deportiva 35L",
+      "marca": "Everlast",
+      "color": "Rojo",
+      "calidad": null,
+      "precio_unitario": 65,
+      "precio_docena": null,
+      "stock": 25,
+      "categoria": "Accesorios",
+      "descripcion": null,
+      "en_oferta": 1,
+      "activo": 1,
+      "fecha_registro": "2026-08-07T03:46:42.817Z"
     }
   ],
   "sedes": [
@@ -378,5 +401,5 @@
       "fecha_registro": "2026-08-06T10:00:00.000Z"
     }
   ],
-  "nextId": 22
+  "nextId": 25
 }

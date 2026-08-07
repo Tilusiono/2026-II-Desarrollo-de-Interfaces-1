@@ -1,8 +1,34 @@
 import { db } from '../database/jsonDB.js';
 
 export const productoRepository = {
-    async getAll() {
-        return db.getProductos();
+    async getAll(filters = {}) {
+        let productos = db.getProductos();
+        
+        // Aplicar filtros
+        if (filters.activo !== undefined) {
+            productos = productos.filter(p => p.activo === filters.activo);
+        }
+        if (filters.en_oferta !== undefined) {
+            productos = productos.filter(p => p.en_oferta === filters.en_oferta);
+        }
+        if (filters.categoria) {
+            productos = productos.filter(p => p.categoria === filters.categoria);
+        }
+        if (filters.termino) {
+            const term = filters.termino.toLowerCase();
+            productos = productos.filter(p =>
+                p.nombre.toLowerCase().includes(term) ||
+                (p.marca && p.marca.toLowerCase().includes(term))
+            );
+        }
+        if (filters.precio_min !== undefined) {
+            productos = productos.filter(p => p.precio_unitario >= filters.precio_min);
+        }
+        if (filters.precio_max !== undefined) {
+            productos = productos.filter(p => p.precio_unitario <= filters.precio_max);
+        }
+        
+        return productos;
     },
 
     async getById(id) {
@@ -10,30 +36,23 @@ export const productoRepository = {
     },
 
     async getOfertas() {
-        return db.getProductos().filter(p => p.en_oferta === 1);
+        return db.getProductos().filter(p => p.en_oferta === 1 && p.activo === 1);
     },
 
     async search(termino) {
         const term = termino.toLowerCase();
         return db.getProductos().filter(p =>
             p.nombre.toLowerCase().includes(term) ||
-            p.marca.toLowerCase().includes(term) ||
-            (p.color && p.color.toLowerCase().includes(term))
+            (p.marca && p.marca.toLowerCase().includes(term))
         );
     },
 
     async create(producto) {
-        console.log('📝 Creando producto:', producto);
-        const result = db.createProducto(producto);
-        console.log('✅ Producto creado:', result);
-        return result;
+        return db.createProducto(producto);
     },
 
     async update(id, producto) {
-        console.log(`📝 Actualizando producto ID ${id}:`, producto);
-        const result = db.updateProducto(id, producto);
-        console.log('✅ Producto actualizado:', result);
-        return result;
+        return db.updateProducto(id, producto);
     },
 
     async updateStock(id, cantidad) {
@@ -45,10 +64,7 @@ export const productoRepository = {
     },
 
     async delete(id) {
-        console.log(`🗑️ Eliminando producto ID ${id}`);
-        const result = db.deleteProducto(id);
-        console.log('✅ Producto eliminado:', result);
-        return result;
+        return db.deleteProducto(id);
     },
 
     async deletePermanent(id) {

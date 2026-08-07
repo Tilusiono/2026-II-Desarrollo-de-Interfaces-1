@@ -6,9 +6,10 @@ import {
     obtenerSedePorCodigo,
     crearSede,
     actualizarSede,
-    eliminarSede,
-    obtenerEmpleadosDeSede
+    eliminarSede
 } from '../controllers/sedeController.js';
+// ✅ COMENTA O ELIMINA LAS IMPORTACIONES DE AUTENTICACIÓN
+// import { verificarToken, verificarPersonal } from '../middlewares/auth.js';
 import { validarSede } from '../middlewares/validator.js';
 
 const router = Router();
@@ -16,8 +17,9 @@ const router = Router();
 router.get('/', obtenerSedes);
 router.get('/buscar', buscarSedes);
 router.get('/codigo/:codigo', obtenerSedePorCodigo);
-router.get('/:id/empleados', obtenerEmpleadosDeSede);
 router.get('/:id', obtenerSede);
+
+// ✅ QUITA verificarToken y verificarPersonal
 router.post('/', validarSede, crearSede);
 router.put('/:id', validarSede, actualizarSede);
 router.delete('/:id', eliminarSede);

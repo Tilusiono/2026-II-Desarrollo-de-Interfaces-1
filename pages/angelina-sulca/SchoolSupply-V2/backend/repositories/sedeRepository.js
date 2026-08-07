@@ -1,12 +1,23 @@
 import { db } from '../database/jsonDB.js';
 
 export const sedeRepository = {
-    async getAll() {
-        return db.getSedes().filter(s => s.activo === 1);
-    },
-
-    async getAllIncludingInactive() {
-        return db.getSedes();
+    async getAll(filters = {}) {
+        let sedes = db.getSedes();
+        if (filters.activo !== undefined) {
+            sedes = sedes.filter(s => s.activo === filters.activo);
+        }
+        if (filters.distrito) {
+            sedes = sedes.filter(s => s.distrito === filters.distrito);
+        }
+        if (filters.termino) {
+            const term = filters.termino.toLowerCase();
+            sedes = sedes.filter(s =>
+                s.nombre.toLowerCase().includes(term) ||
+                (s.distrito && s.distrito.toLowerCase().includes(term)) ||
+                s.direccion.toLowerCase().includes(term)
+            );
+        }
+        return sedes;
     },
 
     async getById(id) {

@@ -1,98 +1,105 @@
-import { productoRepository } from '../repositories/productoRepository.js';
+// ============================================
+// CONTROLLER: Producto
+// ============================================
+
+import { ProductoService } from '../services/productoService.js';
+import { ProductoRequestDTO, ProductoQueryDTO } from '../dtos/productoDTO.js';
+
+const productoService = new ProductoService();
 
 // GET - Obtener todos los productos
-export const obtenerProductos = async (req, res) => {
+export const obtenerProductos = async (req, res, next) => {
     try {
-        const productos = await productoRepository.getAll();
-        res.json({ success: true, data: productos });
+        const query = new ProductoQueryDTO(req.query);
+        const productos = await productoService.getAll(query.getFilters());
+        res.json({ success: true, data: productos.map(p => p.toJSON()) });
     } catch (error) {
-        console.error('❌ Error en obtenerProductos:', error);
-        res.status(500).json({ success: false, error: error.message });
-    }
-};
-
-// GET - Obtener producto por ID
-export const obtenerProducto = async (req, res) => {
-    try {
-        const { id } = req.params;
-        const producto = await productoRepository.getById(parseInt(id));
-        if (!producto) {
-            return res.status(404).json({ success: false, error: 'Producto no encontrado' });
-        }
-        res.json({ success: true, data: producto });
-    } catch (error) {
-        console.error('❌ Error en obtenerProducto:', error);
-        res.status(500).json({ success: false, error: error.message });
+        next(error);
     }
 };
 
 // GET - Obtener productos en oferta
-export const obtenerOfertas = async (req, res) => {
+export const obtenerOfertas = async (req, res, next) => {
     try {
-        const productos = await productoRepository.getOfertas();
-        res.json({ success: true, data: productos });
+        const productos = await productoService.getOfertas();
+        res.json({ success: true, data: productos.map(p => p.toJSON()) });
     } catch (error) {
-        console.error('❌ Error en obtenerOfertas:', error);
-        res.status(500).json({ success: false, error: error.message });
+        next(error);
     }
 };
 
 // GET - Buscar productos
-export const buscarProductos = async (req, res) => {
+export const buscarProductos = async (req, res, next) => {
     try {
         const { q } = req.query;
         if (!q) {
             return res.status(400).json({ success: false, error: 'Se requiere un término de búsqueda' });
         }
-        const productos = await productoRepository.search(q);
-        res.json({ success: true, data: productos });
+        const productos = await productoService.search(q);
+        res.json({ success: true, data: productos.map(p => p.toJSON()) });
     } catch (error) {
-        console.error('❌ Error en buscarProductos:', error);
-        res.status(500).json({ success: false, error: error.message });
+        next(error);
     }
 };
 
-// POST - Crear un producto
-export const crearProducto = async (req, res) => {
-    try {
-        console.log('📥 Recibiendo POST /api/productos:', req.body);
-        const producto = await productoRepository.create(req.body);
-        console.log('✅ Producto creado:', producto);
-        res.status(201).json({ success: true, data: producto });
-    } catch (error) {
-        console.error('❌ Error en crearProducto:', error);
-        res.status(500).json({ success: false, error: error.message });
-    }
-};
-
-// PUT - Actualizar un producto
-export const actualizarProducto = async (req, res) => {
+// GET - Obtener producto por ID
+export const obtenerProducto = async (req, res, next) => {
     try {
         const { id } = req.params;
-        console.log(`📥 Recibiendo PUT /api/productos/${id}:`, req.body);
-        const producto = await productoRepository.update(parseInt(id), req.body);
+        const producto = await productoService.getById(parseInt(id));
         if (!producto) {
             return res.status(404).json({ success: false, error: 'Producto no encontrado' });
         }
-        res.json({ success: true, data: producto });
+        res.json({ success: true, data: producto.toJSON() });
     } catch (error) {
-        console.error('❌ Error en actualizarProducto:', error);
-        res.status(500).json({ success: false, error: error.message });
+        next(error);
     }
 };
 
-// DELETE - Eliminar un producto (borrado lógico)
-export const eliminarProducto = async (req, res) => {
+// POST - Crear producto
+export const crearProducto = async (req, res, next) => {
+    try {
+        const dto = new ProductoRequestDTO(req.body);
+        const errors = dto.validate();
+        if (errors.length > 0) {
+            return res.status(400).json({ success: false, errors });
+        }
+        const producto = await productoService.create(dto);
+        res.status(201).json({ success: true, data: producto.toJSON() });
+    } catch (error) {
+        next(error);
+    }
+};
+
+// PUT - Actualizar producto
+export const actualizarProducto = async (req, res, next) => {
     try {
         const { id } = req.params;
-        console.log(`📥 Recibiendo DELETE /api/productos/${id}`);
-        const result = await productoRepository.delete(parseInt(id));
+        const dto = new ProductoRequestDTO(req.body);
+        const errors = dto.validate();
+        if (errors.length > 0) {
+            return res.status(400).json({ success: false, errors });
+        }
+        const producto = await productoService.update(parseInt(id), dto);
+        if (!producto) {
+            return res.status(404).json({ success: false, error: 'Producto no encontrado' });
+        }
+        res.json({ success: true, data: producto.toJSON() });
+    } catch (error) {
+        next(error);
+    }
+};
+
+// DELETE - Eliminar producto
+export const eliminarProducto = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const result = await productoService.delete(parseInt(id));
         if (!result) {
             return res.status(404).json({ success: false, error: 'Producto no encontrado' });
         }
         res.json({ success: true, message: 'Producto eliminado' });
     } catch (error) {
-        console.error('❌ Error en eliminarProducto:', error);
-        res.status(500).json({ success: false, error: error.message });
+        next(error);
     }
 };

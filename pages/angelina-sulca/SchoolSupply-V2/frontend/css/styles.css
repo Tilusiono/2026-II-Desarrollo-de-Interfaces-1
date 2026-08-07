@@ -159,7 +159,10 @@
     background: #a8a8a8;
 }
 
+/* ============================================================ */
 /* TARJETAS DE SEDES */
+/* ============================================================ */
+
 .sede-card {
     transition: all 0.3s ease;
     border: none;
@@ -184,4 +187,145 @@
 .sede-card .badge {
     font-size: 0.7rem;
     padding: 4px 10px;
+}
+
+/* ============================================================ */
+/* OFERTA TAG */
+/* ============================================================ */
+
+.oferta-tag {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #dc3545;
+    color: white;
+    padding: 2px 12px;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    z-index: 10;
+}
+
+/* ============================================================ */
+/* TARJETAS DE PRODUCTOS */
+/* ============================================================ */
+
+.product-card {
+    transition: all 0.3s ease;
+    height: 100%;
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    position: relative;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.product-card .card-body {
+    padding: 1.25rem;
+}
+
+.product-card .product-brand {
+    color: #6c757d;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.product-card .product-name {
+    font-weight: 600;
+    font-size: 1.05rem;
+    margin-bottom: 0.25rem;
+}
+
+.product-card .product-desc {
+    color: #6c757d;
+    font-size: 0.8rem;
+    margin-bottom: 0.5rem;
+}
+
+.product-card .product-price {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #0d6efd;
+}
+
+.product-card .product-docena {
+    font-size: 0.75rem;
+    color: #6c757d;
+}
+
+.product-card .product-color {
+    font-size: 0.75rem;
+}
+
+.product-card .product-stock {
+    font-size: 0.75rem;
+}
+
+.product-card .stock-disponible {
+    color: #198754;
+}
+
+.product-card .stock-agotado {
+    color: #dc3545;
+}
+
+/* ============================================================ */
+/* SELECTOR DE CANTIDAD */
+/* ============================================================ */
+
+.cantidad-selector {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin: 8px 0;
+    flex-wrap: wrap;
+}
+
+.cantidad-selector label {
+    font-size: 0.75rem;
+    color: #6c757d;
+    margin-right: 4px;
+}
+
+.cantidad-selector .btn-cantidad {
+    padding: 2px 8px;
+    font-size: 0.65rem;
+    border-radius: 4px;
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    transition: all 0.2s;
+}
+
+.cantidad-selector .btn-cantidad:hover {
+    background: #e9ecef;
+    border-color: #0d6efd;
+}
+
+.cantidad-selector .btn-cantidad.active {
+    background: #0d6efd;
+    color: white;
+    border-color: #0d6efd;
+}
+
+.cantidad-selector .cantidad-input {
+    width: 45px;
+    text-align: center;
+    font-size: 0.8rem;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    padding: 2px 0;
+}
+
+/* ============================================================ */
+/* HERO */
+/* ============================================================ */
+
+.hero-gradient {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
 }
