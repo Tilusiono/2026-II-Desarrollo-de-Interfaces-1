@@ -38,16 +38,16 @@ export class EmpleadoService {
     return new EmpleadoResponseDto(empleadoCreadoModel);
   }
 
-  async validarCodigo(codigo, idOmitido) {
+  async validarCodigo(nombre, idOmitido) {
     const empleadoModel = await this.empleadoRepository.listar();
     const empleadoRepetidoModel = empleadoModel.find(
       (empleadoModel) =>
-        normalizarTexto(empleadoModel.codigo) === normalizarTexto(codigo) &&
+        normalizarTexto(empleadoModel.nombre) === normalizarTexto(nombre) &&
         Number(empleadoModel.id) !== Number(idOmitido),
     );
 
     if (empleadoRepetidoModel) {
-      throw new AppError("El código de empleado ya existe", 409);
+      throw new AppError("El nombre de empleado ya existe", 409);
     }
   }
 

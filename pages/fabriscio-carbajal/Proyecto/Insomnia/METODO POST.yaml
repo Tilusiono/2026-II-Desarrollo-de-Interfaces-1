@@ -1,0 +1,59 @@
+type: collection.insomnia.rest/5.0
+schema_version: "5.1"
+name: My first collection
+meta:
+  id: wrk_69c97d07bfd1406dacda0ae9877301f1
+  created: 1786072831096
+  modified: 1786072831096
+  description: ""
+collection:
+  - url: http://localhost:4214/api/empleado
+    name: CREAR
+    meta:
+      id: req_6f62795d978b43a4bb4fae95a5300dff
+      created: 1786072831200
+      modified: 1786073044996
+      isPrivate: false
+      description: ""
+      sortKey: -1786072831200
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "nombre": "Pedro",
+          "apellidoPaterno": "Fernández",
+          "dni": 71234512,
+          "telefono": "987654320",
+          "salario": 3200.5,
+          "direccion": "San Borja",
+          "horaIngreso": "08:00:00",
+          "horaSalida": "17:00:00",
+          "disponible": true,
+          "fechaIngreso": "2026-08-06T08:15:00",
+          "fechaNacimiento": "1998-04-15"
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_ef4feca8bb28c530847c3df113c57345e4b92013
+    created: 1786072831107
+    modified: 1786072831107
+environments:
+  name: Base Environment
+  meta:
+    id: env_ef4feca8bb28c530847c3df113c57345e4b92013
+    created: 1786072831103
+    modified: 1786072831103
+    isPrivate: false

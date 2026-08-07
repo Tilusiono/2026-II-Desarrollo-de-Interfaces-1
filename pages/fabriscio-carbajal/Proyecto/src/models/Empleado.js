@@ -1,4 +1,4 @@
-class Vendedor {
+class Empleado {
   #id;
   #nombre;
   #apellidoPaterno;
@@ -74,4 +74,4 @@ class Vendedor {
   }
 }
 
-export default Vendedor;
+export default Empleado;

@@ -1,4 +1,4 @@
-export class VendedorRequestDto {
+export class EmpleadoRequestDto {
   constructor(requestBody = {}) {
     this.nombre = requestBody.nombre;
     this.apellidoPaterno = requestBody.apellidoPaterno;
@@ -14,7 +14,7 @@ export class VendedorRequestDto {
   }
 }
 
-export class VendedorConsultaDto {
+export class EmpleadoConsultaDto {
   constructor(queryParams = {}) {
     this.texto = queryParams.texto;
     this.disponible = queryParams.disponible;
@@ -24,19 +24,19 @@ export class VendedorConsultaDto {
   }
 }
 
-export class VendedorResponseDto {
-  constructor(vendedorModel) {
-    this.id = vendedorModel.id;
-    this.nombre = vendedorModel.nombre;
-    this.apellidoPaterno = vendedorModel.apellidoPaterno;
-    this.dni = vendedorModel.dni;
-    this.telefono = vendedorModel.telefono;
-    this.salario = vendedorModel.salario;
-    this.direccion = vendedorModel.direccion;
-    this.horaIngreso = vendedorModel.horaIngreso;
-    this.horaSalida = vendedorModel.horaSalida;
-    this.disponible = vendedorModel.disponible;
-    this.fechaIngreso = vendedorModel.fechaIngreso;
-    this.fechaNacimiento = vendedorModel.fechaNacimiento;
+export class EmpleadoResponseDto {
+  constructor(empleadoModel) {
+    this.id = empleadoModel.id;
+    this.nombre = empleadoModel.nombre;
+    this.apellidoPaterno = empleadoModel.apellidoPaterno;
+    this.dni = empleadoModel.dni;
+    this.telefono = empleadoModel.telefono;
+    this.salario = empleadoModel.salario;
+    this.direccion = empleadoModel.direccion;
+    this.horaIngreso = empleadoModel.horaIngreso;
+    this.horaSalida = empleadoModel.horaSalida;
+    this.disponible = empleadoModel.disponible;
+    this.fechaIngreso = empleadoModel.fechaIngreso;
+    this.fechaNacimiento = empleadoModel.fechaNacimiento;
   }
 }

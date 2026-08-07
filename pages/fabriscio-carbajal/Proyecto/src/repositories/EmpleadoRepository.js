@@ -33,7 +33,7 @@ export class EmpleadoRepository {
 
     return filas.map(
       (fila) =>
-        new Producto(
+        new Empleado(
           fila.id,
           fila.nombre,
           fila.apellidoPaterno,
@@ -58,7 +58,7 @@ export class EmpleadoRepository {
 
     if (!fila) return null;
 
-    return new Producto(
+    return new Empleado(
         fila.id,
         fila.nombre,
         fila.apellidoPaterno,
