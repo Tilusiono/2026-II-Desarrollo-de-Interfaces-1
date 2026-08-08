@@ -108,6 +108,46 @@ export class ServicioRepository {
 
     return this.buscarPorId(Number(resultado.lastInsertRowid));
   }
+
+   //PUT
+  async modificar(identificador,servicio) {
+    const resultado = this.db
+      .prepare(
+        `
+        UPDATE servicios
+        SET codigo = ?,
+            nombre = ?,
+            tipoServicio = ?,
+            precio = ?,
+            duracionMinutos = ?,
+            fechaInicio = ?,
+            descripcion = ?,
+            activo = ?,
+            horaRegistro = ?,
+            fechaHoraRegistro = ?,
+            imagen = ?,
+            imagenMimeType = ?
+        WHERE id = ?
+      `,
+      )
+      .run(
+        servicio.codigo,
+        servicio.nombre,
+        servicio.tipoServicio,
+        servicio.precio,
+        servicio.duracionMinutos,
+        servicio.fechaInicio,
+        servicio.descripcion,
+        Number(servicio.activo),
+        servicio.horaRegistro,
+        servicio.fechaHoraRegistro,
+        servicio.imagen,
+        servicio.imagenMimeType,
+        Number(identificador),
+      );
+
+    return resultado.changes ? this.buscarPorId(identificador) : null;
+  }
 }
 
 

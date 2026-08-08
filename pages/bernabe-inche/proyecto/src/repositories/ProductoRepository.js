@@ -110,5 +110,47 @@ export class ProductoRepository {
     return this.buscarPorId(Number(resultado.lastInsertRowid));
   }
 
+  //PUT
+    async reemplazar(id, productoModel) {
+    const resultado = this.db
+      .prepare(
+        `
+        UPDATE productos
+        SET codigo = ?,
+            nombre = ?,
+            categoria = ?,
+            stock = ?,
+            precio = ?,
+            peso = ?,
+            descripcion = ?,
+            activo = ?,
+            fechaVencimiento = ?,
+            horaRegistro = ?,
+            fechaHoraRegistro = ?,
+            imagen = ?,
+            imagenMimeType = ?
+        WHERE id = ?
+      `,
+      )
+      .run(
+        productoModel.codigo,
+        productoModel.nombre,
+        productoModel.categoria,
+        productoModel.stock,
+        productoModel.precio,
+        productoModel.peso,
+        productoModel.descripcion,
+        Number(productoModel.activo),
+        productoModel.fechaVencimiento,
+        productoModel.horaRegistro,
+        productoModel.fechaHoraRegistro,
+        productoModel.imagen,
+        productoModel.imagenMimeType,
+        Number(id),
+      );
+
+    return resultado.changes ? this.buscarPorId(id) : null;
+  }
+
 
 }
