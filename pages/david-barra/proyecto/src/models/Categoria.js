@@ -36,7 +36,6 @@ class Categoria {
     this.fechaHoraRegistro = fechaHoraRegistro;
     this.imagen = imagen ?? null;
     this.imagenMimeType = imagenMimeType ?? null;
-    this.observaciones = observaciones ?? null;
   }
 
   get id() {

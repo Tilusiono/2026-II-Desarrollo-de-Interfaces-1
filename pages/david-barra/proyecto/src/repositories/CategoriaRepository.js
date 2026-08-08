@@ -1,5 +1,6 @@
 import { createRequire } from "node:module";
 import { sqlitePath } from "../config/storage.config.js";
+import Categoria from "../models/Categoria.js";
 
 const require = createRequire(import.meta.url);
 
@@ -27,6 +28,87 @@ export class CategoriaRepository {
         observaciones TEXT
         );
     `);
+  }
+
+    //GET all productos
+  async listar() {
+    const filas = this.db.prepare("SELECT * FROM Categorias ORDER BY id").all();
+
+    return filas.map(
+      (fila) =>
+        new Categoria(
+          fila.id,
+          fila.codigo,
+          fila.nombre,
+          fila.tipo,
+          fila.cantidadProductos,
+          fila.presupuesto,
+          fila.pesoPromedio,
+          fila.descripcion,
+          fila.activo,
+          fila.fechaLimite,
+          fila.horaRegistro,
+          fila.fechaHoraRegistro,
+          fila.imagen ? Buffer.from(fila.imagen) : null,
+          fila.imagenMimeType,
+        ),
+    );
+  }
+//GET productos by ID
+  async buscarPorId(id) {
+    const fila = this.db
+      .prepare("SELECT * FROM productos WHERE id = ?")
+      .get(Number(id));
+
+    if (!fila) return null;
+
+    return new Categoria(
+      fila.id,
+      fila.codigo,
+      fila.nombre,
+      fila.tipo,
+      fila.cantidadProductos,
+      fila.presupuesto,
+      fila.pesoPromedio,
+      fila.descripcion,
+      fila.activo,
+      fila.fechaLimite,
+      fila.horaRegistro,
+      fila.fechaHoraRegistro,
+      fila.imagen ? Buffer.from(fila.imagen) : null,
+      fila.imagenMimeType,
+    );
+  }
+//POST productos
+  async crear(xd) {
+    const resultado = this.db
+      .prepare(
+        `
+        INSERT INTO categorias (
+          codigo, nombre, tipo, cantidadProductos, presupuesto, pesoPromedio, descripcion,
+          activo, fechaLimite, horaRegistro, fechaHoraRegistro,
+          imagen, imagenMimeType
+        )
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      `,
+      )
+      .run(
+        xd.codigo,
+        xd.nombre,
+        xd.tipo,
+        xd.cantidadProductos,
+        xd.presupuesto,
+        xd.pesoPromedio,
+        xd.descripcion,
+        Number(xd.activo),
+        xd.fechaLimite,
+        xd.horaRegistro,
+        xd.fechaHoraRegistro,
+        xd.imagen,
+        xd.imagenMimeType,
+      );
+
+    return this.buscarPorId(Number(resultado.lastInsertRowid));
   }
 }
 
