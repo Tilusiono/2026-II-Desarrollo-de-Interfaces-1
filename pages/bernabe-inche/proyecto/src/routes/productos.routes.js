@@ -18,5 +18,13 @@ router.post(
 router.get("/",             asyncHandler((request, response) => controller.listar(response)));
 router.get("/:id",validarId,asyncHandler((request, response) => controller.obtener(Number(request.params.id), response),),);
 
+router.put("/:id",validarId,//validarProductoCompleto,
+  asyncHandler((request, response) => {
+    const id = Number(request.params.id);
+    const productoRequestDto = new ProductoRequestDto(request.body);
+    return controller.reemplazar(id, productoRequestDto, response);
+  }),
+);
+
 
 export default router;
