@@ -86,6 +86,38 @@ export class ServiciosService {
       if (!servicio) throw new AppError("Servicio no encontrado", 404);
       return new ServicioResponseDto(servicio);
     }
+
+    async reemplazar(id, servicioRequestDto) {
+    const servicioExistenteModel =
+      await this.servicioRepository.buscarPorId(id);
+    if (!servicioExistenteModel)
+      throw new AppError("Servicio no encontrado", 404);
+    await this.validarCodigo(servicioRequestDto.codigo, id);
+
+    const imagenDatos = this.convertirImagen(servicioRequestDto.imagenBase64);
+    const servicioModel = new Servicio(
+      id,
+      servicioRequestDto.codigo,
+      servicioRequestDto.nombre,
+      servicioRequestDto.tipoServicio,
+      servicioRequestDto.precio,
+      servicioRequestDto.duracionMinutos,
+      servicioRequestDto.fechaInicio,
+      servicioRequestDto.descripcion,
+      servicioRequestDto.activo,
+      servicioRequestDto.horaRegistro,
+      servicioRequestDto.fechaHoraRegistro,
+      imagenDatos.imagen,
+      imagenDatos.imagenMimeType,
+    );
+
+    const servicioActualizadoModel = await this.servicioRepository.modificar(
+      id,
+      servicioModel,
+    );
+
+    return new ServicioResponseDto(servicioActualizadoModel);
+  }
 }
 
 export const serviciosService = new ServiciosService();

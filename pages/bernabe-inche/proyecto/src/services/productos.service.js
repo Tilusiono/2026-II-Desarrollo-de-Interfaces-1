@@ -88,6 +88,39 @@ export class ProductosService {
   }
 
 
+  async reemplazar(id, productoRequestDto) {
+    const productoExistenteModel =
+      await this.productoRepository.buscarPorId(id);
+    if (!productoExistenteModel)
+      throw new AppError("Producto no encontrado", 404);
+    await this.validarCodigo(productoRequestDto.codigo, id);
+
+    const imagenDatos = this.convertirImagen(productoRequestDto.imagenBase64);
+    const productoModel = new Producto(
+      id,
+      productoRequestDto.codigo,
+      productoRequestDto.nombre,
+      productoRequestDto.categoria,
+      productoRequestDto.stock,
+      productoRequestDto.precio,
+      productoRequestDto.peso,
+      productoRequestDto.descripcion,
+      productoRequestDto.activo,
+      productoRequestDto.fechaVencimiento,
+      productoRequestDto.horaRegistro,
+      productoRequestDto.fechaHoraRegistro,
+      imagenDatos.imagen,
+      imagenDatos.imagenMimeType,
+    );
+
+    const productoActualizadoModel = await this.productoRepository.reemplazar(
+      id,
+      productoModel,
+    );
+    return new ProductoResponseDto(productoActualizadoModel);
+  }
+
+
 }
 
 export const productosService = new ProductosService();
