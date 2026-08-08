@@ -1,14 +1,13 @@
 // ============================================
-// CONTROLLER: Cliente
+// CONTROLLER: Cliente (CommonJS)
 // ============================================
 
-import { ClienteService } from '../services/clienteService.js';
-import { ClienteRequestDTO } from '../dtos/clienteDTO.js';
+const { ClienteService } = require('../services/clienteService');
+const { ClienteRequestDTO } = require('../dtos/clienteDTO');
 
 const clienteService = new ClienteService();
 
-// GET - Obtener todos los clientes
-export const obtenerClientes = async (req, res, next) => {
+const obtenerClientes = async (req, res, next) => {
     try {
         const clientes = await clienteService.getAll();
         res.json({ success: true, data: clientes.map(c => c.toJSON()) });
@@ -17,8 +16,7 @@ export const obtenerClientes = async (req, res, next) => {
     }
 };
 
-// GET - Obtener cliente por ID
-export const obtenerCliente = async (req, res, next) => {
+const obtenerCliente = async (req, res, next) => {
     try {
         const { id } = req.params;
         const cliente = await clienteService.getById(parseInt(id));
@@ -31,8 +29,7 @@ export const obtenerCliente = async (req, res, next) => {
     }
 };
 
-// POST - Crear cliente
-export const crearCliente = async (req, res, next) => {
+const crearCliente = async (req, res, next) => {
     try {
         const dto = new ClienteRequestDTO(req.body);
         const errors = dto.validate();
@@ -46,8 +43,7 @@ export const crearCliente = async (req, res, next) => {
     }
 };
 
-// PUT - Actualizar cliente
-export const actualizarCliente = async (req, res, next) => {
+const actualizarCliente = async (req, res, next) => {
     try {
         const { id } = req.params;
         const dto = new ClienteRequestDTO(req.body);
@@ -65,8 +61,7 @@ export const actualizarCliente = async (req, res, next) => {
     }
 };
 
-// DELETE - Eliminar cliente
-export const eliminarCliente = async (req, res, next) => {
+const eliminarCliente = async (req, res, next) => {
     try {
         const { id } = req.params;
         const result = await clienteService.delete(parseInt(id));
@@ -77,4 +72,12 @@ export const eliminarCliente = async (req, res, next) => {
     } catch (error) {
         next(error);
     }
+};
+
+module.exports = {
+    obtenerClientes,
+    obtenerCliente,
+    crearCliente,
+    actualizarCliente,
+    eliminarCliente
 };

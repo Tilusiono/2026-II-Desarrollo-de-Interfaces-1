@@ -1,17 +1,22 @@
-import { Router } from 'express';
-import {
+// ============================================
+// ROUTES: Cliente (CommonJS)
+// ============================================
+
+const express = require('express');
+const router = express.Router();
+
+const {
     obtenerClientes,
     obtenerCliente,
     crearCliente,
     actualizarCliente,
     eliminarCliente
-} from '../controllers/clienteController.js';
-
-const router = Router();
+} = require('../controllers/clienteController');
 
 router.get('/', obtenerClientes);
 router.get('/:id', obtenerCliente);
 router.post('/', crearCliente);
 router.put('/:id', actualizarCliente);
 router.delete('/:id', eliminarCliente);
-export default router;
+
+module.exports = router;

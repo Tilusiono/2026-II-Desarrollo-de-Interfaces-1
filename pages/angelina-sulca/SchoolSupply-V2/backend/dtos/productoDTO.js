@@ -1,11 +1,8 @@
 // ============================================
-// DTO: Producto
+// DTO: Producto (CommonJS)
 // ============================================
 
-// ============================================
-// REQUEST DTO (para crear/actualizar)
-// ============================================
-export class ProductoRequestDTO {
+class ProductoRequestDTO {
     constructor(data) {
         this.nombre = data.nombre;
         this.marca = data.marca;
@@ -34,10 +31,7 @@ export class ProductoRequestDTO {
     }
 }
 
-// ============================================
-// RESPONSE DTO (para devolver datos)
-// ============================================
-export class ProductoResponseDTO {
+class ProductoResponseDTO {
     constructor(producto) {
         this.id = producto.id;
         this.nombre = producto.nombre;
@@ -73,10 +67,7 @@ export class ProductoResponseDTO {
     }
 }
 
-// ============================================
-// QUERY DTO (para filtros)
-// ============================================
-export class ProductoQueryDTO {
+class ProductoQueryDTO {
     constructor(query) {
         this.termino = query.q || '';
         this.en_oferta = query.en_oferta !== undefined ? parseInt(query.en_oferta) : undefined;
@@ -99,3 +90,9 @@ export class ProductoQueryDTO {
         return filters;
     }
 }
+
+module.exports = {
+    ProductoRequestDTO,
+    ProductoResponseDTO,
+    ProductoQueryDTO
+};

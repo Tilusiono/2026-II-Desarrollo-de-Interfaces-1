@@ -1,14 +1,13 @@
 // ============================================
-// CONTROLLER: Sede
+// CONTROLLER: Sede (CommonJS)
 // ============================================
 
-import { SedeService } from '../services/sedeService.js';
-import { SedeRequestDTO, SedeQueryDTO } from '../dtos/sedeDTO.js';
+const { SedeService } = require('../services/sedeService');
+const { SedeRequestDTO, SedeQueryDTO } = require('../dtos/sedeDTO');
 
 const sedeService = new SedeService();
 
-// GET - Obtener todas las sedes
-export const obtenerSedes = async (req, res, next) => {
+const obtenerSedes = async (req, res, next) => {
     try {
         const query = new SedeQueryDTO(req.query);
         const sedes = await sedeService.getAll(query.getFilters());
@@ -18,8 +17,7 @@ export const obtenerSedes = async (req, res, next) => {
     }
 };
 
-// GET - Buscar sedes
-export const buscarSedes = async (req, res, next) => {
+const buscarSedes = async (req, res, next) => {
     try {
         const { q } = req.query;
         if (!q) {
@@ -32,8 +30,7 @@ export const buscarSedes = async (req, res, next) => {
     }
 };
 
-// GET - Obtener sede por ID
-export const obtenerSede = async (req, res, next) => {
+const obtenerSede = async (req, res, next) => {
     try {
         const { id } = req.params;
         const sede = await sedeService.getById(parseInt(id));
@@ -46,8 +43,7 @@ export const obtenerSede = async (req, res, next) => {
     }
 };
 
-// GET - Obtener sede por código
-export const obtenerSedePorCodigo = async (req, res, next) => {
+const obtenerSedePorCodigo = async (req, res, next) => {
     try {
         const { codigo } = req.params;
         const sede = await sedeService.getByCodigo(codigo);
@@ -60,8 +56,7 @@ export const obtenerSedePorCodigo = async (req, res, next) => {
     }
 };
 
-// POST - Crear sede
-export const crearSede = async (req, res, next) => {
+const crearSede = async (req, res, next) => {
     try {
         const dto = new SedeRequestDTO(req.body);
         const errors = dto.validate();
@@ -75,8 +70,7 @@ export const crearSede = async (req, res, next) => {
     }
 };
 
-// PUT - Actualizar sede
-export const actualizarSede = async (req, res, next) => {
+const actualizarSede = async (req, res, next) => {
     try {
         const { id } = req.params;
         const dto = new SedeRequestDTO(req.body);
@@ -94,8 +88,7 @@ export const actualizarSede = async (req, res, next) => {
     }
 };
 
-// DELETE - Eliminar sede
-export const eliminarSede = async (req, res, next) => {
+const eliminarSede = async (req, res, next) => {
     try {
         const { id } = req.params;
         const result = await sedeService.delete(parseInt(id));
@@ -108,10 +101,7 @@ export const eliminarSede = async (req, res, next) => {
     }
 };
 
-// ============================================
-// 🔥 FUNCIÓN FALTANTE: Obtener empleados de una sede
-// ============================================
-export const obtenerEmpleadosDeSede = async (req, res, next) => {
+const obtenerEmpleadosDeSede = async (req, res, next) => {
     try {
         const { id } = req.params;
         const empleados = await sedeService.getEmpleados(parseInt(id));
@@ -119,4 +109,15 @@ export const obtenerEmpleadosDeSede = async (req, res, next) => {
     } catch (error) {
         next(error);
     }
+};
+
+module.exports = {
+    obtenerSedes,
+    buscarSedes,
+    obtenerSede,
+    obtenerSedePorCodigo,
+    crearSede,
+    actualizarSede,
+    eliminarSede,
+    obtenerEmpleadosDeSede
 };

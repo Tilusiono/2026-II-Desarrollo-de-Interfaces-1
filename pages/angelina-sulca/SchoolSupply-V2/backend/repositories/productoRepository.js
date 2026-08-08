@@ -1,73 +1,137 @@
-import { db } from '../database/jsonDB.js';
+// ============================================
+// REPOSITORY: Producto (CommonJS)
+// ============================================
 
-export const productoRepository = {
+const { getDB } = require('../database/sqliteDB');
+
+const productoRepository = {
     async getAll(filters = {}) {
-        let productos = db.getProductos();
-        
-        // Aplicar filtros
+        const db = getDB();
+        let query = 'SELECT * FROM productos WHERE 1=1';
+        const params = [];
+
         if (filters.activo !== undefined) {
-            productos = productos.filter(p => p.activo === filters.activo);
+            query += ' AND activo = ?';
+            params.push(filters.activo);
         }
         if (filters.en_oferta !== undefined) {
-            productos = productos.filter(p => p.en_oferta === filters.en_oferta);
+            query += ' AND en_oferta = ?';
+            params.push(filters.en_oferta);
         }
         if (filters.categoria) {
-            productos = productos.filter(p => p.categoria === filters.categoria);
+            query += ' AND categoria = ?';
+            params.push(filters.categoria);
         }
         if (filters.termino) {
-            const term = filters.termino.toLowerCase();
-            productos = productos.filter(p =>
-                p.nombre.toLowerCase().includes(term) ||
-                (p.marca && p.marca.toLowerCase().includes(term))
-            );
+            query += ' AND (nombre LIKE ? OR marca LIKE ?)';
+            params.push(`%${filters.termino}%`, `%${filters.termino}%`);
         }
         if (filters.precio_min !== undefined) {
-            productos = productos.filter(p => p.precio_unitario >= filters.precio_min);
+            query += ' AND precio_unitario >= ?';
+            params.push(filters.precio_min);
         }
         if (filters.precio_max !== undefined) {
-            productos = productos.filter(p => p.precio_unitario <= filters.precio_max);
+            query += ' AND precio_unitario <= ?';
+            params.push(filters.precio_max);
         }
-        
-        return productos;
+
+        query += ' ORDER BY id DESC';
+        return db.prepare(query).all(params);
     },
 
     async getById(id) {
-        return db.getProductoById(id);
+        const db = getDB();
+        return db.prepare('SELECT * FROM productos WHERE id = ?').get(id);
     },
 
     async getOfertas() {
-        return db.getProductos().filter(p => p.en_oferta === 1 && p.activo === 1);
+        const db = getDB();
+        return db.prepare('SELECT * FROM productos WHERE en_oferta = 1 AND activo = 1').all();
     },
 
     async search(termino) {
-        const term = termino.toLowerCase();
-        return db.getProductos().filter(p =>
-            p.nombre.toLowerCase().includes(term) ||
-            (p.marca && p.marca.toLowerCase().includes(term))
-        );
+        const db = getDB();
+        return db.prepare(
+            `SELECT * FROM productos 
+             WHERE (nombre LIKE ? OR marca LIKE ?) AND activo = 1`
+        ).all(`%${termino}%`, `%${termino}%`);
     },
 
     async create(producto) {
-        return db.createProducto(producto);
+        const db = getDB();
+        const { nombre, marca, color, calidad, precio_unitario, precio_docena, stock, categoria, descripcion, en_oferta } = producto;
+
+        const stmt = db.prepare(`
+            INSERT INTO productos (nombre, marca, color, calidad, precio_unitario, precio_docena, stock, categoria, descripcion, en_oferta)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        `);
+
+        const info = stmt.run(
+            nombre, 
+            marca, 
+            color || null, 
+            calidad || null, 
+            precio_unitario, 
+            precio_docena || null, 
+            stock || 0, 
+            categoria || null, 
+            descripcion || null, 
+            en_oferta || 0
+        );
+
+        return await this.getById(info.lastInsertRowid);
     },
 
     async update(id, producto) {
-        return db.updateProducto(id, producto);
-    },
+        const db = getDB();
+        const { nombre, marca, color, calidad, precio_unitario, precio_docena, stock, activo, categoria, descripcion, en_oferta } = producto;
 
-    async updateStock(id, cantidad) {
-        const producto = db.getProductoById(id);
-        if (!producto || producto.stock < cantidad) return false;
-        producto.stock -= cantidad;
-        db.updateProducto(id, producto);
-        return true;
+        const stmt = db.prepare(`
+            UPDATE productos 
+            SET nombre = ?, marca = ?, color = ?, calidad = ?, 
+                precio_unitario = ?, precio_docena = ?, stock = ?, 
+                activo = ?, categoria = ?, descripcion = ?, en_oferta = ?
+            WHERE id = ?
+        `);
+
+        stmt.run(
+            nombre, 
+            marca, 
+            color || null, 
+            calidad || null, 
+            precio_unitario, 
+            precio_docena || null, 
+            stock || 0, 
+            activo !== undefined ? activo : 1, 
+            categoria || null, 
+            descripcion || null, 
+            en_oferta || 0, 
+            id
+        );
+
+        return await this.getById(id);
     },
 
     async delete(id) {
-        return db.deleteProducto(id);
+        const db = getDB();
+        db.prepare('UPDATE productos SET activo = 0 WHERE id = ?').run(id);
+        return true;
     },
 
     async deletePermanent(id) {
-        return db.deleteProducto(id);
+        const db = getDB();
+        db.prepare('DELETE FROM productos WHERE id = ?').run(id);
+        return true;
+    },
+
+    async updateStock(id, cantidad) {
+        const db = getDB();
+        const producto = await this.getById(id);
+        if (!producto || producto.stock < cantidad) return false;
+        
+        db.prepare('UPDATE productos SET stock = stock - ? WHERE id = ?').run(cantidad, id);
+        return true;
     }
 };
+
+module.exports = { productoRepository };

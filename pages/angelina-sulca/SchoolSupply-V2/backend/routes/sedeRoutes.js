@@ -1,27 +1,30 @@
-import { Router } from 'express';
-import {
+// ============================================
+// ROUTES: Sede (CommonJS)
+// ============================================
+
+const express = require('express');
+const router = express.Router();
+
+const {
     obtenerSedes,
     buscarSedes,
     obtenerSede,
     obtenerSedePorCodigo,
     crearSede,
     actualizarSede,
-    eliminarSede
-} from '../controllers/sedeController.js';
-// ✅ COMENTA O ELIMINA LAS IMPORTACIONES DE AUTENTICACIÓN
-// import { verificarToken, verificarPersonal } from '../middlewares/auth.js';
-import { validarSede } from '../middlewares/validator.js';
+    eliminarSede,
+    obtenerEmpleadosDeSede
+} = require('../controllers/sedeController');
 
-const router = Router();
+const { validarSede } = require('../middlewares/validator');
 
 router.get('/', obtenerSedes);
 router.get('/buscar', buscarSedes);
 router.get('/codigo/:codigo', obtenerSedePorCodigo);
 router.get('/:id', obtenerSede);
-
-// ✅ QUITA verificarToken y verificarPersonal
 router.post('/', validarSede, crearSede);
 router.put('/:id', validarSede, actualizarSede);
 router.delete('/:id', eliminarSede);
+router.get('/:id/empleados', obtenerEmpleadosDeSede);
 
-export default router;
+module.exports = router;

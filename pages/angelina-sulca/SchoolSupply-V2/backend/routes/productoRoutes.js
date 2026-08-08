@@ -1,5 +1,11 @@
-import { Router } from 'express';
-import {
+// ============================================
+// ROUTES: Producto (CommonJS)
+// ============================================
+
+const express = require('express');
+const router = express.Router();
+
+const {
     obtenerProductos,
     obtenerOfertas,
     buscarProductos,
@@ -7,22 +13,16 @@ import {
     crearProducto,
     actualizarProducto,
     eliminarProducto
-} from '../controllers/productoController.js';
-// ✅ COMENTA O ELIMINA LAS IMPORTACIONES DE AUTENTICACIÓN
-// import { verificarToken, verificarPersonal } from '../middlewares/auth.js';
-import { validarProducto } from '../middlewares/validator.js';
+} = require('../controllers/productoController');
 
-const router = Router();
+const { validarProducto } = require('../middlewares/validator');
 
-// Rutas públicas (todas sin autenticación)
 router.get('/', obtenerProductos);
 router.get('/ofertas', obtenerOfertas);
 router.get('/buscar', buscarProductos);
 router.get('/:id', obtenerProducto);
-
-// ✅ QUITA verificarToken y verificarPersonal
 router.post('/', validarProducto, crearProducto);
 router.put('/:id', validarProducto, actualizarProducto);
 router.delete('/:id', eliminarProducto);
 
-export default router;
+module.exports = router;

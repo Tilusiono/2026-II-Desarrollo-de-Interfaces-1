@@ -1,33 +1,22 @@
 // ============================================
-// MIDDLEWARE: Manejo global de errores
+// MIDDLEWARE: Error Handler (CommonJS)
 // ============================================
 
-/**
- * Middleware para manejar errores de forma centralizada
- * Captura cualquier error y devuelve una respuesta JSON estructurada
- */
-export const errorHandler = (err, req, res, next) => {
-    // Determinar el código de estado (si no tiene, 500)
+const errorHandler = (err, req, res, next) => {
     const status = err.status || 500;
     const message = err.message || 'Error interno del servidor';
 
-    // Mostrar error en consola (para debugging)
     console.error('❌ Error:', {
         message: err.message,
         stack: err.stack,
         status: status,
         url: req.url,
-        method: req.method,
-        body: req.body,
-        params: req.params,
-        query: req.query
+        method: req.method
     });
 
-    // Responder al cliente
     res.status(status).json({
         success: false,
         error: message,
-        // Solo mostrar detalles en desarrollo
         ...(process.env.NODE_ENV === 'development' && {
             stack: err.stack,
             details: err.details || null
@@ -35,15 +24,7 @@ export const errorHandler = (err, req, res, next) => {
     });
 };
 
-// ============================================
-// MIDDLEWARE: Ruta no encontrada (404)
-// ============================================
-
-/**
- * Middleware para manejar rutas no encontradas
- * Se ejecuta cuando ninguna ruta coincide
- */
-export const notFoundHandler = (req, res, next) => {
+const notFoundHandler = (req, res, next) => {
     res.status(404).json({
         success: false,
         error: `Ruta no encontrada: ${req.method} ${req.url}`,
@@ -51,15 +32,7 @@ export const notFoundHandler = (req, res, next) => {
     });
 };
 
-// ============================================
-// CLASE: AppError (para errores personalizados)
-// ============================================
-
-/**
- * Clase para crear errores personalizados con código de estado
- * Útil para lanzar errores desde los servicios o controladores
- */
-export class AppError extends Error {
+class AppError extends Error {
     constructor(message, status = 400, details = null) {
         super(message);
         this.status = status;
@@ -68,7 +41,6 @@ export class AppError extends Error {
         Error.captureStackTrace(this, this.constructor);
     }
 
-    // Errores comunes
     static badRequest(message = 'Solicitud inválida', details = null) {
         return new AppError(message, 400, details);
     }
@@ -97,3 +69,9 @@ export class AppError extends Error {
         return new AppError(message, 422, details);
     }
 }
+
+module.exports = {
+    errorHandler,
+    notFoundHandler,
+    AppError
+};

@@ -1,36 +1,24 @@
-import express from 'express';
-import cors from 'cors';
-import path from 'path';
-import { fileURLToPath } from 'url';
-
 // ============================================
-// CONFIGURAR VARIABLES DE ENTORNO
-// ============================================
-// Si tienes dotenv instalado, descomenta esto:
-// import dotenv from 'dotenv';
-// dotenv.config();
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-// ============================================
-// IMPORTAR MIDDLEWARES Y RUTAS
+// APP - SchoolSupply (CommonJS)
 // ============================================
 
-import { errorHandler, notFoundHandler } from './middlewares/errorHandler.js';
-import { validarProducto, validarSede, validarCliente, validarId } from './middlewares/validator.js';
-import { verificarToken, verificarPersonal } from './middlewares/auth.js';
+const express = require('express');
+const cors = require('cors');
+const path = require('path');
+const { getDB } = require('./database/sqliteDB');
 
-import productoRoutes from './routes/productoRoutes.js';
-import clienteRoutes from './routes/clienteRoutes.js';
-import sedeRoutes from './routes/sedeRoutes.js';
+// Middlewares
+const { errorHandler, notFoundHandler } = require('./middlewares/errorHandler');
+const { validarProducto, validarSede, validarCliente, validarId } = require('./middlewares/validator');
+const { verificarToken, verificarPersonal } = require('./middlewares/auth');
 
-// ============================================
-// INICIALIZAR APP
-// ============================================
+// Rutas
+const productoRoutes = require('./routes/productoRoutes');
+const clienteRoutes = require('./routes/clienteRoutes');
+const sedeRoutes = require('./routes/sedeRoutes');
 
 const app = express();
-const PORT = process.env.PORT || 7878; // Usa el puerto del .env o el 7878 por defecto
+const PORT = process.env.PORT || 7878;
 
 // ============================================
 // MIDDLEWARES GLOBALES
@@ -39,25 +27,18 @@ const PORT = process.env.PORT || 7878; // Usa el puerto del .env o el 7878 por d
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-// Servir archivos estáticos del frontend
 app.use(express.static(path.join(__dirname, '../frontend')));
 
 // ============================================
 // RUTAS API
 // ============================================
 
-// Productos
 app.use('/api/productos', productoRoutes);
-
-// Clientes
 app.use('/api/clientes', clienteRoutes);
-
-// Sedes
 app.use('/api/sedes', sedeRoutes);
 
 // ============================================
-// RUTA DE AUTENTICACIÓN (ejemplo)
+// AUTENTICACIÓN
 // ============================================
 
 app.post('/api/auth/login', (req, res) => {
@@ -70,7 +51,6 @@ app.post('/api/auth/login', (req, res) => {
         });
     }
 
-    // Simulación de autenticación
     if (email === 'admin@schoolsupply.com' && password === 'admin123') {
         const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.' +
                       Buffer.from(JSON.stringify({ id: 1, nombre: 'Admin', rol: 'personal' })).toString('base64') +
@@ -115,7 +95,6 @@ app.post('/api/auth/login', (req, res) => {
     });
 });
 
-// Ruta protegida de ejemplo (solo Personal)
 app.get('/api/admin/dashboard', verificarToken, verificarPersonal, (req, res) => {
     res.json({
         success: true,
@@ -125,7 +104,7 @@ app.get('/api/admin/dashboard', verificarToken, verificarPersonal, (req, res) =>
 });
 
 // ============================================
-// RUTA PRINCIPAL (Frontend)
+// RUTA PRINCIPAL
 // ============================================
 
 app.get('/', (req, res) => {
@@ -146,4 +125,11 @@ app.use(errorHandler);
 app.listen(PORT, () => {
     console.log(`✅ Servidor en http://localhost:${PORT}`);
     console.log(`📁 Entorno: ${process.env.NODE_ENV || 'development'}`);
+    
+    try {
+        getDB();
+        console.log('✅ SQLite conectado correctamente');
+    } catch (error) {
+        console.error('❌ Error conectando a SQLite:', error.message);
+    }
 });

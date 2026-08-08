@@ -1,11 +1,8 @@
 // ============================================
-// DTO: Cliente
+// DTO: Cliente (CommonJS)
 // ============================================
 
-// ============================================
-// REQUEST DTO (para crear/actualizar)
-// ============================================
-export class ClienteRequestDTO {
+class ClienteRequestDTO {
     constructor(data) {
         this.nombre = data.nombre;
         this.correo = data.correo || null;
@@ -30,10 +27,7 @@ export class ClienteRequestDTO {
     }
 }
 
-// ============================================
-// RESPONSE DTO (para devolver datos)
-// ============================================
-export class ClienteResponseDTO {
+class ClienteResponseDTO {
     constructor(cliente) {
         this.id = cliente.id;
         this.nombre = cliente.nombre;
@@ -57,10 +51,7 @@ export class ClienteResponseDTO {
     }
 }
 
-// ============================================
-// QUERY DTO (para filtros)
-// ============================================
-export class ClienteQueryDTO {
+class ClienteQueryDTO {
     constructor(query) {
         this.termino = query.q || '';
         this.tipo_cliente = query.tipo_cliente || '';
@@ -75,3 +66,9 @@ export class ClienteQueryDTO {
         return filters;
     }
 }
+
+module.exports = {
+    ClienteRequestDTO,
+    ClienteResponseDTO,
+    ClienteQueryDTO
+};

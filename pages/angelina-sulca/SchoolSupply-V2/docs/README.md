@@ -254,7 +254,7 @@ Importa el archivo de colección desde la carpeta `docs/` (si está disponible).
 
 ## 👨‍💻 Autor
 
-**Nombre:** [Tu nombre completo]  
+**Nombre:** Angelina Amy Sulca Cuba  
 **Curso:** Desarrollo de Interfaces I  
 **Institución:** IDAT  
 **Año:** 2026
@@ -276,18 +276,3 @@ Este proyecto es de uso educativo y no tiene fines comerciales.
 ---
 
 **¡Gracias por visitar mi proyecto!** 🚀
-```
-
----
-
-## 📁 **CÓMO GUARDAR EL ARCHIVO**
-
-1. **Abre VS Code**
-2. **Ve a la carpeta `SchoolSupply-V2/`**
-3. **Crea un nuevo archivo** llamado `README.md`
-4. **Copia y pega TODO el contenido de arriba**
-5. **Guarda el archivo** (Ctrl + S)
-
----
-
-**¡Ya tienes un README.md profesional listo para tu proyecto!** 🚀😊

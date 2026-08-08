@@ -1,36 +1,80 @@
-import { db } from '../database/jsonDB.js';
+// ============================================
+// REPOSITORY: Cliente (CommonJS)
+// ============================================
 
-export const clienteRepository = {
+const { getDB } = require('../database/sqliteDB');
+
+const clienteRepository = {
     async getAll() {
-        return db.getClientes();
+        const db = getDB();
+        return db.prepare('SELECT * FROM clientes ORDER BY id DESC').all();
     },
 
     async getById(id) {
-        return db.getClienteById(id);
+        const db = getDB();
+        return db.prepare('SELECT * FROM clientes WHERE id = ?').get(id);
     },
 
     async search(termino) {
-        const term = termino.toLowerCase();
-        return db.getClientes().filter(c =>
-            c.nombre.toLowerCase().includes(term) ||
-            (c.correo && c.correo.toLowerCase().includes(term))
-        );
+        const db = getDB();
+        return db.prepare(
+            `SELECT * FROM clientes 
+             WHERE nombre LIKE ? OR correo LIKE ?`
+        ).all(`%${termino}%`, `%${termino}%`);
     },
 
     async create(cliente) {
-        return db.createCliente(cliente);
+        const db = getDB();
+        const { nombre, correo, telefono, direccion, tipo_cliente } = cliente;
+
+        const stmt = db.prepare(`
+            INSERT INTO clientes (nombre, correo, telefono, direccion, tipo_cliente)
+            VALUES (?, ?, ?, ?, ?)
+        `);
+
+        const info = stmt.run(
+            nombre, 
+            correo || null, 
+            telefono || null, 
+            direccion || null, 
+            tipo_cliente || 'Unitario'
+        );
+
+        return await this.getById(info.lastInsertRowid);
     },
 
     async update(id, cliente) {
-        return db.updateCliente(id, cliente);
+        const db = getDB();
+        const { nombre, correo, telefono, direccion, tipo_cliente } = cliente;
+
+        const stmt = db.prepare(`
+            UPDATE clientes 
+            SET nombre = ?, correo = ?, telefono = ?, direccion = ?, tipo_cliente = ?
+            WHERE id = ?
+        `);
+
+        stmt.run(
+            nombre, 
+            correo || null, 
+            telefono || null, 
+            direccion || null, 
+            tipo_cliente || 'Unitario', 
+            id
+        );
+
+        return await this.getById(id);
     },
 
     async delete(id) {
-        return db.deleteCliente(id);
+        const db = getDB();
+        db.prepare('DELETE FROM clientes WHERE id = ?').run(id);
+        return true;
     },
 
     async getVentas(clienteId) {
-        // Si no tienes ventas en JSON, devuelves array vacío
-        return [];
+        const db = getDB();
+        return db.prepare('SELECT * FROM ventas WHERE cliente_id = ?').all(clienteId);
     }
 };
+
+module.exports = { clienteRepository };

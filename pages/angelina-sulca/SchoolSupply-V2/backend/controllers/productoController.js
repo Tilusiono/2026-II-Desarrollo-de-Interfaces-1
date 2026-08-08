@@ -1,14 +1,13 @@
 // ============================================
-// CONTROLLER: Producto
+// CONTROLLER: Producto (CommonJS)
 // ============================================
 
-import { ProductoService } from '../services/productoService.js';
-import { ProductoRequestDTO, ProductoQueryDTO } from '../dtos/productoDTO.js';
+const { ProductoService } = require('../services/productoService');
+const { ProductoRequestDTO, ProductoQueryDTO } = require('../dtos/productoDTO');
 
 const productoService = new ProductoService();
 
-// GET - Obtener todos los productos
-export const obtenerProductos = async (req, res, next) => {
+const obtenerProductos = async (req, res, next) => {
     try {
         const query = new ProductoQueryDTO(req.query);
         const productos = await productoService.getAll(query.getFilters());
@@ -18,8 +17,7 @@ export const obtenerProductos = async (req, res, next) => {
     }
 };
 
-// GET - Obtener productos en oferta
-export const obtenerOfertas = async (req, res, next) => {
+const obtenerOfertas = async (req, res, next) => {
     try {
         const productos = await productoService.getOfertas();
         res.json({ success: true, data: productos.map(p => p.toJSON()) });
@@ -28,8 +26,7 @@ export const obtenerOfertas = async (req, res, next) => {
     }
 };
 
-// GET - Buscar productos
-export const buscarProductos = async (req, res, next) => {
+const buscarProductos = async (req, res, next) => {
     try {
         const { q } = req.query;
         if (!q) {
@@ -42,8 +39,7 @@ export const buscarProductos = async (req, res, next) => {
     }
 };
 
-// GET - Obtener producto por ID
-export const obtenerProducto = async (req, res, next) => {
+const obtenerProducto = async (req, res, next) => {
     try {
         const { id } = req.params;
         const producto = await productoService.getById(parseInt(id));
@@ -56,8 +52,7 @@ export const obtenerProducto = async (req, res, next) => {
     }
 };
 
-// POST - Crear producto
-export const crearProducto = async (req, res, next) => {
+const crearProducto = async (req, res, next) => {
     try {
         const dto = new ProductoRequestDTO(req.body);
         const errors = dto.validate();
@@ -71,8 +66,7 @@ export const crearProducto = async (req, res, next) => {
     }
 };
 
-// PUT - Actualizar producto
-export const actualizarProducto = async (req, res, next) => {
+const actualizarProducto = async (req, res, next) => {
     try {
         const { id } = req.params;
         const dto = new ProductoRequestDTO(req.body);
@@ -90,8 +84,7 @@ export const actualizarProducto = async (req, res, next) => {
     }
 };
 
-// DELETE - Eliminar producto
-export const eliminarProducto = async (req, res, next) => {
+const eliminarProducto = async (req, res, next) => {
     try {
         const { id } = req.params;
         const result = await productoService.delete(parseInt(id));
@@ -102,4 +95,14 @@ export const eliminarProducto = async (req, res, next) => {
     } catch (error) {
         next(error);
     }
+};
+
+module.exports = {
+    obtenerProductos,
+    obtenerOfertas,
+    buscarProductos,
+    obtenerProducto,
+    crearProducto,
+    actualizarProducto,
+    eliminarProducto
 };

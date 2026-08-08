@@ -1,11 +1,8 @@
 // ============================================
-// DTO: Sede
+// DTO: Sede (CommonJS)
 // ============================================
 
-// ============================================
-// REQUEST DTO (para crear/actualizar)
-// ============================================
-export class SedeRequestDTO {
+class SedeRequestDTO {
     constructor(data) {
         this.codigo = data.codigo;
         this.nombre = data.nombre;
@@ -33,10 +30,7 @@ export class SedeRequestDTO {
     }
 }
 
-// ============================================
-// RESPONSE DTO (para devolver datos)
-// ============================================
-export class SedeResponseDTO {
+class SedeResponseDTO {
     constructor(sede) {
         this.id = sede.id;
         this.codigo = sede.codigo;
@@ -70,10 +64,7 @@ export class SedeResponseDTO {
     }
 }
 
-// ============================================
-// QUERY DTO (para filtros)
-// ============================================
-export class SedeQueryDTO {
+class SedeQueryDTO {
     constructor(query) {
         this.termino = query.q || '';
         this.distrito = query.distrito || '';
@@ -90,3 +81,9 @@ export class SedeQueryDTO {
         return filters;
     }
 }
+
+module.exports = {
+    SedeRequestDTO,
+    SedeResponseDTO,
+    SedeQueryDTO
+};

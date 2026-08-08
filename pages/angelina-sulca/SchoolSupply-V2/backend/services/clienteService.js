@@ -1,11 +1,11 @@
 // ============================================
-// SERVICE: Cliente
+// SERVICE: Cliente (CommonJS)
 // ============================================
 
-import { clienteRepository } from '../repositories/clienteRepository.js';
-import { ClienteResponseDTO } from '../dtos/clienteDTO.js';
+const { clienteRepository } = require('../repositories/clienteRepository');
+const { ClienteResponseDTO } = require('../dtos/clienteDTO');
 
-export class ClienteService {
+class ClienteService {
     constructor() {
         this.repository = clienteRepository;
     }
@@ -45,3 +45,5 @@ export class ClienteService {
         return await this.repository.getVentas(clienteId);
     }
 }
+
+module.exports = { ClienteService };

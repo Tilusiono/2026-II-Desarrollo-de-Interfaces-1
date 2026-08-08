@@ -1,17 +1,17 @@
 // ============================================
-// SERVICE: Sede
+// SERVICE: Sede (CommonJS)
 // ============================================
 
-import { sedeRepository } from '../repositories/sedeRepository.js';
-import { SedeResponseDTO } from '../dtos/sedeDTO.js';
+const { sedeRepository } = require('../repositories/sedeRepository');
+const { SedeResponseDTO } = require('../dtos/sedeDTO');
 
-export class SedeService {
+class SedeService {
     constructor() {
         this.repository = sedeRepository;
     }
 
     async getAll(filters = {}) {
-        const sedes = await this.repository.getAll();
+        const sedes = await this.repository.getAll(filters);
         return sedes.map(s => new SedeResponseDTO(s));
     }
 
@@ -33,7 +33,6 @@ export class SedeService {
     }
 
     async create(sedeData) {
-        // Verificar que el código no exista
         const existente = await this.repository.getByCodigo(sedeData.codigo);
         if (existente) {
             throw new Error('Ya existe una sede con ese código');
@@ -56,3 +55,5 @@ export class SedeService {
         return await this.repository.getEmpleados(sedeId);
     }
 }
+
+module.exports = { SedeService };
