@@ -73,6 +73,21 @@ export class ProductosService {
       imagenMimeType: coincidencia[1],
     };
   }
+
+  async listar() {
+    const productosModel = await this.productoRepository.listar();
+    return productosModel.map(
+      (productoModel) => new ProductoResponseDto(productoModel),
+    );
+  }
+
+  async obtener(id) {
+    const productoModel = await this.productoRepository.buscarPorId(id);
+    if (!productoModel) throw new AppError("Producto no encontrado", 404);
+    return new ProductoResponseDto(productoModel);
+  }
+
+
 }
 
 export const productosService = new ProductosService();
