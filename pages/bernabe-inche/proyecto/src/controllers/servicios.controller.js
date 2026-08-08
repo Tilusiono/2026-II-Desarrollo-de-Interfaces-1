@@ -1,3 +1,4 @@
+import { ServicioRequestDto } from "../dtos/servicioDto.js";
 import { serviciosService } from "../services/servicios.service.js";
 
 export class ServiciosController {
@@ -12,6 +13,21 @@ export class ServiciosController {
       mensaje: "Servicio creado",
       servicioResponseDto,
     });
+  }
+
+    // GET ALL
+  async listar(response) {
+    const servicios = await this.serviciosService.listar();
+    response.json({
+      total: servicios.length,
+      servicios,
+    });
+  }
+
+  // GET BY ID
+  async obtener(id, response) {
+    const servicio = await this.serviciosService.obtener(id);
+    response.json({ servicio });
   }
 }
 
