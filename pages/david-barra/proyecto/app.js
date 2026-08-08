@@ -6,11 +6,15 @@ import { loggerMiddleware } from "./src/middlewares/logger.middleware.js";
 import { normalizarBody } from "./src/middlewares/normalizacion.middleware.js";
 import { rutaNoEncontrada } from "./src/middlewares/notFound.middleware.js";
 import { manejarErrores } from "./src/middlewares/error.middleware.js";
+import productosRoutes from "./src/routes/productos.routes.js";
+import categoriasRoutes from "./src/routes/categorias.routes.js";
+
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const app = express();
-const PORT = process.env.PORT ?? 56776;
+//>=0 y <65536
+const PORT = process.env.PORT ?? 4214;
 
 app.use(express.json({ limit: "2mb" }));
 app.use(express.urlencoded({ extended: true }));
@@ -29,9 +33,20 @@ app.get("/api", (request, response) => {
   });
 });
 
+//RUTASS
+
+
+app.use("/api/productos", productosRoutes);
+app.use("/api/categorias", categoriasRoutes);
+
+
+
 app.use(rutaNoEncontrada);
 app.use(manejarErrores);
 
 app.listen(PORT, () => {
   console.log(`Servidor ejecutándose en http://localhost:${PORT}`);
 });
+
+
+

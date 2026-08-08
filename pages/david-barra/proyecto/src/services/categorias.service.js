@@ -2,7 +2,7 @@ import { AppError } from "../errors/AppError.js";
 import { normalizarTexto } from "../utils/texto.js";
 
 import Categoria from "../models/Categoria.js";
-import { CategoriaResponseDto,CategoriaResponseDto } from "../dtos/CategoriaDto.js";
+import { CategoriaRequestDto,CategoriaResponseDto } from "../dtos/CategoriaDto.js";
 import { CategoriaRepository } from "../repositories/CategoriaRepository.js";
 
 
