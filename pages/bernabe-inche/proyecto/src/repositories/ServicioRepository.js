@@ -110,7 +110,7 @@ export class ServicioRepository {
   }
 
    //PUT
-  async modificar(identificador,servicio) {
+  async modificarRepositorio(identificador,servicio) {
     const resultado = this.db
       .prepare(
         `

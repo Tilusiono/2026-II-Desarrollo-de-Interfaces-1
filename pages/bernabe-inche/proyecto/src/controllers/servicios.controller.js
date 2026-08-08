@@ -29,6 +29,18 @@ export class ServiciosController {
     const servicio = await this.serviciosService.obtener(id);
     response.json({ servicio });
   }
+
+    //PUT 
+  async modificarControlador(id, servicioRequestDto, response) {
+    const servicioResponseDto = await this.serviciosService.modificarService(
+      id,
+      servicioRequestDto,
+    );
+    response.json({
+      mensaje: "Servicio modificado",
+      servicioResponseDto,
+    });
+  }
 }
 
 export const serviciosController = new ServiciosController(serviciosService);

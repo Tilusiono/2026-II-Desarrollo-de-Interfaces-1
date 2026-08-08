@@ -87,7 +87,7 @@ export class ServiciosService {
       return new ServicioResponseDto(servicio);
     }
 
-    async reemplazar(id, servicioRequestDto) {
+    async modificarService(id, servicioRequestDto) {
     const servicioExistenteModel =
       await this.servicioRepository.buscarPorId(id);
     if (!servicioExistenteModel)
@@ -111,7 +111,7 @@ export class ServiciosService {
       imagenDatos.imagenMimeType,
     );
 
-    const servicioActualizadoModel = await this.servicioRepository.modificar(
+    const servicioActualizadoModel = await this.servicioRepository.modificarRepositorio(
       id,
       servicioModel,
     );

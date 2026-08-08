@@ -28,6 +28,19 @@ export class ProductosController {
     response.json({ productoResponseDto });
   }
 
+  //PUT 
+    async reemplazar(id, productoRequestDto, response) {
+    const productoResponseDto = await this.productosService.reemplazar(
+      id,
+      productoRequestDto,
+    );
+    response.json({
+      mensaje: "Producto reemplazado",
+      productoResponseDto,
+    });
+  }
+
+
 }
 
 export const productosController = new ProductosController(productosService);
