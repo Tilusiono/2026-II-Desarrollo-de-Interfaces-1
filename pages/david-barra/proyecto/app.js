@@ -23,9 +23,9 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/api", (request, response) => {
   response.json({
-    nombre: "Productos Express API",
+    nombre: "EliteMarket",
     almacenamiento: "sqlite",
-    recursos: ["productos"],
+    recursos: ["productos,categorias"],
   });
 });
 
