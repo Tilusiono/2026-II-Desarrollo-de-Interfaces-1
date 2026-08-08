@@ -20,7 +20,6 @@ class Categoria {
     fechaHoraRegistro,
     imagen,
     imagenMimeType,
-    observaciones
   ) {
     this.#id = Number(id);
     this.#codigo = codigo;
