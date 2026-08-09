@@ -141,30 +141,15 @@ export class EmpleadoService {
     return new EmpleadoResponseDto(empleadoActualizadoModel);
   }
 
-
-
-
-/*  convertirImagen(imagenBase64) {
-    if (imagenBase64 === null || imagenBase64 === "") {
-      return { imagen: null, imagenMimeType: null };
-    }
-
-    if (imagenBase64 === undefined) {
-      return { imagen: null, imagenMimeType: null };
-    }
-
-    const coincidencia = String(imagenBase64).match(
-      /^data:(image\/[a-zA-Z0-9.+-]+);base64,(.+)$/,
+  // QUERY
+  async buscar(empleadoConsultaDto) {
+    const empleadoModel =
+      await this.empleadoRepository.query(empleadoConsultaDto);
+    return empleadoModel.map(
+      (empleadoModel) => new ProductoResponseDto(empleadoModel),
     );
-    if (!coincidencia) {
-      throw new AppError("La imagen Base64 no es válida", 400);
-    }
+  }
 
-    return {
-      imagen: Buffer.from(coincidencia[2], "base64"),
-      imagenMimeType: coincidencia[1],
-    };
-  }*/
 }
 
 export const empleadoService = new EmpleadoService();
