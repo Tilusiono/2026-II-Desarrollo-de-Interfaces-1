@@ -150,6 +150,15 @@ export class EmpleadoService {
     );
   }
 
+// BORRAR
+async eliminar(id) {
+    const empleadoEliminadoModel = await this.empleadoRepository.eliminar(id);
+    if (!empleadoEliminadoModel)
+      throw new AppError("Empleado no encontrado", 404);
+    return new EmpleadoResponseDto(empleadoEliminadoModel);
+  }
+
+
 }
 
 export const empleadoService = new EmpleadoService();
