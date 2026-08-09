@@ -23,9 +23,9 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/api", (request, response) => {
   response.json({
-    nombre: "Productos Express API",
+    nombre: "Casino Perlitas De Barcena",
     almacenamiento: "sqlite",
-    recursos: ["productos"],
+    recursos: ["Servicios,categorias"],
   });
 });
 
