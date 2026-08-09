@@ -51,6 +51,22 @@ export class EmpleadoService {
     }
   }
 
+  // OBTENER TODOS LOS ELEMENTOS
+  async listar() {
+    const listaEmpleados = await this.productoRepository.listar();
+    return listaEmpleados.map(
+      (empl) => new ProductoResponseDto(empl),
+    );
+  }
+
+  // OBTENER UNA PARTE DE LA TABLA
+  async obtener(id) {
+    const empleado = await this.productoRepository.buscarPorId(id);
+    if (!empleado) throw new AppError("Empleado no encontrado", 404);
+    return new ProductoResponseDto(empleado);
+  }
+
+
 /*  convertirImagen(imagenBase64) {
     if (imagenBase64 === null || imagenBase64 === "") {
       return { imagen: null, imagenMimeType: null };
