@@ -16,7 +16,7 @@ export class EmpleadoRequestDto {
 
 export class EmpleadoConsultaDto {
   constructor(queryParams = {}) {
-    this.texto = queryParams.texto;
+    this.nombre = queryParams.nombre;
     this.disponible = queryParams.disponible;
     this.salarioMin = queryParams.salarioMin;
     this.salarioMax = queryParams.salarioMax;

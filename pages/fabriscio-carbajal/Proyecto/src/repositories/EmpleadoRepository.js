@@ -1,6 +1,8 @@
 import { createRequire } from "node:module";
 import { sqlitePath } from "../config/storage.config.js";
 import Empleado from "../models/Empleado.js";
+import { objetoContieneTexto } from "../utils/texto.js";
+
 
 const require = createRequire(import.meta.url);
 
@@ -107,6 +109,7 @@ export class EmpleadoRepository {
     return this.buscarPorId(Number(resultado.lastInsertRowid));
   }
 
+  // PUT
   async modificarRepositorio(identificador, empleado) {
     const resultado = this.db
       .prepare(
@@ -143,6 +146,35 @@ export class EmpleadoRepository {
 
     return resultado.changes ? this.buscarPorId(identificador) : null;
   }
+
+  // SEARCH
+  async query(empleadoConsultaDto) {
+    const empleado = await this.listar();
+    const nombre = empleadoConsultaDto.nombre ?? "";
+    const disponible = empleadoConsultaDto.disponible ?? "";
+    const salarioMin = empleadoConsultaDto.salarioMin ?? "";
+    const salarioMax = empleadoConsultaDto.salarioMax ?? "";
+    const fechaIngreso = empleadoConsultaDto.fechaIngreso ?? "";
+
+    return productos.filter((empleadoModel) => {
+      const camposBuscables = {
+        id: empleadoModel.id,
+        nombre: empleadoModel.nombre,
+        apellidoPaterno: empleadoModel.apellidoPaterno,
+        telefono: empleadoModel.telefono,
+        fechaNacimiento: empleadoModel.fechaNacimiento,
+      };
+
+      return (
+        objetoContieneTexto(camposBuscables, nombre) &&
+        (disponible === "" || String(empleadoModel.disponible) === String(disponible)) &&
+        (salarioMin === "" || empleadoModel.salario >= Number(salarioMin)) &&
+        (salarioMax === "" || empleadoModel.salario <= Number(salarioMax)) &&
+        (fechaIngreso || empleadoModel.fechaIngreso === fechaIngreso) 
+      );
+    });
+  }
+
 
 }
 
