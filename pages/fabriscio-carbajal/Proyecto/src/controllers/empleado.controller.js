@@ -66,7 +66,6 @@ export class EmpleadoController {
   }
 
 
-
 }
 
 export const empleadoController = new EmpleadoController(empleadoService);

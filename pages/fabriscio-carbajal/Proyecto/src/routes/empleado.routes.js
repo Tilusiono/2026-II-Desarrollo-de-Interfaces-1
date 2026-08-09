@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { asyncHandler } from "../utils/asyncHandler.js";
 
-import { EmpleadoRequestDto } from "../dtos/EmpleadoDto.js";
+import { EmpleadoRequestDto, EmpleadoConsultaDto, } from "../dtos/EmpleadoDto.js";
 import { empleadoController as controller } from "../controllers/empleado.controller.js";
 import { validarId } from "../middlewares/id.middleware.js";
 
@@ -22,6 +22,15 @@ router.post(
 
 router.get("/",               asyncHandler((request, response) => controller.listar(response)));
 router.get("/:id", validarId, asyncHandler((request, response) => controller.obtener(Number(request.params.id), response),),);
+
+
+router.get("/buscar", asyncHandler((request, response) => {
+    const empleadoConsultaDto = new EmpleadoConsultaDto(request.query);
+    return controller.buscar(empleadoConsultaDto, response);
+  }),
+);
+
+
 
 router.put(
   "/:id",
