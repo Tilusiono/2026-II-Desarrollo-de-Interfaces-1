@@ -1,6 +1,8 @@
 import { createRequire } from "node:module";
 import { sqlitePath } from "../config/storage.config.js";
 import Producto from "../models/Producto.js";
+import { objetoContieneTexto } from "../utils/texto.js";
+
 
 const require = createRequire(import.meta.url);
 
@@ -150,6 +152,34 @@ export class ProductoRepository {
       );
 
     return resultado.changes ? this.buscarPorId(id) : null;
+  }
+
+  //SEARCH 
+  async query(productoConsultaDto) {
+    const productos = await this.listar();
+    const texto = productoConsultaDto.texto ?? "";
+    const categoria = productoConsultaDto.categoria ?? "";
+    const activo = productoConsultaDto.activo ?? "";
+    const precioMin = productoConsultaDto.precioMin ?? "";
+    const precioMax = productoConsultaDto.precioMax ?? "";
+
+    return productos.filter((productoModel) => {
+      const camposBuscables = {
+        id: productoModel.id,
+        codigo: productoModel.codigo,
+        nombre: productoModel.nombre,
+        categoria: productoModel.categoria,
+        descripcion: productoModel.descripcion,
+      };
+
+      return (
+        objetoContieneTexto(camposBuscables, texto) &&
+        (!categoria || productoModel.categoria === categoria) &&
+        (activo === "" || String(productoModel.activo) === String(activo)) &&
+        (precioMin === "" || productoModel.precio >= Number(precioMin)) &&
+        (precioMax === "" || productoModel.precio <= Number(precioMax))
+      );
+    });
   }
 
 
