@@ -53,6 +53,18 @@ export class ProductosController {
   }
 
 
+  // SEARCH 
+  async buscar(productoConsultaDto, response) {
+    const productosResponseDto =
+      await this.productosService.buscar(productoConsultaDto);
+    response.json({
+      total: productosResponseDto.length,
+      productoConsultaDto,
+      productosResponseDto,
+    });
+  }
+
+
 }
 
 export const productosController = new ProductosController(productosService);

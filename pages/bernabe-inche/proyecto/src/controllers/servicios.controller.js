@@ -53,6 +53,17 @@ export class ServiciosController {
       servicioResponseDto,
     });
   }
+
+    // SEARCH 
+  async buscar(servicioConsultaDto, response) {
+    const serviciosResponseDto =
+      await this.serviciosService.buscar(servicioConsultaDto);
+    response.json({
+      total: serviciosResponseDto.length,
+      servicioConsultaDto,
+      serviciosResponseDto,
+    });
+  }
 }
 
 export const serviciosController = new ServiciosController(serviciosService);
