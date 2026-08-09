@@ -86,7 +86,7 @@ export class ServiciosService {
       if (!servicio) throw new AppError("Servicio no encontrado", 404);
       return new ServicioResponseDto(servicio);
     }
-
+  //modificar todo
     async modificarService(id, servicioRequestDto) {
     const servicioExistenteModel =
       await this.servicioRepository.buscarPorId(id);
@@ -118,6 +118,50 @@ export class ServiciosService {
 
     return new ServicioResponseDto(servicioActualizadoModel);
   }
+
+  // modificar parcial
+  async modificarParcialService(id, servicioRequestDto) {
+    const servicioActualModel = await this.servicioRepository.buscarPorId(id);
+    if (!servicioActualModel) throw new AppError("Servicio no encontrado", 404);
+
+    const codigo = servicioRequestDto.codigo ?? servicioActualModel.codigo;
+    await this.validarCodigo(codigo, id);
+
+    let imagen = servicioActualModel.imagen;
+    let imagenMimeType = servicioActualModel.imagenMimeType;
+    if (servicioRequestDto.imagenBase64 !== undefined) {
+      const imagenDatos = this.convertirImagen(servicioRequestDto.imagenBase64);
+      imagen = imagenDatos.imagen;
+      imagenMimeType = imagenDatos.imagenMimeType;
+    }
+
+    const conservarSiNoSeEnvia = (nuevoValor, valorActual) =>
+      nuevoValor === undefined ? valorActual : nuevoValor;
+
+    const servicioModel = new Servicio(
+      id,
+      codigo,
+      servicioRequestDto.nombre ?? servicioActualModel.nombre,
+      servicioRequestDto.tipoServicio ?? servicioActualModel.tipoServicio,
+      servicioRequestDto.stock ?? servicioActualModel.stock,
+      servicioRequestDto.precio ?? servicioActualModel.precio,
+      conservarSiNoSeEnvia(servicioRequestDto.duracionMinutos, servicioActualModel.duracionMinutos),
+      conservarSiNoSeEnvia(servicioRequestDto.fechaInicio,servicioActualModel.fechaInicio),
+      conservarSiNoSeEnvia(servicioRequestDto.descripcion,servicioActualModel.descripcion),
+      servicioRequestDto.activo ?? servicioActualModel.activo,
+      conservarSiNoSeEnvia(servicioRequestDto.horaRegistro,servicioActualModel.horaRegistro),
+      conservarSiNoSeEnvia(servicioRequestDto.fechaHoraRegistro,servicioActualModel.fechaHoraRegistro),
+      imagen,
+      imagenMimeType,
+    );
+
+    const servicioActualizadoModel = await this.servicioRepository.modificarRepositorio(
+      id,
+      servicioModel,
+    );
+    return new ServicioResponseDto(servicioActualizadoModel);
+  }
+
 }
 
 export const serviciosService = new ServiciosService();
