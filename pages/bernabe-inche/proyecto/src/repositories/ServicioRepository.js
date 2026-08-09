@@ -148,6 +148,38 @@ export class ServicioRepository {
 
     return resultado.changes ? this.buscarPorId(identificador) : null;
   }
+
+ //SEARCH 
+  async query(dtoBusqueda) {
+    const servicios = await this.listar();
+    const texto = dtoBusqueda.texto ?? "";
+    const tipoServicio = dtoBusqueda.tipoServicio ?? "";
+    const activo = dtoBusqueda.activo ?? "";
+    const precioMin = dtoBusqueda.precioMin ?? "";
+    const precioMax = dtoBusqueda.precioMax ?? "";
+    const duracionMin = dtoBusqueda.duracionMin ?? "";
+    const duracionMax = dtoBusqueda.duracionMax ?? "";
+
+    return servicios.filter((servicioModel) => {
+      const camposBuscables = {
+        id: servicioModel.id,
+        codigo: servicioModel.codigo,
+        nombre: servicioModel.nombre,
+        tipoServicio: servicioModel.tipoServicio,
+        descripcion: servicioModel.descripcion,
+      };
+
+      return (
+        objetoContieneTexto(camposBuscables, texto) &&
+        (!tipoServicio || servicioModel.tipoServicio === tipoServicio) &&
+        (activo === "" || String(servicioModel.activo) === String(activo)) &&
+        (precioMin === "" || servicioModel.precio >= Number(precioMin)) &&
+        (precioMax === "" || servicioModel.precio <= Number(precioMax)) &&
+        (duracionMin === "" || servicioModel.duracionMinutos >= Number(duracionMin)) &&
+        (duracionMax === "" || servicioModel.duracionMinutos <= Number(duracionMax))
+      );
+    });
+  }
 }
 
 

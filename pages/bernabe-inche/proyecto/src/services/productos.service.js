@@ -169,6 +169,14 @@ export class ProductosService {
     return new ProductoResponseDto(productoActualizadoModel);
   }
 
+  //buscar 
+    async buscar(productoConsultaDto) {
+    const productosModel =
+      await this.productoRepository.query(productoConsultaDto);
+    return productosModel.map(
+      (productoModel) => new ProductoResponseDto(productoModel),
+    );
+  }
 
 
 }

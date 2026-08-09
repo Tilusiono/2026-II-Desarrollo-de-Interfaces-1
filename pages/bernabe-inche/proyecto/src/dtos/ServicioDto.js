@@ -21,6 +21,8 @@ export class ServicioConsultaDto {
     this.activo = queryParams.activo;
     this.precioMin = queryParams.precioMin;
     this.precioMax = queryParams.precioMax;
+    this.duracionMin = queryParams.duracionMin;
+    this.duracionMax = queryParams.duracionMax;
   }
 }
 
