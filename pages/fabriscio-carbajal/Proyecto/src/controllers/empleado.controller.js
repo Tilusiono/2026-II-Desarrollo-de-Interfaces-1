@@ -77,6 +77,13 @@ export class EmpleadoController {
     });
   }
 
+  async eliminar(id, response) {
+    const empleadoResponseDto = await this.empleadoService.eliminar(id);
+    response.json({
+      mensaje: "Empleado eliminado",
+      empleadoResponseDto,
+    });
+  }
 
 
 }
