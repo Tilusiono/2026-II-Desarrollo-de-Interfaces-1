@@ -41,6 +41,18 @@ export class ServiciosController {
       servicioResponseDto,
     });
   }
+
+   // PATCH
+    async modificarParcialControlador(id, servicioRequestDto, response) {
+    const servicioResponseDto = await this.serviciosService.modificarParcialService(
+      id,
+      servicioRequestDto,
+    );
+    response.json({
+      mensaje: "Servicio modificado parcialmente",
+      servicioResponseDto,
+    });
+  }
 }
 
 export const serviciosController = new ServiciosController(serviciosService);
