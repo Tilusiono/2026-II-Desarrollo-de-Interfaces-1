@@ -54,7 +54,7 @@ export class EmpleadoController {
     });
   }
 
-  // SEARCH
+  // GET - SEARCH
   async buscar(empleadoConsultaDto, response) {
     const empleadosResponseDto =
       await this.empleadoService.buscar(empleadoConsultaDto);
@@ -64,6 +64,19 @@ export class EmpleadoController {
       empleadosResponseDto,
     });
   }
+
+  // QUERY - SEARCH
+  async consultar(empleadoConsultaDto, response) {
+    const empleadoResponseDto =
+      await this.empleadoService.buscar(empleadoConsultaDto);
+    response.json({
+      metodo: "QUERY",
+      total: empleadoResponseDto.length,
+      empleadoConsultaDto,
+      empleadoResponseDto,
+    });
+  }
+
 
 
 }

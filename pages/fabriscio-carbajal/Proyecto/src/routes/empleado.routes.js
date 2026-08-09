@@ -4,6 +4,8 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { EmpleadoRequestDto, EmpleadoConsultaDto, } from "../dtos/EmpleadoDto.js";
 import { empleadoController as controller } from "../controllers/empleado.controller.js";
 import { validarId } from "../middlewares/id.middleware.js";
+import { validarMetodoQuery } from "../middlewares/query.middleware.js";
+
 
 // import { validarEmpleadoCompleto, validarEmpleadoParcial,} from "../middlewares/validacion.middleware.js";
 
@@ -27,6 +29,13 @@ router.get("/buscar", asyncHandler((request, response) => {
     return controller.buscar(empleadoConsultaDto, response);
   })
 );
+
+router.use("/consultar", validarMetodoQuery, asyncHandler((request, response) => {
+    const empleadoConsultaDto = new EmpleadoConsultaDto(request.query);
+    return controller.consultar(empleadoConsultaDto, response);
+  })
+);
+
 
 router.get("/:id", validarId, asyncHandler((request, response) => controller.obtener(Number(request.params.id), response),),);
 
