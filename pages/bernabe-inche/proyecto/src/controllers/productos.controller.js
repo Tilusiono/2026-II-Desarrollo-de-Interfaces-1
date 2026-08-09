@@ -77,6 +77,15 @@ export class ProductosController {
   }
 
 
+    //DELETE
+  async eliminar(id, response) {
+    const productoResponseDto = await this.productosService.eliminar(id);
+    response.json({
+      mensaje: "Producto eliminado",
+      productoResponseDto,
+    });
+  }
+
 }
 
 export const productosController = new ProductosController(productosService);

@@ -76,7 +76,14 @@ export class ServiciosController {
       serviciosResponseDto,
     });
   }
-
+  //DELETE
+  async eliminar(id, response) {
+    const servicioResponseDto = await this.serviciosService.eliminar(id);
+    response.json({
+      mensaje: "Servicio eliminado",
+      servicioResponseDto,
+    });
+  }
 }
 
 export const serviciosController = new ServiciosController(serviciosService);
