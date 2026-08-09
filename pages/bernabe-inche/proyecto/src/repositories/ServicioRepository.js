@@ -1,6 +1,7 @@
 import { createRequire } from "node:module";
 import { sqlitePath } from "../config/storage.config.js";
 import Servicio from "../models/Servicio.js";
+import { objetoContieneTexto } from "../utils/texto.js";
 
 const require = createRequire(import.meta.url);
 
@@ -149,16 +150,16 @@ export class ServicioRepository {
     return resultado.changes ? this.buscarPorId(identificador) : null;
   }
 
- //SEARCH 
-  async query(dtoBusqueda) {
+  //SEARCH
+  async query(dtoConsulta) {
     const servicios = await this.listar();
-    const texto = dtoBusqueda.texto ?? "";
-    const tipoServicio = dtoBusqueda.tipoServicio ?? "";
-    const activo = dtoBusqueda.activo ?? "";
-    const precioMin = dtoBusqueda.precioMin ?? "";
-    const precioMax = dtoBusqueda.precioMax ?? "";
-    const duracionMin = dtoBusqueda.duracionMin ?? "";
-    const duracionMax = dtoBusqueda.duracionMax ?? "";
+    const texto = dtoConsulta.texto ?? "";
+    const tipoServicio = dtoConsulta.tipoServicio ?? "";
+    const activo = dtoConsulta.activo ?? "";
+    const precioMin = dtoConsulta.precioMin ?? "";
+    const precioMax = dtoConsulta.precioMax ?? "";
+    const duracionMin = dtoConsulta.duracionMin ?? "";
+    const duracionMax = dtoConsulta.duracionMax ?? "";
 
     return servicios.filter((servicioModel) => {
       const camposBuscables = {
@@ -176,10 +177,13 @@ export class ServicioRepository {
         (precioMin === "" || servicioModel.precio >= Number(precioMin)) &&
         (precioMax === "" || servicioModel.precio <= Number(precioMax)) &&
         (duracionMin === "" || servicioModel.duracionMinutos >= Number(duracionMin)) &&
-        (duracionMax === "" || servicioModel.duracionMinutos <= Number(duracionMax))
+        (duracionMax === "" || servicioModel.duracionMinutos <= Number(duracionMax))  
       );
     });
   }
+
+
+
 }
 
 

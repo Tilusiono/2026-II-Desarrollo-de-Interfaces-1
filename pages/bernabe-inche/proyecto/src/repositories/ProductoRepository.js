@@ -154,7 +154,7 @@ export class ProductoRepository {
     return resultado.changes ? this.buscarPorId(id) : null;
   }
 
-  //SEARCH 
+  //SEARCH
   async query(productoConsultaDto) {
     const productos = await this.listar();
     const texto = productoConsultaDto.texto ?? "";
@@ -181,6 +181,7 @@ export class ProductoRepository {
       );
     });
   }
+
 
 
 }
