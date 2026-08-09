@@ -1,9 +1,13 @@
 import { Router } from "express";
 import { productosController as controller } from "../controllers/productos.controller.js";
-//import { validarProductoCompleto } from "../middlewares/validacion.middleware.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ProductoRequestDto } from "../dtos/ProductoDto.js";
 import { validarId } from "../middlewares/id.middleware.js";
+//import {
+//  validarProductoCompleto,
+//  validarProductoParcial,
+//} from "../middlewares/validacion.middleware.js";
+
 
 const router = Router();
 
@@ -23,6 +27,16 @@ router.put("/:id",validarId,//validarProductoCompleto,
     const id = Number(request.params.id);
     const productoRequestDto = new ProductoRequestDto(request.body);
     return controller.reemplazar(id, productoRequestDto, response);
+  }),
+);
+router.patch(
+  "/:id",
+  validarId,
+ //validarProductoParcial,
+  asyncHandler((request, response) => {
+    const id = Number(request.params.id);
+    const productoRequestDto = new ProductoRequestDto(request.body);
+    return controller.actualizar(id, productoRequestDto, response);
   }),
 );
 
