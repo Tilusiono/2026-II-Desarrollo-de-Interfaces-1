@@ -4,6 +4,7 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { ServicioRequestDto ,ServicioConsultaDto } from "../dtos/ServicioDto.js";
 import { serviciosController as controller } from "../controllers/servicios.controller.js";
 import { validarId } from "../middlewares/id.middleware.js";
+import { validarMetodoQuery } from "../middlewares/query.middleware.js";
 
 //import {
 //  validarServicioCompleto,
@@ -21,15 +22,27 @@ router.post(
   }),
 );
 router.get("/",             asyncHandler((request, response) => controller.listar(response)));
-router.get("/:id",validarId,asyncHandler((request, response) => controller.obtener(Number(request.params.id), response),),);
-
 
 
 router.get("/buscar", asyncHandler((request, response) => {
     const servicioConsultaDto = new ServicioConsultaDto(request.query);
     return controller.buscar(servicioConsultaDto, response);
-  }),
+  })
 );
+
+router.use("/consulta",validarMetodoQuery,
+  asyncHandler((request, response) => {
+    const servicioConsultaDto = new ServicioConsultaDto(request.query);
+    return controller.consultar(servicioConsultaDto, response);
+  })
+);
+
+
+router.get("/:id",validarId,asyncHandler((request, response) => controller.obtener(Number(request.params.id), response),),);
+
+
+
+
 
 router.put("/:id",validarId,//validarServicioCompleto,
   asyncHandler((request, response) => {

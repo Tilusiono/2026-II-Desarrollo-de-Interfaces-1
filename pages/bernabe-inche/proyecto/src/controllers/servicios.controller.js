@@ -54,7 +54,7 @@ export class ServiciosController {
     });
   }
 
-    // SEARCH 
+    // GET - SEARCH 
   async buscar(servicioConsultaDto, response) {
     const serviciosResponseDto =
       await this.serviciosService.buscar(servicioConsultaDto);
@@ -64,6 +64,19 @@ export class ServiciosController {
       serviciosResponseDto,
     });
   }
+
+   //QUERY -SEARCH
+    async consultar(servicioConsultaDto, response) {
+    const serviciosResponseDto =
+      await this.serviciosService.buscar(servicioConsultaDto);
+    response.json({
+      metodo: "QUERY",
+      total: serviciosResponseDto.length,
+      servicioConsultaDto,
+      serviciosResponseDto,
+    });
+  }
+
 }
 
 export const serviciosController = new ServiciosController(serviciosService);

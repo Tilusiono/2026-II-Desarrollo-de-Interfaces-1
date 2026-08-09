@@ -53,11 +53,23 @@ export class ProductosController {
   }
 
 
-  // SEARCH 
+  // GET - SEARCH 
   async buscar(productoConsultaDto, response) {
     const productosResponseDto =
       await this.productosService.buscar(productoConsultaDto);
     response.json({
+      total: productosResponseDto.length,
+      productoConsultaDto,
+      productosResponseDto,
+    });
+  }
+
+    //QUERY -SEARCH
+    async consultar(productoConsultaDto, response) {
+    const productosResponseDto =
+      await this.productosService.buscar(productoConsultaDto);
+    response.json({
+      metodo: "QUERY",
       total: productosResponseDto.length,
       productoConsultaDto,
       productosResponseDto,
