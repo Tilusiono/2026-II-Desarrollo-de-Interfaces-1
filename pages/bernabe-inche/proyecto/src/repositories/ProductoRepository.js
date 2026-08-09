@@ -182,6 +182,15 @@ export class ProductoRepository {
     });
   }
 
+  //DELETE 
+  async eliminar(id) {
+    const productoModel = await this.buscarPorId(id);
+    if (!productoModel) return null;
+
+    this.db.prepare("DELETE FROM productos WHERE id = ?").run(Number(id));
+    return productoModel;
+  }
+
 
 
 }

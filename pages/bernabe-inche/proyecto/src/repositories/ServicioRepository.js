@@ -182,6 +182,15 @@ export class ServicioRepository {
     });
   }
 
+  //DELETE 
+  async eliminar(id) {
+    const servicioModel = await this.buscarPorId(id);
+    if (!servicioModel) return null;
+
+    this.db.prepare("DELETE FROM servicios WHERE id = ?").run(Number(id));
+    return servicioModel;
+  }
+
 
 
 }
