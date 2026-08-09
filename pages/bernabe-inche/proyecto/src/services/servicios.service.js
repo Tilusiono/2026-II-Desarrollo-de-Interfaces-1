@@ -143,7 +143,6 @@ export class ServiciosService {
       codigo,
       servicioRequestDto.nombre ?? servicioActualModel.nombre,
       servicioRequestDto.tipoServicio ?? servicioActualModel.tipoServicio,
-      servicioRequestDto.stock ?? servicioActualModel.stock,
       servicioRequestDto.precio ?? servicioActualModel.precio,
       conservarSiNoSeEnvia(servicioRequestDto.duracionMinutos, servicioActualModel.duracionMinutos),
       conservarSiNoSeEnvia(servicioRequestDto.fechaInicio,servicioActualModel.fechaInicio),
