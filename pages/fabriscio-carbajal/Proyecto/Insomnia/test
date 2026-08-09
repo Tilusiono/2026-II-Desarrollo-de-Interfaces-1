@@ -1,0 +1,261 @@
+type: collection.insomnia.rest/5.0
+schema_version: "5.1"
+name: My first collection
+meta:
+  id: wrk_8378660a257b4ef6bc0e7a2ef73c5c61
+  created: 1786072828786
+  modified: 1786072828786
+  description: ""
+collection:
+  - name: EMPLEADO
+    meta:
+      id: fld_68c83937fa7c46f2b602a46867ff021a
+      created: 1786233761379
+      modified: 1786233761379
+      sortKey: -1786233761380
+      description: ""
+    children:
+      - url: http://localhost:4214/api/empleado
+        name: CREAR
+        meta:
+          id: req_6f62795d978b43a4bb4fae95a5300dff
+          created: 1786072831200
+          modified: 1786295491917
+          isPrivate: false
+          description: ""
+          sortKey: -1786233766891
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "nombre": "Jesus",
+              "apellidoPaterno": "Angel",
+              "dni": 74234511,
+              "telefono": "987654220",
+              "salario": 3000.50,
+              "direccion": "Lima",
+              "horaIngreso": "07:00:00",
+              "horaSalida": "16:00:00",
+              "disponible": false,
+              "fechaIngreso": "2026-08-06T08:15:00",
+              "fechaNacimiento": "1999-04-15"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:4214/api/empleado
+        name: OBTENER LISTA
+        meta:
+          id: req_ea0f2733dd484d92a0a14b921c4be276
+          created: 1786233794760
+          modified: 1786236831505
+          isPrivate: false
+          description: ""
+          sortKey: -1786233794760
+        method: GET
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:4214/api/empleado/5
+        name: OBTENER POR ID
+        meta:
+          id: req_7d609040a21f4a83a1df648918d59bf2
+          created: 1786235819369
+          modified: 1786314858884
+          isPrivate: false
+          description: ""
+          sortKey: -1786233780825.5
+        method: GET
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:4214/api/empleado/2
+        name: MODIFICAR
+        meta:
+          id: req_ce3fbd41e3834e65a935df04e9f048c0
+          created: 1786245298262
+          modified: 1786295059542
+          isPrivate: false
+          description: ""
+          sortKey: -1786245298262
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "nombre": "Samuel",
+              "apellidoPaterno": "Miguel",
+              "dni": 74234512,
+              "telefono": "987654320",
+              "salario": 3000.50,
+              "direccion": "San Borja",
+              "horaIngreso": "07:00:00",
+              "horaSalida": "16:00:00",
+              "disponible": true,
+              "fechaIngreso": "2026-08-06T08:15:00",
+              "fechaNacimiento": "1999-04-15"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:4214/api/empleado/2
+        name: MODIFICAR PARCIAL
+        meta:
+          id: req_debcd9738b6d4c3b86c2e081e5089c2e
+          created: 1786245305946
+          modified: 1786295608845
+          isPrivate: false
+          description: ""
+          sortKey: -1786245305946
+        method: PATCH
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "nombre": "Juan",
+              "dni": 74236712,
+              "telefono": "924654320",
+              "salario": 3000.50,
+              "horaSalida": "16:00:00",
+              "disponible": true,
+              "fechaIngreso": "2026-08-06T08:15:00"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:4214/api/empleado/buscar
+        name: BUSCAR
+        meta:
+          id: req_64bb52e3367f41a1aae69d168b992727
+          created: 1786303680247
+          modified: 1786314540209
+          isPrivate: false
+          description: ""
+          sortKey: -1786303680247
+        method: GET
+        parameters:
+          - name: nombre
+            value: A
+            description: ""
+            disabled: false
+          - name: salarioMin
+            value: "100"
+            description: ""
+            disabled: true
+          - name: salarioMax
+            value: "10000"
+            description: ""
+            disabled: true
+          - name: disponible
+            value: "true"
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:4214/api/empleado/consultar
+        name: BUSCAR - QUERY
+        meta:
+          id: req_ace052bbbb8848cba8457df6bafbc7d0
+          created: 1786312690951
+          modified: 1786313186207
+          isPrivate: false
+          description: ""
+          sortKey: -1786274493096.5
+        method: QUERY
+        parameters:
+          - name: nombre
+            value: A
+            description: ""
+            disabled: true
+          - name: salarioMin
+            value: "1500"
+            description: ""
+            disabled: false
+          - name: salarioMax
+            value: "10000"
+            description: ""
+            disabled: false
+          - name: disponible
+            value: "true"
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:4214/api/empleado/5
+        name: BORRAR
+        meta:
+          id: req_ba410aeb17a244aeb168a8c60e131943
+          created: 1786314503989
+          modified: 1786314854685
+          isPrivate: false
+          description: ""
+          sortKey: -1786314503989
+        method: DELETE
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_25af1fee87b14a6639783926e7797c99e51f3bb1
+    created: 1786072828791
+    modified: 1786072828791
+environments:
+  name: Base Environment
+  meta:
+    id: env_25af1fee87b14a6639783926e7797c99e51f3bb1
+    created: 1786072828789
+    modified: 1786072828789
+    isPrivate: false
