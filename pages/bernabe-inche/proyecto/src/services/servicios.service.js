@@ -161,7 +161,6 @@ export class ServiciosService {
     return new ServicioResponseDto(servicioActualizadoModel);
   }
 
-    //buscar 
     async buscar(servicioConsultaDto) {
     const serviciosModel =
       await this.servicioRepository.query(servicioConsultaDto);
