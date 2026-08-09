@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Prueba inicial</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet"href="/bootstrap-icons/font/bootstrap-icons.css"/>
+  </head>
+  <body class="bg-light">
+    <nav class="navbar navbar-dark bg-primary">
+      <div class="container">
+        <span class="navbar-brand mb-0 h1">
+          <i class="bi bi-box-seam-fill me-2"></i>Productos Express
+        </span>
+      </div>
+    </nav>
+
+    <main class="container py-5">
+      <div class="card border-0 shadow-sm mx-auto" style="max-width: 42rem">
+        <div class="card-body p-4 p-md-5 text-center">
+          <i class="bi bi-bootstrap-fill text-primary display-3"></i>
+          <h1 class="h3 mt-3">Configuración correcta</h1>
+          <p class="text-secondary">
+            Express está publicando Bootstrap 5.3.8 y Bootstrap Icons desde
+            las dependencias instaladas con NPM.
+          </p>
+          <button
+            class="btn btn-primary"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#detalle-prueba"
+          >
+            <i class="bi bi-check-circle me-1"></i>Probar JavaScript
+          </button>
+          <div id="detalle-prueba" class="collapse mt-3">
+            <div class="alert alert-success mb-0">
+              Bootstrap CSS, JavaScript e iconos funcionan correctamente.
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
