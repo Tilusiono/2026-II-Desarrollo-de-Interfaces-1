@@ -141,7 +141,7 @@ export class EmpleadoService {
     return new EmpleadoResponseDto(empleadoActualizadoModel);
   }
 
-  // QUERY
+  // BUSCAR
   async buscar(empleadoConsultaDto) {
     const empleadoModel =
       await this.empleadoRepository.query(empleadoConsultaDto);

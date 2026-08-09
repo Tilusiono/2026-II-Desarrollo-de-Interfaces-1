@@ -54,6 +54,18 @@ export class EmpleadoController {
     });
   }
 
+  // SEARCH
+  async buscar(empleadoConsultaDto, response) {
+    const empleadosResponseDto =
+      await this.empleadoService.buscar(empleadoConsultaDto);
+    response.json({
+      total: empleadosResponseDto.length,
+      empleadoConsultaDto,
+      empleadosResponseDto,
+    });
+  }
+
+
 
 }
 
