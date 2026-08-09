@@ -1,0 +1,144 @@
+type: collection.insomnia.rest/5.0
+schema_version: "5.1"
+name: SERVICIOS
+meta:
+  id: wrk_b764ac96bcc14d7db1e352e31a047a6d
+  created: 1786247579412
+  modified: 1786247579412
+  description: ""
+collection:
+  - url: http://localhost:4214/api/servicios/
+    name: GET ALL
+    meta:
+      id: req_466d9bfbb4494916ac12b45e7068bbd4
+      created: 1786248652320
+      modified: 1786248674769
+      isPrivate: false
+      description: ""
+      sortKey: -1786248652320
+    method: GET
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:4214/api/servicios/buscar
+    name: SEARCH
+    meta:
+      id: req_3cda0a69e69c43b69797b50903f68fe4
+      created: 1786248679322
+      modified: 1786250114048
+      isPrivate: false
+      description: ""
+      sortKey: -1786248652220
+    method: GET
+    parameters:
+      - name: texto
+        value: SERV
+        description: ""
+        disabled: false
+      - name: tipoServicio
+        value: SERVICIO TECNICO
+        description: ""
+        disabled: true
+      - name: precioMin
+        value: "0"
+        description: ""
+        disabled: false
+      - name: precioMax
+        value: "350000000"
+        description: ""
+        disabled: false
+      - name: duracionMin
+        value: "100"
+        description: ""
+        disabled: false
+      - name: duracionMax
+        value: "220"
+        description: ""
+        disabled: false
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:4214/api/servicios/consulta
+    name: SEARCH
+    meta:
+      id: req_943b0a304c5f4106a04ae47c25282f77
+      created: 1786250035226
+      modified: 1786250105221
+      isPrivate: false
+      description: ""
+      sortKey: -1786248118456.5
+    method: QUERY
+    parameters:
+      - name: texto
+        value: SERV
+        description: ""
+        disabled: false
+      - name: tipoServicio
+        value: SERVICIO TECNICO
+        description: ""
+        disabled: true
+      - name: precioMin
+        value: "0"
+        description: ""
+        disabled: false
+      - name: precioMax
+        value: "35000000"
+        description: ""
+        disabled: false
+      - name: duracionMin
+        value: "100"
+        description: ""
+        disabled: false
+      - name: duracionMax
+        value: "220"
+        description: ""
+        disabled: false
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:4214/api/servicios/1
+    name: DELETE
+    meta:
+      id: req_163c4fcaea8e40ea93b09ff3cbfe2c0a
+      created: 1786251148987
+      modified: 1786251212973
+      isPrivate: false
+      description: ""
+      sortKey: -1786251148987
+    method: DELETE
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_783a3df5b1cdc865f2756fb994fad2e3eda29f75
+    created: 1786247579452
+    modified: 1786247579452
+environments:
+  name: Base Environment
+  meta:
+    id: env_783a3df5b1cdc865f2756fb994fad2e3eda29f75
+    created: 1786247579443
+    modified: 1786247579443
+    isPrivate: false

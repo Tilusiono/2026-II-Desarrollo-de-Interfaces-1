@@ -1,0 +1,136 @@
+type: collection.insomnia.rest/5.0
+schema_version: "5.1"
+name: PRODUCTOS
+meta:
+  id: wrk_eefc4772b8a04aa8ba276c6cbee4a3fb
+  created: 1786247566747
+  modified: 1786247566747
+  description: ""
+collection:
+  - url: http://localhost:4214/api/productos/
+    name: GET ALL
+    meta:
+      id: req_e04cf16a930b498ea92b36b5e27fb62c
+      created: 1786247584693
+      modified: 1786248658053
+      isPrivate: false
+      description: ""
+      sortKey: -1786247584693
+    method: GET
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:4214/api/productos/buscar
+    name: SEARCH
+    meta:
+      id: req_cf65a24b38ce48f9825134294aba84e6
+      created: 1786247711130
+      modified: 1786249937090
+      isPrivate: false
+      description: ""
+      sortKey: -1786247584493
+    method: GET
+    parameters:
+      - name: texto
+        value: PC
+        description: ""
+        disabled: false
+      - name: categoria
+        value: TEC
+        description: ""
+        disabled: false
+      - name: activo
+        value: "false"
+        description: ""
+        disabled: false
+      - name: precioMin
+        value: "1"
+        description: ""
+        disabled: false
+      - name: precioMax
+        value: "999999"
+        description: ""
+        disabled: false
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:4214/api/productos/consulta
+    name: QUERY SEARCH
+    meta:
+      id: req_f0e1cb261c52449db8dcf825496cafb5
+      created: 1786249746481
+      modified: 1786249859466
+      isPrivate: false
+      description: ""
+      sortKey: -1786247584443
+    method: QUERY
+    parameters:
+      - name: texto
+        value: PC
+        description: ""
+        disabled: false
+      - name: categoria
+        value: TEC
+        description: ""
+        disabled: false
+      - name: activo
+        value: "false"
+        description: ""
+        disabled: false
+      - name: precioMin
+        value: "1"
+        description: ""
+        disabled: false
+      - name: precioMax
+        value: "999999"
+        description: ""
+        disabled: false
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:4214/api/productos/1
+    name: DELETE
+    meta:
+      id: req_73cf54e121e0418ba0a3ab394dfa28d2
+      created: 1786251017189
+      modified: 1786251147742
+      isPrivate: false
+      description: ""
+      sortKey: -1786251017189
+    method: DELETE
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_8f9b536add77742edb5961f5cb534c7336d9e41f
+    created: 1786247566749
+    modified: 1786247566749
+environments:
+  name: Base Environment
+  meta:
+    id: env_8f9b536add77742edb5961f5cb534c7336d9e41f
+    created: 1786247566748
+    modified: 1786247566748
+    isPrivate: false
