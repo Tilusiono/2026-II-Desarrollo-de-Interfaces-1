@@ -1,5 +1,6 @@
 import { createRequire } from "node:module";
 import { sqlitePath } from "../config/storage.config.js";
+import Producto from "../models/Servicios.js";
 
 const require = createRequire(import.meta.url);
 
@@ -27,6 +28,86 @@ export class ServiciosRepository {
         FOREIGN KEY (categoria_id) REFERENCES categorias(id) ON UPDATE CASCADE ON DELETE RESTRICT
       );
     `);
+  }
+
+  async listar() {
+    const filas = this.db.prepare("SELECT * FROM servicios_casino ORDER BY id").all();
+
+    return filas.map(
+      (fila) =>
+        new Servicio(
+          fila.id,
+          fila.codigo,
+          fila.nombre,
+          fila.categoria_id,
+          fila.capacidadMax,
+          fila.precio,
+          fila.duracionMinutos,
+          fila.descripcion,
+          fila.activo,
+          fila.fechaVencimiento,
+          fila.horaRegistro,
+          fila.fechaHoraRegistro,
+          fila.imagen ? Buffer.from(fila.imagen) : null,
+          fila.imagenMimeType,
+        ),
+    );
+  }
+
+  async buscarPorId(id) {
+    const fila = this.db
+      .prepare("SELECT * FROM servicios_casino WHERE id = ?")
+      .get(Number(id));
+
+    if (!fila) return null;
+
+    return new Servicio(
+      fila.id,
+      fila.codigo,
+      fila.nombre,
+      fila.categoria_id,
+      fila.capacidadMax,
+      fila.precio,
+      fila.duracionMinutos,
+      fila.descripcion,
+      fila.activo,
+      fila.fechaVencimiento,
+      fila.horaRegistro,
+      fila.fechaHoraRegistro,
+      fila.imagen ? Buffer.from(fila.imagen) : null,
+      fila.imagenMimeType,
+    );
+  }
+
+  async crear(ServiciosModel) {
+    const resultado = this.db
+      .prepare(
+        `
+        INSERT INTO servicios_casino (
+          codigo, nombre, categoria_id, capacidadMax, precio, duracionMinutos, descripcion,
+          activo, fechaVencimiento, horaRegistro, fechaHoraRegistro,
+          imagen, imagenMimeType
+        )
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      `,
+      )
+      .run(
+        ServiciosModel.codigo,
+        ServiciosModel.nombre,
+        ServiciosModel.categoriaId,
+        ServiciosModel.capacidadMax,
+        ServiciosModel.precio,
+        ServiciosModel.duracionMinutos,
+        ServiciosModel.descripcion,
+        Number(ServiciosModel.activo),
+        ServiciosModel.fechaVencimiento,
+        ServiciosModel.horaRegistro,
+        ServiciosModel.fechaHoraRegistro,
+        ServiciosModel.imagen,
+        ServiciosModel.imagenMimeType,
+      );
+
+    return this.buscarPorId(Number(resultado.lastInsertRowid));
   }
 }
 
