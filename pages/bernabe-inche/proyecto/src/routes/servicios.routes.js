@@ -59,6 +59,12 @@ router.patch("/:id",validarId,//validarServicioParcial,
     return controller.modificarParcialControlador(id, servicioRequestDto, response);
   }),
 );
-
+router.delete(
+  "/:id",
+  validarId,
+  asyncHandler((request, response) =>
+    controller.eliminar(Number(request.params.id), response),
+  ),
+);
 
 export default router;
