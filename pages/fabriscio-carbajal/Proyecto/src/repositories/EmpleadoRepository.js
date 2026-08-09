@@ -117,18 +117,18 @@ export class EmpleadoRepository {
             dni = ?,
             telefono = ?,
             salario = ?,
-            dirccion = ?,
+            direccion = ?,
             hora_ingreso = ?,
             hora_salida = ?,
             disponible = ?,
             fecha_ingreso = ?,
-            fecha_nacimiento = ?,
+            fecha_nacimiento = ?
         WHERE id = ?
       `,
       )
       .run(
         empleado.nombre,
-        empleado.apellido_paterno,
+        empleado.apellidoPaterno,
         empleado.dni,
         empleado.telefono,
         empleado.salario,

@@ -21,4 +21,15 @@ router.post(
 router.get("/",               asyncHandler((request, response) => controller.listar(response)));
 router.get("/:id", validarId, asyncHandler((request, response) => controller.obtener(Number(request.params.id), response),),);
 
+router.put(
+  "/:id",
+  validarId,
+  asyncHandler((request, response) => {
+    const id = Number(request.params.id);
+    const empleadoRequestDto = new EmpleadoRequestDto(request.body);
+    return controller.modificarControlador(id, empleadoRequestDto, response);
+  }),
+);
+
+
 export default router;

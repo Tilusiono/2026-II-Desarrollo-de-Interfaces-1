@@ -31,13 +31,13 @@ export class EmpleadoController {
   }
 
   async modificarControlador(id, empleadoRequestDto, response) {
-    const productoResponseDto = await this.empleadoService.modificarService(
+    const empleadoResponseDto = await this.empleadoService.modificarService(
       id,
-      productoRequestDto,
+      empleadoRequestDto,
     );
     response.json({
-      mensaje: "Producto reemplazado",
-      productoResponseDto,
+      mensaje: "Empleado reemplazado",
+      empleadoResponseDto,
     });
   }
 
