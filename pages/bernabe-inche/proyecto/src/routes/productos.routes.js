@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { productosController as controller } from "../controllers/productos.controller.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
-import { ProductoRequestDto } from "../dtos/ProductoDto.js";
+import { ProductoConsultaDto,ProductoRequestDto } from "../dtos/ProductoDto.js";
 import { validarId } from "../middlewares/id.middleware.js";
 //import {
 //  validarProductoCompleto,
@@ -21,6 +21,14 @@ router.post(
 
 router.get("/",             asyncHandler((request, response) => controller.listar(response)));
 router.get("/:id",validarId,asyncHandler((request, response) => controller.obtener(Number(request.params.id), response),),);
+
+router.get("/buscar", asyncHandler((request, response) => {
+    const productoConsultaDto = new ProductoConsultaDto(request.query);
+    return controller.buscar(productoConsultaDto, response);
+  }),
+);
+
+
 
 router.put("/:id",validarId,//validarProductoCompleto,
   asyncHandler((request, response) => {
