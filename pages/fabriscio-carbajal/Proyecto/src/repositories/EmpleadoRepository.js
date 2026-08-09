@@ -175,6 +175,16 @@ export class EmpleadoRepository {
     });
   }
 
+  // DELETE  
+  async eliminar(id) {
+    const empleadoModel = await this.buscarPorId(id);
+    if (!empleadoModel) return null;
+
+    this.db.prepare("DELETE FROM empleado WHERE id = ?").run(Number(id));
+    return empleadoModel;
+  }
+
+
 
 }
 
