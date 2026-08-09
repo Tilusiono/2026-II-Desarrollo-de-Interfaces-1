@@ -101,8 +101,49 @@ export class EmpleadoRepository {
         empleado.fechaNacimiento
       );
 
+      
+
+
     return this.buscarPorId(Number(resultado.lastInsertRowid));
   }
+
+  async reemplazar(identificador, empleado) {
+    const resultado = this.db
+      .prepare(
+        `
+        UPDATE empleado
+        SET nombre = ?,
+            apellido_paterno = ?,
+            dni = ?,
+            telefono = ?,
+            salario = ?,
+            dirccion = ?,
+            hora_ingreso = ?,
+            hora_salida = ?,
+            disponible = ?,
+            fecha_ingreso = ?,
+            fecha_nacimiento = ?,
+        WHERE id = ?
+      `,
+      )
+      .run(
+        empleado.nombre,
+        empleado.apellido_paterno,
+        empleado.dni,
+        empleado.telefono,
+        empleado.salario,
+        empleado.direccion,
+        empleado.horaIngreso,
+        empleado.horaSalida,
+        Number(empleado.disponible),
+        empleado.fechaIngreso,
+        empleado.fechaNacimiento,
+        Number(identificador),
+      );
+
+    return resultado.changes ? this.buscarPorId(identificador) : null;
+  }
+
 }
 
 
