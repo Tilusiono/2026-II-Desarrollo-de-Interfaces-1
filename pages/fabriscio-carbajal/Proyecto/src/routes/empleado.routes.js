@@ -21,14 +21,17 @@ router.post(
 );
 
 router.get("/",               asyncHandler((request, response) => controller.listar(response)));
-router.get("/:id", validarId, asyncHandler((request, response) => controller.obtener(Number(request.params.id), response),),);
-
 
 router.get("/buscar", asyncHandler((request, response) => {
     const empleadoConsultaDto = new EmpleadoConsultaDto(request.query);
     return controller.buscar(empleadoConsultaDto, response);
-  }),
+  })
 );
+
+router.get("/:id", validarId, asyncHandler((request, response) => controller.obtener(Number(request.params.id), response),),);
+
+
+
 
 
 

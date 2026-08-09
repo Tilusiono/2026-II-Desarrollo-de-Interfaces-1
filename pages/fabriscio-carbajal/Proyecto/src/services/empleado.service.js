@@ -146,7 +146,7 @@ export class EmpleadoService {
     const empleadoModel =
       await this.empleadoRepository.query(empleadoConsultaDto);
     return empleadoModel.map(
-      (empleadoModel) => new ProductoResponseDto(empleadoModel),
+      (empleadoModel) => new EmpleadoResponseDto(empleadoModel),
     );
   }
 

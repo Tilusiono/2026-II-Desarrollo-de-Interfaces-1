@@ -156,7 +156,7 @@ export class EmpleadoRepository {
     const salarioMax = empleadoConsultaDto.salarioMax ?? "";
     const fechaIngreso = empleadoConsultaDto.fechaIngreso ?? "";
 
-    return productos.filter((empleadoModel) => {
+    return empleado.filter((empleadoModel) => {
       const camposBuscables = {
         id: empleadoModel.id,
         nombre: empleadoModel.nombre,
@@ -170,7 +170,7 @@ export class EmpleadoRepository {
         (disponible === "" || String(empleadoModel.disponible) === String(disponible)) &&
         (salarioMin === "" || empleadoModel.salario >= Number(salarioMin)) &&
         (salarioMax === "" || empleadoModel.salario <= Number(salarioMax)) &&
-        (fechaIngreso || empleadoModel.fechaIngreso === fechaIngreso) 
+        (fechaIngreso === "" || empleadoModel.fechaIngreso === fechaIngreso) 
       );
     });
   }
