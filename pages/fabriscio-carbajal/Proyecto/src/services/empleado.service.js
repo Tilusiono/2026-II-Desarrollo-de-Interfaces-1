@@ -67,6 +67,39 @@ export class EmpleadoService {
   }
 
 
+
+  async modificar(id, empleadoRequestDto) {
+    const empleadoExistenteModel =
+      await this.empleadoRepository.buscarPorId(id);
+    if (!empleadoExistenteModel)
+      throw new AppError("Empleado no encontrado", 404);
+    await this.validarCodigo(empleadoRequestDto.codigo, id); // !
+
+    //const imagenDatos = this.convertirImagen(productoRequestDto.imagenBase64);
+    const empleadoModel = new Empleado(
+      id,
+      empleadoRequestDto.nombre,
+      empleadoRequestDto.apellidoPaterno,
+      empleadoRequestDto.dni,
+      empleadoRequestDto.telefono,
+      empleadoRequestDto.salario,
+      empleadoRequestDto.direccion,
+      empleadoRequestDto.horaIngreso,
+      empleadoRequestDto.horaSalida,
+      empleadoRequestDto.disponible,
+      empleadoRequestDto.fechaIngreso,
+      empleadoRequestDto.fechaNacimiento,
+    );
+
+    const empleadoActualizadoModel = await this.empleadoRepository.modificar(
+      id,
+      empleadoModel,
+    );
+    return new EmpleadoResponseDto(empleadoActualizadoModel);
+  }
+
+
+
 /*  convertirImagen(imagenBase64) {
     if (imagenBase64 === null || imagenBase64 === "") {
       return { imagen: null, imagenMimeType: null };
