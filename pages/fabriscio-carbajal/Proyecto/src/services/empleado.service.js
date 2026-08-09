@@ -53,17 +53,17 @@ export class EmpleadoService {
 
   // OBTENER TODOS LOS ELEMENTOS
   async listar() {
-    const listaEmpleados = await this.productoRepository.listar();
+    const listaEmpleados = await this.empleadoRepository.listar();
     return listaEmpleados.map(
-      (empl) => new ProductoResponseDto(empl),
+      (empl) => new EmpleadoResponseDto(empl),
     );
   }
 
   // OBTENER UNA PARTE DE LA TABLA
   async obtener(id) {
-    const empleado = await this.productoRepository.buscarPorId(id);
+    const empleado = await this.empleadoRepository.buscarPorId(id);
     if (!empleado) throw new AppError("Empleado no encontrado", 404);
-    return new ProductoResponseDto(empleado);
+    return new EmpleadoResponseDto(empleado);
   }
 
 

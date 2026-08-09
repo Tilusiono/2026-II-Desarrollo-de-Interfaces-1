@@ -36,16 +36,16 @@ export class EmpleadoRepository {
         new Empleado(
           fila.id,
           fila.nombre,
-          fila.apellidoPaterno,
+          fila.apellido_paterno,
           fila.dni,
           fila.telefono,
           fila.salario,
           fila.direccion,
-          fila.horaIngreso,
-          fila.horaSalida,
+          fila.hora_ingreso,
+          fila.hora_salida,
           fila.disponible,
-          fila.fechaIngreso,
-          fila.fechaNacimiento,
+          fila.fecha_ingreso,
+          fila.fecha_nacimiento,
         ),
     );
   }
@@ -61,16 +61,16 @@ export class EmpleadoRepository {
     return new Empleado(
         fila.id,
         fila.nombre,
-        fila.apellidoPaterno,
+        fila.apellido_paterno,
         fila.dni,
         fila.telefono,
         fila.salario,
         fila.direccion,
-        fila.horaIngreso,
-        fila.horaSalida,
+        fila.hora_ingreso,
+        fila.hora_salida,
         fila.disponible,
-        fila.fechaIngreso,
-        fila.fechaNacimiento,
+        fila.fecha_ingreso,
+        fila.fecha_nacimiento,
     );
   }
 
