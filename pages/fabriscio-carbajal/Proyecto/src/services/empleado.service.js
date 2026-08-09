@@ -13,7 +13,7 @@ export class EmpleadoService {
   }
 
   async crear(empleadoRequestDto) {
-    await this.validarCodigo(empleadoRequestDto.codigo);
+    await this.validarDni(empleadoRequestDto.dni);
     // const imagenDatos = this.convertirImagen(empleadoRequestDto.imagenBase64);
 
     const empleadoModel = new Empleado(
@@ -38,16 +38,16 @@ export class EmpleadoService {
     return new EmpleadoResponseDto(empleadoCreadoModel);
   }
 
-  async validarCodigo(nombre, idOmitido) {
+  async validarDni(dni, idOmitido) {
     const empleadoModel = await this.empleadoRepository.listar();
     const empleadoRepetidoModel = empleadoModel.find(
       (empleadoModel) =>
-        normalizarTexto(empleadoModel.nombre) === normalizarTexto(nombre) &&
+        normalizarTexto(empleadoModel.dni) === normalizarTexto(dni) &&
         Number(empleadoModel.id) !== Number(idOmitido),
     );
 
     if (empleadoRepetidoModel) {
-      throw new AppError("El nombre de empleado ya existe", 409);
+      throw new AppError("El dni de empleado ya existe", 409);
     }
   }
 
@@ -67,15 +67,15 @@ export class EmpleadoService {
   }
 
 
-
+  // modificar todo
   async modificarService(id, empleadoRequestDto) {
     const empleadoExistenteModel =
       await this.empleadoRepository.buscarPorId(id);
     if (!empleadoExistenteModel)
       throw new AppError("Empleado no encontrado", 404);
-    await this.validarCodigo(empleadoRequestDto.codigo, id); // !
+    await this.validarDni(empleadoRequestDto.dni, id); // !
 
-    //const imagenDatos = this.convertirImagen(productoRequestDto.imagenBase64);
+    //const imagenDatos = this.convertirImagen(empleadoRequestDto.imagenBase64);
     const empleadoModel = new Empleado(
       id,
       empleadoRequestDto.nombre,
@@ -97,6 +97,50 @@ export class EmpleadoService {
     );
     return new EmpleadoResponseDto(empleadoActualizadoModel);
   }
+
+
+  // modificar parcial
+  async modificarParcialService(id, empleadoRequestDto) {
+    const empleadoActualModel = await this.empleadoRepository.buscarPorId(id);
+    if (!empleadoActualModel) throw new AppError("Empleado no encontrado", 404);
+
+    const dni = empleadoRequestDto.dni ?? empleadoActualModel.dni;
+    await this.validarDni(dni, id);
+
+    //let imagen = empleadoActualModel.imagen;
+    //let imagenMimeType = empleadoActualModel.imagenMimeType;
+
+    //if (empleadoRequestDto.imagenBase64 !== undefined) {
+    // const imagenDatos = this.convertirImagen(empleadoRequestDto.imagenBase64);
+    //  imagen = imagenDatos.imagen;
+    //  imagenMimeType = imagenDatos.imagenMimeType;
+    //}
+
+    const conservarSiNoSeEnvia = (nuevoValor, valorActual) =>
+      nuevoValor === undefined ? valorActual : nuevoValor;
+
+    const empleadoModel = new Empleado(
+      id,
+      empleadoRequestDto.nombre ?? empleadoActualModel.nombre,
+      empleadoRequestDto.apellidoPaterno ?? empleadoActualModel.apellidoPaterno,
+      dni,
+      empleadoRequestDto.telefono ?? empleadoActualModel.telefono,
+      conservarSiNoSeEnvia(empleadoRequestDto.salario, empleadoActualModel.salario),
+      empleadoRequestDto.direccion ?? empleadoActualModel.direccion,
+      conservarSiNoSeEnvia(empleadoRequestDto.horaIngreso, empleadoActualModel.horaIngreso),
+      conservarSiNoSeEnvia(empleadoRequestDto.horaSalida,empleadoActualModel.horaSalida),
+      empleadoRequestDto.disponible ?? empleadoActualModel.disponible,
+      empleadoRequestDto.fechaIngreso ?? empleadoActualModel.fechaIngreso,
+      empleadoRequestDto.fechaNacimiento ?? empleadoActualModel.fechaNacimiento,
+    );
+
+    const empleadoActualizadoModel = await this.empleadoRepository.modificarRepositorio(
+      id,
+      empleadoModel,
+    );
+    return new EmpleadoResponseDto(empleadoActualizadoModel);
+  }
+
 
 
 
