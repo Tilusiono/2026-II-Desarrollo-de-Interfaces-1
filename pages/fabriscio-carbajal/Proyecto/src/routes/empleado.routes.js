@@ -41,9 +41,6 @@ router.get("/:id", validarId, asyncHandler((request, response) => controller.obt
 
 
 
-
-
-
 router.put(
   "/:id",
   validarId,
@@ -64,6 +61,12 @@ router.patch(
     const empleadoRequestDto = new EmpleadoRequestDto(request.body);
     return controller.modificarParcialControlador(id, empleadoRequestDto, response);
   }),
+);
+
+
+router.delete("/:id", validarId, asyncHandler((request, response) =>
+    controller.eliminar(Number(request.params.id), response),
+  ),
 );
 
 
