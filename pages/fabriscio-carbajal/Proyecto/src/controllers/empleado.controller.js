@@ -5,6 +5,7 @@ export class EmpleadoController {
     this.empleadoService = empleadoServiceActual;
   }
 
+  // POST
   async crear(empleadoRequestDto, response) {
     const empleadoResponseDto =
       await this.empleadoService.crear(empleadoRequestDto);
@@ -13,6 +14,22 @@ export class EmpleadoController {
       empleadoResponseDto,
     });
   }
+
+  // GET ALL
+  async listar(response) {
+    const empleados = await this.empleadoService.listar();
+    response.json({
+      total: empleados.length,
+      empleados,
+    });
+  }
+
+  // GET BY ID  
+  async obtener(id, response) {
+    const empleado = await this.empleadoService.obtener(id);
+    response.json({ empleado });
+  }
+
 }
 
 export const empleadoController = new EmpleadoController(empleadoService);
