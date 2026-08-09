@@ -169,13 +169,21 @@ export class ProductosService {
     return new ProductoResponseDto(productoActualizadoModel);
   }
 
-    async buscar(productoConsultaDto) {
+  async buscar(productoConsultaDto) {
     const productosModel =
       await this.productoRepository.query(productoConsultaDto);
     return productosModel.map(
       (productoModel) => new ProductoResponseDto(productoModel),
     );
   }
+
+  async eliminar(id) {
+    const productoEliminadoModel = await this.productoRepository.eliminar(id);
+    if (!productoEliminadoModel)
+      throw new AppError("Producto no encontrado", 404);
+    return new ProductoResponseDto(productoEliminadoModel);
+  }
+
 
 
 }

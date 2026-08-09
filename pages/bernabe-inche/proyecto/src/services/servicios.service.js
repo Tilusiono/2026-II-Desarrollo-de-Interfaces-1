@@ -161,12 +161,19 @@ export class ServiciosService {
     return new ServicioResponseDto(servicioActualizadoModel);
   }
 
-    async buscar(servicioConsultaDto) {
+  async buscar(servicioConsultaDto) {
     const serviciosModel =
       await this.servicioRepository.query(servicioConsultaDto);
     return serviciosModel.map(
       (servicioModel) => new ServicioResponseDto(servicioModel),
     );
+  }
+
+  async eliminar(id) {
+    const servicioEliminadoModel = await this.servicioRepository.eliminar(id);
+    if (!servicioEliminadoModel)
+        throw new AppError("Servicio no encontrado", 404);
+    return new ServicioResponseDto(servicioEliminadoModel);
   }
 
 }
