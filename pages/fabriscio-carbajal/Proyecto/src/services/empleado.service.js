@@ -68,7 +68,7 @@ export class EmpleadoService {
 
 
 
-  async modificar(id, empleadoRequestDto) {
+  async modificarService(id, empleadoRequestDto) {
     const empleadoExistenteModel =
       await this.empleadoRepository.buscarPorId(id);
     if (!empleadoExistenteModel)
@@ -91,7 +91,7 @@ export class EmpleadoService {
       empleadoRequestDto.fechaNacimiento,
     );
 
-    const empleadoActualizadoModel = await this.empleadoRepository.modificar(
+    const empleadoActualizadoModel = await this.empleadoRepository.modificarRepositorio(
       id,
       empleadoModel,
     );

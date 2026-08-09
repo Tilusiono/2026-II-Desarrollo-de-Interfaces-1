@@ -30,6 +30,18 @@ export class EmpleadoController {
     response.json({ empleado }); //con el html
   }
 
+  async modificarControlador(id, empleadoRequestDto, response) {
+    const productoResponseDto = await this.empleadoService.modificarService(
+      id,
+      productoRequestDto,
+    );
+    response.json({
+      mensaje: "Producto reemplazado",
+      productoResponseDto,
+    });
+  }
+
+
 }
 
 export const empleadoController = new EmpleadoController(empleadoService);

@@ -107,7 +107,7 @@ export class EmpleadoRepository {
     return this.buscarPorId(Number(resultado.lastInsertRowid));
   }
 
-  async modificar(identificador, empleado) {
+  async modificarRepositorio(identificador, empleado) {
     const resultado = this.db
       .prepare(
         `
