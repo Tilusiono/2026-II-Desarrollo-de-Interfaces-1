@@ -44,7 +44,7 @@ export class EmpleadoController {
 
   // PATCH
   async modificarParcialControlador(id, empleadoRequestDto, response) {
-    const empleadoResponseDto = await this.empleadoService.modificarParcialControlador(
+    const empleadoResponseDto = await this.empleadoService.modificarParcialService(
       id,
       empleadoRequestDto,
     );
