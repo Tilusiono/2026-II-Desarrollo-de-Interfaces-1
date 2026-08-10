@@ -1,12 +1,10 @@
 import { AppError } from "../errors/AppError.js";
 import Categoria from "../models/Categoria.js";
-
-
-import { CategoriaResponseDto } from "../dtos/Categorias.dto.js";
+import { CategoriaResponseDto } from "../dtos/Categoria.dto.js";
 import { CategoriaRepository } from "../repositories/CategoriaRepository.js";
 import { normalizarTexto } from "../utils/texto.js";
 
-export class CategoriasService {
+export class CategoriaService {
   constructor(categoriaRepository = new CategoriaRepository()) {
     this.categoriaRepository = categoriaRepository;
   }
@@ -41,4 +39,4 @@ export class CategoriasService {
   }
 }
 
-export const categoriasService = new CategoriasService();
+export const categoriaService = new CategoriaService();

@@ -1,5 +1,5 @@
 import { AppError } from "../errors/AppError.js";
-import Servicio from "../models/Servicio.js";
+import Servicio from "../models/Servicios.js";
 
 
 import { ServicioResponseDto } from "../dtos/Servicios.dto.js";
