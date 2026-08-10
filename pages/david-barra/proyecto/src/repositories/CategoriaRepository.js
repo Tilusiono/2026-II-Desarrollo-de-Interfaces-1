@@ -24,7 +24,7 @@ export class CategoriaRepository {
         horaRegistro TIME NOT NULL,
         fechaHoraRegistro DATETIME NOT NULL,
         imagen BLOB,
-        imagenMimeType VARCHAR(100),
+        imagenMimeType VARCHAR(100)
         );
     `);
   }

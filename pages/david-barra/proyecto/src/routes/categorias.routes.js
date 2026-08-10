@@ -21,4 +21,13 @@ router.get("/", asyncHandler((request, response) => controller.listar(response))
 router.get("/:id", validarId, asyncHandler((request, response) => controller.obtener(Number(request.params.id), response),),);
 
 
+router.put("/:id",validarId,//validarProductoCompleto,
+  asyncHandler((request, response) => {
+    const id = Number(request.params.id);
+    const categoriaRequestDto = new CategoriaRequestDto(request.body);
+    return controller.modificarControlador(id, categoriaRequestDto, response);
+  }),
+);
+
+
 export default router;
