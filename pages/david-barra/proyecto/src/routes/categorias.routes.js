@@ -2,9 +2,12 @@ import { Router } from "express";
 import { asyncHandler } from "../utils/asyncHandler.js";
 
 import { CategoriaRequestDto} from "../dtos/CategoriaDto.js";
-//import { validarCategoriaCompleto as validacion } from "../middlewares/validacion.middleware.js";
 import { categoriasController as controller } from "../controllers/categorias.controller.js";
 import { validarId } from "../middlewares/id.middleware.js";
+//import {
+//  validarCategoriaCompleto,
+//  validarCategoriaParcial,
+//} from "../middlewares/validacion.middleware.js";
 
 
 const router = Router();
@@ -21,7 +24,7 @@ router.get("/", asyncHandler((request, response) => controller.listar(response))
 router.get("/:id", validarId, asyncHandler((request, response) => controller.obtener(Number(request.params.id), response),),);
 
 
-router.put("/:id",validarId,//validarProductoCompleto,
+router.put("/:id",validarId,//validarCategoriaCompleto,
   asyncHandler((request, response) => {
     const id = Number(request.params.id);
     const categoriaRequestDto = new CategoriaRequestDto(request.body);
@@ -29,5 +32,12 @@ router.put("/:id",validarId,//validarProductoCompleto,
   }),
 );
 
+router.patch("/:id",validarId,//validarCategoriaParcial,
+  asyncHandler((request, response) => {
+    const id = Number(request.params.id);
+    const categoriaRequestDto = new CategoriaRequestDto(request.body);
+    return controller.modificarParcialControlador(id, categoriaRequestDto, response);
+  }),
+);
 
 export default router;
