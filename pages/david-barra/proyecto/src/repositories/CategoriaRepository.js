@@ -111,7 +111,7 @@ export class CategoriaRepository {
   }
 
 //PUT
-  async modificar(identificador, categ) {
+  async modificarRespositorio(identificador, categ) {
     const resultado = this.db
       .prepare(
         `

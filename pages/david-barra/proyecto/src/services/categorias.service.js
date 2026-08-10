@@ -85,7 +85,7 @@ export class CategoriasService {
     return new CategoriaResponseDto(categoria);
   }
 
-  async reemplazar(id, categoriaRequestDto) {
+  async modificarCategoria(id, categoriaRequestDto) {
     const categoriaExistenteModel =
       await this.categoriaRepository.buscarPorId(id);
     if (!categoriaExistenteModel)
@@ -110,11 +110,11 @@ export class CategoriasService {
       imagenDatos.imagenMimeType,
     );
 
-    const categoriaActualizadaModel = await this.categoriaRepository.modificar(
+    const categoriaActualizadaModel = await this.categoriaRepository.modificarRespositorio(
       id,
       categoriaModel,
     );
-    return new ProductoResponseDto(productoActualizadoModel);
+    return new CategoriaResponseDto(categoriaActualizadaModel);
   }
 
 }

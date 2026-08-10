@@ -28,6 +28,19 @@ export class CategoriasController {
     response.json({ categoria });
   }
 
+//PUT
+  async modificarControlador(id, categoriaRequestDto, response) {
+    const categoriaResponseDto = await this.categoriasService.modificarCategoria(
+      id,
+      categoriaRequestDto,
+    );
+    response.json({
+      mensaje: "Categoría modificada",
+      categoriaResponseDto,
+    });
+  }
+
+
 }
 
 export const categoriasController = new CategoriasController(categoriasService);
