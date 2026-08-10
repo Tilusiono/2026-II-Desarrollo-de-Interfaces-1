@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { serviciosController as controller } from "../controllers/Servicios.controller.js";
 import { validarServicioCompleto } from "../middlewares/Servicios.middleware.js";
+import { validarId } from "../middlewares/id.middleware.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ServicioRequestDto } from "../dtos/Servicios.dto.js";
 
@@ -22,13 +23,6 @@ router.get(
     controller.obtener(Number(request.params.id), response),
   ),
 );
-router.post(
-  "/",
-  validarProductoCompleto,
-  asyncHandler((request, response) => {
-    const productoRequestDto = new ProductoRequestDto(request.body);
-    return controller.crear(productoRequestDto, response);
-  }),
-);
+
 
 export default router;

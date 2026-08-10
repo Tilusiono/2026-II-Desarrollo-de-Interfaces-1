@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Hito 4 - Probar GET (Casino)</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/bootstrap-icons/font/bootstrap-icons.css" />
+  </head>
+  <body class="bg-dark text-light">
+    <nav class="navbar navbar-dark bg-danger border-bottom border-secondary mb-4">
+      <div class="container">
+        <span class="navbar-brand fw-bold">
+          <i class="bi bi-dice-5-fill me-2"></i>Casino System · Hito 4 · GET (Categorías y Servicios)
+        </span>
+      </div>
+    </nav>
+
+    <main class="container py-2">
+      <div id="mensaje" class="alert d-none" role="alert"></div>
+
+      <!-- SECCIÓN 1: CATEGORÍAS -->
+      <section class="card bg-secondary text-white border-0 shadow-sm mb-4">
+        <div class="card-body p-4">
+          <h2 class="h5 text-warning mb-3"><i class="bi bi-tags-fill me-2"></i>Probar Rutas GET: Categorías</h2>
+          <div class="row g-3 align-items-end mb-4">
+            <div class="col-md-4">
+              <button id="btn-listar-cat" class="btn btn-warning w-100 fw-bold text-dark">
+                <i class="bi bi-list-ul me-1"></i>GET: Listar Categorías
+              </button>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label" for="categoria-id">ID de Categoría</label>
+              <input id="categoria-id" type="number" min="1" value="1" class="form-control" />
+            </div>
+            <div class="col-md-4">
+              <button id="btn-obtener-cat" class="btn btn-outline-warning w-100 fw-bold">
+                <i class="bi bi-search me-1"></i>GET: Obtener Categoría por ID
+              </button>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <h3 class="h6 mb-0 text-light">Resultado Categorías</h3>
+            <span id="total-cat" class="badge text-bg-dark">0 categoría(s)</span>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-dark table-hover align-middle mb-0 border border-secondary">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Nombre</th>
+                  <th>Descripción</th>
+                  <th>Estado</th>
+                </tr>
+              </thead>
+              <tbody id="tabla-categorias">
+                <tr><td colspan="4" class="text-center text-secondary py-3">Ejecuta una consulta GET para categorías.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECCIÓN 2: SERVICIOS -->
+      <section class="card bg-secondary text-white border-0 shadow-sm">
+        <div class="card-body p-4">
+          <h2 class="h5 text-warning mb-3"><i class="bi bi-controller me-2"></i>Probar Rutas GET: Servicios</h2>
+          <div class="row g-3 align-items-end mb-4">
+            <div class="col-md-4">
+              <button id="btn-listar-serv" class="btn btn-warning w-100 fw-bold text-dark">
+                <i class="bi bi-list-ul me-1"></i>GET: Listar Servicios
+              </button>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label" for="servicio-id">ID de Servicio</label>
+              <input id="servicio-id" type="number" min="1" value="1" class="form-control" />
+            </div>
+            <div class="col-md-4">
+              <button id="btn-obtener-serv" class="btn btn-outline-warning w-100 fw-bold">
+                <i class="bi bi-search me-1"></i>GET: Obtener Servicio por ID
+              </button>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <h3 class="h6 mb-0 text-light">Resultado Servicios</h3>
+            <span id="total-serv" class="badge text-bg-dark">0 servicio(s)</span>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-dark table-hover align-middle mb-0 border border-secondary">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Código</th>
+                  <th>Nombre</th>
+                  <th>Precio</th>
+                  <th>Capacidad Máx.</th>
+                  <th>Estado</th>
+                </tr>
+              </thead>
+              <tbody id="tabla-servicios">
+                <tr><td colspan="6" class="text-center text-secondary py-3">Ejecuta una consulta GET para servicios.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      const mensaje = document.querySelector("#mensaje");
+
+      // --- CATEGORÍAS ---
+      const tablaCat = document.querySelector("#tabla-categorias");
+      const totalCat = document.querySelector("#total-cat");
+
+      document.querySelector("#btn-listar-cat").addEventListener("click", async () => {
+        await ejecutarGet("/api/categorias", (res) => res.categoriasResponseDto, renderizarCategorias, totalCat);
+      });
+
+      document.querySelector("#btn-obtener-cat").addEventListener("click", async () => {
+        const id = Number(document.querySelector("#categoria-id").value);
+        await ejecutarGet(`/api/categorias/${id}`, (res) => [res.categoriaResponseDto], renderizarCategorias, totalCat);
+      });
+
+      function renderizarCategorias(categorias) {
+        totalCat.textContent = `${categorias.length} categoría(s)`;
+        if (!categorias.length) {
+          tablaCat.innerHTML = '<tr><td colspan="4" class="text-center text-secondary py-3">Sin resultados.</td></tr>';
+          return;
+        }
+
+        tablaCat.innerHTML = categorias.map((cat) => `
+          <tr>
+            <td>${cat.id}</td>
+            <td>${cat.nombre}</td>
+            <td>${cat.descripcion ?? "Sin descripción"}</td>
+            <td><span class="badge text-bg-${cat.activo ? "success" : "secondary"}">${cat.activo ? "Activo" : "Inactivo"}</span></td>
+          </tr>
+        `).join("");
+      }
+
+      // --- SERVICIOS ---
+      const tablaServ = document.querySelector("#tabla-servicios");
+      const totalServ = document.querySelector("#total-serv");
+
+      document.querySelector("#btn-listar-serv").addEventListener("click", async () => {
+        await ejecutarGet("/api/servicios", (res) => res.serviciosResponseDto, renderizarServicios, totalServ);
+      });
+
+      document.querySelector("#btn-obtener-serv").addEventListener("click", async () => {
+        const id = Number(document.querySelector("#servicio-id").value);
+        await ejecutarGet(`/api/servicios/${id}`, (res) => [res.servicioResponseDto], renderizarServicios, totalServ);
+      });
+
+      function renderizarServicios(servicios) {
+        totalServ.textContent = `${servicios.length} servicio(s)`;
+        if (!servicios.length) {
+          tablaServ.innerHTML = '<tr><td colspan="6" class="text-center text-secondary py-3">Sin resultados.</td></tr>';
+          return;
+        }
+
+        tablaServ.innerHTML = servicios.map((serv) => `
+          <tr>
+            <td>${serv.id}</td>
+            <td>${serv.codigo}</td>
+            <td>${serv.nombre}</td>
+            <td>S/ ${Number(serv.precio).toFixed(2)}</td>
+            <td>${serv.capacidadMax ?? "-"} pers.</td>
+            <td><span class="badge text-bg-${serv.activo ? "success" : "secondary"}">${serv.activo ? "Activo" : "Inactivo"}</span></td>
+          </tr>
+        `).join("");
+      }
+
+      // --- FUNCIÓN GENERAL FETCH ---
+      async function ejecutarGet(ruta, extraerDatos, funcionRender, elementoTotal) {
+        try {
+          const respuestaHttp = await fetch(ruta);
+          const respuesta = await respuestaHttp.json();
+          if (!respuestaHttp.ok) {
+            throw new Error(`HTTP ${respuestaHttp.status} · ${respuesta.mensaje ?? "Error en la petición"}`);
+          }
+
+          const datos = extraerDatos(respuesta);
+          funcionRender(datos);
+          mostrarMensaje(`HTTP ${respuestaHttp.status} · GET correcto (${ruta})`, true);
+        } catch (error) {
+          funcionRender([]);
+          mostrarMensaje(error.message, false);
+        }
+      }
+
+      function mostrarMensaje(texto, correcto) {
+        mensaje.className = `alert alert-${correcto ? "success" : "danger"} mb-4`;
+        mensaje.textContent = texto;
+      }
+    </script>
+    <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

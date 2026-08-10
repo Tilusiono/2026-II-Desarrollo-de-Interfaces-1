@@ -2,7 +2,8 @@
   "name": "italo-chocce",
   "version": "1.0.0",
   "main": "ejemplo_herencia.js",
-  "scripts": {
+  "scripts": { 
+    
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

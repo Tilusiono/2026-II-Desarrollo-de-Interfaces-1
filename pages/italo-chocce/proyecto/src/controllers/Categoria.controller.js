@@ -1,29 +1,30 @@
 import { categoriaService } from "../services/Categoria.service.js";
 
 export class CategoriaController {
-  constructor(categoriasServiceActual = categoriasService) {
-    this.categoriasService = categoriasServiceActual;
+  constructor(categoriaServiceActual = categoriaService) {
+    this.categoriaService = categoriaServiceActual;
   }
 
   async crear(categoriaRequestDto, response) {
     const categoriaResponseDto =
-      await this.categoriasService.crear(categoriaRequestDto);
+      await this.categoriaService.crear(categoriaRequestDto);
     response.status(201).json({
       mensaje: "Categoría creada",
       categoriaResponseDto,
     });
   }
-  async listar(req, res) {
+
+  async listar(response) {
     const categoriasResponseDto = await this.categoriaService.listar();
-    res.json({
+    response.json({
       total: categoriasResponseDto.length,
       categoriasResponseDto,
     });
   }
 
-  async obtener(req, res) {
-    const categoriaResponseDto = await this.categoriaService.obtener(req.params.id);
-    res.json({ categoriaResponseDto });
+  async obtener(id, response) {
+    const categoriaResponseDto = await this.categoriaService.obtener(id);
+    response.json({ categoriaResponseDto });
   }
 }
 
