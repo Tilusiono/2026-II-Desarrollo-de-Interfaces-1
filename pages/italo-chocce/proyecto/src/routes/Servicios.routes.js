@@ -22,5 +22,13 @@ router.get(
     controller.obtener(Number(request.params.id), response),
   ),
 );
+router.post(
+  "/",
+  validarProductoCompleto,
+  asyncHandler((request, response) => {
+    const productoRequestDto = new ProductoRequestDto(request.body);
+    return controller.crear(productoRequestDto, response);
+  }),
+);
 
 export default router;
