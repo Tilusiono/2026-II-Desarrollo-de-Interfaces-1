@@ -13,6 +13,18 @@ export class CategoriaController {
       categoriaResponseDto,
     });
   }
+  async listar(req, res) {
+    const categoriasResponseDto = await this.categoriaService.listar();
+    res.json({
+      total: categoriasResponseDto.length,
+      categoriasResponseDto,
+    });
+  }
+
+  async obtener(req, res) {
+    const categoriaResponseDto = await this.categoriaService.obtener(req.params.id);
+    res.json({ categoriaResponseDto });
+  }
 }
 
 export const categoriaController = new CategoriaController(categoriaService);

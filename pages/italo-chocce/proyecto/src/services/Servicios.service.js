@@ -67,6 +67,18 @@ export class ServiciosService {
       imagenMimeType: coincidencia[1],
     };
   }
+  async listar() {
+    const serviciosModel = await this.servicioRepository.listar();
+    return serviciosModel.map(
+      (servicioModel) => new ServicioResponseDto(servicioModel)
+    );
+  }
+
+  async obtener(id) {
+    const servicioModel = await this.servicioRepository.buscarPorId(id);
+    if (!servicioModel) throw new AppError("Servicio no encontrado", 404);
+    return new ServicioResponseDto(servicioModel);
+  }
 }
 
 export const serviciosService = new ServiciosService();

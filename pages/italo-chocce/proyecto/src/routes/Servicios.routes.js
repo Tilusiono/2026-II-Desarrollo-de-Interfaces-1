@@ -14,5 +14,13 @@ router.post(
     return controller.crear(servicioRequestDto, response);
   }),
 );
+router.get("/", asyncHandler((request, response) => controller.listar(response)));
+router.get(
+  "/:id",
+  validarId,
+  asyncHandler((request, response) =>
+    controller.obtener(Number(request.params.id), response),
+  ),
+);
 
 export default router;

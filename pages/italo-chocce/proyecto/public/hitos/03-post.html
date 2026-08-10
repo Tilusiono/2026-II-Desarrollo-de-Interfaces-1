@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Casino - Gestión de Categorías y Servicios</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/bootstrap-icons/font/bootstrap-icons.css" />
+  </head>
+  <body class="bg-dark text-light">
+    <nav class="navbar navbar-dark bg-danger border-bottom border-secondary mb-4">
+      <div class="container">
+        <span class="navbar-brand fw-bold">
+          <i class="bi bi-dice-5-fill me-2"></i>Casino System · Hito Categorías y Servicios
+        </span>
+      </div>
+    </nav>
+
+    <main class="container py-2">
+      <div class="row g-4">
+        
+        <!-- SECCIÓN 1: CREAR CATEGORÍA -->
+        <div class="col-lg-5">
+          <div class="card bg-secondary text-white border-0 shadow h-100">
+            <div class="card-body p-4">
+              <h2 class="h5 mb-3 text-warning"><i class="bi bi-tags-fill me-2"></i>Nueva Categoría</h2>
+              <p class="text-light small mb-3">POST /api/categorias</p>
+
+              <form id="form-categoria" class="row g-3">
+                <div class="col-12">
+                  <label class="form-label" for="cat-id">ID Categoría</label>
+                  <input id="cat-id" class="form-control" value="CAT-CAS-001" required />
+                </div>
+                <div class="col-12">
+                  <label class="form-label" for="cat-nombre">Nombre</label>
+                  <input id="cat-nombre" class="form-control" value="Mesas de Juego VIP" required />
+                </div>
+                <div class="col-12">
+                  <label class="form-label" for="cat-descripcion">Descripción</label>
+                  <textarea id="cat-descripcion" class="form-control" rows="2">Área exclusiva para Blackjack, Ruleta y Poker</textarea>
+                </div>
+                <div class="col-12">
+                  <div class="form-check form-switch">
+                    <input id="cat-activo" class="form-check-input" type="checkbox" checked />
+                    <label class="form-check-label" for="cat-activo">Activo</label>
+                  </div>
+                </div>
+                <div class="col-12 mt-3">
+                  <button class="btn btn-warning w-100 fw-bold text-dark">
+                    <i class="bi bi-plus-circle-fill me-1"></i> Guardar Categoría
+                  </button>
+                </div>
+              </form>
+              <div id="mensaje-cat" class="alert d-none mt-3 p-2 small" role="alert"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECCIÓN 2: CREAR SERVICIO -->
+        <div class="col-lg-7">
+          <div class="card bg-secondary text-white border-0 shadow h-100">
+            <div class="card-body p-4">
+              <h2 class="h5 mb-3 text-warning"><i class="bi bi-controller me-2"></i>Nuevo Servicio</h2>
+              <p class="text-light small mb-3">POST /api/servicios</p>
+
+              <form id="form-servicio" class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label" for="serv-codigo">Código</label>
+                  <input id="serv-codigo" class="form-control" value="SERV-CAS-001" required />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="serv-nombre">Nombre del Servicio</label>
+                  <input id="serv-nombre" class="form-control" value="Reserva Mesa Poker VIP" required />
+                </div>
+
+                <div class="col-md-6">
+                  <label class="form-label" for="serv-categoria">Categoría</label>
+                  <select id="serv-categoria" class="form-select" required>
+                    <option value="" disabled selected>Cargando categorías...</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="serv-precio">Precio (S/)</label>
+                  <input id="serv-precio" type="number" min="0" step="0.01" class="form-control" value="500.00" required />
+                </div>
+
+                <div class="col-md-4">
+                  <label class="form-label" for="serv-capacidad">Capacidad Máx.</label>
+                  <input id="serv-capacidad" type="number" class="form-control" value="10" min="1" required />
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label" for="serv-duracion">Duración (min)</label>
+                  <input id="serv-duracion" type="number" class="form-control" value="120" min="1" required />
+                </div>
+                <div class="col-md-4">
+                  <div class="form-check form-switch mt-4 pt-2">
+                    <input id="serv-activo" class="form-check-input" type="checkbox" checked />
+                    <label class="form-check-label" for="serv-activo">Activo</label>
+                  </div>
+                </div>
+
+                <div class="col-12">
+                  <label class="form-label" for="serv-descripcion">Descripción</label>
+                  <textarea id="serv-descripcion" class="form-control" rows="2">Servicio exclusivo con crupier privado y barra libre</textarea>
+                </div>
+
+                <div class="col-12 mt-3">
+                  <button class="btn btn-warning w-100 fw-bold text-dark">
+                    <i class="bi bi-cloud-arrow-up-fill me-1"></i> Guardar Servicio
+                  </button>
+                </div>
+              </form>
+              <div id="mensaje-serv" class="alert d-none mt-3 p-2 small" role="alert"></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+    <script>
+      // 1. Cargar las categorías en el select al abrir la página
+      async function cargarCategoriasSelect() {
+        try {
+          const res = await fetch("/api/categorias");
+          const categorias = await res.json();
+          const select = document.querySelector("#serv-categoria");
+          
+          select.innerHTML = '<option value="" disabled selected>Seleccione una categoría</option>';
+          
+          if (Array.isArray(categorias) && categorias.length > 0) {
+            categorias.forEach(cat => {
+              const option = document.createElement("option");
+              option.value = cat.id;
+              option.textContent = cat.nombre;
+              select.appendChild(option);
+            });
+          } else {
+            select.innerHTML = '<option value="" disabled>No hay categorías registradas</option>';
+          }
+        } catch (error) {
+          console.error("Error al cargar categorías:", error);
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", cargarCategoriasSelect);
+
+      // 2. Enviar Formulario de Categoría
+      document.querySelector("#form-categoria").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const msg = document.querySelector("#mensaje-cat");
+
+        const data = {
+          id: document.querySelector("#cat-id").value.trim(),
+          nombre: document.querySelector("#cat-nombre").value.trim(),
+          descripcion: document.querySelector("#cat-descripcion").value.trim(),
+          activo: document.querySelector("#cat-activo").checked,
+          horaRegistro: new Date().toTimeString().split(" ")[0].slice(0,5),
+          fechaHoraRegistro: new Date().toISOString().slice(0,19)
+        };
+
+        try {
+          const res = await fetch("/api/categorias", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data)
+          });
+          const resultado = await res.json();
+
+          msg.className = `alert alert-${res.ok ? "success" : "danger"} mt-3 p-2 small`;
+          msg.textContent = `HTTP ${res.status} · ${resultado.mensaje ?? "Procesado"}`;
+          msg.classList.remove("d-none");
+
+          if (res.ok) cargarCategoriasSelect(); // Recargar el select automáticamente
+        } catch (err) {
+          msg.className = "alert alert-danger mt-3 p-2 small";
+          msg.textContent = err.message;
+          msg.classList.remove("d-none");
+        }
+      });
+
+      // 3. Enviar Formulario de Servicio
+      document.querySelector("#form-servicio").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const msg = document.querySelector("#mensaje-serv");
+
+        const data = {
+          codigo: document.querySelector("#serv-codigo").value.trim(),
+          nombre: document.querySelector("#serv-nombre").value.trim(),
+          categoriaId: document.querySelector("#serv-categoria").value,
+          precio: Number(document.querySelector("#serv-precio").value),
+          capacidadMax: Number(document.querySelector("#serv-capacidad").value),
+          duracionMinutos: Number(document.querySelector("#serv-duracion").value),
+          descripcion: document.querySelector("#serv-descripcion").value.trim(),
+          activo: document.querySelector("#serv-activo").checked,
+          horaRegistro: new Date().toTimeString().split(" ")[0].slice(0,5),
+          fechaHoraRegistro: new Date().toISOString().slice(0,19),
+          fechaVencimiento: "2026-12-31",
+          imagen: null,
+          imagenMimeType: null
+        };
+
+        try {
+          const res = await fetch("/api/servicios", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data)
+          });
+          const resultado = await res.json();
+
+          msg.className = `alert alert-${res.ok ? "success" : "danger"} mt-3 p-2 small`;
+          msg.textContent = `HTTP ${res.status} · ${resultado.mensaje ?? "Procesado"}`;
+          msg.classList.remove("d-none");
+        } catch (err) {
+          msg.className = "alert alert-danger mt-3 p-2 small";
+          msg.textContent = err.message;
+          msg.classList.remove("d-none");
+        }
+      });
+    </script>
+    <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

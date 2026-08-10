@@ -13,6 +13,18 @@ export class ServiciosController {
       servicioResponseDto,
     });
   }
+  async listar(req, res) {
+    const serviciosResponseDto = await this.servicioService.listar();
+    res.json({
+      total: serviciosResponseDto.length,
+      serviciosResponseDto,
+    });
+  }
+
+  async obtener(req, res) {
+    const servicioResponseDto = await this.servicioService.obtener(req.params.id);
+    res.json({ servicioResponseDto });
+  }
 }
 
 export const serviciosController = new ServiciosController(serviciosService);

@@ -37,6 +37,19 @@ export class CategoriaService {
       throw new AppError("El código ID de categoría ya existe", 409);
     }
   }
+
+  async listar() {
+    const categoriasModel = await this.categoriaRepository.listar();
+    return categoriasModel.map(
+      (categoriaModel) => new CategoriaResponseDto(categoriaModel)
+    );
+  }
+
+  async obtener(id) {
+    const categoriaModel = await this.categoriaRepository.buscarPorId(id);
+    if (!categoriaModel) throw new AppError("Categoría no encontrada", 404);
+    return new CategoriaResponseDto(categoriaModel);
+  }  
 }
 
 export const categoriaService = new CategoriaService();
