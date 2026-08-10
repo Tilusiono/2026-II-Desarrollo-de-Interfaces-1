@@ -12,7 +12,6 @@ export class CategoriaRequestDto {
     this.horaRegistro = requestBody.horaRegistro;
     this.fechaHoraRegistro = requestBody.fechaHoraRegistro;
     this.imagenBase64 = requestBody.imagenBase64;
-    this.observaciones = requestBody.observaciones;
   }
 }
 
@@ -40,7 +39,6 @@ export class CategoriaResponseDto {
     this.fechaLimite = categoriaModel.fechaLimite;
     this.horaRegistro = categoriaModel.horaRegistro;
     this.fechaHoraRegistro = categoriaModel.fechaHoraRegistro;
-    this.observaciones = categoriaModel.observaciones;
     this.imagenMimeType = categoriaModel.imagenMimeType;
     this.imagenBase64 = categoriaModel.imagen
       ? `data:${categoriaModel.imagenMimeType};base64,${Buffer.from(

@@ -71,6 +71,20 @@ export class CategoriasService {
       imagenMimeType: coincidencia[1],
     };
   }
+
+  async listar() {
+    const categorias = await this.categoriaRepository.listar();
+    return categorias.map(
+      (xd) => new CategoriaResponseDto(xd),
+    );
+  }
+//para uno 
+  async obtener(id) {
+    const categoria = await this.categoriaRepository.buscarPorId(id);
+    if (!categoria) throw new AppError("Categoría no encontrada", 404);
+    return new CategoriaResponseDto(categoria);
+  }
+
 }
 
 export const categoriasService = new CategoriasService();

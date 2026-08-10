@@ -57,7 +57,7 @@ export class CategoriaRepository {
 //GET productos by ID
   async buscarPorId(id) {
     const fila = this.db
-      .prepare("SELECT * FROM productos WHERE id = ?")
+      .prepare("SELECT * FROM categorias WHERE id = ?")
       .get(Number(id));
 
     if (!fila) return null;
