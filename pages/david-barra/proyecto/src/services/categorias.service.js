@@ -164,4 +164,3 @@ export class CategoriasService {
 }
 
 export const categoriasService = new CategoriasService();
-//xd

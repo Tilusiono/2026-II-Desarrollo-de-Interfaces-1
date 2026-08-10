@@ -40,6 +40,17 @@ export class CategoriasController {
     });
   }
 
+//PATCH
+  async modificarParcialControlador(id, categoriaRequestDto, response) {
+    const categoriaResponseDto = await this.categoriasService.modificarParcialCategoria(
+      id,
+      categoriaRequestDto,
+    );
+    response.json({
+      mensaje: "Categoría actualizada",
+      categoriaResponseDto,
+    });
+  }
 
 }
 

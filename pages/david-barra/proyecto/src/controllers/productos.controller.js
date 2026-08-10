@@ -39,6 +39,18 @@ export class ProductoController {
     });
   }
 
+//PATCH
+  async actualizar(id, productoRequestDto, response) {
+    const productoResponseDto = await this.productosService.actualizar(
+      id,
+      productoRequestDto,
+    );
+    response.json({
+      mensaje: "Producto actualizado",
+      productoResponseDto,
+    });
+  }
+
 }
 
 export const productosController = new ProductoController(productosService);
