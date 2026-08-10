@@ -24,8 +24,7 @@ export class CategoriaRepository {
         horaRegistro TIME NOT NULL,
         fechaHoraRegistro DATETIME NOT NULL,
         imagen BLOB,
-        imagenMimeType VARCHAR(100),
-        observaciones TEXT
+        imagenMimeType VARCHAR(100)
         );
     `);
   }
@@ -110,6 +109,50 @@ export class CategoriaRepository {
 
     return this.buscarPorId(Number(resultado.lastInsertRowid));
   }
+
+//PUT
+  async modificar(identificador, categ) {
+    const resultado = this.db
+      .prepare(
+        `
+        UPDATE categorias
+        SET codigo = ?,
+            nombre = ?,
+            tipo = ?,
+            cantidadProductos = ?,
+            presupuesto = ?,
+            pesoPromedio = ?,
+            descripcion = ?,
+            activo = ?,
+            fechaLimite = ?,
+            horaRegistro = ?,
+            fechaHoraRegistro = ?,
+            imagen = ?,
+            imagenMimeType = ?
+        WHERE id = ?
+      `,
+      )
+      .run(
+        categ.codigo,
+        categ.nombre,
+        categ.tipo,
+        categ.cantidadProductos,
+        categ.presupuesto,
+        categ.pesoPromedio,
+        categ.descripcion,
+        Number(categ.activo),
+        categ.fechaLimite,
+        categ.horaRegistro,
+        categ.fechaHoraRegistro,
+        categ.imagen,
+        categ.imagenMimeType,
+        Number(identificador),
+      );
+
+    return resultado.changes ? this.buscarPorId(identificador) : null;
+  }
+
+
 }
 
 
