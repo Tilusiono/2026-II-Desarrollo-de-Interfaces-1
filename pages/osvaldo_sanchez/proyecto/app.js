@@ -23,7 +23,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/api", (request, response) => {
   response.json({
-    nombre: "Tienda ",
+    nombre: "Tienda",
     almacenamiento: "sqlite",
     recursos: ["productos, automoviles"],
   });
