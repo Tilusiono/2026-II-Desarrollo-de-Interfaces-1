@@ -153,7 +153,7 @@ export class CategoriasService {
       imagenMimeType,
     );
 
-    const categoriaActualizadaModel = await this.categoriaRepository.modificar(
+    const categoriaActualizadaModel = await this.categoriaRepository.modificarRespositorio(
       id,
       categoriaModel,
     );
