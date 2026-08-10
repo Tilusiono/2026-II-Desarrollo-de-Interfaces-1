@@ -84,7 +84,7 @@ export class ProductosService {
     if (!productoModel) throw new AppError("Producto no encontrado", 404);
     return new ProductoResponseDto(productoModel);
   }
-
+//modificar todo
   async reemplazar(id, productoRequestDto) {
     const productoExistenteModel =
       await this.productoRepository.buscarPorId(id);
@@ -117,6 +117,55 @@ export class ProductosService {
     return new ProductoResponseDto(productoActualizadoModel);
   }
 
+//modificar parcialmente(solo los campos que se envien)
+  async actualizar(id, productoRequestDto) {
+    const productoActualModel = await this.productoRepository.buscarPorId(id);
+    if (!productoActualModel) throw new AppError("Producto no encontrado", 404);
+
+    const codigo = productoRequestDto.codigo ?? productoActualModel.codigo;
+    await this.validarCodigo(codigo, id);
+
+    let imagen = productoActualModel.imagen;
+    let imagenMimeType = productoActualModel.imagenMimeType;
+    if (productoRequestDto.imagenBase64 !== undefined) {
+      const imagenDatos = this.convertirImagen(productoRequestDto.imagenBase64);
+      imagen = imagenDatos.imagen;
+      imagenMimeType = imagenDatos.imagenMimeType;
+    }
+
+    const conservarSiNoSeEnvia = (nuevoValor, valorActual) =>
+      nuevoValor === undefined ? valorActual : nuevoValor;
+
+    const productoModel = new Producto(
+      id,
+      codigo,
+      productoRequestDto.nombre ?? productoActualModel.nombre,
+      productoRequestDto.categoria ?? productoActualModel.categoria,
+      productoRequestDto.stock ?? productoActualModel.stock,
+      productoRequestDto.precio ?? productoActualModel.precio,
+      conservarSiNoSeEnvia(productoRequestDto.peso, productoActualModel.peso),
+      conservarSiNoSeEnvia(
+        productoRequestDto.descripcion,
+        productoActualModel.descripcion,
+      ),
+      productoRequestDto.activo ?? productoActualModel.activo,
+      conservarSiNoSeEnvia(
+        productoRequestDto.fechaVencimiento,
+        productoActualModel.fechaVencimiento,
+      ),
+      productoRequestDto.horaRegistro ?? productoActualModel.horaRegistro,
+      productoRequestDto.fechaHoraRegistro ??
+        productoActualModel.fechaHoraRegistro,
+      imagen,
+      imagenMimeType,
+    );
+
+    const productoActualizadoModel = await this.productoRepository.reemplazar(
+      id,
+      productoModel,
+    );
+    return new ProductoResponseDto(productoActualizadoModel);
+  }
 
 }
 

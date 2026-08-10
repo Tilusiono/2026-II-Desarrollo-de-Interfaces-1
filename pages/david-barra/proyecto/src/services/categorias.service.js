@@ -84,7 +84,7 @@ export class CategoriasService {
     if (!categoria) throw new AppError("Categoría no encontrada", 404);
     return new CategoriaResponseDto(categoria);
   }
-
+//modificar todo
   async modificarCategoria(id, categoriaRequestDto) {
     const categoriaExistenteModel =
       await this.categoriaRepository.buscarPorId(id);
@@ -116,6 +116,50 @@ export class CategoriasService {
     );
     return new CategoriaResponseDto(categoriaActualizadaModel);
   }
+
+//modificar parcialmente(solo los campos que se envien)
+  async modificarParcialCategoria(id, categoriaRequestDto) {
+    const categoriaActualModel = await this.categoriaRepository.buscarPorId(id);
+    if (!categoriaActualModel) throw new AppError("Categoría no encontrada", 404);
+
+    const codigo = categoriaRequestDto.codigo ?? categoriaActualModel.codigo;
+    await this.validarCodigo(codigo, id);
+
+    let imagen = categoriaActualModel.imagen;
+    let imagenMimeType = categoriaActualModel.imagenMimeType;
+    if (categoriaRequestDto.imagenBase64 !== undefined) {
+      const imagenDatos = this.convertirImagen(categoriaRequestDto.imagenBase64);
+      imagen = imagenDatos.imagen;
+      imagenMimeType = imagenDatos.imagenMimeType;
+    }
+
+    const conservarSiNoSeEnvia = (nuevoValor, valorActual) =>
+      nuevoValor === undefined ? valorActual : nuevoValor;
+
+    const categoriaModel = new Categoria(
+      id,
+      codigo,
+      categoriaRequestDto.nombre ?? categoriaActualModel.nombre,
+      categoriaRequestDto.tipo ?? categoriaActualModel.tipo,
+      categoriaRequestDto.cantidadProductos ?? categoriaActualModel.cantidadProductos,
+      categoriaRequestDto.presupuesto ?? categoriaActualModel.presupuesto,
+      categoriaRequestDto.pesoPromedio ?? categoriaActualModel.pesoPromedio,
+      conservarSiNoSeEnvia(categoriaRequestDto.descripcion,categoriaActualModel.descripcion,),
+      categoriaRequestDto.activo ?? categoriaActualModel.activo,
+      conservarSiNoSeEnvia(categoriaRequestDto.fechaVencimiento,categoriaActualModel.fechaVencimiento,),
+      categoriaRequestDto.horaRegistro ?? categoriaActualModel.horaRegistro,
+      categoriaRequestDto.fechaHoraRegistro ?? categoriaActualModel.fechaHoraRegistro,
+      imagen,
+      imagenMimeType,
+    );
+
+    const categoriaActualizadaModel = await this.categoriaRepository.modificar(
+      id,
+      categoriaModel,
+    );
+    return new CategoriaResponseDto(categoriaActualizadaModel);
+  }
+
 
 }
 
