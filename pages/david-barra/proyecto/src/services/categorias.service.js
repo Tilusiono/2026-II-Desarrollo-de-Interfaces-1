@@ -85,6 +85,38 @@ export class CategoriasService {
     return new CategoriaResponseDto(categoria);
   }
 
+  async reemplazar(id, categoriaRequestDto) {
+    const categoriaExistenteModel =
+      await this.categoriaRepository.buscarPorId(id);
+    if (!categoriaExistenteModel)
+      throw new AppError("Categoría no encontrada", 404);
+    await this.validarCodigo(categoriaRequestDto.codigo, id);
+
+    const imagenDatos = this.convertirImagen(categoriaRequestDto.imagenBase64);
+    const categoriaModel = new Categoria(
+      id,
+      categoriaRequestDto.codigo,
+      categoriaRequestDto.nombre,
+      categoriaRequestDto.tipo,
+      categoriaRequestDto.cantidadProductos,
+      categoriaRequestDto.presupuesto,
+      categoriaRequestDto.pesoPromedio,
+      categoriaRequestDto.descripcion,
+      categoriaRequestDto.activo,
+      categoriaRequestDto.fechaLimite,
+      categoriaRequestDto.horaRegistro,
+      categoriaRequestDto.fechaHoraRegistro,
+      imagenDatos.imagen,
+      imagenDatos.imagenMimeType,
+    );
+
+    const categoriaActualizadaModel = await this.categoriaRepository.modificar(
+      id,
+      categoriaModel,
+    );
+    return new ProductoResponseDto(productoActualizadoModel);
+  }
+
 }
 
 export const categoriasService = new CategoriasService();
