@@ -1,9 +1,10 @@
 import { Router } from "express";
 import { asyncHandler } from "../utils/asyncHandler.js";
 
-import { CategoriaRequestDto} from "../dtos/CategoriaDto.js";
 import { categoriasController as controller } from "../controllers/categorias.controller.js";
 import { validarId } from "../middlewares/id.middleware.js";
+import {CategoriaConsultaDto,CategoriaRequestDto,} from "../dtos/CategoriaDto.js";import { validarId } from "../middlewares/id.middleware.js";
+
 //import {
 //  validarCategoriaCompleto,
 //  validarCategoriaParcial,

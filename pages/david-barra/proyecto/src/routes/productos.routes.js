@@ -2,8 +2,7 @@ import { Router } from "express";
 
 import { productosController as controller } from "../controllers/productos.controller.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
-import { ProductoRequestDto } from "../dtos/ProductoDto.js";
-import { validarId } from "../middlewares/id.middleware.js";
+import {ProductoConsultaDto,ProductoRequestDto,} from "../dtos/ProductoDto.js";import { validarId } from "../middlewares/id.middleware.js";
 //import {
 //  validarProductoCompleto,
 //  validarProductoParcial,
