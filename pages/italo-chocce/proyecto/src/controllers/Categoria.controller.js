@@ -5,13 +5,10 @@ export class CategoriaController {
     this.categoriaService = categoriaServiceActual;
   }
 
-  async crear(categoriaRequestDto, response) {
-    const categoriaResponseDto =
-      await this.categoriaService.crear(categoriaRequestDto);
-    response.status(201).json({
-      mensaje: "Categoría creada",
-      categoriaResponseDto,
-    });
+ async crear(request, response) {
+    const categoriaResponseDto = 
+    await this.categoriaService.crear(request.body);
+    response.json({ categoriaResponseDto });
   }
 
   async listar(response) {

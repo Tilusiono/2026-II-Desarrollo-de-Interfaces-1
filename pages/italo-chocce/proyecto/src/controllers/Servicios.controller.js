@@ -5,16 +5,17 @@ export class ServiciosController {
     this.serviciosService = serviciosServiceActual;
   }
 
-  async crear(servicioRequestDto, response) {
+  async crear(req, response) {
     const servicioResponseDto =
-      await this.serviciosService.crear(servicioRequestDto);
+      await this.serviciosService.crear(req.body ?? req);
     response.status(201).json({
       mensaje: "Servicio creado",
       servicioResponseDto,
     });
   }
+
   async listar(req, res) {
-    const serviciosResponseDto = await this.servicioService.listar();
+    const serviciosResponseDto = await this.serviciosService.listar();
     res.json({
       total: serviciosResponseDto.length,
       serviciosResponseDto,

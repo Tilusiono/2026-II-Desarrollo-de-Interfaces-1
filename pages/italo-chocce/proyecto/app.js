@@ -18,7 +18,7 @@ const PORT = process.env.PORT ?? 4214;
 
 app.use(express.json({ limit: "2mb" }));
 app.use(express.urlencoded({ extended: true }));
-app.use(normalizarBody);
+//app.use(normalizarBody);
 app.use(loggerMiddleware);
 
 app.use("/bootstrap", express.static(path.join(__dirname, "node_modules/bootstrap/dist")));

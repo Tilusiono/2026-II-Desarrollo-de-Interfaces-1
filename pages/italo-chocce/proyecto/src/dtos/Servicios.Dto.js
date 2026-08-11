@@ -2,7 +2,7 @@ export class ServicioRequestDto {
   constructor(requestBody = {}) {
     this.codigo = requestBody.codigo;
     this.nombre = requestBody.nombre;
-    this.categoriaId = requestBody.categoriaId;
+    this.categoria_id = requestBody.categoria_id;
     this.capacidadMax = requestBody.capacidadMax;
     this.precio = requestBody.precio;
     this.duracionMinutos = requestBody.duracionMinutos;
@@ -30,7 +30,7 @@ export class ServicioResponseDto {
     this.id = servicioModel.id;
     this.codigo = servicioModel.codigo;
     this.nombre = servicioModel.nombre;
-    this.categoriaId = servicioModel.categoriaId;
+    this.categoria_id = servicioModel.categoria_id;
     this.capacidadMax = servicioModel.capacidadMax;
     this.precio = servicioModel.precio;
     this.duracionMinutos = servicioModel.duracionMinutos;

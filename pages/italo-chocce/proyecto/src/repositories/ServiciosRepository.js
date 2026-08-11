@@ -78,36 +78,34 @@ export class ServiciosRepository {
       fila.imagenMimeType,
     );
   }
-
   async crear(ServiciosModel) {
+    console.log("--> CATEGORIA_ID QUE INTENTA INSERTAR:", ServiciosModel?.categoria_id);
+    
     const resultado = this.db
-      .prepare(
-        `
+      .prepare(`
         INSERT INTO servicios_casino (
           codigo, nombre, categoria_id, capacidadMax, precio, duracionMinutos, descripcion,
-          activo, fechaVencimiento, horaRegistro, fechaHoraRegistro,
-          imagen, imagenMimeType
+          activo, fechaVencimiento, horaRegistro, fechaHoraRegistro, imagen, imagenMimeType
         )
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-      `,
-      )
+      `)
       .run(
-        ServiciosModel.codigo,
-        ServiciosModel.nombre,
-        ServiciosModel.categoriaId,
-        ServiciosModel.capacidadMax,
-        ServiciosModel.precio,
-        ServiciosModel.duracionMinutos,
-        ServiciosModel.descripcion,
-        Number(ServiciosModel.activo),
-        ServiciosModel.fechaVencimiento,
-        ServiciosModel.horaRegistro,
-        ServiciosModel.fechaHoraRegistro,
-        ServiciosModel.imagen,
-        ServiciosModel.imagenMimeType,
+        String(ServiciosModel?.codigo ?? ''),
+        String(ServiciosModel?.nombre ?? ''),
+        String(ServiciosModel?.categoria_id ?? ServiciosModel?.categoriaId ?? ''),
+        Number(ServiciosModel?.capacidadMax ?? 0),
+        Number(ServiciosModel?.precio ?? 0),
+        Number(ServiciosModel?.duracionMinutos ?? 0),
+        ServiciosModel?.descripcion ? String(ServiciosModel.descripcion) : null,
+        ServiciosModel?.activo === true || ServiciosModel?.activo === 1 ? 1 : 0,
+        ServiciosModel?.fechaVencimiento ? String(ServiciosModel.fechaVencimiento) : null,
+        String(ServiciosModel?.horaRegistro ?? ''),
+        String(ServiciosModel?.fechaHoraRegistro ?? ''),
+        ServiciosModel?.imagen ?? null,
+        ServiciosModel?.imagenMimeType ?? null
+      
       );
 
     return this.buscarPorId(Number(resultado.lastInsertRowid));
   }
 }
-

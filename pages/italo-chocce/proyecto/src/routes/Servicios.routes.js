@@ -16,6 +16,7 @@ router.post(
   }),
 );
 router.get("/", asyncHandler((request, response) => controller.listar(response)));
+
 router.get(
   "/:id",
   validarId,
