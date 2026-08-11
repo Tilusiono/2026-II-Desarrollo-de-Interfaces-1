@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Hito 4 - Probar GET Empleados</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/bootstrap-icons/font/bootstrap-icons.css" />
+  </head>
+  <body class="bg-light">
+    <nav class="navbar navbar-dark bg-primary">
+      <div class="container">
+        <span class="navbar-brand">
+          <i class="bi bi-people-fill me-2"></i>Hito 4 · GET Empleados
+        </span>
+      </div>
+    </nav>
+
+    <main class="container py-4">
+      <div id="mensaje" class="alert d-none" role="alert"></div>
+
+      <section class="card border-0 shadow-sm mb-4">
+        <div class="card-body p-4">
+          <h1 class="h4">Probar las dos rutas GET</h1>
+          <div class="row g-3 align-items-end">
+            <div class="col-md-4">
+              <button id="btn-listar" class="btn btn-primary w-100">
+                <i class="bi bi-list-ul me-1"></i>GET: listar todos
+              </button>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label" for="empleado-id">ID del empleado</label>
+              <input id="empleado-id" type="number" min="1" value="1" class="form-control" />
+            </div>
+            <div class="col-md-4">
+              <button id="btn-obtener" class="btn btn-outline-primary w-100">
+                <i class="bi bi-search me-1"></i>GET: obtener por ID
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card border-0 shadow-sm">
+        <div class="card-body p-4">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2 class="h5 mb-0">Resultado</h2>
+            <span id="total" class="badge text-bg-secondary">0 empleado(s)</span>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+              <thead>
+                <tr>
+                  <!-- AJUSTA ESTAS CABECERAS SEGÚN TU TABLA REAL -->
+                  <th>ID</th>
+                  <th>Nombres</th>
+                  <th>Apellidos</th>
+                  <th>Documento</th>
+                  <th>Teléfono</th>
+                  <th>Correo</th>
+                  <th>Estado</th>
+                </tr>
+              </thead>
+              <tbody id="tabla-empleados">
+                <tr><td colspan="7" class="text-center text-secondary py-4">Ejecuta una consulta GET.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      const mensaje = document.querySelector("#mensaje");
+      const tabla = document.querySelector("#tabla-empleados");
+      const total = document.querySelector("#total");
+
+      document.querySelector("#btn-listar").addEventListener("click", async () => {
+        // Asegúrate de que tu controlador devuelva "empleadosResponseDto" o cambia este nombre
+        await ejecutarGet("/api/empleados", (respuesta) => respuesta.empleadosResponseDto || respuesta.datos);
+      });
+
+      document.querySelector("#btn-obtener").addEventListener("click", async () => {
+        const id = Number(document.querySelector("#empleado-id").value);
+        // Asegúrate de que tu controlador devuelva "empleadoResponseDto" o cambia este nombre
+        await ejecutarGet(`/api/empleados/${id}`, (respuesta) => [respuesta.empleadoResponseDto || respuesta.datos]);
+      });
+
+      async function ejecutarGet(ruta, extraerEmpleados) {
+        try {
+          const respuestaHttp = await fetch(ruta);
+          const respuesta = await respuestaHttp.json();
+          if (!respuestaHttp.ok) {
+            throw new Error(`HTTP ${respuestaHttp.status} ·${respuesta.mensaje}`);
+          }
+
+          const empleados = extraerEmpleados(respuesta);
+          renderizar(empleados);
+          mostrarMensaje(`HTTP ${respuestaHttp.status} · GET correcto`, true);
+        } catch (error) {
+          renderizar([]);
+          mostrarMensaje(error.message, false);
+        }
+      }
+
+      function renderizar(empleados) {
+        total.textContent = `${empleados.length} empleado(s)`;
+        if (!empleados.length) {
+          tabla.innerHTML = '<tr><td colspan="7" class="text-center text-secondary py-4">Sin resultados.</td></tr>';
+          return;
+        }
+
+        tabla.innerHTML = empleados.map((empleado) => `
+          <tr>
+            <!-- VERIFICA QUE ESTOS NOMBRES COINCIDAN CON TU EmpleadoResponseDto -->
+            <td>${empleado.idEmpleado || empleado.id}</td>
+            <td>${empleado.nombres || ''}</td>
+            <td>${empleado.apellidos || ''}</td>
+            <td>${empleado.documento || empleado.dni || ''}</td>
+            <td>${empleado.telefono || ''}</td>
+            <td>${empleado.correo || ''}</td>
+            <td>
+              <span class="badge text-bg-${empleado.estado === 'Activo' || empleado.activo ? "success" : "secondary"}">
+                ${empleado.estado || (empleado.activo ? "Activo" : "Inactivo") || "N/A"}
+              </span>
+            </td>
+          </tr>
+        `).join("");
+      }
+
+      function mostrarMensaje(texto, correcto) {
+        mensaje.className = `alert alert-${correcto ? "success" : "danger"}`;
+        mensaje.textContent = texto;
+      }
+    </script>
+    <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

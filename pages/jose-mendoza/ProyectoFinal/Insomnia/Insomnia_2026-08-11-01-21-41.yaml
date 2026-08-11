@@ -1,0 +1,1264 @@
+type: collection.insomnia.rest/5.0
+schema_version: "5.1"
+name: Scratch Pad
+meta:
+  id: wrk_2e49c7871078454bbbc5b02b7faa53c2
+  created: 1786312505491
+  modified: 1786312505491
+  description: ""
+collection:
+  - name: Empleado
+    meta:
+      id: fld_288e6dbf72374f449fbf528a0ff7dae6
+      created: 1786325741754
+      modified: 1786325741754
+      sortKey: -1786325741755
+      description: ""
+    children:
+      - url: http://localhost:3212/api/empleados
+        name: CREAR
+        meta:
+          id: req_bd12931c92c54e0cbdaa614f10b1dbd2
+          created: 1786328315597
+          modified: 1786418005776
+          isPrivate: false
+          description: ""
+          sortKey: -1786328317541
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "dni": "11223344",
+              "nombres": "Luis",
+              "apellidos": "Baltazar Mariños",
+              "telefono": "987654321",
+              "correo": "Luise@gmail.com",
+              "direccion": "Av. Principal 123",
+              "fechaIngreso": "2026-08-27",
+              "salario": 2400.0,
+              "estado": "Activo",
+              "idTipoEmpleado": 1,
+              "idCargo": 1,
+              "idArea": 1,
+              "idSede": 1
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3212/api/empleados
+        name: New Request
+        meta:
+          id: req_09fcbd4dee904bae87357423e58506e1
+          created: 1786332768371
+          modified: 1786335815019
+          isPrivate: false
+          description: ""
+          sortKey: -1786328317641
+        method: GET
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3212/api/empleados/2
+        name: New Request
+        meta:
+          id: req_fdaa8c8afa224e28b8c0a45d1f65e121
+          created: 1786333923371
+          modified: 1786402585239
+          isPrivate: false
+          description: ""
+          sortKey: -1786333923371
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "dni": "11223344",
+              "nombres": "Luis",
+              "apellidos": "Baltazar Mariños",
+              "telefono": "987654321",
+              "correo": "Luise@gmail.com",
+              "direccion": "Av. Principal 123",
+              "fechaIngreso": "2026-08-27",
+              "salario": 2400,
+              "estado": "Activo",
+              "idTipoEmpleado": 1,
+              "idCargo": 1,
+              "idArea": 1,
+              "idSede": 1
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3212/api/empleados/2
+        name: New Request
+        meta:
+          id: req_00f275a71b4e4255bcab46c728fd163b
+          created: 1786333932031
+          modified: 1786404381453
+          isPrivate: false
+          description: ""
+          sortKey: -1786333923471
+        method: PATCH
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "dni": "11111111"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3212/api/empleados/buscar?nombre=Luis
+        name: BUSCAR
+        meta:
+          id: req_cc672c0ff0554bb283cb9d8c297d2fff
+          created: 1786416785041
+          modified: 1786422134009
+          isPrivate: false
+          description: ""
+          sortKey: -1786333923571
+        method: GET
+        parameters:
+          - name: texto
+            value: Luis
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3212/api/empleados/consulta
+        name: QUERY SEARCH
+        meta:
+          id: req_000f3fe908de4d5a80b282d823feb7f2
+          created: 1786426525194
+          modified: 1786428971536
+          isPrivate: false
+          description: ""
+          sortKey: -1786333923671
+        method: QUERY
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Area
+    meta:
+      id: fld_820c98e59ce14d498ccb2f29e484cb1d
+      created: 1786325784637
+      modified: 1786325784637
+      sortKey: -1786325784637
+      description: ""
+    children:
+      - url: http://localhost:3212/api/areas/buscar/
+        name: CREAR
+        meta:
+          id: req_c8465da1aac845e09798a07f1800d7f2
+          created: 1786328308975
+          modified: 1786418930375
+          isPrivate: false
+          description: ""
+          sortKey: -1786328310333
+        method: POST
+        body:
+          mimeType: application/json
+          text: >-
+            {
+              "nombre": "Desarrollo de Software",
+              "descripcion": "Área encargada de la creación y mantenimiento de los sistemas internos.",
+              "capacidad": 25,
+              "idSede": 1,
+              "idJefe": 1
+            }
+        parameters:
+          - name: texto
+            value: Desarrolador Full Stack
+            description: ""
+            disabled: false
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3212/api/areas
+        name: New Request
+        meta:
+          id: req_609923b00dd74dcaa247c711c5d6c87e
+          created: 1786332758480
+          modified: 1786428837747
+          isPrivate: false
+          description: ""
+          sortKey: -1786328310433
+        method: GET
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3212/api/areas/2
+        name: New Request
+        meta:
+          id: req_4848aa0516074f64835366d3a744a347
+          created: 1786337623882
+          modified: 1786402577406
+          isPrivate: false
+          description: ""
+          sortKey: -1786328310533
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "nombre": "Desarrollo de Sistema",
+              "descripcion": "mantenimiento de los sistemas internos.",
+              "capacidad": 5,
+              "idSede": 1,
+              "idJefe": 1
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3212/api/areas/1
+        name: New Request
+        meta:
+          id: req_19454e6b41f54325b330b30408691d42
+          created: 1786400210114
+          modified: 1786418686034
+          isPrivate: false
+          description: ""
+          sortKey: -1786328310633
+        method: PATCH
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"nombre": "Desarrolador Full Stack"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3212/api/areas/buscar/
+        name: BUSCAR
+        meta:
+          id: req_08217175db2e42c7a2f8a677dbebfd7d
+          created: 1786418677267
+          modified: 1786418706966
+          isPrivate: false
+          description: ""
+          sortKey: -1786418677267
+        method: GET
+        parameters:
+          - name: estado
+            value: ""
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3212/api/areas/consulta
+        name: QUERY SEARCH
+        meta:
+          id: req_78817f3088f44dfcb01d1a7e5e581c89
+          created: 1786426488115
+          modified: 1786428253217
+          isPrivate: false
+          description: ""
+          sortKey: -1786418677367
+        method: QUERY
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Sede
+    meta:
+      id: fld_47a99ff2dd104769957b128c8d27fc7c
+      created: 1786325802181
+      modified: 1786325802181
+      sortKey: -1786325802181
+      description: ""
+    children:
+      - url: http://localhost:3212/api/sedes
+        name: CREAR
+        meta:
+          id: req_048f204f4ece4585b51853fa5994c061
+          created: 1786328304424
+          modified: 1786332456616
+          isPrivate: false
+          description: ""
+          sortKey: -1786328306164
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "nombre": "Sede Norte Surquillo",
+              "direccion": "Av. Angamos 889",
+              "telefono": "987654321",
+              "capacidad": 150,
+              "estado": "Inactivo",
+              "horaApertura": "09:00:00",
+              "fechaInauguracion": "2023-11-10"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3212/api/cargos
+        name: New Request
+        meta:
+          id: req_2bac075d626a45ba9147589dfc484905
+          created: 1786332761347
+          modified: 1786332763114
+          isPrivate: false
+          description: ""
+          sortKey: -1786328306264
+        method: GET
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3212/api/sedes/2
+        name: New Request
+        meta:
+          id: req_407a52605ff84f92ab5b9cf465147a9d
+          created: 1786381906653
+          modified: 1786425521996
+          isPrivate: false
+          description: ""
+          sortKey: -1786357910092.5
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "nombre": "Sede Sur Surquillo",
+              "direccion": "Av. Angamos 889",
+              "telefono": "987654321",
+              "capacidad": 100,
+              "estado": "Activo",
+              "horaApertura": "09:00:00",
+              "fechaInauguracion": "2023-11-10"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3212/api/sedes/2
+        name: New Request
+        meta:
+          id: req_52bf8b2edae74eada6e161d03a49e9f2
+          created: 1786400194555
+          modified: 1786404610591
+          isPrivate: false
+          description: ""
+          sortKey: -1786357910192.5
+        method: PATCH
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"nombre": "Sede Norte Trujillo"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3212/api/sedes/buscar
+        name: BUSCAR
+        meta:
+          id: req_dc7dc8ce35dc44dda367ca5e27d5cf40
+          created: 1786419500148
+          modified: 1786425529509
+          isPrivate: false
+          description: ""
+          sortKey: -1786419500148
+        method: GET
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3212/api/sedes/consulta
+        name: QUERY SEARCH
+        meta:
+          id: req_d6c7fa59f91849c28bd78ea39d0fc59c
+          created: 1786426518832
+          modified: 1786428077975
+          isPrivate: false
+          description: ""
+          sortKey: -1786419500198
+        method: QUERY
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: TipoEmpleado
+    meta:
+      id: fld_03c4a4fed7114476bc7a9c5e5c2d723a
+      created: 1786325817201
+      modified: 1786325817201
+      sortKey: -1786325817201
+      description: ""
+    children:
+      - url: http://localhost:3212/api/tipos-empleado
+        name: CREAR
+        meta:
+          id: req_8806ea39d9e9488999ab7a1663a3dfbd
+          created: 1786328291831
+          modified: 1786398877805
+          isPrivate: false
+          description: ""
+          sortKey: -1786328300755
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "nombre": "Practicante"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3212/api/tipos-empleado/1
+        name: New Request
+        meta:
+          id: req_e8957fb5a49c4abf9bd153f481d31ce3
+          created: 1786332745986
+          modified: 1786333098214
+          isPrivate: false
+          description: ""
+          sortKey: -1786328300855
+        method: GET
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3212/api/tipos-empleado/3
+        name: New Request
+        meta:
+          id: req_c0db45d096254675aac6ffb6362b8fbd
+          created: 1786381896814
+          modified: 1786402564475
+          isPrivate: false
+          description: ""
+          sortKey: -1786328300955
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "nombre": "Recepcionista"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3212/api/tipos-empleado/3
+        name: New Request
+        meta:
+          id: req_ef3bfd9126d642539bf6b58a7152581b
+          created: 1786400201768
+          modified: 1786425533853
+          isPrivate: false
+          description: ""
+          sortKey: -1786328301005
+        method: PATCH
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"nombre": "Practicante"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3212/api/tipos-empleado/buscar
+        name: BUSCAR
+        meta:
+          id: req_d6d28f5d2c6d4e90bfc7006b20b56082
+          created: 1786419488230
+          modified: 1786427899672
+          isPrivate: false
+          description: ""
+          sortKey: -1786419488230
+        method: GET
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3212/api/tipos-empleado/consulta
+        name: QUERY SEARCH
+        meta:
+          id: req_0b0911124bbb4a41b8452a35f4f864d1
+          created: 1786426482582
+          modified: 1786427903636
+          isPrivate: false
+          description: ""
+          sortKey: -1786419488330
+        method: QUERY
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Asistencia
+    meta:
+      id: fld_6b40f1f08df44b04967b552de5c36ea1
+      created: 1786328125467
+      modified: 1786328125467
+      sortKey: -1786328125467
+      description: ""
+    children:
+      - url: http://localhost:3212/api/asistencias
+        name: CREAR
+        meta:
+          id: req_4f185135ab554cddb7fc6bd32e6fcf8b
+          created: 1786328295176
+          modified: 1786332321409
+          isPrivate: false
+          description: ""
+          sortKey: -1786328298836
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "fecha": "2026-08-09",
+              "horaEntrada": "08:00:00",
+              "horaSalida": "17:00:00",
+              "horasTrabajadas": 8.0,
+              "estado": "Presente",
+              "idEmpleado": 2
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3212/api/asistencias
+        name: New Request
+        meta:
+          id: req_ec81cb72bf8f4eba87bb4d659d9193a8
+          created: 1786332743074
+          modified: 1786332801890
+          isPrivate: false
+          description: ""
+          sortKey: -1786328298936
+        method: GET
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3212/api/asistencias/1
+        name: New Request
+        meta:
+          id: req_9ca04d7daab64c22b788b55e3cd891f6
+          created: 1786381911090
+          modified: 1786425542108
+          isPrivate: false
+          description: ""
+          sortKey: -1786328299136
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "fecha": "2026-08-09",
+              "horaEntrada": "08:00:00",
+              "horaSalida": "17:00:00",
+              "horasTrabajadas": 8.0,
+              "estado": "Presente",
+              "idEmpleado": 1
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3212/api/asistencias/1
+        name: New Request
+        meta:
+          id: req_bfcd201d5c234307845f725b626bb93b
+          created: 1786400180332
+          modified: 1786404525832
+          isPrivate: false
+          description: ""
+          sortKey: -1786328299236
+        method: PATCH
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"fecha": "2022-08-19"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3212/api/asistencias/buscar
+        name: BUSCAR
+        meta:
+          id: req_d71abc386bd94aad953d87e2b1dabcb8
+          created: 1786419478607
+          modified: 1786425547016
+          isPrivate: false
+          description: ""
+          sortKey: -1786419478607
+        method: GET
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3212/api/asistencias/consulta
+        name: QUERY SEARCH
+        meta:
+          id: req_41ee79816669428ba755df0621ae16e1
+          created: 1786426485366
+          modified: 1786427698610
+          isPrivate: false
+          description: ""
+          sortKey: -1786419478707
+        method: QUERY
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Permiso
+    meta:
+      id: fld_30ddd71cf6a44488acf8399c0a18adbd
+      created: 1786328137595
+      modified: 1786328137595
+      sortKey: -1786328137595
+      description: ""
+    children:
+      - url: http://localhost:3212/api/permisos
+        name: CREAR
+        meta:
+          id: req_947d3c1d0b9c4a0c9bd40217b24476b8
+          created: 1786328276681
+          modified: 1786332137085
+          isPrivate: false
+          description: ""
+          sortKey: -1786328278124
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "tipoPermiso": "Salud",
+              "fechaInicio": "2026-08-12",
+              "fechaFin": "2026-08-15",
+              "motivo": "Descanso médico tras operación ambulatoria",
+              "estado": "Pendiente",
+              "idEmpleado": 1
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3212/api/permisos
+        name: New Request
+        meta:
+          id: req_28524bb96d3946f88fb00c8e175c7a88
+          created: 1786332748608
+          modified: 1786425549934
+          isPrivate: false
+          description: ""
+          sortKey: -1786328278224
+        method: GET
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3212/api/permisos/1
+        name: New Request
+        meta:
+          id: req_27700573420a4b14935ae5bfca09b3f3
+          created: 1786381934135
+          modified: 1786402547561
+          isPrivate: false
+          description: ""
+          sortKey: -1786328278324
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "tipoPermiso": "Descanso Medico",
+              "fechaInicio": "2026-08-12",
+              "fechaFin": "2026-08-15",
+              "motivo": "Descanso médico tras operación ambulatoria",
+              "estado": "Pendiente",
+              "idEmpleado": 1
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3212/api/permisos/1
+        name: New Request
+        meta:
+          id: req_bebec7eb7f2540f7b47acc4ead556c66
+          created: 1786400189062
+          modified: 1786404497454
+          isPrivate: false
+          description: ""
+          sortKey: -1786328278374
+        method: PATCH
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"motivo": "Descanso medico" 
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3212/api/permisos/buscar
+        name: BUSCAR
+        meta:
+          id: req_a6f74f7d08b641c0b1a66ff8284caa31
+          created: 1786419514208
+          modified: 1786425556746
+          isPrivate: false
+          description: ""
+          sortKey: -1786419514208
+        method: GET
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3212/api/permisos/consulta
+        name: QUERY SEARCH
+        meta:
+          id: req_eff0648ae7f4402db191dc751e9cc81f
+          created: 1786426473166
+          modified: 1786427179390
+          isPrivate: false
+          description: ""
+          sortKey: -1786419514308
+        method: QUERY
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Vacaciones
+    meta:
+      id: fld_6cdc45ef356746358707f33a9ae27cca
+      created: 1786328156741
+      modified: 1786328156741
+      sortKey: -1786328156741
+      description: ""
+    children:
+      - url: http://localhost:3212/api/vacaciones
+        name: CREAR
+        meta:
+          id: req_fd940314af6a4f53b8ba6fc446ca9673
+          created: 1786328269065
+          modified: 1786425558824
+          isPrivate: false
+          description: ""
+          sortKey: -1786328270463
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "fechaInicio": "2026-12-20",
+              "fechaFin": "2026-12-30",
+              "cantidadDias": 10,
+              "estado": "Aprobado",
+              "observacion": "Descanso por fiestas de fin de año",
+              "idEmpleado": 2
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3212/api/vacaciones
+        name: New Request
+        meta:
+          id: req_8ec56836509c4c1f872fe731f172fff2
+          created: 1786332733385
+          modified: 1786418473063
+          isPrivate: false
+          description: ""
+          sortKey: -1786328270563
+        method: GET
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3212/api/vacaciones/1
+        name: New Request
+        meta:
+          id: req_62ede548487647d99125c339ec090965
+          created: 1786381941611
+          modified: 1786402539586
+          isPrivate: false
+          description: ""
+          sortKey: -1786328270663
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "fechaInicio": "2026-09-01",
+              "fechaFin": "2026-09-05",
+            	"cantidadDias": 10,
+              "estado": "Rechazado",
+              "observacion": "Se requiere presencia en cierre de proyecto",
+              "idEmpleado": 1
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3212/api/vacaciones/1
+        name: New Request
+        meta:
+          id: req_efd8b53c7c6641229695e799d24ece39
+          created: 1786400175381
+          modified: 1786426548554
+          isPrivate: false
+          description: ""
+          sortKey: -1786328270763
+        method: PATCH
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"cantidadDias": 20
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3212/api/vacaciones/buscar
+        name: BUSCAR
+        meta:
+          id: req_c350127dadd142d4b322a4033cc41d59
+          created: 1786418464150
+          modified: 1786425561041
+          isPrivate: false
+          description: ""
+          sortKey: -1786418464150
+        method: GET
+        parameters:
+          - name: Estado
+            value: "2026"
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3212/api/vacaciones/consulta
+        name: QUERY SEARCH
+        meta:
+          id: req_6a66958622d148de89059b34a241594e
+          created: 1786425591412
+          modified: 1786426963537
+          isPrivate: false
+          description: ""
+          sortKey: -1786373367456.5
+        method: QUERY
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Cargo
+    meta:
+      id: fld_afbecafb66a34942a294417b989514aa
+      created: 1786328181032
+      modified: 1786328181032
+      sortKey: -1786328181032
+      description: ""
+    children:
+      - url: http://localhost:3212/api/cargos
+        name: CREAR
+        meta:
+          id: req_205e0a432bf74143af9b424a8d9c8230
+          created: 1786328248838
+          modified: 1786419933009
+          isPrivate: false
+          description: ""
+          sortKey: -1786328248838
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "nombre": "Desarrollador",
+              "descripcion": "Encargado de Desarrollar",
+              "sueldoBase": 2000.00
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3212/api/cargos
+        name: New Request
+        meta:
+          id: req_54d45ee60da74f3e96833a448af67ab4
+          created: 1786332607968
+          modified: 1786332723512
+          isPrivate: false
+          description: ""
+          sortKey: -1786332607968
+        method: GET
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3212/api/cargos/1
+        name: New Request
+        meta:
+          id: req_a0d5abc406544d34995adcaed8a60d9b
+          created: 1786381953170
+          modified: 1786426310871
+          isPrivate: false
+          description: ""
+          sortKey: -1786332608068
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "nombre": "Desarrollador",
+              "descripcion": "Encargado de Desarrollar",
+              "sueldoBase": 2000.00
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3212/api/cargos/1
+        name: New Request
+        meta:
+          id: req_1a11d6865b9249f7ba098dd18a392cc3
+          created: 1786400151236
+          modified: 1786404406705
+          isPrivate: false
+          description: ""
+          sortKey: -1786400151236
+        method: PATCH
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "sueldoBase": 1000
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3212/api/cargos/buscar?texto=Desarrollador
+        name: BUSCAR
+        meta:
+          id: req_6043d6d9ade242d0a7874c96e9503f9d
+          created: 1786417977615
+          modified: 1786420078105
+          isPrivate: false
+          description: ""
+          sortKey: -1786408468138.5
+        method: GET
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3212/api/cargos/consulta
+        name: QUERY SEARCH
+        meta:
+          id: req_5ad7ed884b664409a33e51f4144dd7be
+          created: 1786426459403
+          modified: 1786426459403
+          isPrivate: false
+          description: ""
+          sortKey: -1786402230461.625
+        method: QUERY
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_e2c6f2e301b0bcc61de9d9a74bfbfbea1fc26767
+    created: 1786312505493
+    modified: 1786312505493
+environments:
+  name: Base Environment
+  meta:
+    id: env_e2c6f2e301b0bcc61de9d9a74bfbfbea1fc26767
+    created: 1786312505493
+    modified: 1786312505493
+    isPrivate: false
