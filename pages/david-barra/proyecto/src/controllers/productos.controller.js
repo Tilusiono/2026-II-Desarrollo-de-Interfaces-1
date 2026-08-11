@@ -50,7 +50,7 @@ export class ProductoController {
       productoResponseDto,
     });
   }
-//SEARCH
+//GET-SEARCH
   async buscar(productoConsultaDto, response) {
     const productosResponseDto =
       await this.productosService.buscar(productoConsultaDto);
@@ -60,6 +60,19 @@ export class ProductoController {
       productosResponseDto,
     });
   }
+  
+//QUERY- SEARCH (es como usar el cut con el patch)
+  async consultar(productoConsultaDto, response) {
+    const productosResponseDto =
+      await this.productosService.buscar(productoConsultaDto);
+    response.json({
+      metodo: "QUERY",
+      total: productosResponseDto.length,
+      productoConsultaDto,
+      productosResponseDto,
+    });
+  }
+
 
 
 

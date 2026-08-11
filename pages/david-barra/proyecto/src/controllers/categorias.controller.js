@@ -63,6 +63,18 @@ export class CategoriasController {
     });
   }
 
+//QUERY- SEARCH (es como usar el cut con el patch)
+  async consultar(categoriaConsultaDto, response) {
+    const categoriasResponseDto =
+      await this.categoriasService.buscar(categoriaConsultaDto);
+    response.json({
+      metodo: "QUERY",
+      total: categoriasResponseDto.length,
+      categoriaConsultaDto,
+      categoriasResponseDto,
+    });
+  }
+
 
 }
 

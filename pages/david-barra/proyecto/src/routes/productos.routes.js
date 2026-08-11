@@ -4,6 +4,8 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { productosController as controller } from "../controllers/productos.controller.js";
 import {ProductoConsultaDto,ProductoRequestDto,} from "../dtos/ProductoDto.js";
 import { validarId } from "../middlewares/id.middleware.js";
+import { validarMetodoQuery } from "../middlewares/query.middleware.js";
+
 //import {
 //  validarProductoCompleto,
 //  validarProductoParcial,
@@ -21,6 +23,17 @@ router.post(
 );
 
 router.get("/", asyncHandler((request, response) => controller.listar(response)));
+
+
+router.use(
+  "/consulta",
+  validarMetodoQuery,
+  asyncHandler((request, response) => {
+    const productoConsultaDto = new ProductoConsultaDto(request.query);
+    return controller.consultar(productoConsultaDto, response);
+  }),
+);
+
 
 router.get(
   "/buscar",

@@ -4,6 +4,8 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { categoriasController as controller } from "../controllers/categorias.controller.js";
 import {CategoriaConsultaDto,CategoriaRequestDto,} from "../dtos/CategoriaDto.js";
 import { validarId } from "../middlewares/id.middleware.js";
+import { validarMetodoQuery } from "../middlewares/query.middleware.js";
+
 //import {
 //  validarCategoriaCompleto,
 //  validarCategoriaParcial,
@@ -29,6 +31,16 @@ router.get(
     return controller.buscar(categoriaConsultaDto, response);
   }),
 );
+
+router.use(
+  "/consulta",
+  validarMetodoQuery,
+  asyncHandler((request, response) => {
+    const categoriaConsultaDto = new CategoriaConsultaDto(request.query);
+    return controller.consultar(categoriaConsultaDto, response);
+  }),
+);
+
 
 router.get("/:id", validarId, asyncHandler((request, response) => controller.obtener(Number(request.params.id), response),),);
 

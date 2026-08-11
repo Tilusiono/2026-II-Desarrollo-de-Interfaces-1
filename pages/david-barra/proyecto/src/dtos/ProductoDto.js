@@ -15,10 +15,10 @@ export class ProductoRequestDto {
   }
 }
 
-export class CategoriaConsultaDto {
+export class ProductoConsultaDto {
   constructor(queryParams = {}) {
     this.texto = queryParams.texto;
-    this.tipo = queryParams.tipo;
+    this.categoria = queryParams.categoria;
     this.activo = queryParams.activo;
     this.precioMin = queryParams.precioMin;
     this.precioMax = queryParams.precioMax;
@@ -26,6 +26,7 @@ export class CategoriaConsultaDto {
     this.pesoMax = queryParams.pesoMax;
   }
 }
+
 
 export class ProductoResponseDto {
   constructor(productoModel) {
