@@ -160,6 +160,15 @@ export class CategoriasService {
     return new CategoriaResponseDto(categoriaActualizadaModel);
   }
 
+//Buscar
+  async buscar(productoConsultaDto) {
+    const productosModel =
+      await this.productoRepository.query(productoConsultaDto);
+    return productosModel.map(
+      (productoModel) => new ProductoResponseDto(productoModel),
+    );
+  }
+
 
 }
 
