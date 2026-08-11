@@ -1,6 +1,7 @@
 import { createRequire } from "node:module";
 import { sqlitePath } from "../config/storage.config.js";
 import Categoria from "../models/Categoria.js";
+import { objetoContieneTexto } from "../utils/texto.js";
 
 const require = createRequire(import.meta.url);
 
@@ -150,6 +151,34 @@ export class CategoriaRepository {
       );
 
     return resultado.changes ? this.buscarPorId(identificador) : null;
+  }
+
+//BUSCAR SEARCH
+  async query(dtoConsulta) {
+    const categorias = await this.listar();
+    const texto = dtoConsulta.texto ?? "";
+    const tipo = dtoConsulta.tipo ?? "";
+    const activo = dtoConsulta.activo ?? "";
+    const presupuestoMin = dtoConsulta.presupuestoMin ?? "";
+    const presupuestoMax = dtoConsulta.presupuestoMax ?? "";
+
+    return categorias.filter((categoriaModel) => {
+      const camposBuscables = {
+        id: categoriaModel.id,
+        codigo: categoriaModel.codigo,
+        nombre: categoriaModel.nombre,
+        tipo: categoriaModel.tipo,
+        descripcion: categoriaModel.descripcion,
+      };
+
+      return (
+        objetoContieneTexto(camposBuscables, texto) &&
+        (!tipo || categoriaModel.tipo === tipo) &&
+        (activo === "" || String(categoriaModel.activo) === String(activo)) &&
+        (presupuestoMin === "" || categoriaModel.presupuesto >= Number(presupuestoMin)) &&
+        (presupuestoMax === "" || categoriaModel.presupuesto <= Number(presupuestoMax))
+      );
+    });
   }
 
 
