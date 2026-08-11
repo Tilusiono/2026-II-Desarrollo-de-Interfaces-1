@@ -15,13 +15,15 @@ export class ProductoRequestDto {
   }
 }
 
-export class ProductoConsultaDto {
+export class CategoriaConsultaDto {
   constructor(queryParams = {}) {
     this.texto = queryParams.texto;
-    this.categoria = queryParams.categoria;
+    this.tipo = queryParams.tipo;
     this.activo = queryParams.activo;
     this.precioMin = queryParams.precioMin;
     this.precioMax = queryParams.precioMax;
+    this.pesoMin = queryParams.pesoMin;
+    this.pesoMax = queryParams.pesoMax;
   }
 }
 

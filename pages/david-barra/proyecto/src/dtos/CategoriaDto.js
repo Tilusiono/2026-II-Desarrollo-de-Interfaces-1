@@ -20,8 +20,12 @@ export class CategoriaConsultaDto {
     this.texto = queryParams.texto;
     this.tipo = queryParams.tipo;
     this.activo = queryParams.activo;
+    this.cantidadProductosMin = queryParams.cantidadProductosMin;
+    this.cantidadProductosMax = queryParams.cantidadProductosMax;
     this.presupuestoMin = queryParams.presupuestoMin;
     this.presupuestoMax = queryParams.presupuestoMax;
+    this.pesoPromedioMin = queryParams.pesoPromedioMin;
+    this.pesoPromedioMax = queryParams.pesoPromedioMax;
   }
 }
 

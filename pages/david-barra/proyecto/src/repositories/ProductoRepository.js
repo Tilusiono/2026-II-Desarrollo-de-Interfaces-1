@@ -155,11 +155,16 @@ export class ProductoRepository {
 //BUSCAR SEARCH
   async query(productoConsultaDto) {
     const productos = await this.listar();
+    
     const texto = productoConsultaDto.texto ?? "";
     const categoria = productoConsultaDto.categoria ?? "";
     const activo = productoConsultaDto.activo ?? "";
-    const precioMin = productoConsultaDto.precioMin ?? "";
-    const precioMax = productoConsultaDto.precioMax ?? "";
+    
+    // Usamos null si no se envía o viene vacío para no generar ceros falsos en Number()
+    const precioMin = (productoConsultaDto.precioMin !== undefined && productoConsultaDto.precioMin !== "") ? productoConsultaDto.precioMin : null;
+    const precioMax = (productoConsultaDto.precioMax !== undefined && productoConsultaDto.precioMax !== "") ? productoConsultaDto.precioMax : null;
+    const pesoMin = (productoConsultaDto.pesoMin !== undefined && productoConsultaDto.pesoMin !== "") ? productoConsultaDto.pesoMin : null;
+    const pesoMax = (productoConsultaDto.pesoMax !== undefined && productoConsultaDto.pesoMax !== "") ? productoConsultaDto.pesoMax : null;
 
     return productos.filter((productoModel) => {
       const camposBuscables = {
@@ -174,8 +179,10 @@ export class ProductoRepository {
         objetoContieneTexto(camposBuscables, texto) &&
         (!categoria || productoModel.categoria === categoria) &&
         (activo === "" || String(productoModel.activo) === String(activo)) &&
-        (precioMin === "" || productoModel.precio >= Number(precioMin)) &&
-        (precioMax === "" || productoModel.precio <= Number(precioMax))
+        (precioMin === null || productoModel.precio >= Number(precioMin)) &&
+        (precioMax === null || productoModel.precio <= Number(precioMax)) &&
+        (pesoMin === null || productoModel.peso >= Number(pesoMin)) &&
+        (pesoMax === null || productoModel.peso <= Number(pesoMax))
       );
     });
   }

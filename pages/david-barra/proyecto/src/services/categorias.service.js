@@ -161,11 +161,11 @@ export class CategoriasService {
   }
 
 //Buscar
-  async buscar(productoConsultaDto) {
-    const productosModel =
-      await this.productoRepository.query(productoConsultaDto);
-    return productosModel.map(
-      (productoModel) => new ProductoResponseDto(productoModel),
+  async buscar(categoriaConsultaDto) {
+    const categoriasModel =
+      await this.categoriaRepository.query(categoriaConsultaDto);
+    return categoriasModel.map(
+      (categoriaModel) => new CategoriaResponseDto(categoriaModel),
     );
   }
 

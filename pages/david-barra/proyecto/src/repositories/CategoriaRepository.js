@@ -30,9 +30,9 @@ export class CategoriaRepository {
     `);
   }
 
-    //GET all productos
+  //GET all categorias
   async listar() {
-    const filas = this.db.prepare("SELECT * FROM Categorias ORDER BY id").all();
+    const filas = this.db.prepare("SELECT * FROM categorias ORDER BY id").all();
 
     return filas.map(
       (fila) =>
@@ -54,7 +54,8 @@ export class CategoriaRepository {
         ),
     );
   }
-//GET productos by ID
+
+  //GET categoria by ID
   async buscarPorId(id) {
     const fila = this.db
       .prepare("SELECT * FROM categorias WHERE id = ?")
@@ -79,7 +80,8 @@ export class CategoriaRepository {
       fila.imagenMimeType,
     );
   }
-//POST productos
+
+  //POST categoria
   async crear(xd) {
     const resultado = this.db
       .prepare(
@@ -111,7 +113,7 @@ export class CategoriaRepository {
     return this.buscarPorId(Number(resultado.lastInsertRowid));
   }
 
-//PUT
+  //PUT
   async modificarRespositorio(identificador, categ) {
     const resultado = this.db
       .prepare(
@@ -150,24 +152,33 @@ export class CategoriaRepository {
         Number(identificador),
       );
 
-    return resultado.changes ? this.buscarPorId(identificador) : null;
+    return resultado.changes ? this.buscarPorId(Number(identificador)) : null;
   }
 
-//BUSCAR SEARCH
-  async query(dtoConsulta) {
+  //BUSCAR SEARCH (CATEGORÍAS)
+  async query(categoriaConsultaDto) {
     const categorias = await this.listar();
-    const texto = dtoConsulta.texto ?? "";
-    const tipo = dtoConsulta.tipo ?? "";
-    const activo = dtoConsulta.activo ?? "";
-    const presupuestoMin = dtoConsulta.presupuestoMin ?? "";
-    const presupuestoMax = dtoConsulta.presupuestoMax ?? "";
+    
+    // Captura de texto global y filtros específicos
+    const texto = categoriaConsultaDto.texto ?? "";
+    const tipo = categoriaConsultaDto.tipo ?? "";
+    const activo = categoriaConsultaDto.activo ?? "";
+    
+    // Manejo seguro de rangos numéricos vinculados al CategoriaConsultaDto
+    const cantidadProductosMin = (categoriaConsultaDto.cantidadProductosMin !== undefined && categoriaConsultaDto.cantidadProductosMin !== "") ? categoriaConsultaDto.cantidadProductosMin : null;
+    const cantidadProductosMax = (categoriaConsultaDto.cantidadProductosMax !== undefined && categoriaConsultaDto.cantidadProductosMax !== "") ? categoriaConsultaDto.cantidadProductosMax : null;
+    
+    const presupuestoMin = (categoriaConsultaDto.presupuestoMin !== undefined && categoriaConsultaDto.presupuestoMin !== "") ? categoriaConsultaDto.presupuestoMin : null;
+    const presupuestoMax = (categoriaConsultaDto.presupuestoMax !== undefined && categoriaConsultaDto.presupuestoMax !== "") ? categoriaConsultaDto.presupuestoMax : null;
+    
+    const pesoPromedioMin = (categoriaConsultaDto.pesoPromedioMin !== undefined && categoriaConsultaDto.pesoPromedioMin !== "") ? categoriaConsultaDto.pesoPromedioMin : null;
+    const pesoPromedioMax = (categoriaConsultaDto.pesoPromedioMax !== undefined && categoriaConsultaDto.pesoPromedioMax !== "") ? categoriaConsultaDto.pesoPromedioMax : null;
 
     return categorias.filter((categoriaModel) => {
       const camposBuscables = {
         id: categoriaModel.id,
         codigo: categoriaModel.codigo,
         nombre: categoriaModel.nombre,
-        tipo: categoriaModel.tipo,
         descripcion: categoriaModel.descripcion,
       };
 
@@ -175,13 +186,13 @@ export class CategoriaRepository {
         objetoContieneTexto(camposBuscables, texto) &&
         (!tipo || categoriaModel.tipo === tipo) &&
         (activo === "" || String(categoriaModel.activo) === String(activo)) &&
-        (presupuestoMin === "" || categoriaModel.presupuesto >= Number(presupuestoMin)) &&
-        (presupuestoMax === "" || categoriaModel.presupuesto <= Number(presupuestoMax))
+        (cantidadProductosMin === null || categoriaModel.cantidadProductos >= Number(cantidadProductosMin)) &&
+        (cantidadProductosMax === null || categoriaModel.cantidadProductos <= Number(cantidadProductosMax)) &&
+        (presupuestoMin === null || categoriaModel.presupuesto >= Number(presupuestoMin)) &&
+        (presupuestoMax === null || categoriaModel.presupuesto <= Number(presupuestoMax)) &&
+        (pesoPromedioMin === null || categoriaModel.pesoPromedio >= Number(pesoPromedioMin)) &&
+        (pesoPromedioMax === null || categoriaModel.pesoPromedio <= Number(pesoPromedioMax))
       );
     });
   }
-
-
 }
-
-
