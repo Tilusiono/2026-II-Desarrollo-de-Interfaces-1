@@ -174,6 +174,14 @@ export class ProductosService {
       (productoModel) => new ProductoResponseDto(productoModel),
     );
   }
+  
+//DELETE
+  async eliminar(id) {
+    const productoEliminadoModel = await this.productoRepository.eliminar(id);
+    if (!productoEliminadoModel)
+      throw new AppError("Producto no encontrado", 404);
+    return new ProductoResponseDto(productoEliminadoModel);
+  }
 
 
 }

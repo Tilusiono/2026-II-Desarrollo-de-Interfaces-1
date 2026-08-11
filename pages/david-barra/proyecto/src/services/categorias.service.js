@@ -169,6 +169,15 @@ export class CategoriasService {
     );
   }
 
+//DELETE
+  async eliminar(id) {
+    const categoriaEliminadaModel = await this.categoriaRepository.eliminar(id);
+    if (!categoriaEliminadaModel)
+      throw new AppError("Categoría no encontrada", 404);
+    return new CategoriaResponseDto(categoriaEliminadaModel);
+  }
+
+
 
 }
 
