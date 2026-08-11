@@ -2,9 +2,8 @@ import { Router } from "express";
 import { asyncHandler } from "../utils/asyncHandler.js";
 
 import { categoriasController as controller } from "../controllers/categorias.controller.js";
+import {CategoriaConsultaDto,CategoriaRequestDto,} from "../dtos/CategoriaDto.js";
 import { validarId } from "../middlewares/id.middleware.js";
-import {CategoriaConsultaDto,CategoriaRequestDto,} from "../dtos/CategoriaDto.js";import { validarId } from "../middlewares/id.middleware.js";
-
 //import {
 //  validarCategoriaCompleto,
 //  validarCategoriaParcial,
@@ -22,6 +21,15 @@ router.post(
 );
 
 router.get("/", asyncHandler((request, response) => controller.listar(response)));
+
+router.get(
+  "/buscar",
+  asyncHandler((request, response) => {
+    const categoriaConsultaDto = new CategoriaConsultaDto(request.query);
+    return controller.buscar(categoriaConsultaDto, response);
+  }),
+);
+
 router.get("/:id", validarId, asyncHandler((request, response) => controller.obtener(Number(request.params.id), response),),);
 
 
