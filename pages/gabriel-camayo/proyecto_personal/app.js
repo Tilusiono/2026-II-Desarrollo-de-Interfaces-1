@@ -25,7 +25,7 @@ app.get("/api", (request, response) => {
   response.json({
     nombre: "Tienda de Hadware",
     almacenamiento: "sqlite",
-    recursos: ["productos,servicios"],
+    recursos: ["productos,perifericos"],
   });
 });
 
