@@ -195,4 +195,14 @@ export class CategoriaRepository {
       );
     });
   }
+
+//DELETE
+  async eliminar(id) {
+    const categoriaModel = await this.buscarPorId(id);
+    if (!categoriaModel) return null;
+
+    this.db.prepare("DELETE FROM categorias WHERE id = ?").run(Number(id));
+    return categoriaModel;
+  }
+
 }
