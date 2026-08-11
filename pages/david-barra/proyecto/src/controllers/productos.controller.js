@@ -50,6 +50,18 @@ export class ProductoController {
       productoResponseDto,
     });
   }
+//SEARCH
+  async buscar(productoConsultaDto, response) {
+    const productosResponseDto =
+      await this.productosService.buscar(productoConsultaDto);
+    response.json({
+      total: productosResponseDto.length,
+      productoConsultaDto,
+      productosResponseDto,
+    });
+  }
+
+
 
 }
 

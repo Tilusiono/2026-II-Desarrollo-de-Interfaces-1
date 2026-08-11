@@ -52,6 +52,18 @@ export class CategoriasController {
     });
   }
 
+//SEARCH
+  async buscar(categoriaConsultaDto, response) {
+    const categoriasResponseDto =
+      await this.categoriasService.buscar(categoriaConsultaDto);
+    response.json({
+      total: categoriasResponseDto.length,
+      categoriaConsultaDto,
+      categoriasResponseDto,
+    });
+  }
+
+
 }
 
 export const categoriasController = new CategoriasController(categoriasService);
