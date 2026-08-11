@@ -61,4 +61,13 @@ router.patch("/:id",validarId,//validarCategoriaParcial,
   }),
 );
 
+router.delete(
+  "/:id",
+  validarId,
+  asyncHandler((request, response) =>
+    controller.eliminar(Number(request.params.id), response),
+  ),
+);
+
+
 export default router;
