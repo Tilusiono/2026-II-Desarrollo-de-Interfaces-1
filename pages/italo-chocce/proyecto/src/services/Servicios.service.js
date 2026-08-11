@@ -1,7 +1,5 @@
 import { AppError } from "../errors/AppError.js";
 import Servicio from "../models/Servicios.js";
-
-
 import { ServicioResponseDto } from "../dtos/Servicios.dto.js";
 import { ServiciosRepository } from "../repositories/ServiciosRepository.js";
 import { normalizarTexto } from "../utils/texto.js";
@@ -15,22 +13,22 @@ export class ServiciosService {
     await this.validarCodigo(servicioRequestDto.codigo);
     const imagenDatos = this.convertirImagen(servicioRequestDto.imagenBase64);
 
-    const servicioModel = new Servicio(
-      0,
-      servicioRequestDto.codigo,
-      servicioRequestDto.nombre,
-      servicioRequestDto.categoriaId,
-      servicioRequestDto.capacidadMax,
-      servicioRequestDto.precio,
-      servicioRequestDto.duracionMinutos,
-      servicioRequestDto.descripcion,
-      servicioRequestDto.activo,
-      servicioRequestDto.fechaVencimiento,
-      servicioRequestDto.horaRegistro,
-      servicioRequestDto.fechaHoraRegistro,
-      imagenDatos.imagen,
-      imagenDatos.imagenMimeType
-    );
+   const servicioModel = new Servicio(
+    0,
+    servicioRequestDto.codigo ?? servicioRequestDto.codigoService, 
+    servicioRequestDto.nombre,
+    servicioRequestDto.categoria_id ?? servicioRequestDto.categoriaId, // <-- AQUÍ ESTÁ EL TRUCO
+    servicioRequestDto.capacidadMax,
+    servicioRequestDto.precio,
+    servicioRequestDto.duracionMinutos,
+    servicioRequestDto.descripcion,
+    servicioRequestDto.activo,
+    servicioRequestDto.fechaVencimiento,
+    servicioRequestDto.horaRegistro,
+    servicioRequestDto.fechaHoraRegistro,
+    imagenDatos.imagen,
+    imagenDatos.imagenMimeType
+);
 
     const servicioCreadoModel = await this.serviciosRepository.crear(servicioModel);
     return new ServicioResponseDto(servicioCreadoModel);

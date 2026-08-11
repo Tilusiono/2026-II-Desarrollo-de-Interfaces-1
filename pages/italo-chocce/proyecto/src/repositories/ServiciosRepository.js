@@ -14,7 +14,7 @@ export class ServiciosRepository {
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         codigo VARCHAR(20) NOT NULL UNIQUE,
         nombre TEXT NOT NULL,
-        categoria_id CHAR(3) NOT NULL,
+        categoria_id VARCHAR(20) NOT NULL,
         capacidadMax INTEGER NOT NULL DEFAULT 0,
         precio DECIMAL(10, 2) NOT NULL,
         duracionMinutos REAL,
@@ -79,33 +79,30 @@ export class ServiciosRepository {
     );
   }
   async crear(ServiciosModel) {
-    console.log("--> CATEGORIA_ID QUE INTENTA INSERTAR:", ServiciosModel?.categoria_id);
-    
-    const resultado = this.db
-      .prepare(`
-        INSERT INTO servicios_casino (
-          codigo, nombre, categoria_id, capacidadMax, precio, duracionMinutos, descripcion,
-          activo, fechaVencimiento, horaRegistro, fechaHoraRegistro, imagen, imagenMimeType
-        )
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-      `)
-      .run(
-        String(ServiciosModel?.codigo ?? ''),
-        String(ServiciosModel?.nombre ?? ''),
-        String(ServiciosModel?.categoria_id ?? ServiciosModel?.categoriaId ?? ''),
-        Number(ServiciosModel?.capacidadMax ?? 0),
-        Number(ServiciosModel?.precio ?? 0),
-        Number(ServiciosModel?.duracionMinutos ?? 0),
-        ServiciosModel?.descripcion ? String(ServiciosModel.descripcion) : null,
-        ServiciosModel?.activo === true || ServiciosModel?.activo === 1 ? 1 : 0,
-        ServiciosModel?.fechaVencimiento ? String(ServiciosModel.fechaVencimiento) : null,
-        String(ServiciosModel?.horaRegistro ?? ''),
-        String(ServiciosModel?.fechaHoraRegistro ?? ''),
-        ServiciosModel?.imagen ?? null,
-        ServiciosModel?.imagenMimeType ?? null
-      
-      );
+        console.log("--> OBJETO COMPLETO QUE LLEGó:", JSON.stringify(ServiciosModel));
 
-    return this.buscarPorId(Number(resultado.lastInsertRowid));
-  }
+        const resultado = this.db.prepare(`
+            INSERT INTO servicios_casino (
+                codigo, nombre, categoria_id, capacidadMax, precio, duracionMinutos, descripcion,
+                activo, fechaVencimiento, horaRegistro, fechaHoraRegistro, imagen, imagenMimeType
+            )
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        `).run(
+            String(ServiciosModel?.codigo ?? ''),
+            String(ServiciosModel?.nombre ?? ''),
+            String(ServiciosModel?.categoria_id ?? ServiciosModel?.categoriaId ?? ''),
+            Number(ServiciosModel?.capacidadMax ?? 0),
+            Number(ServiciosModel?.precio ?? 0),
+            Number(ServiciosModel?.duracionMinutos ?? 0),
+            ServiciosModel?.descripcion ? String(ServiciosModel.descripcion) : null,
+            ServiciosModel?.activo === true || ServiciosModel?.activo === 1 ? 1 : 0,
+            ServiciosModel?.fechaVencimiento ? String(ServiciosModel.fechaVencimiento) : null,
+            String(ServiciosModel?.horaRegistro ?? ''),
+            String(ServiciosModel?.fechaHoraRegistro ?? ''),
+            ServiciosModel?.imagen ?? null,
+            ServiciosModel?.imagenMimeType ?? null
+        );
+
+        return this.buscarPorId(Number(resultado.lastInsertRowid));
+    }
 }
