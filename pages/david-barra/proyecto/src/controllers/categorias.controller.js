@@ -75,6 +75,15 @@ export class CategoriasController {
     });
   }
 
+//DELETE
+  async eliminar(id, response) {
+    const categoriaResponseDto = await this.categoriasService.eliminar(id);
+    response.json({
+      mensaje: "Categoría eliminada",
+      categoriaResponseDto,
+    });
+  }
+
 
 }
 
