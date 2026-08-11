@@ -1,6 +1,6 @@
 import { createRequire } from "node:module";
 import { sqlitePath } from "../config/storage.config.js";
-import Producto from "../models/Servicios.js";
+import Servicio from "../models/Servicios.js";
 
 const require = createRequire(import.meta.url);
 
