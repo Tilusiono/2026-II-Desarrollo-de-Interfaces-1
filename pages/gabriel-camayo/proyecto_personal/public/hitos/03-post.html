@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Hito 3 - POST Periféricos</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/bootstrap-icons/font/bootstrap-icons.css" />
+    <style>
+      /* Toques azules personalizados para diferenciarlo */
+      .navbar-custom { background-color: #0a3d6e !important; }
+      .card-custom { border-top: 4px solid #0a3d6e; }
+    </style>
+  </head>
+  <body class="bg-primary-subtle">
+    <nav class="navbar navbar-dark navbar-custom shadow-sm">
+      <div class="container">
+        <span class="navbar-brand">
+          <i class="bi bi-pc-display me-2"></i>Gestión de Periféricos
+        </span>
+      </div>
+    </nav>
+
+    <main class="container py-4">
+      <div class="card card-custom border-0 shadow-sm">
+        <div class="card-body p-4">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+              <h1 class="h4 mb-1 text-primary-emphasis">Registrar Periférico</h1>
+              <p class="text-secondary mb-0">POST /api/perifericos</p>
+            </div>
+            <span class="badge bg-primary">Proyecto Gabriel</span>
+          </div>
+
+          <form id="form-post" class="row g-3">
+            <!-- Fila 1 -->
+            <div class="col-md-3">
+              <label class="form-label fw-bold text-primary-emphasis" for="codigo">Código</label>
+              <input id="codigo" class="form-control" value="PER-001" required />
+            </div>
+            <div class="col-md-3">
+              <label class="form-label fw-bold text-primary-emphasis" for="tipo">Tipo</label>
+              <select id="tipo" class="form-select" required>
+                <option value="Mouse">Mouse</option>
+                <option value="Teclado">Teclado</option>
+                <option value="Monitor">Monitor</option>
+                <option value="Auriculares">Auriculares</option>
+                <option value="Micrófono">Micrófono</option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <label class="form-label fw-bold text-primary-emphasis" for="marca">Marca</label>
+              <input id="marca" class="form-control" value="Logitech" required />
+            </div>
+            <div class="col-md-3">
+              <label class="form-label fw-bold text-primary-emphasis" for="modelo">Modelo</label>
+              <input id="modelo" class="form-control" value="G203" required />
+            </div>
+
+            <!-- Fila 2 -->
+            <div class="col-md-3">
+              <label class="form-label fw-bold text-primary-emphasis" for="tipoConexion">Conexión</label>
+              <select id="tipoConexion" class="form-select" required>
+                <option value="Cable USB">Cable USB</option>
+                <option value="Inalámbrico">Inalámbrico (Dongle)</option>
+                <option value="Bluetooth">Bluetooth</option>
+                <option value="Jack 3.5mm">Jack 3.5mm</option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <label class="form-label fw-bold text-primary-emphasis" for="color">Color</label>
+              <input id="color" class="form-control" value="Negro" required />
+            </div>
+            <div class="col-md-3">
+              <label class="form-label fw-bold text-primary-emphasis" for="precio">Precio</label>
+              <div class="input-group">
+                <span class="input-group-text">S/</span>
+                <input id="precio" type="number" min="0" step="0.01" class="form-control" value="120.50" required />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <label class="form-label fw-bold text-primary-emphasis" for="stock">Stock</label>
+              <input id="stock" type="number" min="0" class="form-control" value="15" required />
+            </div>
+
+            <!-- Fila 3 -->
+            <div class="col-md-3">
+              <label class="form-label fw-bold text-primary-emphasis" for="horaRegistro">Hora de Registro</label>
+              <input id="horaRegistro" type="time" class="form-control" value="14:30" required />
+            </div>
+            <div class="col-md-4">
+              <label class="form-label fw-bold text-primary-emphasis" for="fechaHoraRegistro">Fecha y Hora</label>
+              <input id="fechaHoraRegistro" type="datetime-local" class="form-control" value="2026-08-11T14:30" required />
+            </div>
+            <div class="col-md-5">
+              <label class="form-label fw-bold text-primary-emphasis" for="imagen">Imagen (Opcional)</label>
+              <input id="imagen" type="file" accept="image/*" class="form-control" />
+            </div>
+
+            <!-- Botón -->
+            <div class="col-12 mt-4">
+              <button class="btn btn-primary w-100 fw-bold">
+                <i class="bi bi-save me-2"></i>Guardar Periférico
+              </button>
+            </div>
+          </form>
+
+          <!-- Zona de alertas y respuestas -->
+          <div id="mensaje" class="alert d-none mt-4" role="alert"></div>
+          <pre id="resultado" class="bg-dark text-info border border-secondary rounded p-3 mt-3 mb-0 d-none"></pre>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      const formulario = document.querySelector("#form-post");
+      const mensaje = document.querySelector("#mensaje");
+      const resultado = document.querySelector("#resultado");
+
+      formulario.addEventListener("submit", async (evento) => {
+        evento.preventDefault();
+
+        try {
+          const archivo = document.querySelector("#imagen").files[0];
+          const imagenBase64 = archivo ? await convertirBase64(archivo) : null;
+
+          // Construcción del DTO usando las propiedades exactas de tu modelo Perifericos
+          const perifericoRequestDto = {
+            codigo: document.querySelector("#codigo").value.trim(),
+            tipo: document.querySelector("#tipo").value,
+            marca: document.querySelector("#marca").value.trim(),
+            modelo: document.querySelector("#modelo").value.trim(),
+            tipoConexion: document.querySelector("#tipoConexion").value,
+            color: document.querySelector("#color").value.trim(),
+            precio: Number(document.querySelector("#precio").value),
+            stock: Number(document.querySelector("#stock").value),
+            horaRegistro: document.querySelector("#horaRegistro").value,
+            fechaHoraRegistro: document.querySelector("#fechaHoraRegistro").value,
+            imagenBase64: imagenBase64
+          };
+
+          // Apuntamos al endpoint que configuraste en tu router
+          const respuestaHttp = await fetch("/api/perifericos", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(perifericoRequestDto),
+          });
+          
+          const respuesta = await respuestaHttp.json();
+          mostrarResultado(respuestaHttp.status, respuestaHttp.ok, respuesta);
+          
+        } catch (error) {
+          mostrarResultado(0, false, { mensaje: error.message });
+        }
+      });
+
+      function convertirBase64(archivo) {
+        return new Promise((resolve, reject) => {
+          const lector = new FileReader();
+          lector.addEventListener("load", () => resolve(lector.result), { once: true });
+          lector.addEventListener("error", () => reject(lector.error), { once: true });
+          lector.readAsDataURL(archivo);
+        });
+      }
+
+      function mostrarResultado(status, correcto, datos) {
+        mensaje.className = `alert alert-${correcto ? "success" : "danger"} mt-4`;
+        mensaje.textContent = `HTTP ${status || "sin respuesta"} · ${datos.mensaje ?? "Solicitud procesada"}`;
+        resultado.textContent = JSON.stringify(datos, null, 2);
+        resultado.classList.remove("d-none");
+      }
+    </script>
+    <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
