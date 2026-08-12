@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Hito 7 - Probar GET buscar Empleados</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/bootstrap-icons/font/bootstrap-icons.css" />
+  </head>
+  <body class="bg-light">
+    <nav class="navbar navbar-dark bg-primary">
+      <div class="container">
+        <span class="navbar-brand"><i class="bi bi-search me-2"></i>Hito 7 · GET /buscar Empleados</span>
+      </div>
+    </nav>
+
+    <main class="container py-4">
+      <div id="mensaje" class="alert d-none" role="alert"></div>
+      
+      <!-- SECCIÓN DEL FORMULARIO DE BÚSQUEDA -->
+      <section class="card border-0 shadow-sm mb-4">
+        <div class="card-body p-4">
+          <form id="form-buscar" class="row g-3 align-items-end">
+            
+            <div class="col-md-4">
+              <label class="form-label" for="texto">Texto (DNI, Nombre, Apellido, Correo)</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-search"></i></span>
+                <input id="texto" class="form-control" placeholder="Buscar..." />
+              </div>
+            </div>
+            
+            <div class="col-md-2">
+              <label class="form-label" for="estado">Estado</label>
+              <select id="estado" class="form-select">
+                <option value="">Todos</option>
+                <option value="1">Activos (1)</option>
+                <option value="0">Inactivos (0)</option>
+              </select>
+            </div>
+
+            <!-- TIPO EMPLEADO (Select Dinámico) -->
+            <div class="col-md-3">
+              <label class="form-label" for="idTipoEmpleado">Tipo Empleado</label>
+              <select id="idTipoEmpleado" class="form-select">
+                <option value="">Todos</option>
+              </select>
+            </div>
+
+            <!-- CARGO (Select Dinámico) -->
+            <div class="col-md-3">
+              <label class="form-label" for="idCargo">Cargo</label>
+              <select id="idCargo" class="form-select">
+                <option value="">Todos</option>
+              </select>
+            </div>
+
+            <!-- ÁREA (Select Dinámico) -->
+            <div class="col-md-3">
+              <label class="form-label" for="idArea">Área</label>
+              <select id="idArea" class="form-select">
+                <option value="">Todas</option>
+              </select>
+            </div>
+
+            <!-- SEDE (Select Dinámico) -->
+            <div class="col-md-3">
+              <label class="form-label" for="idSede">Sede</label>
+              <select id="idSede" class="form-select">
+                <option value="">Todas</option>
+              </select>
+            </div>
+
+            <div class="col-md-6 d-flex gap-2">
+              <button class="btn btn-primary flex-grow-1">
+                <i class="bi bi-funnel me-1"></i>Buscar con GET
+              </button>
+              <button id="btn-limpiar" type="button" class="btn btn-outline-secondary">
+                <i class="bi bi-x-circle me-1"></i>Limpiar filtros
+              </button>
+            </div>
+
+          </form>
+          <code id="url" class="d-block mt-3 text-secondary"></code>
+        </div>
+      </section>
+
+      <!-- SECCIÓN DE LA TABLA DE RESULTADOS -->
+      <section class="card border-0 shadow-sm">
+        <div class="card-body p-4">
+          <div class="d-flex justify-content-between mb-3">
+            <h1 class="h5 mb-0">Resultados filtrados</h1>
+            <span id="total" class="badge text-bg-primary">0</span>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>DNI</th>
+                  <th>Empleado (Nombres y Apellidos)</th>
+                  <th>Correo</th>
+                  <th>Tipo Empleado</th>
+                  <th>Área</th>
+                  <th>Cargo</th>
+                  <th>Salario</th>
+                  <th>Estado</th>
+                </tr>
+              </thead>
+              <tbody id="tabla">
+                <tr><td colspan="9" class="text-center py-4 text-secondary">Realiza una búsqueda.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- SCRIPTS -->
+    <script>
+      const formulario = document.querySelector("#form-buscar");
+      const mensaje = document.querySelector("#mensaje");
+      const tabla = document.querySelector("#tabla");
+
+      // --- NUEVO: Cargar los selects dinámicamente al abrir la página ---
+      document.addEventListener("DOMContentLoaded", () => {
+        cargarListasDesplegables();
+        // Opcional: hacer una primera búsqueda automática para mostrar todo al cargar
+        // buscar(new Event("submit")); 
+      });
+
+      async function cargarListasDesplegables() {
+        try {
+          const resTipo = await fetch("/api/tipos-empleado");
+          llenarSelect("#idTipoEmpleado", await resTipo.json(), "idTipoEmpleado", "nombre");
+
+          const resCargo = await fetch("/api/cargos");
+          llenarSelect("#idCargo", await resCargo.json(), "idCargo", "nombre");
+
+          const resArea = await fetch("/api/areas");
+          llenarSelect("#idArea", await resArea.json(), "idArea", "nombre");
+
+          const resSede = await fetch("/api/sedes");
+          llenarSelect("#idSede", await resSede.json(), "idSede", "nombre");
+        } catch (error) {
+          console.error("Error al cargar los desplegables:", error);
+        }
+      }
+
+      function llenarSelect(selector, respuestaApi, campoId, campoNombre) {
+        const select = document.querySelector(selector);
+        // Respetamos la opción por defecto ("Todos" o "Todas")
+        const defaultText = selector === "#idArea" || selector === "#idSede" ? "Todas" : "Todos";
+        select.innerHTML = `<option value="">${defaultText}</option>`;
+        
+        const lista = Array.isArray(respuestaApi) 
+          ? respuestaApi 
+          : (Object.values(respuestaApi).find(val => Array.isArray(val)) || []);
+
+        lista.forEach(item => {
+          const option = document.createElement("option");
+          option.value = item[campoId]; // Enviaremos el ID en la URL de búsqueda
+          option.textContent = item[campoNombre];
+          select.appendChild(option);
+        });
+      }
+      // ------------------------------------------------------------------
+
+      formulario.addEventListener("submit", buscar);
+      document.querySelector("#btn-limpiar").addEventListener("click", () => {
+        formulario.reset();
+        buscar(new Event("submit"));
+      });
+
+      async function buscar(evento) {
+        if(evento) evento.preventDefault();
+        
+        const empleadoConsultaDto = {
+          texto: valor("texto"), 
+          estado: valor("estado"), 
+          idTipoEmpleado: valor("idTipoEmpleado"), 
+          idCargo: valor("idCargo"), 
+          idArea: valor("idArea"),
+          idSede: valor("idSede")
+        };
+
+        const parametros = new URLSearchParams();
+        for (const [campo, valorActual] of Object.entries(empleadoConsultaDto)) {
+          // Si el select está en "Todos" (valor vacío ""), no lo añadimos a la URL
+          if (valorActual !== "") parametros.set(campo, valorActual);
+        }
+        
+        const ruta = `/api/empleados/buscar?${parametros}`;
+        document.querySelector("#url").textContent = `GET ${ruta}`;
+
+        try {
+          const respuestaHttp = await fetch(ruta);
+          const respuesta = await respuestaHttp.json();
+          
+          if (!respuestaHttp.ok) throw new Error(`HTTP ${respuestaHttp.status} · ${respuesta.mensaje}`);
+          
+          const arregloEmpleados = respuesta.empleadosResponseDto || respuesta.empleadoResponseDto || respuesta || [];
+          
+          renderizar(arregloEmpleados);
+          mostrar(`HTTP 200 · ${respuesta.total ?? arregloEmpleados.length} resultado(s)`, true);
+          mensaje.classList.remove("d-none");
+        } catch (error) {
+          renderizar([]);
+          mostrar(error.message, false);
+          mensaje.classList.remove("d-none");
+        }
+      }
+
+      function renderizar(empleados) {
+        document.querySelector("#total").textContent = empleados.length;
+        
+        tabla.innerHTML = empleados.length
+          ? empleados.map((e) => `
+              <tr>
+                <td>${e.idEmpleado}</td>
+                <td>${e.dni}</td>
+                <td>${e.nombres} ${e.apellidos}</td>
+                <td>${e.correo || '-'}</td>
+                <td><span class="badge bg-secondary">${e.nombreTipoEmpleado || 'Sin Tipo'}</span></td>
+                <td><span class="badge bg-info text-dark">${e.nombreArea || 'Sin Área'}</span></td>
+                <td><span class="badge bg-warning text-dark">${e.nombreCargo || 'Sin Cargo'}</span></td>
+                <td>S/ ${e.salario != null ? Number(e.salario).toFixed(2) : '0.00'}</td>
+                <td>
+                  <span class="badge ${String(e.estado) === '1' || e.estado === true || e.estado === 'Activo' ? 'bg-success' : 'bg-danger'}">
+                    ${String(e.estado) === '1' || e.estado === true || e.estado === 'Activo' ? 'Activo' : 'Inactivo'}
+                  </span>
+                </td>
+              </tr>`).join("")
+          : '<tr><td colspan="9" class="text-center py-4 text-secondary">Sin resultados.</td></tr>';
+      }
+
+      function valor(id) { 
+        return document.querySelector(`#${id}`).value.trim(); 
+      }
+      
+      function mostrar(texto, correcto) {
+        mensaje.className = `alert alert-${correcto ? "success" : "danger"} mb-3`;
+        mensaje.textContent = texto;
+      }
+    </script>
+    <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

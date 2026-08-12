@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Hito 6 - Probar PATCH Empleado</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/bootstrap-icons/font/bootstrap-icons.css" />
+  </head>
+  <body class="bg-light">
+    <nav class="navbar navbar-dark bg-primary">
+      <div class="container">
+        <span class="navbar-brand"><i class="bi bi-sliders me-2"></i>Hito 6 · PATCH Empleado</span>
+      </div>
+    </nav>
+
+    <main class="container py-4">
+      <div id="mensaje" class="alert d-none" role="alert"></div>
+      <div class="row g-4">
+        <div class="col-lg-6">
+          <section class="card border-0 shadow-sm h-100">
+            <div class="card-body p-4">
+              <h1 class="h4">Enviar solamente algunos campos</h1>
+              <form id="form-patch" class="row g-3">
+                <div class="col-12">
+                  <label class="form-label" for="id">ID</label>
+                  <input id="id" type="number" min="1" value="1" class="form-control" required />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="dni">DNI</label>
+                  <input id="dni" type="text" class="form-control" placeholder="Vacío = conservar" />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="nombres">Nombres</label>
+                  <input id="nombres" type="text" class="form-control" placeholder="Vacío = conservar" />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="apellidos">Apellidos</label>
+                  <input id="apellidos" type="text" class="form-control" placeholder="Vacío = conservar" />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="telefono">Teléfono</label>
+                  <input id="telefono" type="text" class="form-control" placeholder="Vacío = conservar" />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="correo">Correo</label>
+                  <input id="correo" type="email" class="form-control" placeholder="Vacío = conservar" />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="direccion">Dirección</label>
+                  <input id="direccion" type="text" class="form-control" placeholder="Vacío = conservar" />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="fechaIngreso">Fecha de Ingreso</label>
+                  <input id="fechaIngreso" type="date" class="form-control" />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="salario">Salario</label>
+                  <input id="salario" type="number" step="0.01" class="form-control" placeholder="Vacío = conservar" />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="estado">Estado</label>
+                  <select id="estado" class="form-select">
+                    <option value="">No enviar: conservar</option>
+                    <option value="Activo">Activo</option>
+                    <option value="Inactivo">Inactivo</option>
+                  </select>
+                </div>
+                
+                <div class="col-md-6">
+                  <label class="form-label" for="idTipoEmpleado">Tipo Empleado</label>
+                  <select id="idTipoEmpleado" class="form-select">
+                    <option value="">No enviar: conservar</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="idCargo">Cargo</label>
+                  <select id="idCargo" class="form-select">
+                    <option value="">No enviar: conservar</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="idArea">Área</label>
+                  <select id="idArea" class="form-select">
+                    <option value="">No enviar: conservar</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="idSede">Sede</label>
+                  <select id="idSede" class="form-select">
+                    <option value="">No enviar: conservar</option>
+                  </select>
+                </div>
+
+                <div class="col-12 d-flex gap-2 mt-3">
+                  <button class="btn btn-primary">
+                    <i class="bi bi-send me-1"></i>Enviar PATCH
+                  </button>
+                  <button id="btn-consultar" type="button" class="btn btn-outline-primary">
+                    <i class="bi bi-search me-1"></i>Consultar con GET
+                  </button>
+                </div>
+              </form>
+            </div>
+          </section>
+        </div>
+
+        <div class="col-lg-6">
+          <section class="card border-0 shadow-sm h-100">
+            <div class="card-body p-4">
+              <h2 class="h5">Body que se enviará</h2>
+              <pre id="body" class="bg-dark text-light rounded p-3">{}</pre>
+              <h2 class="h5 mt-4">Empleado guardado</h2>
+              <pre id="resultado" class="bg-dark text-light rounded p-3 mb-0">Ejecuta PATCH o GET.</pre>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      const mensaje = document.querySelector("#mensaje");
+      const bodyVista = document.querySelector("#body");
+      const resultado = document.querySelector("#resultado");
+
+      document.addEventListener("DOMContentLoaded", cargarListasDesplegables);
+
+      async function cargarListasDesplegables() {
+        try {
+          const resTipo = await fetch("/api/tipos-empleado");
+          llenarSelect("#idTipoEmpleado", await resTipo.json(), "idTipoEmpleado", "nombre");
+
+          const resCargo = await fetch("/api/cargos");
+          llenarSelect("#idCargo", await resCargo.json(), "idCargo", "nombre");
+
+          const resArea = await fetch("/api/areas");
+          llenarSelect("#idArea", await resArea.json(), "idArea", "nombre");
+
+          const resSede = await fetch("/api/sedes");
+          llenarSelect("#idSede", await resSede.json(), "idSede", "nombre");
+        } catch (error) {
+          console.error("Error al cargar los desplegables:", error);
+        }
+      }
+
+      function llenarSelect(selector, respuestaApi, campoId, campoNombre) {
+        const select = document.querySelector(selector);
+        // Respetamos la opción vacía para PATCH
+        select.innerHTML = '<option value="">No enviar: conservar</option>';
+        
+        const lista = Array.isArray(respuestaApi) 
+          ? respuestaApi 
+          : (Object.values(respuestaApi).find(val => Array.isArray(val)) || []);
+
+        lista.forEach(item => {
+          const option = document.createElement("option");
+          option.value = item[campoId];
+          option.textContent = item[campoNombre];
+          select.appendChild(option);
+        });
+      }
+      // ------------------------------------------------------------------
+
+      document.querySelector("#form-patch").addEventListener("submit", async (evento) => {
+        evento.preventDefault();
+        const id = Number(document.querySelector("#id").value);
+        const empleadoRequestDto = construirBody();
+        bodyVista.textContent = JSON.stringify(empleadoRequestDto, null, 2);
+
+        if (!Object.keys(empleadoRequestDto).length) {
+          mostrar("Selecciona por lo menos un campo para PATCH.", false);
+          return;
+        }
+
+        await ejecutar(async () => {
+          const respuestaHttp = await fetch(`/api/empleados/${id}`, {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(empleadoRequestDto),
+          });
+          const respuesta = await respuestaHttp.json();
+          if (!respuestaHttp.ok) throw new Error(`HTTP ${respuestaHttp.status} · ${respuesta.mensaje}`);
+          
+          resultado.textContent = JSON.stringify(respuesta.empleadoResponseDto || respuesta, null, 2);
+          mostrar(`HTTP ${respuestaHttp.status} · ${respuesta.mensaje}`, true);
+        });
+      });
+
+      document.querySelector("#btn-consultar").addEventListener("click", consultar);
+
+      function construirBody() {
+        const empleadoRequestDto = {};
+        const dni = document.querySelector("#dni").value.trim();
+        const nombres = document.querySelector("#nombres").value.trim();
+        const apellidos = document.querySelector("#apellidos").value.trim();
+        const telefono = document.querySelector("#telefono").value.trim();
+        const correo = document.querySelector("#correo").value.trim();
+        const direccion = document.querySelector("#direccion").value.trim();
+        const fechaIngreso = document.querySelector("#fechaIngreso").value;
+        const salario = document.querySelector("#salario").value;
+        const estado = document.querySelector("#estado").value;
+        const idTipoEmpleado = document.querySelector("#idTipoEmpleado").value;
+        const idCargo = document.querySelector("#idCargo").value;
+        const idArea = document.querySelector("#idArea").value;
+        const idSede = document.querySelector("#idSede").value;
+
+        if (dni !== "") empleadoRequestDto.dni = dni;
+        if (nombres !== "") empleadoRequestDto.nombres = nombres;
+        if (apellidos !== "") empleadoRequestDto.apellidos = apellidos;
+        if (telefono !== "") empleadoRequestDto.telefono = telefono;
+        if (correo !== "") empleadoRequestDto.correo = correo;
+        if (direccion !== "") empleadoRequestDto.direccion = direccion;
+        if (fechaIngreso !== "") empleadoRequestDto.fechaIngreso = fechaIngreso;
+        if (salario !== "") empleadoRequestDto.salario = Number(salario);
+        if (estado !== "") empleadoRequestDto.estado = estado;
+        if (idTipoEmpleado !== "") empleadoRequestDto.idTipoEmpleado = Number(idTipoEmpleado);
+        if (idCargo !== "") empleadoRequestDto.idCargo = Number(idCargo);
+        if (idArea !== "") empleadoRequestDto.idArea = Number(idArea);
+        if (idSede !== "") empleadoRequestDto.idSede = Number(idSede);
+
+        return empleadoRequestDto;
+      }
+
+      async function consultar() {
+        const id = Number(document.querySelector("#id").value);
+        await ejecutar(async () => {
+          const respuestaHttp = await fetch(`/api/empleados/${id}`);
+          const respuesta = await respuestaHttp.json();
+          if (!respuestaHttp.ok) throw new Error(`HTTP ${respuestaHttp.status} · ${respuesta.mensaje}`);
+          resultado.textContent = JSON.stringify(respuesta.empleadoResponseDto, null, 2);
+          mostrar("HTTP 200 · Empleado consultado", true);
+        });
+      }
+
+      async function ejecutar(callback) {
+        try { await callback(); } catch (error) { mostrar(error.message, false); }
+      }
+      
+      function mostrar(texto, correcto) {
+        mensaje.className = `alert alert-${correcto ? "success" : "danger"}`;
+        mensaje.textContent = texto;
+        mensaje.classList.remove("d-none");
+      }
+    </script>
+    <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

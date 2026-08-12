@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Hito 3 - Probar POST Empleado</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/bootstrap-icons/font/bootstrap-icons.css" />
+  </head>
+  <body class="bg-light">
+    <nav class="navbar navbar-dark bg-primary">
+      <div class="container">
+        <span class="navbar-brand">
+          <i class="bi bi-person-plus-fill me-2"></i>Hito 3 · POST Empleado
+        </span>
+      </div>
+    </nav>
+
+    <main class="container py-4">
+      <div class="card border-0 shadow-sm">
+        <div class="card-body p-4">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+              <h1 class="h4 mb-1">Crear un empleado</h1>
+              <p class="text-secondary mb-0">POST /api/empleados</p>
+            </div>
+            <span class="badge text-bg-primary">Frontend temporal</span>
+          </div>
+
+          <form id="form-post" class="row g-3">
+            <div class="col-md-3">
+              <label class="form-label" for="dni">DNI</label>
+              <input id="dni" class="form-control" value="72817878" maxlength="8" required />
+            </div>
+            <div class="col-md-4">
+              <label class="form-label" for="nombres">Nombres</label>
+              <input id="nombres" class="form-control" value="Jose Luis" required />
+            </div>
+            <div class="col-md-5">
+              <label class="form-label" for="apellidos">Apellidos</label>
+              <input id="apellidos" class="form-control" value="Mendoza Ventura" required />
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label" for="telefono">Teléfono</label>
+              <input id="telefono" class="form-control" value="987654321" required />
+            </div>
+            <div class="col-md-4">
+              <label class="form-label" for="correo">Correo</label>
+              <input id="correo" type="email" class="form-control" value="Jose@gmail.com" required />
+            </div>
+            <div class="col-md-5">
+              <label class="form-label" for="direccion">Dirección</label>
+              <input id="direccion" class="form-control" value="Av. Principal 123" required />
+            </div>
+
+            <div class="col-md-4">
+              <label class="form-label" for="fechaIngreso">Fecha de Ingreso</label>
+              <input id="fechaIngreso" type="date" class="form-control" value="2026-08-27" required />
+            </div>
+            <div class="col-md-4">
+              <label class="form-label" for="salario">Salario (S/.)</label>
+              <input id="salario" type="number" min="0" step="0.01" class="form-control" value="2400" required />
+            </div>
+            <div class="col-md-4">
+              <label class="form-label" for="estado">Estado</label>
+              <select id="estado" class="form-select" required>
+                <option value="Activo" selected>Activo</option>
+                <option value="Inactivo">Inactivo</option>
+              </select>
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label" for="idTipoEmpleado">Tipo de Empleado</label>
+              <select id="idTipoEmpleado" class="form-select" required>
+                <option value="">Cargando...</option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <label class="form-label" for="idCargo">Cargo</label>
+              <select id="idCargo" class="form-select" required>
+                <option value="">Cargando...</option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <label class="form-label" for="idArea">Área</label>
+              <select id="idArea" class="form-select" required>
+                <option value="">Cargando...</option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <label class="form-label" for="idSede">Sede</label>
+              <select id="idSede" class="form-select" required>
+                <option value="">Cargando...</option>
+              </select>
+            </div>
+
+            <div class="col-12 mt-4">
+              <button class="btn btn-primary w-100">
+                <i class="bi bi-cloud-arrow-up me-1"></i>Registrar Empleado
+              </button>
+            </div>
+          </form>
+
+          <div id="mensaje" class="alert d-none mt-4" role="alert"></div>
+          <pre id="resultado" class="bg-dark text-light rounded p-3 mt-3 mb-0 d-none"></pre>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      const formulario = document.querySelector("#form-post");
+      const mensaje = document.querySelector("#mensaje");
+      const resultado = document.querySelector("#resultado");
+
+      async function cargarListasDesplegables() {
+        try {
+          const resTipo = await fetch("/api/tipos-empleado");
+          const tipos = await resTipo.json();
+          llenarSelect("#idTipoEmpleado", tipos, "idTipoEmpleado", "nombre");
+
+          const resCargo = await fetch("/api/cargos");
+          const cargos = await resCargo.json();
+          llenarSelect("#idCargo", cargos, "idCargo", "nombre");
+
+          const resArea = await fetch("/api/areas");
+          const areas = await resArea.json();
+          llenarSelect("#idArea", areas, "idArea", "nombre");
+
+          const resSede = await fetch("/api/sedes");
+          const sedes = await resSede.json();
+          llenarSelect("#idSede", sedes, "idSede", "nombre");
+
+        } catch (error) {
+          console.error("Error al cargar los desplegables:", error);
+        }
+      }
+
+      function llenarSelect(selector, respuestaApi, campoId, campoNombre) {
+        const select = document.querySelector(selector);
+        select.innerHTML = '<option value="">Seleccione...</option>';
+        
+        // Busca automáticamente cuál propiedad contiene el Array (ej. cargosResponseDto)
+        const lista = Array.isArray(respuestaApi) 
+          ? respuestaApi 
+          : (Object.values(respuestaApi).find(val => Array.isArray(val)) || []);
+
+        lista.forEach(item => {
+          const option = document.createElement("option");
+          option.value = item[campoId];        
+          option.textContent = item[campoNombre]; 
+          select.appendChild(option);
+        });
+      }
+
+      document.addEventListener("DOMContentLoaded", cargarListasDesplegables);
+
+      formulario.addEventListener("submit", async (evento) => {
+        evento.preventDefault();
+
+        try {
+          const empleadoRequestDto = {
+            dni: document.querySelector("#dni").value.trim(),
+            nombres: document.querySelector("#nombres").value.trim(),
+            apellidos: document.querySelector("#apellidos").value.trim(),
+            telefono: document.querySelector("#telefono").value.trim(),
+            correo: document.querySelector("#correo").value.trim(),
+            direccion: document.querySelector("#direccion").value.trim(),
+            fechaIngreso: document.querySelector("#fechaIngreso").value,
+            salario: Number(document.querySelector("#salario").value),
+            estado: document.querySelector("#estado").value,
+            
+            idTipoEmpleado: Number(document.querySelector("#idTipoEmpleado").value),
+            idCargo: Number(document.querySelector("#idCargo").value),
+            idArea: Number(document.querySelector("#idArea").value),
+            idSede: Number(document.querySelector("#idSede").value)
+          };
+
+          const respuestaHttp = await fetch("/api/empleados", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(empleadoRequestDto),
+          });
+          
+          const respuesta = await respuestaHttp.json();
+          mostrarResultado(respuestaHttp.status, respuestaHttp.ok, respuesta);
+        } catch (error) {
+          mostrarResultado(0, false, { mensaje: error.message });
+        }
+      });
+
+      function mostrarResultado(status, correcto, datos) {
+        mensaje.className = `alert alert-${correcto ? "success" : "danger"} mt-4`;
+        mensaje.textContent = `HTTP ${status || "sin respuesta"} · ${datos.mensaje ?? "Solicitud procesada"}`;
+        resultado.textContent = JSON.stringify(datos, null, 2);
+        resultado.classList.remove("d-none");
+      }
+    </script>
+    <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

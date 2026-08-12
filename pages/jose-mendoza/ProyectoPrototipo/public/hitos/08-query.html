@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Hito 8 - Probar QUERY Empleados</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/bootstrap-icons/font/bootstrap-icons.css" />
+  </head>
+  <body class="bg-light">
+    <nav class="navbar navbar-dark bg-primary">
+      <div class="container">
+        <span class="navbar-brand"><i class="bi bi-database-down me-2"></i>Hito 8 · Empleados QUERY</span>
+      </div>
+    </nav>
+
+    <main class="container py-4">
+      <div class="alert alert-info">
+        <i class="bi bi-info-circle me-1"></i>
+      </div>
+      <div id="mensaje" class="alert d-none" role="alert"></div>
+
+      <section class="card border-0 shadow-sm mb-4">
+        <div class="card-body p-4">
+          <form id="form-query" class="row g-3 align-items-end">
+            
+            <div class="col-md-3">
+              <label class="form-label" for="texto">Texto (DNI, Nombres, Apellidos)</label>
+              <input id="texto" class="form-control" placeholder="Buscar..." />
+            </div>
+            
+            <div class="col-md-2">
+              <label class="form-label" for="estado">Estado</label>
+              <select id="estado" class="form-select">
+                <option value="">Todos</option>
+                <option value="1">Activo</option>
+                <option value="0">Inactivo</option>
+              </select>
+            </div>
+
+            <div class="col-md-2">
+              <label class="form-label" for="idTipoEmpleado">Tipo Empleado</label>
+              <select id="idTipoEmpleado" class="form-select">
+                <option value="">Todos</option>
+              </select>
+            </div>
+
+            <div class="col-md-2">
+              <label class="form-label" for="idCargo">Cargo</label>
+              <select id="idCargo" class="form-select">
+                <option value="">Todos</option>
+              </select>
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label" for="idArea">Área</label>
+              <select id="idArea" class="form-select">
+                <option value="">Todas</option>
+              </select>
+            </div>
+
+            <div class="col-12 d-flex flex-wrap gap-2 mt-3">
+              <button class="btn btn-primary">
+                <i class="bi bi-play-circle me-1"></i>Enviar método QUERY
+              </button>
+              <button id="btn-get-invalido" type="button" class="btn btn-outline-danger">
+                <i class="bi bi-bug me-1"></i>Probar GET inválido
+              </button>
+            </div>
+          </form>
+          <code id="solicitud" class="d-block mt-3 text-secondary"></code>
+        </div>
+      </section>
+
+      <section class="card border-0 shadow-sm">
+        <div class="card-body p-4">
+          <h1 class="h5">Respuesta</h1>
+          <pre id="resultado" class="bg-dark text-light rounded p-3 mb-0">Ejecuta una solicitud.</pre>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      const formulario = document.querySelector("#form-query");
+      const mensaje = document.querySelector("#mensaje");
+      const resultado = document.querySelector("#resultado");
+
+      document.addEventListener("DOMContentLoaded", cargarListasDesplegables);
+
+      async function cargarListasDesplegables() {
+        try {
+          const resTipo = await fetch("/api/tipos-empleado");
+          llenarSelect("#idTipoEmpleado", await resTipo.json(), "idTipoEmpleado", "nombre");
+
+          const resCargo = await fetch("/api/cargos");
+          llenarSelect("#idCargo", await resCargo.json(), "idCargo", "nombre");
+
+          const resArea = await fetch("/api/areas");
+          llenarSelect("#idArea", await resArea.json(), "idArea", "nombre");
+        } catch (error) {
+          console.error("Error al cargar los desplegables:", error);
+        }
+      }
+
+      function llenarSelect(selector, respuestaApi, campoId, campoNombre) {
+        const select = document.querySelector(selector);
+        const defaultText = selector === "#idArea" ? "Todas" : "Todos";
+        select.innerHTML = `<option value="">${defaultText}</option>`;
+        
+        const lista = Array.isArray(respuestaApi) 
+          ? respuestaApi 
+          : (Object.values(respuestaApi).find(val => Array.isArray(val)) || []);
+
+        lista.forEach(item => {
+          const option = document.createElement("option");
+          option.value = item[campoId]; 
+          option.textContent = item[campoNombre];
+          select.appendChild(option);
+        });
+      }
+      // ------------------------------------------------------------------
+
+      formulario.addEventListener("submit", async (evento) => {
+        evento.preventDefault();
+        await consultar("QUERY");
+      });
+      
+      document.querySelector("#btn-get-invalido").addEventListener("click", async () => {
+        await consultar("GET");
+      });
+
+      async function consultar(metodo) {
+        const parametros = new URLSearchParams();
+        for (const identificador of ["texto", "estado", "idTipoEmpleado", "idCargo", "idArea"]) {
+          const valor = document.querySelector(`#${identificador}`).value.trim();
+          if (valor !== "") parametros.set(identificador, valor);
+        }
+        const ruta = `/api/empleados/consulta?${parametros}`;
+        document.querySelector("#solicitud").textContent = `${metodo} ${ruta}`;
+
+        try {
+          const respuestaHttp = await fetch(ruta, { method: metodo });
+          const respuesta = await respuestaHttp.json();
+          resultado.textContent = JSON.stringify(respuesta, null, 2);
+
+          const resultadoEsperado = metodo === "QUERY"
+            ? respuestaHttp.status === 200 && respuesta.metodo === "QUERY"
+            : respuestaHttp.status === 405;
+            
+          mostrar(
+            `HTTP ${respuestaHttp.status} · ${resultadoEsperado ? "Resultado esperado" : "Resultado inesperado"}`,
+            resultadoEsperado,
+          );
+          mensaje.classList.remove("d-none");
+        } catch (error) {
+          mostrar(error.message, false);
+          mensaje.classList.remove("d-none");
+        }
+      }
+
+      function mostrar(texto, correcto) {
+        mensaje.className = `alert alert-${correcto ? "success" : "danger"} mb-3`;
+        mensaje.textContent = texto;
+      }
+    </script>
+    <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
