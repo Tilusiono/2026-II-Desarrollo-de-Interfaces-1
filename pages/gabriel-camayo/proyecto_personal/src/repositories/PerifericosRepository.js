@@ -81,7 +81,7 @@ export class PerifericosRepository {
         `
         INSERT INTO perifericos (
           codigo, tipo, marca, modelo, tipoConexion, color, precio,
-          stock, horaResgistro, fechaHoraRegistro
+          stock, horaRegistro, fechaHoraRegistro
         )
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
       `,

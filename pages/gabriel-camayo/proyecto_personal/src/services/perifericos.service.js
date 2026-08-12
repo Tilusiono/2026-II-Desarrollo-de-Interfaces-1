@@ -3,7 +3,7 @@ import { normalizarTexto } from "../utils/texto.js";
 
 
 import Perifericos from "../models/Perifericos.js";
-import { PerifericosResponseDto } from "../dtos/PerifericosDto.js";
+import { PerifericosResponseDto, PerifericosRequestDto } from "../dtos/PerifericosDto.js";
 import { PerifericosRepository } from "../repositories/PerifericosRepository.js";
 
 
@@ -12,25 +12,22 @@ export class PerifericosService {
     this.perifericosRepository = perifericosRepository;
   }
 
-  async crear(PerifericosRequestDto) {
-    await this.validarCodigo(PerifericosRequestDto.codigo);
-    const imagenDatos = this.convertirImagen(PerifericosRequestDto.imagenBase64);
+  async crear(perifericosRequestDto) {
+    await this.validarCodigo(perifericosRequestDto.codigo);
+    const imagenDatos = this.convertirImagen(perifericosRequestDto.imagenBase64);
 
     const perifericosModel = new Perifericos(
       0,
-      PerifericosRequestDto.codigo,
-      PerifericosRequestDto.nombre,
-      PerifericosRequestDto.categoria,
-      PerifericosRequestDto.stock,
-      PerifericosRequestDto.precio,
-      PerifericosRequestDto.peso,
-      PerifericosRequestDto.descripcion,
-      PerifericosRequestDto.activo,
-      PerifericosRequestDto.fechaVencimiento,
-      PerifericosRequestDto.horaRegistro,
-      PerifericosRequestDto.fechaHoraRegistro,
-      imagenDatos.imagen,
-      imagenDatos.imagenMimeType,
+      perifericosRequestDto.codigo,
+      perifericosRequestDto.tipo,
+      perifericosRequestDto.marca,
+      perifericosRequestDto.modelo,
+      perifericosRequestDto.tipoConexion,
+      perifericosRequestDto.color,
+      perifericosRequestDto.precio,
+      perifericosRequestDto.stock,
+      perifericosRequestDto.horaRegistro,
+      perifericosRequestDto.fechaHoraRegistro,
     );
 
     const perifericosCreadoModel =
