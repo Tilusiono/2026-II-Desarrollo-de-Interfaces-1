@@ -7,7 +7,7 @@ export class SedeRequestDto {
         this.direccion = requestBody.direccion;
         this.telefono = requestBody.telefono;
         this.capacidad = requestBody.capacidad;
-        // conversion digamos que envian o colocan activo este tomara el valor de 1 como activo y 0 como inactivo
+        // CONVERSIÓN DE ENTRADA: Si envían "Activo", lo guarda como 1. Si no, como 0.
         this.estado = requestBody.estado === "Activo" ? 1 : 0;
         this.horaApertura = requestBody.horaApertura;
         this.fechaInauguracion = requestBody.fechaInauguracion;
@@ -37,7 +37,7 @@ export class SedeResponseDto {
         this.direccion = sedeModel.getDireccion();
         this.telefono = sedeModel.getTelefono();
         this.capacidad = sedeModel.getCapacidad();
-        // CONVERSIÓN DE SALIDA Si la BD tiene 1, devuelve "Activo". Si tiene 0, "Inactivo".
+        // CONVERSIÓN DE SALIDA: Si la BD tiene 1, devuelve "Activo". Si tiene 0, "Inactivo".
         this.estado = Number(sedeModel.getEstado()) === 1 ? "Activo" : "Inactivo";
         this.horaApertura = sedeModel.getHoraApertura();
         this.fechaInauguracion = sedeModel.getFechaInauguracion();

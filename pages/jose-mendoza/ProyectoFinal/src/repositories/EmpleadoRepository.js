@@ -79,7 +79,6 @@ export class EmpleadoRepository {
     });
   }
 
-
   async buscarPorId(id) {
     const fila = this.db
         .prepare(`
@@ -87,13 +86,13 @@ export class EmpleadoRepository {
                    area.nombre AS nombre_area, 
                    tipo_empleado.nombre AS nombre_tipo_empleado,
                    cargo.nombre AS nombre_cargo
-                  FROM empleado 
-                  LEFT JOIN area ON empleado.id_area = area.id_area
-                  LEFT JOIN tipo_empleado ON empleado.id_tipo_empleado = tipo_empleado.id_tipo_empleado
-                  LEFT JOIN cargo ON empleado.id_cargo = cargo.id_cargo
-                  WHERE id_empleado = ?
-              `)
-            .get(Number(id));
+            FROM empleado 
+            LEFT JOIN area ON empleado.id_area = area.id_area
+            LEFT JOIN tipo_empleado ON empleado.id_tipo_empleado = tipo_empleado.id_tipo_empleado
+            LEFT JOIN cargo ON empleado.id_cargo = cargo.id_cargo
+            WHERE id_empleado = ?
+        `)
+        .get(Number(id));
 
     if (!fila) return null;
 
@@ -119,7 +118,7 @@ export class EmpleadoRepository {
     return empleado;
   }
 
-  async crear(productoModel) {
+  async crear(empleadoModel) {
     const resultado = this.db
         .prepare(
             `
@@ -160,5 +159,120 @@ export class EmpleadoRepository {
     return this.buscarPorId(
         Number(resultado.lastInsertRowid)
     );
+  }
+
+  async reemplazar(id, empleadoModel) {
+    const resultado = this.db
+      .prepare(
+        `
+        UPDATE empleado
+        SET dni = ?,
+            nombres = ?,
+            apellidos = ?,
+            telefono = ?,
+            correo = ?,
+            direccion = ?,
+            fecha_ingreso = ?,
+            salario = ?,
+            estado = ?,
+            id_tipo_empleado = ?,
+            id_cargo = ?,
+            id_area = ?,
+            id_sede = ?
+        WHERE id_empleado = ?
+      `
+      )
+      .run(
+        empleadoModel.getDni(),
+        empleadoModel.getNombres(),
+        empleadoModel.getApellidos(),
+        empleadoModel.getTelefono(),
+        empleadoModel.getCorreo(),
+        empleadoModel.getDireccion(),
+        empleadoModel.getFechaIngreso(),
+        empleadoModel.getSalario(),
+        empleadoModel.getEstado(),
+        empleadoModel.getIdTipoEmpleado(),
+        empleadoModel.getIdCargo(),
+        empleadoModel.getIdArea(),
+        empleadoModel.getIdSede(),
+        Number(id)
+      );
+
+    return resultado.changes ? this.buscarPorId(id) : null;
+  }
+
+  async query(empleadoConsultaDto) {
+    const dto = empleadoConsultaDto ?? {};
+    const empleados = await this.listar();
+    const texto = dto.texto ?? "";
+    const estado = dto.estado ?? "";
+    const idTipoEmpleado = dto.idTipoEmpleado ?? "";
+    const idCargo = dto.idCargo ?? "";
+    const idArea = dto.idArea ?? "";
+    const idSede = dto.idSede ?? "";
+
+    return empleados.filter((empleadoModel) => {
+      const estadoActual = empleadoModel.getEstado ? empleadoModel.getEstado() : empleadoModel.estado;
+      const idTipoEmpleadoActual = empleadoModel.getIdTipoEmpleado ? empleadoModel.getIdTipoEmpleado() : empleadoModel.idTipoEmpleado;
+      const idCargoActual = empleadoModel.getIdCargo ? empleadoModel.getIdCargo() : empleadoModel.idCargo;
+      const idAreaActual = empleadoModel.getIdArea ? empleadoModel.getIdArea() : empleadoModel.idArea;
+      const idSedeActual = empleadoModel.getIdSede ? empleadoModel.getIdSede() : empleadoModel.idSede;
+      
+      const nombreAreaActual = empleadoModel.nombreArea || "";
+      const nombreTipoEmpleadoActual = empleadoModel.nombreTipoEmpleado || "";
+      const nombreCargoActual = empleadoModel.nombreCargo || "";
+
+      const camposBuscables = {
+        idEmpleado: empleadoModel.getIdEmpleado ? empleadoModel.getIdEmpleado() : empleadoModel.idEmpleado,
+        dni: empleadoModel.getDni ? empleadoModel.getDni() : empleadoModel.dni,
+        nombres: empleadoModel.getNombres ? empleadoModel.getNombres() : empleadoModel.nombres,
+        apellidos: empleadoModel.getApellidos ? empleadoModel.getApellidos() : empleadoModel.apellidos,
+        telefono: (empleadoModel.getTelefono ? empleadoModel.getTelefono() : empleadoModel.telefono) || "",
+        correo: (empleadoModel.getCorreo ? empleadoModel.getCorreo() : empleadoModel.correo) || "",
+        direccion: (empleadoModel.getDireccion ? empleadoModel.getDireccion() : empleadoModel.direccion) || "",
+        fechaIngreso: (empleadoModel.getFechaIngreso ? empleadoModel.getFechaIngreso() : empleadoModel.fechaIngreso) || "",
+        salario: (empleadoModel.getSalario ? empleadoModel.getSalario() : empleadoModel.salario) || "",
+        estado: estadoActual,
+        idTipoEmpleado: idTipoEmpleadoActual || "",
+        idCargo: idCargoActual || "",
+        idArea: idAreaActual || "",
+        idSede: idSedeActual || "",
+        nombreArea: nombreAreaActual,
+        nombreTipoEmpleado: nombreTipoEmpleadoActual,
+        nombreCargo: nombreCargoActual,
+      };
+
+      const filtroTipo = String(idTipoEmpleado).toLowerCase();
+      const filtroCargo = String(idCargo).toLowerCase();
+      const filtroArea = String(idArea).toLowerCase();
+
+      return (
+        objetoContieneTexto(camposBuscables, texto) &&
+        (estado === "" || String(estadoActual) === String(estado)) &&
+        (idTipoEmpleado === "" || 
+          String(idTipoEmpleadoActual) === String(idTipoEmpleado) || 
+          nombreTipoEmpleadoActual.toLowerCase().includes(filtroTipo)) &&
+        (idCargo === "" || 
+          String(idCargoActual) === String(idCargo) || 
+          nombreCargoActual.toLowerCase().includes(filtroCargo)) &&
+        (idArea === "" || 
+          String(idAreaActual) === String(idArea) || 
+          nombreAreaActual.toLowerCase().includes(filtroArea)) &&
+        (idSede === "" || String(idSedeActual) === String(idSede))
+      );
+    });
+  }
+
+  // DELETE ELIMINAR
+
+  async eliminar(identificador) {
+    const empleadoModelo = await this.buscarPorId(identificador);
+    if (!empleadoModelo) {
+      return null;
+    }
+
+    this.db.prepare("DELETE FROM empleado WHERE id_empleado = ?").run(Number(identificador));
+    return empleadoModelo;
   }
 }

@@ -1,4 +1,4 @@
-class Area{
+class Area {
     #idArea;
     #nombre;
     #descripcion;
@@ -6,16 +6,16 @@ class Area{
     #idSede;
     #idJefe;
 
-    constructor(idArea,nombre, descripcion, capacidad = 0, idSede =null, idJefe = null){
-        this.__idArea = idArea;
-        this.__nombre = nombre;
-        this.__descripcion = descripcion;
-        this.__capacidad = capacidad;
-        this.__idSede = idSede;
-        this.__idJefe = idJefe;
-    }
-    
-// Getters & Setters
+    constructor(idArea, nombre, descripcion, capacidad = 0, idSede = null, idJefe = null) {
+    this._idArea = idArea;
+    this._nombre = nombre;
+    this._descripcion = descripcion;
+    this._capacidad = capacidad;
+    this._idSede = idSede;
+    this._idJefe = idJefe;
+  }
+
+  // Getters & Setters
   get idArea() {
     return this._idArea;
   }

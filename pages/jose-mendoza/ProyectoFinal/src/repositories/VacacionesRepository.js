@@ -112,4 +112,87 @@ async crear(vacacionesModel) {
     );
 
   }
-} 
+
+  async reemplazar(id, vacacionesModel) {
+    const resultado = this.db
+      .prepare(
+        `
+        UPDATE vacaciones
+        SET fecha_inicio = ?,
+            fecha_fin = ?,
+            cantidad_dias = ?,
+            estado = ?,
+            observacion = ?,
+            id_empleado = ?
+        WHERE id_vacacion = ?
+      `
+      )
+      .run(
+        vacacionesModel.getFechaInicio(),
+        vacacionesModel.getFechaFin(),
+        vacacionesModel.getCantidadDias(),
+        vacacionesModel.getEstado(),
+        vacacionesModel.getObservacion(),
+        vacacionesModel.getIdEmpleado(),
+        Number(id)
+      );
+
+    return resultado.changes ? this.buscarPorId(id) : null;
+  }
+
+    //   BUSCAR
+
+    async query(vacacionesConsultaDto) {
+    const vacaciones = await this.listar();
+
+    const texto = vacacionesConsultaDto.texto ?? "";
+    const estado = vacacionesConsultaDto.estado ?? "";
+    const idEmpleado = vacacionesConsultaDto.idEmpleado ?? "";
+    const fechaInicio = vacacionesConsultaDto.fechaInicio ?? "";
+    const fechaFin = vacacionesConsultaDto.fechaFin ?? "";
+
+    return vacaciones.filter((vacacionesModel) => {
+
+        const camposBuscables = {
+            idVacacion: vacacionesModel.idVacacion,
+            fechaInicio: vacacionesModel.fechaInicio,
+            fechaFin: vacacionesModel.fechaFin,
+            cantidadDias: vacacionesModel.cantidadDias,
+            estado: vacacionesModel.estado,
+            observacion: vacacionesModel.observacion,
+            idEmpleado: vacacionesModel.idEmpleado,
+        };
+
+        return (
+            objetoContieneTexto(
+                camposBuscables,
+                texto
+            ) &&
+
+            (!estado ||
+                String(vacacionesModel.estado) === String(estado)) &&
+
+            (!idEmpleado ||
+                String(vacacionesModel.idEmpleado) === String(idEmpleado)) &&
+
+            (!fechaInicio ||
+                String(vacacionesModel.fechaInicio) === String(fechaInicio)) &&
+
+            (!fechaFin ||
+                String(vacacionesModel.fechaFin) === String(fechaFin))
+        );
+    });
+    }
+
+    // DELETE ELIMINAR
+    async eliminar(identificador) {
+    const vacacionesModelo = await this.buscarPorId(identificador);
+    if (!vacacionesModelo) {
+      return null;
+    }
+
+    // Corregido: id_vacacion (en singular, sin la 's')
+    this.db.prepare("DELETE FROM vacaciones WHERE id_vacacion = ?").run(Number(identificador));
+    return vacacionesModelo;
+  }
+}

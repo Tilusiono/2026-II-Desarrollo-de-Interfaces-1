@@ -73,4 +73,54 @@ async crear(tipoEmpleadoModel) {
     );
 
   }
+
+  async reemplazar(id, tipoEmpleadoModel) {
+    const resultado = this.db
+      .prepare(
+        `
+        UPDATE tipo_empleado
+        SET nombre = ?
+        WHERE id_tipo_empleado = ?
+      `
+      )
+      .run(
+        tipoEmpleadoModel.getNombre(), 
+        Number(id)
+      );
+
+    return resultado.changes ? this.buscarPorId(id) : null;
+  }
+
+  // BUSCAR
+  
+    async query(tipoEmpleadoConsultaDto) {
+    const tiposEmpleado = await this.listar();
+    const texto = tipoEmpleadoConsultaDto.texto ?? "";
+
+    return tiposEmpleado.filter((tipoEmpleadoModel) => {
+      const idTipoEmpleadoActual = tipoEmpleadoModel.getIdTipoEmpleado ? tipoEmpleadoModel.getIdTipoEmpleado() : tipoEmpleadoModel.idTipoEmpleado;
+      const nombreActual = tipoEmpleadoModel.getNombre ? tipoEmpleadoModel.getNombre() : tipoEmpleadoModel.nombre;
+
+      const camposBuscables = {
+        idTipoEmpleado: idTipoEmpleadoActual,
+        nombre: nombreActual,
+      };
+
+      return (
+        objetoContieneTexto(camposBuscables, texto)
+      );
+    });
+  }
+
+
+  // DELETE ELIMINAR
+  async eliminar(identificador) {
+    const tipoEmpleadoModelo = await this.buscarPorId(identificador);
+    if (!tipoEmpleadoModelo) {
+      return null;
+    }
+
+    this.db.prepare("DELETE FROM tipo_empleado WHERE id_tipo_empleado = ?").run(Number(identificador));
+    return tipoEmpleadoModelo;
+  }
 }

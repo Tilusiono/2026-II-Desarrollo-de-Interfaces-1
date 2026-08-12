@@ -26,82 +26,144 @@ export class SedeRepository {
   }
 
   async listar() {
-    const filas = this.db.prepare("SELECT * FROM productos ORDER BY id").all();
+    const filas = this.db
+      .prepare("SELECT * FROM sede ORDER BY id_sede")
+      .all();
 
     return filas.map(
       (fila) =>
-        new Producto(
-          fila.id,
-          fila.codigo,
+        new Sede(
+          fila.id_sede,
           fila.nombre,
-          fila.categoria,
-          fila.stock,
-          fila.precio,
-          fila.peso,
-          fila.descripcion,
-          fila.activo,
-          fila.fechaVencimiento,
-          fila.horaRegistro,
-          fila.fechaHoraRegistro,
-          fila.imagen ? Buffer.from(fila.imagen) : null,
-          fila.imagenMimeType,
-        ),
+          fila.direccion,
+          fila.telefono,
+          fila.capacidad,
+          fila.estado,
+          fila.horaApertura,
+          fila.fechaInauguracion
+        )
     );
   }
 
   async buscarPorId(id) {
     const fila = this.db
-      .prepare("SELECT * FROM productos WHERE id = ?")
+      .prepare("SELECT * FROM sede WHERE id_sede = ?")
       .get(Number(id));
 
     if (!fila) return null;
 
-    return new Producto(
-      fila.id,
-      fila.codigo,
+    return new Sede(
+      fila.id_sede,
       fila.nombre,
-      fila.categoria,
-      fila.stock,
-      fila.precio,
-      fila.peso,
-      fila.descripcion,
-      fila.activo,
-      fila.fechaVencimiento,
-      fila.horaRegistro,
-      fila.fechaHoraRegistro,
-      fila.imagen ? Buffer.from(fila.imagen) : null,
-      fila.imagenMimeType,
+      fila.direccion,
+      fila.telefono,
+      fila.capacidad,
+      fila.estado,
+      fila.horaApertura,
+      fila.fechaInauguracion
     );
   }
 
-  async crear(productoModel) {
+  async crear(sedeModel) {
     const resultado = this.db
       .prepare(
         `
-        INSERT INTO productos (
-          codigo, nombre, categoria, stock, precio, peso, descripcion,
-          activo, fechaVencimiento, horaRegistro, fechaHoraRegistro,
-          imagen, imagenMimeType
+        INSERT INTO sede (
+            nombre,
+            direccion,
+            telefono,
+            capacidad,
+            estado,
+            horaApertura,
+            fechaInauguracion
         )
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-      `,
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+        `
       )
       .run(
-        productoModel.codigo,
-        productoModel.nombre,
-        productoModel.categoria,
-        productoModel.stock,
-        productoModel.precio,
-        productoModel.peso,
-        productoModel.descripcion,
-        Number(productoModel.activo),
-        productoModel.fechaVencimiento,
-        productoModel.horaRegistro,
-        productoModel.fechaHoraRegistro,
-        productoModel.imagen,
-        productoModel.imagenMimeType,
+        sedeModel.getNombre(),
+        sedeModel.getDireccion(),
+        sedeModel.getTelefono(),
+        sedeModel.getCapacidad(),
+        sedeModel.getEstado(),
+        sedeModel.getHoraApertura(),
+        sedeModel.getFechaInauguracion()
       );
 
     return this.buscarPorId(Number(resultado.lastInsertRowid));
+  }
+
+  async reemplazar(id, sedeModel) {
+    const resultado = this.db
+      .prepare(
+        `
+        UPDATE sede
+        SET nombre = ?,
+            direccion = ?,
+            telefono = ?,
+            capacidad = ?,
+            estado = ?,
+            horaApertura = ?,
+            fechaInauguracion = ?
+        WHERE id_sede = ?
+      `
+      )
+      .run(
+        sedeModel.getNombre(),
+        sedeModel.getDireccion(),
+        sedeModel.getTelefono(),
+        Number(sedeModel.getCapacidad()), 
+        sedeModel.getEstado(),
+        sedeModel.getHoraApertura(),
+        sedeModel.getFechaInauguracion(),
+        Number(id)
+      );
+
+    return resultado.changes ? this.buscarPorId(id) : null;
+  }
+
+  // BUSCAR / QUERY SEARCH
+  async query(sedeConsultaDto) {
+    const dto = sedeConsultaDto ?? {};
+    const sedes = await this.listar();
+    const texto = dto.texto ?? "";
+    const estado = dto.estado ?? "";
+    const capacidadMin = dto.capacidadMin ?? "";
+    const capacidadMax = dto.capacidadMax ?? "";
+
+    return sedes.filter((sedeModel) => {
+      const estadoActual = sedeModel.getEstado ? sedeModel.getEstado() : sedeModel.estado;
+      const capacidadActual = sedeModel.getCapacidad ? sedeModel.getCapacidad() : sedeModel.capacidad;
+
+      const camposBuscables = {
+        idSede: sedeModel.getIdSede ? sedeModel.getIdSede() : sedeModel.idSede,
+        nombre: sedeModel.getNombre ? sedeModel.getNombre() : sedeModel.nombre,
+        direccion: (sedeModel.getDireccion ? sedeModel.getDireccion() : sedeModel.direccion) || "",
+        telefono: (sedeModel.getTelefono ? sedeModel.getTelefono() : sedeModel.telefono) || "",
+        capacidad: capacidadActual,
+        estado: estadoActual,
+        horaApertura: sedeModel.getHoraApertura ? sedeModel.getHoraApertura() : sedeModel.horaApertura,
+        fechaInauguracion: (sedeModel.getFechaInauguracion ? sedeModel.getFechaInauguracion() : sedeModel.fechaInauguracion) || "",
+      };
+
+      return (
+        objetoContieneTexto(camposBuscables, texto) &&
+        (estado === "" || String(estadoActual) === String(estado)) &&
+        (capacidadMin === "" || capacidadActual >= Number(capacidadMin)) &&
+        (capacidadMax === "" || capacidadActual <= Number(capacidadMax))
+      );
+    });
+  }
+
+  // DELETE ELIMINAR
+
+  async eliminar(identificador) {
+    const sedeModelo = await this.buscarPorId(identificador);
+    if (!sedeModelo) {
+      return null;
+    }
+
+    this.db.prepare("DELETE FROM sede WHERE id_sede = ?").run(Number(identificador));
+    return sedeModelo;
   }
 }

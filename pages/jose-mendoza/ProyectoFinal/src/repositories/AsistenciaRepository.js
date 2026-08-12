@@ -33,14 +33,17 @@ constructor(archivo = sqlitePath) {
       )
     `);
 
-    }
+  }
 
-    async listar() {
-    const filas = this.db.prepare("SELECT * FROM asistencia ORDER BY id_asistencia").all();
+  async listar() {
 
-    return filas.map(
-      (fila) =>
-        new Asistencia(
+        const filas = this.db
+            .prepare("SELECT * FROM asistencia ORDER BY id_asistencia")
+            .all();
+
+        return filas.map(
+            (fila) =>
+                new Asistencia(
                     fila.id_asistencia,
                     fila.fecha,
                     fila.hora_entrada,
@@ -48,33 +51,41 @@ constructor(archivo = sqlitePath) {
                     fila.horas_trabajadas,
                     fila.estado,
                     fila.id_empleado
-                ),
-      );
-  }
+                )
+        );
 
-  async buscarPorId(id) {
-    const fila = this.db
-      .prepare("SELECT * FROM asistencia WHERE id_asistencia = ?")
-      .get(Number(id));
+    }
 
-    if (!fila) return null;
 
-    return new Asistencia(
-          fila.id_asistencia,
-          fila.fecha,
-          fila.hora_entrada,
-          fila.hora_salida,
-          fila.horas_trabajadas,
-          fila.estado,
-          fila.id_empleado
-    );
-  }
+    async buscarPorId(id) {
 
-  async crear(asistenciaModel) {
-    const resultado = this.db
-      .prepare(
-        `
-        INSERT INTO asistencia (
+        const fila = this.db
+            .prepare(
+                "SELECT * FROM asistencia WHERE id_asistencia = ?"
+            )
+            .get(Number(id));
+
+        if (!fila) return null;
+
+        return new Asistencia(
+            fila.id_asistencia,
+            fila.fecha,
+            fila.hora_entrada,
+            fila.hora_salida,
+            fila.horas_trabajadas,
+            fila.estado,
+            fila.id_empleado
+        );
+
+    }
+
+
+    async crear(asistenciaModel) {
+
+        const resultado = this.db
+            .prepare(
+                `
+                INSERT INTO asistencia (
                     fecha,
                     hora_entrada,
                     hora_salida,
@@ -83,7 +94,36 @@ constructor(archivo = sqlitePath) {
                     id_empleado
                 )
                 VALUES (?, ?, ?, ?, ?, ?)
-                `,
+                `
+            )
+            .run(
+                asistenciaModel.fecha,
+                asistenciaModel.horaEntrada,
+                asistenciaModel.horaSalida,
+                asistenciaModel.horasTrabajadas,
+                asistenciaModel.estado,
+                asistenciaModel.idEmpleado
+            );
+
+        return this.buscarPorId(
+            Number(resultado.lastInsertRowid)
+        );
+
+    }
+    
+    async reemplazar(id, asistenciaModel) {
+    const resultado = this.db
+      .prepare(
+        `
+        UPDATE asistencia
+        SET fecha = ?,
+            hora_entrada = ?,
+            hora_salida = ?,
+            horas_trabajadas = ?,
+            estado = ?,
+            id_empleado = ?
+        WHERE id_asistencia = ?
+      `
       )
       .run(
         asistenciaModel.fecha,
@@ -91,9 +131,49 @@ constructor(archivo = sqlitePath) {
         asistenciaModel.horaSalida,
         asistenciaModel.horasTrabajadas,
         asistenciaModel.estado,
-        asistenciaModel.idEmpleado
+        asistenciaModel.idEmpleado,
+        Number(id)
       );
 
-    return this.buscarPorId(Number(resultado.lastInsertRowid));
+    return resultado.changes ? this.buscarPorId(id) : null;
   }
+
+  // QUERY SEARCH
+  async query(asistenciaConsultaDto) {
+        const asistencias = await this.listar();
+        const dto = asistenciaConsultaDto ?? {};
+        const texto = dto.texto ?? "";
+        const estado = dto.estado ?? "";
+        const idEmpleado = dto.idEmpleado ?? "";
+
+        return asistencias.filter((a) => {
+            const fecha = a.getFecha ? a.getFecha() : a.fecha;
+            const estadoActual = a.getEstado ? a.getEstado() : a.estado;
+            const idEmpleadoActual = a.getIdEmpleado ? a.getIdEmpleado() : a.idEmpleado;
+
+            const camposBuscables = {
+                fecha: fecha,
+                estado: estadoActual,
+                idEmpleado: idEmpleadoActual
+            };
+
+            return (
+                objetoContieneTexto(camposBuscables, texto) &&
+                (!estado || String(estadoActual) === String(estado)) &&
+                (!idEmpleado || String(idEmpleadoActual) === String(idEmpleado))
+            );
+        });
+    }
+
+    // DELETE ELIMINAR 
+
+    async eliminar(identificador) {
+    const asistenciaModelo = await this.buscarPorId(identificador);
+    if (!asistenciaModelo) {
+      return null;
+    }
+
+    this.db.prepare("DELETE FROM asistencia WHERE id_asistencia = ?").run(Number(identificador));
+    return asistenciaModelo;
+    }
 }

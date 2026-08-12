@@ -1,14 +1,14 @@
 export class EmpleadoRequestDto {
     constructor(requestBody = {}) {
 
-        // herencia de padre persona
+        // Datos de Persona
         this.dni = requestBody.dni;
         this.nombres = requestBody.nombres;
         this.apellidos = requestBody.apellidos;
         this.telefono = requestBody.telefono;
         this.correo = requestBody.correo;
         this.direccion = requestBody.direccion;
-        // ----------------
+        // Datos de Empleado
         this.idEmpleado = requestBody.idEmpleado;
         this.fechaIngreso = requestBody.fechaIngreso;
         this.salario = requestBody.salario;
@@ -44,6 +44,7 @@ export class EmpleadoConsultaDto {
 export class EmpleadoResponseDto {
     constructor(empleadoModel) {
 
+        // Datos heredados de Persona
         this.dni = empleadoModel.getDni ? empleadoModel.getDni() : empleadoModel.dni;
         this.nombres = empleadoModel.getNombres ? empleadoModel.getNombres() : empleadoModel.nombres;
         this.apellidos = empleadoModel.getApellidos ? empleadoModel.getApellidos() : empleadoModel.apellidos;
@@ -51,12 +52,11 @@ export class EmpleadoResponseDto {
         this.correo = empleadoModel.getCorreo ? empleadoModel.getCorreo() : empleadoModel.correo;
         this.direccion = empleadoModel.getDireccion ? empleadoModel.getDireccion() : empleadoModel.direccion;
         
-        // heredados
+        // Datos propios de Empleado
         this.idEmpleado = empleadoModel.getIdEmpleado ? empleadoModel.getIdEmpleado() : empleadoModel.idEmpleado;
         this.fechaIngreso = empleadoModel.getFechaIngreso ? empleadoModel.getFechaIngreso() : empleadoModel.fechaIngreso;
         this.salario = empleadoModel.getSalario ? empleadoModel.getSalario() : empleadoModel.salario;
         
-        // para conciderar los activos y inactivos
         const estadoVal = empleadoModel.getEstado ? empleadoModel.getEstado() : empleadoModel.estado;
         this.estado = Number(estadoVal) === 1 ? "Activo" : "Inactivo";
         
@@ -64,6 +64,8 @@ export class EmpleadoResponseDto {
         this.idCargo = empleadoModel.getIdCargo ? empleadoModel.getIdCargo() : empleadoModel.idCargo;
         this.idArea = empleadoModel.getIdArea ? empleadoModel.getIdArea() : empleadoModel.idArea;
         this.idSede = empleadoModel.getIdSede ? empleadoModel.getIdSede() : empleadoModel.idSede;
+
+        // Nombres formateados
         this.nombreTipoEmpleado = empleadoModel.nombreTipoEmpleado || "Sin Tipo";
         this.nombreArea = empleadoModel.nombreArea || "Sin Área";
         this.nombreCargo = empleadoModel.nombreCargo || "Sin Cargo";
