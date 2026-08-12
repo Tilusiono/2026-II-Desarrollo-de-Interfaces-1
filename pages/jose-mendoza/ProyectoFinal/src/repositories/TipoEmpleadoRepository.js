@@ -17,5 +17,60 @@ export class TipoEmpleadoRepository {
     `);
 
   }
-  
+
+  async listar() {
+
+    const filas = this.db
+        .prepare("SELECT * FROM tipo_empleado ORDER BY id_tipo_empleado")
+        .all();
+
+    return filas.map(
+        (fila) =>
+            new TipoEmpleado(
+                fila.id_tipo_empleado,
+                fila.nombre
+            )
+    );
+
+}
+
+
+async buscarPorId(id) {
+
+    const fila = this.db
+        .prepare(
+            "SELECT * FROM tipo_empleado WHERE id_tipo_empleado = ?"
+        )
+        .get(Number(id));
+
+    if (!fila) return null;
+
+    return new TipoEmpleado(
+        fila.id_tipo_empleado,
+        fila.nombre
+    );
+
+}
+
+
+async crear(tipoEmpleadoModel) {
+
+    const resultado = this.db
+        .prepare(
+            `
+            INSERT INTO tipo_empleado (
+                nombre
+            )
+            VALUES (?)
+            `
+        )
+        .run(
+            tipoEmpleadoModel.getNombre()
+        );
+
+    return this.buscarPorId(
+        Number(resultado.lastInsertRowid)
+    );
+
+  }
 }

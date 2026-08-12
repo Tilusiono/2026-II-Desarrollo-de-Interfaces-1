@@ -39,5 +39,126 @@ export class EmpleadoRepository {
       )
     `);
   }
-  
+
+  async listar() {
+    const filas = this.db
+        .prepare(`
+            SELECT empleado.*, 
+                   area.nombre AS nombre_area, 
+                   tipo_empleado.nombre AS nombre_tipo_empleado,
+                   cargo.nombre AS nombre_cargo
+            FROM empleado 
+            LEFT JOIN area ON empleado.id_area = area.id_area
+            LEFT JOIN tipo_empleado ON empleado.id_tipo_empleado = tipo_empleado.id_tipo_empleado
+            LEFT JOIN cargo ON empleado.id_cargo = cargo.id_cargo
+            ORDER BY id_empleado
+        `)
+        .all();
+
+    return filas.map((fila) => {
+        const empleado = new Empleado(
+            fila.id_empleado,
+            fila.dni,
+            fila.nombres,
+            fila.apellidos,
+            fila.telefono,
+            fila.correo,
+            fila.direccion,
+            fila.fecha_ingreso,
+            fila.salario,
+            fila.estado,
+            fila.id_tipo_empleado,
+            fila.id_cargo,
+            fila.id_area,
+            fila.id_sede
+        );
+        empleado.nombreArea = fila.nombre_area || "Sin Área";
+        empleado.nombreTipoEmpleado = fila.nombre_tipo_empleado || "Sin Tipo";
+        empleado.nombreCargo = fila.nombre_cargo || "Sin Cargo";
+        return empleado;
+    });
+  }
+
+
+  async buscarPorId(id) {
+    const fila = this.db
+        .prepare(`
+            SELECT empleado.*, 
+                   area.nombre AS nombre_area, 
+                   tipo_empleado.nombre AS nombre_tipo_empleado,
+                   cargo.nombre AS nombre_cargo
+                  FROM empleado 
+                  LEFT JOIN area ON empleado.id_area = area.id_area
+                  LEFT JOIN tipo_empleado ON empleado.id_tipo_empleado = tipo_empleado.id_tipo_empleado
+                  LEFT JOIN cargo ON empleado.id_cargo = cargo.id_cargo
+                  WHERE id_empleado = ?
+              `)
+            .get(Number(id));
+
+    if (!fila) return null;
+
+    const empleado = new Empleado(
+        fila.id_empleado,
+        fila.dni,
+        fila.nombres,
+        fila.apellidos,
+        fila.telefono,
+        fila.correo,
+        fila.direccion,
+        fila.fecha_ingreso,
+        fila.salario,
+        fila.estado,
+        fila.id_tipo_empleado,
+        fila.id_cargo,
+        fila.id_area,
+        fila.id_sede
+    );
+    empleado.nombreArea = fila.nombre_area || "Sin Área";
+    empleado.nombreTipoEmpleado = fila.nombre_tipo_empleado || "Sin Tipo";
+    empleado.nombreCargo = fila.nombre_cargo || "Sin Cargo";
+    return empleado;
+  }
+
+  async crear(productoModel) {
+    const resultado = this.db
+        .prepare(
+            `
+            INSERT INTO empleado (
+                dni,
+                nombres,
+                apellidos,
+                telefono,
+                correo,
+                direccion,
+                fecha_ingreso,
+                salario,
+                estado,
+                id_tipo_empleado,
+                id_cargo,
+                id_area,
+                id_sede
+            )
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            `
+        )
+        .run(
+            empleadoModel.getDni(),
+            empleadoModel.getNombres(),
+            empleadoModel.getApellidos(),
+            empleadoModel.getTelefono(),
+            empleadoModel.getCorreo(),
+            empleadoModel.getDireccion(),
+            empleadoModel.getFechaIngreso(),
+            empleadoModel.getSalario(),
+            empleadoModel.getEstado(),
+            empleadoModel.getIdTipoEmpleado(),
+            empleadoModel.getIdCargo(),
+            empleadoModel.getIdArea(),
+            empleadoModel.getIdSede()
+        );
+
+    return this.buscarPorId(
+        Number(resultado.lastInsertRowid)
+    );
+  }
 }

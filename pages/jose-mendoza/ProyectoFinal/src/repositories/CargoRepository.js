@@ -19,4 +19,53 @@ export class CargoRepository {
       )
     `);
   }
+  async listar() {
+    const filas = this.db.prepare("SELECT * FROM  cargo BY id_cargo").all();
+
+    return filas.map(
+      (fila) =>
+        new Producto(
+              fila.id_cargo,
+              fila.nombre,
+              fila.descripcion,
+              fila.sueldo_base
+        ),
+    );
+  }
+
+  async buscarPorId(id) {
+    const fila = this.db
+      .prepare("SELECT * FROM cargo WHERE id_cargo = ?")
+      .get(Number(id));
+
+    if (!fila) return null;
+
+    return new Cargo(
+          fila.id_cargo,
+          fila.nombre,
+          fila.descripcion,
+          fila.sueldo_base
+    );
+  }
+
+  async crear(cargoModel) {
+    const resultado = this.db
+      .prepare(
+        `
+            INSERT INTO cargo (
+                nombre,
+                descripcion,
+                sueldo_base
+            )
+            VALUES (?, ?, ?)
+            `,
+      )
+      .run(
+            cargoModel.getNombre(),
+            cargoModel.getDescripcion(),
+            cargoModel.getSueldoBase()
+      );
+
+    return this.buscarPorId(Number(resultado.lastInsertRowid));
+  }
 }

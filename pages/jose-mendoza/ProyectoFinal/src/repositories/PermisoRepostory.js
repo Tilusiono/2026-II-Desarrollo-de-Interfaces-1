@@ -30,4 +30,73 @@ export class PermisoRepository {
       )
     `);
   }
+
+  async listar() {
+    const filas = this.db
+      .prepare("SELECT * FROM sede ORDER BY id_sede")
+      .all();
+
+    return filas.map(
+      (fila) =>
+        new Sede(
+          fila.id_sede,
+          fila.nombre,
+          fila.direccion,
+          fila.telefono,
+          fila.capacidad,
+          fila.estado,
+          fila.horaApertura,
+          fila.fechaInauguracion
+        )
+    );
+  }
+
+  async buscarPorId(id) {
+    const fila = this.db
+      .prepare("SELECT * FROM sede WHERE id_sede = ?")
+      .get(Number(id));
+
+    if (!fila) return null;
+
+    return new Sede(
+      fila.id_sede,
+      fila.nombre,
+      fila.direccion,
+      fila.telefono,
+      fila.capacidad,
+      fila.estado,
+      fila.horaApertura,
+      fila.fechaInauguracion
+    );
+  }
+
+  async crear(sedeModel) {
+    const resultado = this.db
+      .prepare(
+        `
+        INSERT INTO sede (
+            nombre,
+            direccion,
+            telefono,
+            capacidad,
+            estado,
+            horaApertura,
+            fechaInauguracion
+        )
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+        `
+      )
+      .run(
+        sedeModel.getNombre(),
+        sedeModel.getDireccion(),
+        sedeModel.getTelefono(),
+        sedeModel.getCapacidad(),
+        sedeModel.getEstado(),
+        sedeModel.getHoraApertura(),
+        sedeModel.getFechaInauguracion()
+      );
+
+    return this.buscarPorId(Number(resultado.lastInsertRowid));
+  }
+
 }

@@ -34,4 +34,66 @@ constructor(archivo = sqlitePath) {
     `);
 
     }
+
+    async listar() {
+    const filas = this.db.prepare("SELECT * FROM asistencia ORDER BY id_asistencia").all();
+
+    return filas.map(
+      (fila) =>
+        new Asistencia(
+                    fila.id_asistencia,
+                    fila.fecha,
+                    fila.hora_entrada,
+                    fila.hora_salida,
+                    fila.horas_trabajadas,
+                    fila.estado,
+                    fila.id_empleado
+                ),
+      );
+  }
+
+  async buscarPorId(id) {
+    const fila = this.db
+      .prepare("SELECT * FROM asistencia WHERE id_asistencia = ?")
+      .get(Number(id));
+
+    if (!fila) return null;
+
+    return new Asistencia(
+          fila.id_asistencia,
+          fila.fecha,
+          fila.hora_entrada,
+          fila.hora_salida,
+          fila.horas_trabajadas,
+          fila.estado,
+          fila.id_empleado
+    );
+  }
+
+  async crear(asistenciaModel) {
+    const resultado = this.db
+      .prepare(
+        `
+        INSERT INTO asistencia (
+                    fecha,
+                    hora_entrada,
+                    hora_salida,
+                    horas_trabajadas,
+                    estado,
+                    id_empleado
+                )
+                VALUES (?, ?, ?, ?, ?, ?)
+                `,
+      )
+      .run(
+        asistenciaModel.fecha,
+        asistenciaModel.horaEntrada,
+        asistenciaModel.horaSalida,
+        asistenciaModel.horasTrabajadas,
+        asistenciaModel.estado,
+        asistenciaModel.idEmpleado
+      );
+
+    return this.buscarPorId(Number(resultado.lastInsertRowid));
+  }
 }

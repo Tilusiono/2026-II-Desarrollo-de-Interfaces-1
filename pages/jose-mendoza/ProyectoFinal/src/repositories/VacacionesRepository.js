@@ -36,4 +36,80 @@ constructor(archivo = sqlitePath) {
     `);
 
   }
+
+  async listar() {
+
+    const filas = this.db
+        .prepare("SELECT * FROM vacaciones ORDER BY id_vacacion")
+        .all();
+
+    return filas.map(
+        (fila) =>
+            new Vacaciones(
+                fila.id_vacacion,
+                fila.fecha_inicio,
+                fila.fecha_fin,
+                fila.cantidad_dias,
+                fila.estado,
+                fila.observacion,
+                fila.id_empleado
+            )
+    );
+
+}
+
+
+async buscarPorId(id) {
+
+    const fila = this.db
+        .prepare(
+            "SELECT * FROM vacaciones WHERE id_vacacion = ?"
+        )
+        .get(Number(id));
+
+    if (!fila) return null;
+
+    return new Vacaciones(
+        fila.id_vacacion,
+        fila.fecha_inicio,
+        fila.fecha_fin,
+        fila.cantidad_dias,
+        fila.estado,
+        fila.observacion,
+        fila.id_empleado
+    );
+
+}
+
+
+async crear(vacacionesModel) {
+
+    const resultado = this.db
+        .prepare(
+            `
+            INSERT INTO vacaciones (
+                fecha_inicio,
+                fecha_fin,
+                cantidad_dias,
+                estado,
+                observacion,
+                id_empleado
+            )
+            VALUES (?, ?, ?, ?, ?, ?)
+            `
+        )
+        .run(
+            vacacionesModel.getFechaInicio(),
+            vacacionesModel.getFechaFin(),
+            vacacionesModel.getCantidadDias(),
+            vacacionesModel.getEstado(),
+            vacacionesModel.getObservacion(),
+            vacacionesModel.getIdEmpleado()
+        );
+
+    return this.buscarPorId(
+        Number(resultado.lastInsertRowid)
+    );
+
+  }
 } 
