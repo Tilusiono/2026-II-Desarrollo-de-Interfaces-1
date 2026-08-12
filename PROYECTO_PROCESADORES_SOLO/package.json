@@ -1,0 +1,28 @@
+{
+  "name": "procesadores-api",
+  "version": "2.0.0",
+  "description": "Gestión de procesadores con Express, SQLite y seguridad",
+  "type": "module",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "node --watch app.js",
+    "check": "node --check app.js",
+    "test": "node --test",
+    "format": "prettier --write \"app.js\" \"src/**/*.js\" \"public/**/*.{html,css,js}\" \"test/**/*.js\" \"*.{json,md}\"",
+    "seed": "node scripts/seed.js",
+    "test:coverage": "node --test --experimental-test-coverage",
+    "verify": "node --check app.js && node --test"
+  },
+  "engines": {
+    "node": ">=22.13"
+  },
+  "dependencies": {
+    "bootstrap": "^5.3.8",
+    "bootstrap-icons": "^1.13.1",
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "prettier": "^3.9.6"
+  }
+}

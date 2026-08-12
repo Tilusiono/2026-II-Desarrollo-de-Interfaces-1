@@ -1,0 +1,83 @@
+@baseUrl = http://localhost:4214/api
+@apiKey = API_KEY
+
+### 1. Comprobar API
+GET {{baseUrl}}
+
+### 2. Listar componentes
+GET {{baseUrl}}/procesadores
+
+### 3. Crear componente
+POST {{baseUrl}}/procesadores
+Content-Type: application/json
+x-api-key: {{apiKey}}
+
+{
+  "codigo": "P-100",
+  "modelo": "AMD Ryzen 7 7700",
+  "arquitectura": "X64",
+  "nucleos": 8,
+  "precio": 1399.90,
+  "frecuenciaGhz": 5.30,
+  "descripcion": "Componente de ejemplo",
+  "registro": true,
+  "fechaLanzamiento": "2023-01-10",
+  "horaRegistro": "10:30",
+  "fechaHoraRegistro": "2026-08-11T10:30",
+  "imagenBase64": null
+}
+
+### 4. Obtener por ID
+GET {{baseUrl}}/procesadores/1
+
+### 5. Reemplazar completo
+PUT {{baseUrl}}/procesadores/1
+Content-Type: application/json
+x-api-key: {{apiKey}}
+
+{
+  "codigo": "P-001",
+  "modelo": "Intel Core i5-12400 actualizado",
+  "arquitectura": "X64",
+  "nucleos": 6,
+  "precio": 749.90,
+  "frecuenciaGhz": 4.40,
+  "descripcion": "Actualizado con PUT",
+  "registro": true,
+  "fechaLanzamiento": "2022-01-04",
+  "horaRegistro": "11:00",
+  "fechaHoraRegistro": "2026-08-11T11:00",
+  "imagenBase64": null
+}
+
+### 6. Actualizar parcialmente
+PATCH {{baseUrl}}/procesadores/1
+Content-Type: application/json
+x-api-key: {{apiKey}}
+
+{
+  "precio": 699.90,
+  "registro": false
+}
+
+### 7. Buscar con GET
+GET {{baseUrl}}/procesadores/buscar?arquitectura=X64&precioMax=3000
+
+### 8. Consultar con QUERY
+QUERY {{baseUrl}}/procesadores/consulta?arquitectura=X64&precioMax=3000
+
+### 9. Estadísticas con Worker Thread
+GET {{baseUrl}}/procesadores/estadisticas
+
+### 10. Ejemplo Callback
+GET {{baseUrl}}/procesadores/modos/callback
+
+### 11. Ejemplo Promise
+GET {{baseUrl}}/procesadores/modos/promesa
+
+### 12. Historial de auditoría
+GET {{baseUrl}}/procesadores/1/historial
+
+### 13. Eliminar componente
+DELETE {{baseUrl}}/procesadores/4
+x-api-key: {{apiKey}}

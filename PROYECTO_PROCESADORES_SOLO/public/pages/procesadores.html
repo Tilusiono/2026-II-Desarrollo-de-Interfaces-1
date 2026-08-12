@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Sistema web de gestión técnica con Node.js, Express y SQLite" />
+    <title>Gestión técnica</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/bootstrap-icons/font/bootstrap-icons.css" />
+    <link rel="stylesheet" href="/css/estilos.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#contenido">Saltar al contenido principal</a>
+    <div data-component="nav"></div>
+    <div
+      data-component="header"
+      data-title="Centro de gestión técnica"
+    ></div>
+
+    <main id="contenido" class="container-xl py-4 py-lg-5">
+      <div id="mensaje" class="d-none mb-4" role="alert" aria-live="polite"></div>
+
+      <section class="row g-3 mb-4" aria-label="Resumen del inventario">
+        <div class="col-6 col-xl">
+          <article class="metric-card h-100"><span class="metric-icon"><i class="bi bi-hdd"></i></span><div><small>Componentes</small><strong id="resumen-total">0</strong></div></article>
+        </div>
+        <div class="col-6 col-xl">
+          <article class="metric-card h-100"><span class="metric-icon"><i class="bi bi-check2-circle"></i></span><div><small>Activos</small><strong id="resumen-registros">0</strong></div></article>
+        </div>
+        <div class="col-6 col-xl">
+          <article class="metric-card h-100"><span class="metric-icon"><i class="bi bi-diagram-3"></i></span><div><small>Núcleos</small><strong id="resumen-nucleos">0</strong></div></article>
+        </div>
+        <div class="col-6 col-xl">
+          <article class="metric-card h-100"><span class="metric-icon"><i class="bi bi-cash-stack"></i></span><div><small>Valor catálogo</small><strong id="resumen-valor">S/ 0.00</strong></div></article>
+        </div>
+        <div class="col-12 col-xl">
+          <article class="metric-card h-100"><span class="metric-icon"><i class="bi bi-speedometer2"></i></span><div><small>GHz promedio</small><strong id="resumen-frecuencia">0.00</strong></div></article>
+        </div>
+      </section>
+
+      <section class="security-strip mb-4" aria-label="Estado técnico">
+        <div><i class="bi bi-database-check"></i><span><strong>SQLite</strong><small>WAL + índices</small></span></div>
+        <div><i class="bi bi-shield-lock"></i><span><strong>Permisos</strong><small>x-api-key</small></span></div>
+        <div><i class="bi bi-arrow-repeat"></i><span><strong>Transacciones</strong><small>BEGIN IMMEDIATE</small></span></div>
+        <div><i class="bi bi-cpu"></i><span><strong>Multihilo</strong><small>Worker Threads</small></span></div>
+      </section>
+
+      <div class="row g-4 align-items-start">
+        <div class="col-xl-5">
+          <section class="panel sticky-xl-top panel-formulario">
+            <div class="panel-heading">
+              <div><span class="section-tag">GESTIÓN</span><h2 id="titulo-form">Registrar componente</h2></div>
+              <span class="method-pill">POST / PUT</span>
+            </div>
+
+            <form id="form-componente" class="row g-3 needs-validation" novalidate>
+              <input type="hidden" name="id" />
+              <div class="col-md-5">
+                <label class="form-label" for="codigo">Código</label>
+                <input id="codigo" name="codigo" class="form-control" placeholder="P-001" maxlength="20" required />
+                <div class="invalid-feedback">Ingrese un código.</div>
+              </div>
+              <div class="col-md-7">
+                <label class="form-label" for="modelo">Modelo</label>
+                <input id="modelo" name="modelo" class="form-control" placeholder="Ryzen 7 7700" minlength="2" required />
+                <div class="invalid-feedback">Ingrese el modelo.</div>
+              </div>
+              <div class="col-sm-4">
+                <label class="form-label" for="arquitectura">Arquitectura</label>
+                <select id="arquitectura" name="arquitectura" class="form-select" required>
+                  <option value="">Seleccione</option><option value="X64">x64</option><option value="X86">x86</option><option value="ARM">ARM</option><option value="RSC">RISC</option>
+                </select>
+                <div class="invalid-feedback">Seleccione una arquitectura.</div>
+              </div>
+              <div class="col-sm-4">
+                <label class="form-label" for="nucleos">Núcleos</label>
+                <input id="nucleos" name="nucleos" type="number" min="0" step="1" class="form-control" required />
+                <div class="invalid-feedback">Ingrese un entero válido.</div>
+              </div>
+              <div class="col-sm-4">
+                <label class="form-label" for="precio">Precio (S/)</label>
+                <input id="precio" name="precio" type="number" min="0" step="0.01" class="form-control" required />
+                <div class="invalid-feedback">Ingrese un precio válido.</div>
+              </div>
+              <div class="col-sm-6">
+                <label class="form-label" for="frecuenciaGhz">Frecuencia GHz</label>
+                <input id="frecuenciaGhz" name="frecuenciaGhz" type="number" min="0" step="0.01" class="form-control" placeholder="3.80" />
+              </div>
+              <div class="col-sm-6">
+                <label class="form-label" for="fechaLanzamiento">Fecha lanzamiento</label>
+                <input id="fechaLanzamiento" name="fechaLanzamiento" type="date" class="form-control" />
+              </div>
+              <div class="col-sm-5">
+                <label class="form-label" for="horaRegistro">Hora registro</label>
+                <input id="horaRegistro" name="horaRegistro" type="time" class="form-control" required />
+                <div class="invalid-feedback">Seleccione una hora.</div>
+              </div>
+              <div class="col-sm-7">
+                <label class="form-label" for="fechaHoraRegistro">Fecha y hora</label>
+                <input id="fechaHoraRegistro" name="fechaHoraRegistro" type="datetime-local" class="form-control" required />
+                <div class="invalid-feedback">Seleccione fecha y hora.</div>
+              </div>
+              <div class="col-12">
+                <label class="form-label" for="imagen">Imagen opcional</label>
+                <input id="imagen" name="imagen" type="file" accept="image/*" class="form-control" />
+              </div>
+              <div class="col-12">
+                <label class="form-label" for="descripcion">Descripción</label>
+                <textarea id="descripcion" name="descripcion" class="form-control" rows="3" placeholder="Características principales"></textarea>
+              </div>
+              <div class="col-12 d-flex justify-content-between align-items-center flex-wrap gap-3">
+                <div class="form-check form-switch">
+                  <input id="registro" name="registro" class="form-check-input" type="checkbox" checked />
+                  <label class="form-check-label" for="registro">Registro activo</label>
+                </div>
+                <div class="d-flex gap-2">
+                  <button id="btn-cancelar" type="button" class="btn btn-outline-secondary d-none">Cancelar</button>
+                  <button id="btn-guardar" class="btn btn-action"><i class="bi bi-plus-lg me-1"></i>Registrar con POST</button>
+                </div>
+              </div>
+            </form>
+          </section>
+        </div>
+
+        <div class="col-xl-7">
+          <section class="panel">
+            <div class="panel-heading">
+              <div><span class="section-tag">CONSULTA</span><h2>Inventario técnico</h2></div>
+              <div class="d-flex align-items-center gap-2"><span id="total-resultados" class="result-count">0 resultado(s)</span><span id="cargando" class="spinner-border spinner-border-sm d-none" aria-label="Cargando"></span></div>
+            </div>
+
+            <div class="filter-grid mb-4">
+              <div class="filter-search"><label class="form-label" for="buscar">Buscar</label><input id="buscar" class="form-control" placeholder="Código, modelo o descripción" /></div>
+              <div><label class="form-label" for="filtro-arquitectura">Arquitectura</label><select id="filtro-arquitectura" class="form-select"><option value="">Todas</option><option value="X64">x64</option><option value="X86">x86</option><option value="ARM">ARM</option><option value="RSC">RISC</option></select></div>
+              <div><label class="form-label" for="filtro-registro">Estado</label><select id="filtro-registro" class="form-select"><option value="">Todos</option><option value="true">Activos</option><option value="false">Inactivos</option></select></div>
+              <div><label class="form-label" for="precio-min">Precio mín.</label><input id="precio-min" type="number" min="0" step="0.01" class="form-control" /></div>
+              <div><label class="form-label" for="precio-max">Precio máx.</label><input id="precio-max" type="number" min="0" step="0.01" class="form-control" /></div>
+            </div>
+
+            <div class="table-responsive table-wrap">
+              <table id="tabla-componentes" class="table align-middle mb-0">
+                <thead><tr><th>ID</th><th>Componente</th><th>Arq.</th><th>Núcleos</th><th>Precio</th><th>Estado</th><th>Imagen</th><th>Acciones</th></tr></thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <template id="plantilla-componente">
+      <tr>
+        <td><span class="componente-id id-chip"></span></td>
+        <td><strong class="componente-modelo d-block"></strong><small class="componente-codigo text-secondary"></small></td>
+        <td><span class="componente-arquitectura tech-chip"></span></td>
+        <td class="componente-nucleos"></td>
+        <td class="componente-precio text-nowrap"></td>
+        <td><span class="componente-estado status"></span></td>
+        <td><img class="componente-imagen" width="44" height="44" alt="" /></td>
+        <td><div class="table-actions"><button class="btn btn-sm btn-outline-info btn-icon" type="button" data-accion="editar" aria-label="Editar"><i class="bi bi-pencil"></i></button><button class="btn btn-sm btn-outline-warning btn-icon" type="button" data-accion="estado" aria-label="Cambiar estado"><i class="bi bi-power"></i></button><button class="btn btn-sm btn-outline-danger btn-icon" type="button" data-accion="eliminar" aria-label="Eliminar"><i class="bi bi-trash3"></i></button></div></td>
+      </tr>
+    </template>
+
+    <div data-component="footer"></div>
+    <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="/js/shared/layout.js"></script>
+    <script type="module" src="/js/procesadores/procesadores.js"></script>
+  </body>
+</html>
