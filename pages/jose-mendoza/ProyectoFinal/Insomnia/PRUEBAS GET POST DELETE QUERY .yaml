@@ -20,7 +20,7 @@ collection:
         meta:
           id: req_bd12931c92c54e0cbdaa614f10b1dbd2
           created: 1786328315597
-          modified: 1786418005776
+          modified: 1786483437145
           isPrivate: false
           description: ""
           sortKey: -1786328317541
@@ -29,15 +29,15 @@ collection:
           mimeType: application/json
           text: |-
             {
-              "dni": "11223344",
-              "nombres": "Luis",
-              "apellidos": "Baltazar Mariños",
-              "telefono": "987654321",
-              "correo": "Luise@gmail.com",
-              "direccion": "Av. Principal 123",
-              "fechaIngreso": "2026-08-27",
-              "salario": 2400.0,
-              "estado": "Activo",
+              "dni": "11111111",
+              "nombres": "Patiño",
+              "apellidos": "Melgarego Santa",
+              "telefono": "987655555",
+              "correo": "Patito@gmail.com",
+              "direccion": "Av. Principal 1",
+              "fechaIngreso": "2026-08-10",
+              "salario": 200.0,
+              "estado": "Inactivo",
               "idTipoEmpleado": 1,
               "idCargo": 1,
               "idArea": 1,
@@ -77,7 +77,7 @@ collection:
         meta:
           id: req_fdaa8c8afa224e28b8c0a45d1f65e121
           created: 1786333923371
-          modified: 1786402585239
+          modified: 1786481973225
           isPrivate: false
           description: ""
           sortKey: -1786333923371
@@ -179,6 +179,24 @@ collection:
             send: true
             store: true
           rebuildPath: true
+      - url: http://localhost:3212/api/empleados/3
+        name: New Request
+        meta:
+          id: req_9cc8a07cfdd24ce18916eab033dde80f
+          created: 1786481882303
+          modified: 1786482078295
+          isPrivate: false
+          description: ""
+          sortKey: -1786333923771
+        method: DELETE
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
   - name: Area
     meta:
       id: fld_820c98e59ce14d498ccb2f29e484cb1d
@@ -228,7 +246,7 @@ collection:
         meta:
           id: req_609923b00dd74dcaa247c711c5d6c87e
           created: 1786332758480
-          modified: 1786428837747
+          modified: 1786488907534
           isPrivate: false
           description: ""
           sortKey: -1786328310433
@@ -246,7 +264,7 @@ collection:
         meta:
           id: req_4848aa0516074f64835366d3a744a347
           created: 1786337623882
-          modified: 1786402577406
+          modified: 1786481965423
           isPrivate: false
           description: ""
           sortKey: -1786328310533
@@ -272,12 +290,12 @@ collection:
             send: true
             store: true
           rebuildPath: true
-      - url: http://localhost:3212/api/areas/1
+      - url: http://localhost:3212/api/areas/2
         name: New Request
         meta:
           id: req_19454e6b41f54325b330b30408691d42
           created: 1786400210114
-          modified: 1786418686034
+          modified: 1786489668472
           isPrivate: false
           description: ""
           sortKey: -1786328310633
@@ -286,7 +304,8 @@ collection:
           mimeType: application/json
           text: |-
             {
-            	"nombre": "Desarrolador Full Stack"
+            	"nombre": "Analisis de Datos",
+            	"descripcion": "Trabajo de Encargado en la base de datos"
             }
         headers:
           - name: Content-Type
@@ -340,6 +359,24 @@ collection:
             send: true
             store: true
           rebuildPath: true
+      - url: http://localhost:3212/api/areas/3
+        name: New Request
+        meta:
+          id: req_03b648d6fd32460891169cb5d4e0d54c
+          created: 1786481886508
+          modified: 1786488906117
+          isPrivate: false
+          description: ""
+          sortKey: -1786418677467
+        method: DELETE
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
   - name: Sede
     meta:
       id: fld_47a99ff2dd104769957b128c8d27fc7c
@@ -353,7 +390,7 @@ collection:
         meta:
           id: req_048f204f4ece4585b51853fa5994c061
           created: 1786328304424
-          modified: 1786332456616
+          modified: 1786483315535
           isPrivate: false
           description: ""
           sortKey: -1786328306164
@@ -362,13 +399,13 @@ collection:
           mimeType: application/json
           text: |-
             {
-              "nombre": "Sede Norte Surquillo",
-              "direccion": "Av. Angamos 889",
-              "telefono": "987654321",
-              "capacidad": 150,
-              "estado": "Inactivo",
+              "nombre": "Sede Molina",
+              "direccion": "Av. Brazil 889",
+              "telefono": "987777777",
+              "capacidad": 100,
+              "estado": "Activo",
               "horaApertura": "09:00:00",
-              "fechaInauguracion": "2023-11-10"
+              "fechaInauguracion": "2026-11-10"
             }
         headers:
           - name: Content-Type
@@ -381,12 +418,12 @@ collection:
             send: true
             store: true
           rebuildPath: true
-      - url: http://localhost:3212/api/cargos
+      - url: http://localhost:3212/api/sedes
         name: New Request
         meta:
           id: req_2bac075d626a45ba9147589dfc484905
           created: 1786332761347
-          modified: 1786332763114
+          modified: 1786488755708
           isPrivate: false
           description: ""
           sortKey: -1786328306264
@@ -404,7 +441,7 @@ collection:
         meta:
           id: req_407a52605ff84f92ab5b9cf465147a9d
           created: 1786381906653
-          modified: 1786425521996
+          modified: 1786481956275
           isPrivate: false
           description: ""
           sortKey: -1786357910092.5
@@ -495,6 +532,24 @@ collection:
             send: true
             store: true
           rebuildPath: true
+      - url: http://localhost:3212/api/sedes/3
+        name: New Request
+        meta:
+          id: req_f824584efa9e485cbd577c1d553f1046
+          created: 1786481841240
+          modified: 1786488762760
+          isPrivate: false
+          description: ""
+          sortKey: -1786419500298
+        method: DELETE
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
   - name: TipoEmpleado
     meta:
       id: fld_03c4a4fed7114476bc7a9c5e5c2d723a
@@ -508,7 +563,7 @@ collection:
         meta:
           id: req_8806ea39d9e9488999ab7a1663a3dfbd
           created: 1786328291831
-          modified: 1786398877805
+          modified: 1786483247326
           isPrivate: false
           description: ""
           sortKey: -1786328300755
@@ -530,12 +585,12 @@ collection:
             send: true
             store: true
           rebuildPath: true
-      - url: http://localhost:3212/api/tipos-empleado/1
+      - url: http://localhost:3212/api/tipos-empleado
         name: New Request
         meta:
           id: req_e8957fb5a49c4abf9bd153f481d31ce3
           created: 1786332745986
-          modified: 1786333098214
+          modified: 1786488249758
           isPrivate: false
           description: ""
           sortKey: -1786328300855
@@ -553,7 +608,7 @@ collection:
         meta:
           id: req_c0db45d096254675aac6ffb6362b8fbd
           created: 1786381896814
-          modified: 1786402564475
+          modified: 1786489720150
           isPrivate: false
           description: ""
           sortKey: -1786328300955
@@ -562,7 +617,7 @@ collection:
           mimeType: application/json
           text: |-
             {
-              "nombre": "Recepcionista"
+              "nombre": "Practicante"
             }
         headers:
           - name: Content-Type
@@ -638,6 +693,24 @@ collection:
             send: true
             store: true
           rebuildPath: true
+      - url: http://localhost:3212/api/tipos-empleado/4
+        name: New Request
+        meta:
+          id: req_f5a3b4f31a934d9ba219078320131ff9
+          created: 1786481846689
+          modified: 1786488731582
+          isPrivate: false
+          description: ""
+          sortKey: -1786419488430
+        method: DELETE
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
   - name: Asistencia
     meta:
       id: fld_6b40f1f08df44b04967b552de5c36ea1
@@ -651,7 +724,7 @@ collection:
         meta:
           id: req_4f185135ab554cddb7fc6bd32e6fcf8b
           created: 1786328295176
-          modified: 1786332321409
+          modified: 1786487623513
           isPrivate: false
           description: ""
           sortKey: -1786328298836
@@ -660,11 +733,11 @@ collection:
           mimeType: application/json
           text: |-
             {
-              "fecha": "2026-08-09",
-              "horaEntrada": "08:00:00",
-              "horaSalida": "17:00:00",
+              "fecha": "2022-03-02",
+              "horaEntrada": "03:00:00",
+              "horaSalida": "11:00:00",
               "horasTrabajadas": 8.0,
-              "estado": "Presente",
+              "estado": "Tardanza",
               "idEmpleado": 2
             }
         headers:
@@ -701,7 +774,7 @@ collection:
         meta:
           id: req_9ca04d7daab64c22b788b55e3cd891f6
           created: 1786381911090
-          modified: 1786425542108
+          modified: 1786487604816
           isPrivate: false
           description: ""
           sortKey: -1786328299136
@@ -791,6 +864,24 @@ collection:
             send: true
             store: true
           rebuildPath: true
+      - url: http://localhost:3212/api/asistencias/3
+        name: New Request
+        meta:
+          id: req_bdc51f3e3b174d459c95b780379030f7
+          created: 1786481843978
+          modified: 1786488237331
+          isPrivate: false
+          description: ""
+          sortKey: -1786419478807
+        method: DELETE
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
   - name: Permiso
     meta:
       id: fld_30ddd71cf6a44488acf8399c0a18adbd
@@ -804,7 +895,7 @@ collection:
         meta:
           id: req_947d3c1d0b9c4a0c9bd40217b24476b8
           created: 1786328276681
-          modified: 1786332137085
+          modified: 1786483169918
           isPrivate: false
           description: ""
           sortKey: -1786328278124
@@ -813,11 +904,11 @@ collection:
           mimeType: application/json
           text: |-
             {
-              "tipoPermiso": "Salud",
-              "fechaInicio": "2026-08-12",
-              "fechaFin": "2026-08-15",
-              "motivo": "Descanso médico tras operación ambulatoria",
-              "estado": "Pendiente",
+              "tipoPermiso": "Descando Empleativo",
+              "fechaInicio": "2026-07-91",
+              "fechaFin": "2026-07-10",
+              "motivo": "Descanso Matutino",
+              "estado": "Aprobado",
               "idEmpleado": 1
             }
         headers:
@@ -854,7 +945,7 @@ collection:
         meta:
           id: req_27700573420a4b14935ae5bfca09b3f3
           created: 1786381934135
-          modified: 1786402547561
+          modified: 1786481922810
           isPrivate: false
           description: ""
           sortKey: -1786328278324
@@ -944,6 +1035,24 @@ collection:
             send: true
             store: true
           rebuildPath: true
+      - url: http://localhost:3212/api/permisos/2
+        name: New Request
+        meta:
+          id: req_b95a0987c65743c985de724ec3ed2fd4
+          created: 1786481838038
+          modified: 1786487338214
+          isPrivate: false
+          description: ""
+          sortKey: -1786419514408
+        method: DELETE
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
   - name: Vacaciones
     meta:
       id: fld_6cdc45ef356746358707f33a9ae27cca
@@ -957,7 +1066,7 @@ collection:
         meta:
           id: req_fd940314af6a4f53b8ba6fc446ca9673
           created: 1786328269065
-          modified: 1786425558824
+          modified: 1786483023294
           isPrivate: false
           description: ""
           sortKey: -1786328270463
@@ -966,11 +1075,11 @@ collection:
           mimeType: application/json
           text: |-
             {
-              "fechaInicio": "2026-12-20",
-              "fechaFin": "2026-12-30",
-              "cantidadDias": 10,
-              "estado": "Aprobado",
-              "observacion": "Descanso por fiestas de fin de año",
+              "fechaInicio": "2022-02-10",
+              "fechaFin": "2022-02-30",
+              "cantidadDias": 20,
+              "estado": "Pendiente",
+              "observacion": "Descanso anual",
               "idEmpleado": 2
             }
         headers:
@@ -1007,7 +1116,7 @@ collection:
         meta:
           id: req_62ede548487647d99125c339ec090965
           created: 1786381941611
-          modified: 1786402539586
+          modified: 1786481908975
           isPrivate: false
           description: ""
           sortKey: -1786328270663
@@ -1102,6 +1211,24 @@ collection:
             send: true
             store: true
           rebuildPath: true
+      - url: http://localhost:3212/api/vacaciones/6
+        name: New Request
+        meta:
+          id: req_6f837482fd694c74a06388c95a4f6a2a
+          created: 1786481820356
+          modified: 1786487322137
+          isPrivate: false
+          description: ""
+          sortKey: -1786418464250
+        method: DELETE
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
   - name: Cargo
     meta:
       id: fld_afbecafb66a34942a294417b989514aa
@@ -1115,7 +1242,7 @@ collection:
         meta:
           id: req_205e0a432bf74143af9b424a8d9c8230
           created: 1786328248838
-          modified: 1786419933009
+          modified: 1786483514497
           isPrivate: false
           description: ""
           sortKey: -1786328248838
@@ -1124,9 +1251,9 @@ collection:
           mimeType: application/json
           text: |-
             {
-              "nombre": "Desarrollador",
-              "descripcion": "Encargado de Desarrollar",
-              "sueldoBase": 2000.00
+              "nombre": "Senior Desarrollador Web",
+              "descripcion": "Encargado de desarrollar la web",
+              "sueldoBase": 1500.00
             }
         headers:
           - name: Content-Type
@@ -1241,6 +1368,24 @@ collection:
           description: ""
           sortKey: -1786402230461.625
         method: QUERY
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3212/api/cargos/3
+        name: New Request
+        meta:
+          id: req_0673c0223e2f4185b683bfbd077394d6
+          created: 1786481813712
+          modified: 1786483535141
+          isPrivate: false
+          description: ""
+          sortKey: -1786481813712
+        method: DELETE
         settings:
           renderRequestBody: true
           encodeUrl: true
