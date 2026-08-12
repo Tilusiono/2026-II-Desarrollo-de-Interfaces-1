@@ -10,7 +10,7 @@ import { manejarErrores } from "./src/middlewares/error.middleware.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const app = express();
-const PORT = process.env.PORT ?? 3212;
+const PORT = process.env.PORT ?? 3211;
 
 app.use(express.json({ limit: "2mb" }));
 app.use(express.urlencoded({ extended: true }));
@@ -25,7 +25,7 @@ app.get("/api", (request, response) => {
   response.json({
     nombre: "Gestion Express API",
     almacenamiento: "sqlite",
-    recursos: ["Empleados, TipoEmpleado, Cargo, Area, Sede, "],
+    recursos: ["Empleado, TipoEmpleado, Cargo, Area, Sede, Vacaciones, Asistencia, Permiso "],
   });
 });
 
