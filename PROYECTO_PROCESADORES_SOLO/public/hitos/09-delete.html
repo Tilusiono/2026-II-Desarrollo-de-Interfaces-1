@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Eliminar componente</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/bootstrap-icons/font/bootstrap-icons.css" />
+  </head>
+  <body class="bg-light">
+    <nav class="navbar navbar-dark bg-danger">
+      <div class="container">
+        <span class="navbar-brand"
+          ><i class="bi bi-trash me-2"></i>Eliminar componente</span
+        >
+      </div>
+    </nav>
+
+    <main class="container py-4">
+      <div id="mensaje" class="alert d-none" role="alert"></div>
+      <section class="card border-0 shadow-sm mx-auto" style="max-width: 48rem">
+        <div class="card-body p-4">
+          <h1 class="h4">Eliminar un componente de forma controlada</h1>
+          <div class="row g-3 align-items-end">
+            <div class="col-md-6">
+              <label class="form-label" for="id">ID</label>
+              <input
+                id="id"
+                type="number"
+                min="1"
+                value="1"
+                class="form-control"
+              />
+            </div>
+            <div class="col-md-6">
+              <button id="btn-cargar" class="btn btn-outline-primary w-100">
+                <i class="bi bi-search me-1"></i>1. Consultar antes de eliminar
+              </button>
+            </div>
+          </div>
+
+          <div id="componente" class="border rounded p-3 mt-4 d-none">
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <strong id="componente-modelo"></strong>
+                <span
+                  id="componente-codigo"
+                  class="text-secondary d-block"
+                ></span>
+              </div>
+              <button id="btn-abrir-modal" class="btn btn-danger">
+                <i class="bi bi-trash me-1"></i>2. Eliminar
+              </button>
+            </div>
+          </div>
+
+          <button
+            id="btn-verificar"
+            class="btn btn-outline-secondary mt-3 d-none"
+          >
+            <i class="bi bi-shield-check me-1"></i>3. Verificar GET 404
+          </button>
+          <pre id="resultado" class="bg-dark text-light rounded p-3 mt-4 mb-0">
+Consulta un ID.</pre>
+        </div>
+      </section>
+    </main>
+
+    <div id="modal-eliminar" class="modal fade" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title fs-5">Confirmar eliminación</h2>
+            <button
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Cerrar"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <p class="mb-0">
+              Esta acción eliminará el componente seleccionado de SQLite.
+            </p>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-light" data-bs-dismiss="modal">
+              Cancelar
+            </button>
+            <button id="btn-confirmar" class="btn btn-danger">
+              <i class="bi bi-trash me-1"></i>Confirmar DELETE
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script>
+      const mensaje = document.querySelector("#mensaje");
+      const resultado = document.querySelector("#resultado");
+      const tarjetaComponente = document.querySelector("#componente");
+      const btnVerificar = document.querySelector("#btn-verificar");
+      const modal = new bootstrap.Modal(
+        document.querySelector("#modal-eliminar"),
+      );
+
+      document
+        .querySelector("#btn-cargar")
+        .addEventListener("click", consultarAntes);
+      document
+        .querySelector("#btn-abrir-modal")
+        .addEventListener("click", () => modal.show());
+      document
+        .querySelector("#btn-confirmar")
+        .addEventListener("click", eliminar);
+      btnVerificar.addEventListener("click", verificarEliminacion);
+
+      async function consultarAntes() {
+        const { respuestaHttp, respuesta } = await solicitar("GET");
+        resultado.textContent = JSON.stringify(respuesta, null, 2);
+
+        if (!respuestaHttp.ok) {
+          tarjetaComponente.classList.add("d-none");
+          mostrar(`HTTP ${respuestaHttp.status} · ${respuesta.mensaje}`, false);
+          return;
+        }
+
+        document.querySelector("#componente-modelo").textContent =
+          respuesta.procesadorResponseDto.modelo;
+        document.querySelector("#componente-codigo").textContent =
+          respuesta.procesadorResponseDto.codigo;
+        tarjetaComponente.classList.remove("d-none");
+        btnVerificar.classList.add("d-none");
+        mostrar(
+          "HTTP 200 · Componente encontrado. Revisa antes de eliminar.",
+          true,
+        );
+      }
+
+      async function eliminar() {
+        const { respuestaHttp, respuesta } = await solicitar("DELETE");
+        modal.hide();
+        resultado.textContent = JSON.stringify(respuesta, null, 2);
+        const correcto = respuestaHttp.status === 200;
+        mostrar(
+          `HTTP ${respuestaHttp.status} · ${respuesta.mensaje}`,
+          correcto,
+        );
+        if (correcto) {
+          tarjetaComponente.classList.add("d-none");
+          btnVerificar.classList.remove("d-none");
+        }
+      }
+
+      async function verificarEliminacion() {
+        const { respuestaHttp, respuesta } = await solicitar("GET");
+        resultado.textContent = JSON.stringify(respuesta, null, 2);
+        const correcto = respuestaHttp.status === 404;
+        mostrar(
+          `HTTP ${respuestaHttp.status} · ${correcto ? "El componente ya no existe" : "Resultado inesperado"}`,
+          correcto,
+        );
+      }
+
+      async function solicitar(metodo) {
+        const id = Number(document.querySelector("#id").value);
+        const respuestaHttp = await fetch(`/api/procesadores/${id}`, {
+          method: metodo,
+        });
+        const respuesta = await respuestaHttp.json();
+        return { respuestaHttp, respuesta };
+      }
+
+      function mostrar(texto, correcto) {
+        mensaje.className = `alert alert-${correcto ? "success" : "danger"}`;
+        mensaje.textContent = texto;
+      }
+    </script>
+  </body>
+</html>
