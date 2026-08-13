@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Gestión de tarjetas gráficas</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/bootstrap-icons/font/bootstrap-icons.css" />
+    <link rel="stylesheet" href="/css/estilos.css" />
+  </head>
+  <body>
+    <div data-component="nav"></div>
+    <div
+      data-component="header"
+      data-title="Gestión de tarjetas gráficas"
+      data-description="Registra, consulta y actualiza las tarjetas gráficas del inventario."
+      data-icon="bi-cpu"
+    ></div>
+
+    <main class="container py-4">
+      <div id="mensaje" class="d-none mb-4" role="alert"></div>
+
+      <section class="card panel-card mb-4">
+        <div class="card-body p-4">
+          <div class="section-heading">
+            <div>
+              <span class="eyebrow text-primary">Formulario</span>
+              <h2 id="titulo-form" class="h4 mb-0">
+                Registrar nueva tarjeta gráfica
+              </h2>
+            </div>
+            <span class="badge rounded-pill text-bg-light">POST / PUT</span>
+          </div>
+
+          <form
+            id="form-tarjetaGrafica"
+            class="row g-3 needs-validation"
+            novalidate
+          >
+            <input type="hidden" name="id" />
+
+            <div class="col-md-4">
+              <label class="form-label" for="codigo">Código</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-upc"></i></span>
+                <input
+                  id="codigo"
+                  name="codigo"
+                  class="form-control"
+                  placeholder="GPU-001"
+                  maxlength="20"
+                  required
+                />
+                <div class="invalid-feedback">Ingrese un código.</div>
+              </div>
+            </div>
+
+            <div class="col-md-5">
+              <label class="form-label" for="modelo">Modelo</label>
+              <input
+                id="modelo"
+                name="modelo"
+                class="form-control"
+                placeholder="NVIDIA GeForce RTX 4060"
+                minlength="2"
+                required
+              />
+              <div class="invalid-feedback">Ingrese el modelo.</div>
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label" for="fabricante">Fabricante</label>
+              <select
+                id="fabricante"
+                name="fabricante"
+                class="form-select"
+                required
+              >
+                <option value="">Seleccione</option>
+                <option value="NVD">NVIDIA</option>
+                <option value="AMD">AMD</option>
+                <option value="INT">Intel</option>
+                <option value="OTH">Otros</option>
+              </select>
+              <div class="invalid-feedback">Seleccione un fabricante.</div>
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label" for="memoriaGb">Memoria GB</label>
+              <input
+                id="memoriaGb"
+                name="memoriaGb"
+                type="number"
+                min="0"
+                step="1"
+                class="form-control"
+                required
+              />
+              <div class="invalid-feedback">Ingrese un entero desde cero.</div>
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label" for="precio">Precio</label>
+              <div class="input-group">
+                <span class="input-group-text">S/</span>
+                <input
+                  id="precio"
+                  name="precio"
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  class="form-control"
+                  required
+                />
+                <div class="invalid-feedback">Ingrese un precio válido.</div>
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label" for="frecuenciaMhz"
+                >Frecuencia MHz</label
+              >
+              <input
+                id="frecuenciaMhz"
+                name="frecuenciaMhz"
+                type="number"
+                min="0"
+                step="0.01"
+                class="form-control"
+                placeholder="Opcional"
+              />
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label" for="fechaLanzamiento">
+                Fecha de lanzamiento
+              </label>
+              <input
+                id="fechaLanzamiento"
+                name="fechaLanzamiento"
+                type="date"
+                class="form-control"
+              />
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label" for="horaRegistro">
+                Hora de registro
+              </label>
+              <input
+                id="horaRegistro"
+                name="horaRegistro"
+                type="time"
+                class="form-control"
+                required
+              />
+              <div class="invalid-feedback">Seleccione una hora.</div>
+            </div>
+
+            <div class="col-md-4">
+              <label class="form-label" for="fechaHoraRegistro">
+                Fecha y hora de registro
+              </label>
+              <input
+                id="fechaHoraRegistro"
+                name="fechaHoraRegistro"
+                type="datetime-local"
+                class="form-control"
+                required
+              />
+              <div class="invalid-feedback">Seleccione la fecha y hora.</div>
+            </div>
+
+            <div class="col-md-5">
+              <label class="form-label" for="imagen">Imagen</label>
+              <input
+                id="imagen"
+                name="imagen"
+                type="file"
+                accept="image/*"
+                class="form-control"
+              />
+              <div class="form-text">Opcional. Se almacena como BLOB.</div>
+            </div>
+
+            <div class="col-md-3 d-flex align-items-end">
+              <div class="form-check form-switch pb-2">
+                <input
+                  id="registro"
+                  name="registro"
+                  class="form-check-input"
+                  type="checkbox"
+                  checked
+                />
+                <label class="form-check-label" for="registro">
+                  Tarjeta gráfica registrada
+                </label>
+              </div>
+            </div>
+
+            <div class="col-12">
+              <label class="form-label" for="descripcion">Descripción</label>
+              <textarea
+                id="descripcion"
+                name="descripcion"
+                class="form-control"
+                rows="3"
+                placeholder="Opcional"
+              ></textarea>
+            </div>
+
+            <div class="col-12 d-flex flex-wrap gap-2">
+              <button id="btn-guardar" class="btn btn-primary">
+                <i class="bi bi-plus-circle me-1"></i>Registrar con POST
+              </button>
+              <button
+                id="btn-cancelar"
+                type="button"
+                class="btn btn-outline-secondary d-none"
+              >
+                <i class="bi bi-x-circle me-1"></i>Cancelar edición
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <section class="card panel-card">
+        <div class="card-body p-4">
+          <div class="section-heading">
+            <div>
+              <span class="eyebrow text-primary">Consulta</span>
+              <h2 class="h4 mb-0">Tarjetas gráficas registradas</h2>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+              <span id="total-resultados" class="text-secondary small">
+                0 resultado(s)
+              </span>
+              <span
+                id="cargando"
+                class="spinner-border spinner-border-sm text-primary d-none"
+              ></span>
+            </div>
+          </div>
+
+          <div class="row g-3 mb-4">
+            <div class="col-md-4">
+              <label class="form-label" for="buscar">Buscar</label>
+              <div class="input-group">
+                <span class="input-group-text"
+                  ><i class="bi bi-search"></i
+                ></span>
+                <input
+                  id="buscar"
+                  class="form-control"
+                  placeholder="Código, modelo o descripción..."
+                />
+              </div>
+            </div>
+            <div class="col-md-2">
+              <label class="form-label" for="filtro-fabricante"
+                >Fabricante</label
+              >
+              <select id="filtro-fabricante" class="form-select">
+                <option value="">Todas</option>
+                <option value="NVD">NVIDIA</option>
+                <option value="AMD">AMD</option>
+                <option value="INT">Intel</option>
+                <option value="OTH">Otros</option>
+              </select>
+            </div>
+            <div class="col-md-2">
+              <label class="form-label" for="filtro-registro">Estado</label>
+              <select id="filtro-registro" class="form-select">
+                <option value="">Todos</option>
+                <option value="true">Registrados</option>
+                <option value="false">No registrados</option>
+              </select>
+            </div>
+            <div class="col-md-2">
+              <label class="form-label" for="precio-min">Precio mínimo</label>
+              <input
+                id="precio-min"
+                type="number"
+                min="0"
+                class="form-control"
+              />
+            </div>
+            <div class="col-md-2">
+              <label class="form-label" for="precio-max">Precio máximo</label>
+              <input
+                id="precio-max"
+                type="number"
+                min="0"
+                class="form-control"
+              />
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table
+              id="tabla-tarjetasGraficas"
+              class="table table-hover align-middle"
+            >
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Imagen</th>
+                  <th>TarjetaGrafica</th>
+                  <th>Fabricante</th>
+                  <th>Memoria GB</th>
+                  <th>Precio</th>
+                  <th>Estado</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <template id="plantilla-tarjetaGrafica">
+        <tr>
+          <td><span class="id-chip tarjetaGrafica-id"></span></td>
+          <td>
+            <img class="tarjetaGrafica-imagen" width="48" height="48" />
+          </td>
+          <td>
+            <strong class="tarjetaGrafica-modelo"></strong>
+            <small class="tarjetaGrafica-codigo d-block text-secondary"></small>
+          </td>
+          <td class="tarjetaGrafica-fabricante"></td>
+          <td class="tarjetaGrafica-memoriaGb"></td>
+          <td class="tarjetaGrafica-precio"></td>
+          <td><span class="tarjetaGrafica-estado status"></span></td>
+          <td>
+            <div class="table-actions">
+              <button
+                class="btn btn-sm btn-outline-primary btn-icon"
+                data-accion="editar"
+                title="Editar con PUT"
+              >
+                <i class="bi bi-pencil"></i>
+              </button>
+              <button
+                class="btn btn-sm btn-outline-secondary btn-icon"
+                data-accion="estado"
+                title="Cambiar estado con PATCH"
+              >
+                <i class="bi bi-arrow-repeat"></i>
+              </button>
+              <button
+                class="btn btn-sm btn-outline-danger btn-icon"
+                data-accion="eliminar"
+                title="Eliminar"
+              >
+                <i class="bi bi-trash"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </template>
+    </main>
+
+    <div data-component="footer"></div>
+
+    <div id="modal-eliminar" class="modal fade" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title fs-5">Eliminar tarjeta gráfica</h2>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Cerrar"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <p id="modal-eliminar-contexto" class="mb-0"></p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-light" data-bs-dismiss="modal">
+              Cancelar
+            </button>
+            <button
+              id="btn-confirmar-eliminar"
+              type="button"
+              class="btn btn-danger"
+            >
+              Eliminar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="/js/shared/layout.js"></script>
+    <script type="module" src="/js/tarjetas-graficas/tarjetasGraficas.js"></script>
+  </body>
+</html>

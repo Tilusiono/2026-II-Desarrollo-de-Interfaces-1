@@ -1,0 +1,72 @@
+@baseUrl = http://localhost:4214/api
+
+### 1. GET: comprobar API
+GET {{baseUrl}}
+
+### 2. GET: listar tarjetas gráficas antes de crear
+GET {{baseUrl}}/tarjetas-graficas
+
+### 3. POST: crear tarjeta gráfica
+POST {{baseUrl}}/tarjetas-graficas
+Content-Type: application/json
+
+{
+  "codigo": "GPU-001",
+  "modelo": "NVIDIA GeForce RTX 4060",
+  "fabricante": "NVD",
+  "memoriaGb": 8,
+  "precio": 1499.90,
+  "frecuenciaMhz": 2535,
+  "descripcion": "Tarjeta gráfica para desarrollo y diseño",
+  "registro": true,
+  "fechaLanzamiento": "2023-01-10",
+  "horaRegistro": "10:30",
+  "fechaHoraRegistro": "2026-08-03T10:30",
+  "imagenBase64": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="
+}
+
+### 4. GET: obtener tarjeta gráfica por ID
+GET {{baseUrl}}/tarjetas-graficas/1
+
+### 5. PUT: reemplazar tarjeta gráfica completa
+PUT {{baseUrl}}/tarjetas-graficas/1
+Content-Type: application/json
+
+{
+  "codigo": "GPU-001",
+  "modelo": "NVIDIA GeForce RTX 4060 actualizado",
+  "fabricante": "NVD",
+  "memoriaGb": 8,
+  "precio": 1299.90,
+  "frecuenciaMhz": 2535,
+  "descripcion": "Tarjeta gráfica reemplazada completamente",
+  "registro": true,
+  "fechaLanzamiento": "2023-01-10",
+  "horaRegistro": "11:00",
+  "fechaHoraRegistro": "2026-08-03T11:00",
+  "imagenBase64": null
+}
+
+### 6. PATCH: actualizar solamente memoria GB y registro
+PATCH {{baseUrl}}/tarjetas-graficas/1
+Content-Type: application/json
+
+{
+  "memoriaGb": 12,
+  "registro": false
+}
+
+### 7. GET: buscar tarjetas gráficas
+GET {{baseUrl}}/tarjetas-graficas/buscar?texto=RTX&fabricante=NVD
+
+### 8. QUERY: consultar tarjetas gráficas con filtros
+QUERY {{baseUrl}}/tarjetas-graficas/consulta?fabricante=NVD&registro=false&precioMax=1500
+
+### 9. GET: comprobar que /consulta no acepta GET
+GET {{baseUrl}}/tarjetas-graficas/consulta?fabricante=NVD
+
+### 10. DELETE: eliminar tarjeta gráfica
+DELETE {{baseUrl}}/tarjetas-graficas/1
+
+### 11. GET: comprobar que fue eliminado
+GET {{baseUrl}}/tarjetas-graficas/1

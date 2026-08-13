@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Hito 5 - Probar PUT</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/bootstrap-icons/font/bootstrap-icons.css" />
+  </head>
+  <body class="bg-light">
+    <nav class="navbar navbar-dark bg-primary">
+      <div class="container">
+        <span class="navbar-brand"
+          ><i class="bi bi-pencil-square me-2"></i>Hito 5 · PUT</span
+        >
+      </div>
+    </nav>
+
+    <main class="container py-4">
+      <div id="mensaje" class="alert d-none" role="alert"></div>
+      <section class="card border-0 shadow-sm">
+        <div class="card-body p-4">
+          <div class="row g-3 align-items-end mb-4">
+            <div class="col-md-4">
+              <label class="form-label" for="id">ID que se reemplazará</label>
+              <input
+                id="id"
+                type="number"
+                min="1"
+                value="1"
+                class="form-control"
+              />
+            </div>
+            <div class="col-md-4">
+              <button
+                id="btn-cargar"
+                type="button"
+                class="btn btn-outline-primary w-100"
+              >
+                <i class="bi bi-download me-1"></i>Cargar datos con GET
+              </button>
+            </div>
+          </div>
+
+          <form id="form-put" class="row g-3">
+            <div class="col-md-4">
+              <label class="form-label" for="codigo">Código</label>
+              <input id="codigo" class="form-control" required />
+            </div>
+            <div class="col-md-5">
+              <label class="form-label" for="modelo">Modelo</label>
+              <input id="modelo" class="form-control" required />
+            </div>
+            <div class="col-md-3">
+              <label class="form-label" for="fabricante">Fabricante</label>
+              <select id="fabricante" class="form-select" required>
+                <option value="NVD">NVIDIA</option>
+                <option value="AMD">AMD</option>
+                <option value="INT">Intel</option>
+                <option value="OTH">Otros</option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <label class="form-label" for="memoriaGb">Memoria GB</label>
+              <input
+                id="memoriaGb"
+                type="number"
+                min="0"
+                class="form-control"
+                required
+              />
+            </div>
+            <div class="col-md-3">
+              <label class="form-label" for="precio">Precio</label>
+              <input
+                id="precio"
+                type="number"
+                min="0"
+                step="0.01"
+                class="form-control"
+                required
+              />
+            </div>
+            <div class="col-md-3">
+              <label class="form-label" for="frecuenciaMhz"
+                >Frecuencia MHz</label
+              >
+              <input
+                id="frecuenciaMhz"
+                type="number"
+                min="0"
+                step="0.01"
+                class="form-control"
+              />
+            </div>
+            <div class="col-md-3">
+              <label class="form-label" for="fechaLanzamiento"
+                >Fecha de lanzamiento</label
+              >
+              <input id="fechaLanzamiento" type="date" class="form-control" />
+            </div>
+            <div class="col-md-3">
+              <label class="form-label" for="horaRegistro">Hora</label>
+              <input
+                id="horaRegistro"
+                type="time"
+                class="form-control"
+                required
+              />
+            </div>
+            <div class="col-md-4">
+              <label class="form-label" for="fechaHoraRegistro"
+                >Fecha y hora</label
+              >
+              <input
+                id="fechaHoraRegistro"
+                type="datetime-local"
+                class="form-control"
+                required
+              />
+            </div>
+            <div class="col-md-5">
+              <label class="form-label" for="imagen">Reemplazar imagen</label>
+              <input
+                id="imagen"
+                type="file"
+                accept="image/*"
+                class="form-control"
+              />
+            </div>
+            <div class="col-md-3 d-flex align-items-end">
+              <div class="form-check form-switch mb-2">
+                <input id="registro" class="form-check-input" type="checkbox" />
+                <label class="form-check-label" for="registro"
+                  >Registrado</label
+                >
+              </div>
+            </div>
+            <div class="col-12">
+              <label class="form-label" for="descripcion">Descripción</label>
+              <textarea
+                id="descripcion"
+                class="form-control"
+                rows="2"
+              ></textarea>
+            </div>
+            <div class="col-12">
+              <button class="btn btn-primary">
+                <i class="bi bi-save me-1"></i>Reemplazar todos los campos con
+                PUT
+              </button>
+            </div>
+          </form>
+          <pre
+            id="resultado"
+            class="bg-dark text-light rounded p-3 mt-4 mb-0 d-none"
+          ></pre>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      let imagenActualBase64 = null;
+      const mensaje = document.querySelector("#mensaje");
+      const resultado = document.querySelector("#resultado");
+
+      document
+        .querySelector("#btn-cargar")
+        .addEventListener("click", cargarTarjetaGrafica);
+      document
+        .querySelector("#form-put")
+        .addEventListener("submit", reemplazarTarjetaGrafica);
+
+      async function cargarTarjetaGrafica() {
+        const id = Number(document.querySelector("#id").value);
+        await ejecutar(async () => {
+          const respuestaHttp = await fetch(`/api/tarjetas-graficas/${id}`);
+          const respuesta = await respuestaHttp.json();
+          if (!respuestaHttp.ok)
+            throw new Error(
+              `HTTP ${respuestaHttp.status} · ${respuesta.mensaje}`,
+            );
+
+          const tarjetaGrafica = respuesta.tarjetaGraficaResponseDto;
+          for (const campo of [
+            "codigo",
+            "modelo",
+            "fabricante",
+            "memoriaGb",
+            "precio",
+            "horaRegistro",
+          ]) {
+            document.querySelector(`#${campo}`).value = tarjetaGrafica[campo];
+          }
+          document.querySelector("#frecuenciaMhz").value =
+            tarjetaGrafica.frecuenciaMhz ?? "";
+          document.querySelector("#descripcion").value =
+            tarjetaGrafica.descripcion ?? "";
+          document.querySelector("#fechaLanzamiento").value =
+            tarjetaGrafica.fechaLanzamiento ?? "";
+          document.querySelector("#fechaHoraRegistro").value = String(
+            tarjetaGrafica.fechaHoraRegistro,
+          ).slice(0, 16);
+          document.querySelector("#registro").checked = tarjetaGrafica.registro;
+          imagenActualBase64 = tarjetaGrafica.imagenBase64;
+          mostrar(
+            `HTTP 200 · TarjetaGrafica ${id} cargado. Modifica cualquier campo.`,
+            true,
+          );
+        });
+      }
+
+      async function reemplazarTarjetaGrafica(evento) {
+        evento.preventDefault();
+        const id = Number(document.querySelector("#id").value);
+
+        await ejecutar(async () => {
+          const archivo = document.querySelector("#imagen").files[0];
+          const imagenBase64 = archivo
+            ? await convertirBase64(archivo)
+            : imagenActualBase64;
+          const tarjetaGraficaRequestDto = {
+            codigo: valor("codigo"),
+            modelo: valor("modelo"),
+            fabricante: valor("fabricante"),
+            memoriaGb: Number(valor("memoriaGb")),
+            precio: Number(valor("precio")),
+            frecuenciaMhz: numeroONull("frecuenciaMhz"),
+            descripcion: valor("descripcion") || null,
+            registro: document.querySelector("#registro").checked,
+            fechaLanzamiento: valor("fechaLanzamiento") || null,
+            horaRegistro: valor("horaRegistro"),
+            fechaHoraRegistro: valor("fechaHoraRegistro"),
+            imagenBase64,
+          };
+
+          const respuestaHttp = await fetch(`/api/tarjetas-graficas/${id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(tarjetaGraficaRequestDto),
+          });
+          const respuesta = await respuestaHttp.json();
+          resultado.textContent = JSON.stringify(respuesta, null, 2);
+          resultado.classList.remove("d-none");
+          if (!respuestaHttp.ok)
+            throw new Error(
+              `HTTP ${respuestaHttp.status} · ${respuesta.mensaje}`,
+            );
+          mostrar(`HTTP ${respuestaHttp.status} · ${respuesta.mensaje}`, true);
+        });
+      }
+
+      function valor(id) {
+        return document.querySelector(`#${id}`).value.trim();
+      }
+      function numeroONull(id) {
+        return valor(id) === "" ? null : Number(valor(id));
+      }
+      function convertirBase64(archivo) {
+        return new Promise((resolve, reject) => {
+          const lector = new FileReader();
+          lector.addEventListener("load", () => resolve(lector.result), {
+            once: true,
+          });
+          lector.addEventListener("error", () => reject(lector.error), {
+            once: true,
+          });
+          lector.readAsDataURL(archivo);
+        });
+      }
+      async function ejecutar(callback) {
+        try {
+          await callback();
+        } catch (error) {
+          mostrar(error.message, false);
+        }
+      }
+      function mostrar(texto, correcto) {
+        mensaje.className = `alert alert-${correcto ? "success" : "danger"}`;
+        mensaje.textContent = texto;
+      }
+    </script>
+    <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
