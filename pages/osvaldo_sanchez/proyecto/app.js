@@ -7,6 +7,9 @@ import { normalizarBody } from "./src/middlewares/normalizacion.middleware.js";
 import { rutaNoEncontrada } from "./src/middlewares/notFound.middleware.js";
 import { manejarErrores } from "./src/middlewares/error.middleware.js";
 
+import productosRoutes from "./src/routes/productos.routes.js";
+import automovilesRoutes from "./src/routes/automoviles.routes.js";
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const app = express();
@@ -28,6 +31,12 @@ app.get("/api", (request, response) => {
     recursos: ["productos, automoviles"],
   });
 });
+
+// RUTAS
+
+
+app.use("/api/productos", productosRoutes);
+app.use("/api/automoviles", automovilesRoutes);
 
 app.use(rutaNoEncontrada);
 app.use(manejarErrores);

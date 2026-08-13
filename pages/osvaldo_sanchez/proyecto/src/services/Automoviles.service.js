@@ -2,11 +2,11 @@ import { AppError } from "../errors/AppError.js";
 import { normalizarTexto } from "../utils/texto.js";
 
 import Automoviles from "../models/Automoviles.js";
-import { AutomovilesResponseDto } from "../dtos/AutomovilesDto.js";
+import { automovilesResponseDto } from "../dtos/AutomovilesDto.js";
 import { AutomovilesRepository } from "../repositories/AutomovilesRepository.js";
 
-export class AutomovilesService {
-  constructor(AutomovilesRepository = new AutomovilesRepository()) {
+export class automovilesService  {
+  constructor(AutomovilesRepository = new automovilesRepository()) {
     this.AutomovilesRepository = AutomovilesRepository;
   }
 
@@ -14,7 +14,7 @@ export class AutomovilesService {
     await this.validarCodigo(automovilesRequestDto.codigo);
     const imagenDatos = this.convertirImagen(automovilesRequestDto.imagenBase64);
 
-    const AutomovilesModel = new Automoviles(
+    const AutomovilesModel = new automoviles(
       0,
       automovilesRequestDto.codigo,
       automovilesRequestDto.marca,
@@ -75,4 +75,4 @@ export class AutomovilesService {
   }
 }
 
-export const AutomovilesService = new AutomovilesService();
+export const automovilesService = new AutomovilesService();
