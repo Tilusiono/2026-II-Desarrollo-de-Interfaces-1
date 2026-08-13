@@ -52,9 +52,7 @@
 
     <main class="container py-4">
       
-      <!-- ========================================== -->
-      <!-- ZONA 1: FORMULARIO (Crear / Editar Área)   -->
-      <!-- ========================================== -->
+      <!--FORMULARIO Crear Editar Área   -->
       <div class="card border-0 shadow-sm mb-4">
         <div class="card-body p-4">
           <div class="d-flex justify-content-between align-items-center mb-4">
@@ -64,7 +62,7 @@
           </div>
 
           <form id="form-area" class="row g-3">
-            <!-- CAMPO OCULTO: Guarda el ID cuando estamos editando -->
+            <!-- CAMPO OCULTO Guarda cuando estamos editando -->
             <input type="hidden" id="idAreaEditar" value="" />
 
             <div class="col-md-4">
@@ -109,9 +107,7 @@
         </div>
       </div>
 
-      <!-- ========================================== -->
-      <!-- ZONA 2: TABLA DE DATOS                     -->
-      <!-- ========================================== -->
+      <!--TABLA DE DATOS                     -->
       <div class="card border-0 shadow-sm">
         <div class="card-body p-0">
           <div class="table-responsive">
@@ -203,7 +199,7 @@
         `).join('');
       }
 
-      // POST / PUT - Guardar o Actualizar
+      // POST / PUT
       formulario.addEventListener("submit", async (evento) => {
         evento.preventDefault();
 
@@ -276,7 +272,7 @@
         document.querySelector("#btn-cancelar").classList.add("d-none");
       }
 
-      // DELETE - Eliminar Área
+      // DELETE 
       async function eliminarArea(idArea) {
         if (!confirm(`¿Estás seguro de que deseas eliminar el área con ID ${idArea}?`)) return;
 

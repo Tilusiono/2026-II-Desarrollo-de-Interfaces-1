@@ -250,13 +250,11 @@
         `).join('');
       }
 
-      // ==========================================
-      // GUARDAR (POST) O ACTUALIZAR (PUT)
-      // ==========================================
+      // GUARDAR  POST PUT 
       formulario.addEventListener("submit", async (evento) => {
         evento.preventDefault();
 
-        // Recolectar datos
+        // Recolecta los  datos
         const datosFormulario = {
           dni: document.querySelector("#dni").value.trim(),
           nombres: document.querySelector("#nombres").value.trim(),
@@ -273,7 +271,6 @@
           idSede: Number(document.querySelector("#idSede").value)
         };
 
-        // Verificamos si hay un ID oculto (Si hay ID = PUT, Si está vacío = POST)
         const idAEditar = document.querySelector("#idEmpleadoEditar").value;
         const metodoHttp = idAEditar ? "PUT" : "POST";
         const urlApi = idAEditar ? `/api/empleados/${idAEditar}` : "/api/empleados";
@@ -298,9 +295,8 @@
         }
       });
 
-      // ==========================================
       // PREPARAR MODO EDICIÓN
-      // ==========================================
+
       function prepararEdicion(idEmpleado) {
         // Buscamos los datos de ese empleado en nuestra lista global
         const emp = listaGlobalEmpleados.find(e => e.idEmpleado === idEmpleado);
@@ -374,9 +370,8 @@
         }
       }
 
-      // ==========================================
       // ALERTAS EN PANTALLA
-      // ==========================================
+      
       function mostrarMensaje(texto, esExito) {
         mensaje.className = `alert alert-${esExito ? "success" : "danger"} mt-3`;
         mensaje.textContent = texto;
