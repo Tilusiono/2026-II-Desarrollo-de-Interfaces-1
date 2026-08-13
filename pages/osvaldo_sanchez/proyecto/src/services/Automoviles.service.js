@@ -1,20 +1,25 @@
+// ...existing code...
 import { AppError } from "../errors/AppError.js";
 import { normalizarTexto } from "../utils/texto.js";
 
 import Automoviles from "../models/Automoviles.js";
-import { automovilesResponseDto } from "../dtos/AutomovilesDto.js";
+import {
+  AutomovilesResponseDto,
+  AutomovilesRequestDto,
+} from "../dtos/AutomovilesDto.js";
 import { AutomovilesRepository } from "../repositories/AutomovilesRepository.js";
 
-export class automovilesService  {
-  constructor(AutomovilesRepository = new automovilesRepository()) {
-    this.AutomovilesRepository = AutomovilesRepository;
+export class AutomovilesService {
+  constructor(automovilesRepository = new AutomovilesRepository()) {
+    this.automovilesRepository = automovilesRepository;
   }
 
   async crear(automovilesRequestDto) {
     await this.validarCodigo(automovilesRequestDto.codigo);
+
     const imagenDatos = this.convertirImagen(automovilesRequestDto.imagenBase64);
 
-    const AutomovilesModel = new automoviles(
+    const automovilesModel = new Automoviles(
       0,
       automovilesRequestDto.codigo,
       automovilesRequestDto.marca,
@@ -34,36 +39,35 @@ export class automovilesService  {
       imagenDatos.imagenMimeType,
     );
 
-    const AutomovilesCreadoModel =
-      await this.AutomovilesRepository.crear(AutomovilesModel);
-    return new AutomovilesResponseDto(AutomovilesCreadoModel);
+    const automovilesCreadoModel =
+      await this.automovilesRepository.crear(automovilesModel);
+
+    return new AutomovilesResponseDto(automovilesCreadoModel);
   }
 
   async validarCodigo(codigo, idOmitido) {
-    const AutomovilessModel = await this.AutomovilesRepository.listar();
-    const AutomovilesRepetidoModel = AutomovilessModel.find(
-      (AutomovilesModel) =>
-        normalizarTexto(AutomovilesModel.codigo) === normalizarTexto(codigo) &&
-        Number(AutomovilesModel.id) !== Number(idOmitido),
+    const automovilesModelList = await this.automovilesRepository.listar();
+
+    const automovilesRepetidoModel = automovilesModelList.find(
+      (automovilesModel) =>
+        normalizarTexto(automovilesModel.codigo) === normalizarTexto(codigo) &&
+        Number(automovilesModel.id) !== Number(idOmitido),
     );
 
-    if (AutomovilesRepetidoModel) {
+    if (automovilesRepetidoModel) {
       throw new AppError("El código de Automoviles ya existe", 409);
     }
   }
 
   convertirImagen(imagenBase64) {
-    if (imagenBase64 === null || imagenBase64 === "") {
-      return { imagen: null, imagenMimeType: null };
-    }
-
-    if (imagenBase64 === undefined) {
+    if (imagenBase64 === null || imagenBase64 === "" || imagenBase64 === undefined) {
       return { imagen: null, imagenMimeType: null };
     }
 
     const coincidencia = String(imagenBase64).match(
-      /^data:(image\/[a-zA-Z0-9.+-]+);base64,(.+)$/,
+      /^data:(image\/[a-zA-Z0-9.+-]+);base64,(.+)$/
     );
+
     if (!coincidencia) {
       throw new AppError("La imagen Base64 no es válida", 400);
     }
