@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Cafetería</title>
+
+```
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        background: #f5efe6;
+        color: #3e2723;
+    }
+
+    header {
+        background: #5d4037;
+        color: white;
+        padding: 30px;
+        text-align: center;
+    }
+
+    header h1 {
+        margin-bottom: 10px;
+    }
+
+    header p {
+        color: #ead7c4;
+    }
+
+    nav {
+        background: #3e2723;
+        padding: 15px;
+        text-align: center;
+    }
+
+    nav a {
+        color: white;
+        text-decoration: none;
+        margin: 0 15px;
+        font-weight: bold;
+    }
+
+    nav a:hover {
+        color: #d7a86e;
+    }
+
+    .contenedor {
+        width: 90%;
+        max-width: 1200px;
+        margin: 30px auto;
+    }
+
+    .titulo-seccion {
+        text-align: center;
+        margin-bottom: 25px;
+        font-size: 28px;
+    }
+
+    .tarjetas {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 20px;
+    }
+
+    .tarjeta {
+        background: white;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+        border-left: 5px solid #795548;
+    }
+
+    .tarjeta h3 {
+        color: #5d4037;
+        margin-bottom: 15px;
+    }
+
+    .tarjeta p {
+        margin: 8px 0;
+        line-height: 1.5;
+    }
+
+    .botones {
+        margin-top: 15px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    button {
+        background: #795548;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background: #5d4037;
+    }
+
+    .productos {
+        margin-top: 20px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background: white;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    th {
+        background: #6d4c41;
+        color: white;
+        padding: 14px;
+        text-align: left;
+    }
+
+    td {
+        padding: 12px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    tr:hover {
+        background: #f8f1e9;
+    }
+
+    .estado {
+        display: inline-block;
+        padding: 5px 10px;
+        border-radius: 15px;
+        background: #c8e6c9;
+        color: #256029;
+        font-weight: bold;
+    }
+
+    .resultado {
+        background: #fff8e1;
+        border: 1px solid #ffcc80;
+        padding: 15px;
+        margin-top: 20px;
+        border-radius: 8px;
+        min-height: 50px;
+    }
+
+    footer {
+        background: #3e2723;
+        color: white;
+        text-align: center;
+        padding: 20px;
+        margin-top: 40px;
+    }
+
+    @media (max-width: 600px) {
+        nav a {
+            display: block;
+            margin: 8px;
+        }
+    }
+</style>
+```
+
+</head>
+
+<body>
+
+```
+<header>
+    <h1>☕ Sistema de Cafetería</h1>
+    <p>Gestión de clientes, empleados, productos, sedes y ventas</p>
+</header>
+
+<nav>
+    <a href="#personas">Personas</a>
+    <a href="#cafeteria">Cafetería</a>
+    <a href="#productos">Productos</a>
+    <a href="#sede">Sede</a>
+    <a href="#venta">Venta</a>
+</nav>
+
+<main class="contenedor">
+
+    <!-- PERSONAS -->
+    <section id="personas">
+        <h2 class="titulo-seccion">Personas</h2>
+
+        <div class="tarjetas">
+
+            <!-- Cliente -->
+            <div class="tarjeta">
+                <h3>👤 Cliente</h3>
+
+                <p><strong>Nombre:</strong> Luis</p>
+                <p><strong>DNI:</strong> 12345678</p>
+                <p><strong>Teléfono:</strong> 999999999</p>
+                <p><strong>Correo:</strong> luis@email.com</p>
+                <p><strong>Categoría:</strong> Frecuente</p>
+                <p><strong>Dirección:</strong> Av. Principal 123</p>
+                <p><strong>Puntos:</strong> 120</p>
+                <p><strong>Código:</strong> CLI001</p>
+
+                <div class="botones">
+                    <button onclick="mostrarDatosCliente()">
+                        Mostrar datos
+                    </button>
+
+                    <button onclick="realizarCompra()">
+                        Comprar
+                    </button>
+
+                    <button onclick="consultarCliente()">
+                        Consultar
+                    </button>
+                </div>
+            </div>
+
+            <!-- Empleado -->
+            <div class="tarjeta">
+                <h3>👨‍💼 Empleado</h3>
+
+                <p><strong>Cargo:</strong> Empleado</p>
+                <p><strong>Salario:</strong> S/ 1,500</p>
+                <p><strong>Turno:</strong> Mañana</p>
+                <p><strong>Código:</strong> EMP001</p>
+
+                <div class="botones">
+                    <button onclick="trabajarEmpleado()">
+                        Trabajar
+                    </button>
+                </div>
+            </div>
+
+            <!-- Vendedor -->
+            <div class="tarjeta">
+                <h3>🧑‍💼 Vendedor</h3>
+
+                <p><strong>Nombre:</strong> Luis Gómez</p>
+                <p><strong>Turno:</strong> Mañana</p>
+                <p><strong>Salario:</strong> S/ 1,500</p>
+
+                <div class="botones">
+                    <button onclick="mostrarVendedor()">
+                        Mostrar información
+                    </button>
+                </div>
+            </div>
+
+            <!-- Conserje -->
+            <div class="tarjeta">
+                <h3>🧹 Conserje</h3>
+
+                <p><strong>Nombre:</strong> Carlos</p>
+                <p><strong>DNI:</strong> 87654321</p>
+                <p><strong>Cargo:</strong> Conserje</p>
+                <p><strong>Salario:</strong> S/ 1,300</p>
+                <p><strong>Turno:</strong> Tarde</p>
+                <p><strong>Área:</strong> Área de mesas</p>
+                <p><strong>Sector:</strong> Primer piso</p>
+                <p><strong>Horario:</strong> 18:00</p>
+
+                <div class="botones">
+                    <button onclick="trabajarConserje()">
+                        Trabajar
+                    </button>
+
+                    <button onclick="limpiarAreas()">
+                        Limpiar
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- CAFETERÍA -->
+    <section id="cafeteria" style="margin-top: 50px;">
+        <h2 class="titulo-seccion">☕ Cafetería</h2>
+
+        <div class="tarjetas">
+
+            <div class="tarjeta">
+                <h3>Cafetería Central</h3>
+
+                <p><strong>Tipo de café:</strong> Arábica</p>
+                <p><strong>Capacidad:</strong> 120 personas</p>
+                <p><strong>Sucursal:</strong> Sucursal Centro</p>
+            </div>
+
+            <div class="tarjeta">
+                <h3>📍 Ubicación</h3>
+
+                <p><strong>Dirección:</strong> Av. Principal 123</p>
+                <p><strong>Distrito:</strong> Miraflores</p>
+                <p><strong>Referencia:</strong> Frente al parque</p>
+                <p><strong>Código postal:</strong> 15074</p>
+            </div>
+
+            <div class="tarjeta">
+                <h3>📞 Teléfono</h3>
+
+                <p><strong>Principal:</strong> 987654321</p>
+                <p><strong>Secundario:</strong> 912345678</p>
+                <p><strong>Código país:</strong> +51</p>
+                <p><strong>Extensión:</strong> 101</p>
+            </div>
+
+            <div class="tarjeta">
+                <h3>📧 Correo</h3>
+
+                <p><strong>Principal:</strong> info@cafe.com</p>
+                <p><strong>Soporte:</strong> soporte@cafe.com</p>
+                <p><strong>Dominio:</strong> cafe.com</p>
+                <p>
+                    <strong>Estado:</strong>
+                    <span class="estado">Activo</span>
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- PRODUCTOS -->
+    <section id="productos" class="productos">
+        <h2 class="titulo-seccion">🍵 Productos</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Categoría</th>
+                    <th>Stock</th>
+                    <th>Descripción</th>
+                    <th>Precio</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>Latte</td>
+                    <td>Bebida</td>
+                    <td>20</td>
+                    <td>Café con leche</td>
+                    <td>S/ 10.00</td>
+                </tr>
+
+                <tr>
+                    <td>Capuccino</td>
+                    <td>Bebida</td>
+                    <td>15</td>
+                    <td>Café con espuma de leche</td>
+                    <td>S/ 12.00</td>
+                </tr>
+
+                <tr>
+                    <td>Espresso</td>
+                    <td>Bebida</td>
+                    <td>25</td>
+                    <td>Café espresso tradicional</td>
+                    <td>S/ 8.00</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- SEDE -->
+    <section id="sede" style="margin-top: 50px;">
+        <h2 class="titulo-seccion">🏢 Sede</h2>
+
+        <div class="tarjeta">
+
+            <h3>Sucursal Centro</h3>
+
+            <p>
+                <strong>Dirección:</strong>
+                Av. Principal 123
+            </p>
+
+            <p>
+                <strong>Horario:</strong>
+                Lunes a Sábado 08:00 - 20:00
+            </p>
+
+            <p>
+                <strong>Capacidad:</strong>
+                120 personas
+            </p>
+
+            <div class="botones">
+                <button onclick="abrirSede()">
+                    Abrir sede
+                </button>
+
+                <button onclick="cerrarSede()">
+                    Cerrar sede
+                </button>
+
+                <button onclick="mostrarHorario()">
+                    Mostrar horario
+                </button>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- VENTA -->
+    <section id="venta" style="margin-top: 50px;">
+        <h2 class="titulo-seccion">💰 Venta</h2>
+
+        <div class="tarjeta">
+
+            <h3>Información de la venta</h3>
+
+            <p><strong>Fecha:</strong> 18/06/2026</p>
+            <p><strong>Cantidad:</strong> 3 productos</p>
+            <p><strong>Total:</strong> S/ 30.00</p>
+            <p><strong>Método de pago:</strong> Efectivo</p>
+
+        </div>
+
+        <div id="resultado" class="resultado">
+            <strong>Resultado:</strong>
+            Selecciona una acción para ver la información.
+        </div>
+
+    </section>
+
+</main>
+
+<footer>
+    <p>© 2026 Sistema de Cafetería | Programación Orientada a Objetos</p>
+</footer>
+
+
+<script>
+
+    // ==========================
+    // DATOS DEL SISTEMA
+    // ==========================
+
+    const cliente1 = {
+        nombre: "Luis",
+        dni: "12345678",
+        telefono: "999999999",
+        correo: "luis@email.com",
+        categoria: "Frecuente",
+        puntos: 120,
+        codigo: "CLI001"
+    };
+
+    const vendedor1 = {
+        nombre: "Luis",
+        apellido: "Gómez",
+        turno: "Mañana",
+        salario: 1500
+    };
+
+    const conserje1 = {
+        nombre: "Carlos",
+        cargo: "Conserje",
+        salario: 1300,
+        turno: "Tarde",
+        area: "Área de mesas",
+        sector: "Primer piso"
+    };
+
+
+    // ==========================
+    // FUNCIONES DEL CLIENTE
+    // ==========================
+
+    function mostrarDatosCliente() {
+
+        document.getElementById("resultado").innerHTML =
+            "<strong>Datos del cliente:</strong><br>" +
+            "Nombre: " + cliente1.nombre + "<br>" +
+            "DNI: " + cliente1.dni + "<br>" +
+            "Teléfono: " + cliente1.telefono + "<br>" +
+            "Correo: " + cliente1.correo + "<br>" +
+            "Categoría: " + cliente1.categoria + "<br>" +
+            "Puntos: " + cliente1.puntos;
+    }
+
+
+    function realizarCompra() {
+
+        const productos = [
+            "Latte - S/10",
+            "Capuccino - S/12",
+            "Espresso - S/8"
+        ];
+
+        document.getElementById("resultado").innerHTML =
+            "<strong>Productos comprados:</strong><br>" +
+            "- " + productos[0] + "<br>" +
+            "- " + productos[1] + "<br>" +
+            "- " + productos[2];
+    }
+
+
+    function consultarCliente() {
+
+        document.getElementById("resultado").innerHTML =
+            "<strong>Consulta:</strong><br>" +
+            "Consulta realizada correctamente.";
+    }
+
+
+    // ==========================
+    // EMPLEADO
+    // ==========================
+
+    function trabajarEmpleado() {
+
+        document.getElementById("resultado").innerHTML =
+            "<strong>Empleado:</strong><br>" +
+            "La persona trabaja en la cafetería.";
+    }
+
+
+    // ==========================
+    // VENDEDOR
+    // ==========================
+
+    function mostrarVendedor() {
+
+        document.getElementById("resultado").innerHTML =
+            "<strong>Vendedor:</strong><br>" +
+            "Nombre: " + vendedor1.nombre + " " +
+            vendedor1.apellido + "<br>" +
+            "Turno: " + vendedor1.turno + "<br>" +
+            "Salario: S/ " + vendedor1.salario;
+    }
+
+
+    // ==========================
+    // CONSERJE
+    // ==========================
+
+    function trabajarConserje() {
+
+        document.getElementById("resultado").innerHTML =
+            "<strong>Conserje:</strong><br>" +
+            "El conserje realiza labores de limpieza.";
+    }
+
+
+    function limpiarAreas() {
+
+        let mensaje = "<strong>Proceso de limpieza:</strong><br>";
+
+        let area = 1;
+
+        while (area <= 3) {
+            mensaje += "Limpiando área " + area + "<br>";
+            area++;
+        }
+
+        document.getElementById("resultado").innerHTML =
+            mensaje;
+    }
+
+
+    // ==========================
+    // SEDE
+    // ==========================
+
+    function abrirSede() {
+
+        let mensaje =
+            "<strong>Sede abierta:</strong><br>";
+
+        let hora = 8;
+
+        do {
+            mensaje +=
+                "Atendiendo desde las " +
+                hora + ":00<br>";
+
+            hora++;
+
+        } while (hora <= 10);
+
+        document.getElementById("resultado").innerHTML =
+            mensaje;
+    }
+
+
+    function cerrarSede() {
+
+        document.getElementById("resultado").innerHTML =
+            "<strong>Sede:</strong><br>" +
+            "La sede cerró correctamente.";
+    }
+
+
+    function mostrarHorario() {
+
+        document.getElementById("resultado").innerHTML =
+            "<strong>Horario de atención:</strong><br>" +
+            "Lunes a Sábado 08:00 - 20:00";
+    }
+
+</script>
+```
+
+</body>
+</html>
