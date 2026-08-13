@@ -2,28 +2,29 @@ import { Router } from "express";
 import { serviciosController as controller } from "../controllers/Servicios.controller.js";
 import { validarServicioCompleto } from "../middlewares/Servicios.middleware.js";
 import { validarId } from "../middlewares/id.middleware.js";
-import { asyncHandler } from "../utils/asyncHandler.js";
+import asyncHandler from "../middlewares/asyncHandler.js";
 import { ServicioRequestDto } from "../dtos/Servicios.dto.js";
 
 const router = Router();
 
 router.post(
-  "/",
-  validarServicioCompleto,
-  asyncHandler((request, response) => {
-    const servicioRequestDto = new ServicioRequestDto(request.body);
-    return controller.crear(servicioRequestDto, response);
-  }),
+    "/",
+    validarServicioCompleto,
+    asyncHandler((req, res) => {
+        const servicioRequestDto = new ServicioRequestDto(req.body);
+        return controller.crear(servicioRequestDto, res);
+    }),
 );
-router.get("/", asyncHandler((request, response) => controller.listar(response)));
 
 router.get(
-  "/:id",
-  validarId,
-  asyncHandler((request, response) =>
-    controller.obtener(Number(request.params.id), response),
-  ),
+    "/",
+    asyncHandler((req, res) => controller.listar(req, res))
 );
 
+router.get(
+    "/:id",
+    validarId,
+    asyncHandler((req, res) => controller.obtener(req, res))
+);
 
 export default router;

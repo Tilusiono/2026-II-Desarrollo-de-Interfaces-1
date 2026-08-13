@@ -23,6 +23,15 @@ export class CategoriaController {
     const categoriaResponseDto = await this.categoriaService.obtener(id);
     response.json({ categoriaResponseDto });
   }
+  async reemplazar(req, res) {
+        const categoriaResponseDto = await this.categoriasService.reemplazar(
+            req.params.id,
+            req.body ?? req
+        );
+        res.json({
+            mensaje: "Categoría reemplazada",
+            categoriaResponseDto,
+        });
+      }
 }
-
 export const categoriaController = new CategoriaController(categoriaService);

@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Hito 5 · Casino Management - Probar PUT</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/bootstrap-icons/font/bootstrap-icons.css" />
+    <style>
+      body {
+        background-color: #121418;
+        color: #e2e8f0;
+      }
+      .navbar-casino {
+        background: linear-gradient(135deg, #1a1c23 0%, #0d0e12 100%);
+        border-bottom: 2px solid #d4af37;
+      }
+      .card-casino {
+        background-color: #1a1c23;
+        border: 1px solid #2a2e39;
+        color: #e2e8f0;
+      }
+      .form-control, .form-select {
+        background-color: #121418;
+        border-color: #2a2e39;
+        color: #fff;
+      }
+      .form-control:focus, .form-select:focus {
+        background-color: #121418;
+        border-color: #d4af37;
+        color: #fff;
+        box-shadow: 0 0 0 0.25rem rgba(212, 175, 55, 0.25);
+      }
+      .btn-gold {
+        background-color: #d4af37;
+        border-color: #d4af37;
+        color: #121418;
+        font-weight: 600;
+      }
+      .btn-gold:hover {
+        background-color: #c19b2e;
+        border-color: #c19b2e;
+        color: #121418;
+      }
+      .btn-outline-gold {
+        color: #d4af37;
+        border-color: #d4af37;
+      }
+      .btn-outline-gold:hover {
+        background-color: #d4af37;
+        color: #121418;
+      }
+      .text-gold {
+        color: #d4af37 !important;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-dark navbar-casino py-3">
+      <div class="container">
+        <span class="navbar-brand fw-bold text-gold">
+          <i class="bi bi-dice-5-fill me-2"></i>Casino Royale Management · Hito 5 (PUT)
+        </span>
+      </div>
+    </nav>
+
+    <main class="container py-4">
+      <div id="mensaje" class="alert d-none shadow-sm" role="alert"></div>
+      
+      <section class="card card-casino border-0 shadow-lg">
+        <div class="card-body p-4">
+          <div class="row g-3 align-items-end mb-4">
+            <div class="col-md-4">
+              <label class="form-label text-gold fw-semibold" for="id">ID del Registro a Reemplazar</label>
+              <input id="id" type="number" min="1" value="1" class="form-control" />
+            </div>
+            <div class="col-md-4">
+              <button id="btn-cargar" type="button" class="btn btn-outline-gold w-100">
+                <i class="bi bi-download me-1"></i>Cargar datos con GET
+              </button>
+            </div>
+          </div>
+
+          <form id="form-put" class="row g-3">
+            <div class="col-md-4">
+              <label class="form-label" for="codigo">Código</label>
+              <input id="codigo" class="form-control" required />
+            </div>
+            <div class="col-md-5">
+              <label class="form-label" for="nombre">Nombre</label>
+              <input id="nombre" class="form-control" required />
+            </div>
+            <div class="col-md-3">
+              <label class="form-label" for="categoria">Categoría</label>
+              <select id="categoria" class="form-select" required>
+                <option value="TEC">Tecnología</option><option value="HOG">Hogar</option>
+                <option value="OFI">Oficina</option><option value="ALI">Alimentos</option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <label class="form-label" for="stock">Stock</label>
+              <input id="stock" type="number" min="0" class="form-control" required />
+            </div>
+            <div class="col-md-3">
+              <label class="form-label" for="precio">Precio</label>
+              <input id="precio" type="number" min="0" step="0.01" class="form-control" required />
+            </div>
+            <div class="col-md-3">
+              <label class="form-label" for="peso">Peso</label>
+              <input id="peso" type="number" min="0" step="0.01" class="form-control" />
+            </div>
+            <div class="col-md-3">
+              <label class="form-label" for="fechaVencimiento">Vencimiento</label>
+              <input id="fechaVencimiento" type="date" class="form-control" />
+            </div>
+            <div class="col-md-3">
+              <label class="form-label" for="horaRegistro">Hora</label>
+              <input id="horaRegistro" type="time" class="form-control" required />
+            </div>
+            <div class="col-md-4">
+              <label class="form-label" for="fechaHoraRegistro">Fecha y hora</label>
+              <input id="fechaHoraRegistro" type="datetime-local" class="form-control" required />
+            </div>
+            <div class="col-md-5">
+              <label class="form-label" for="imagen">Reemplazar imagen</label>
+              <input id="imagen" type="file" accept="image/*" class="form-control" />
+            </div>
+            <div class="col-md-3 d-flex align-items-end">
+              <div class="form-check form-switch mb-2">
+                <input id="activo" class="form-check-input" type="checkbox" />
+                <label class="form-check-label" for="activo">Activo</label>
+              </div>
+            </div>
+            <div class="col-12">
+              <label class="form-label" for="descripcion">Descripción</label>
+              <textarea id="descripcion" class="form-control" rows="2"></textarea>
+            </div>
+            <div class="col-12 pt-2">
+              <button class="btn btn-gold w-100 py-2">
+                <i class="bi bi-save me-1"></i>Reemplazar todos los campos con PUT
+              </button>
+            </div>
+          </form>
+          <pre id="resultado" class="bg-black text-warning border border-secondary rounded p-3 mt-4 mb-0 d-none" style="max-height: 300px; overflow-y: auto;"></pre>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      let imagenActualBase64 = null;
+      const mensaje = document.querySelector("#mensaje");
+      const resultado = document.querySelector("#resultado");
+
+      document.querySelector("#btn-cargar").addEventListener("click", cargarProducto);
+      document.querySelector("#form-put").addEventListener("submit", reemplazarProducto);
+
+      async function cargarProducto() {
+        const id = Number(document.querySelector("#id").value);
+        await ejecutar(async () => {
+          const respuestaHttp = await fetch(`/api/productos/${id}`);
+          const respuesta = await respuestaHttp.json();
+          if (!respuestaHttp.ok) throw new Error(`HTTP ${respuestaHttp.status} · ${respuesta.mensaje}`);
+
+          const producto = respuesta.productoResponseDto;
+          for (const campo of ["codigo", "nombre", "categoria", "stock", "precio", "horaRegistro"]) {
+            document.querySelector(`#${campo}`).value = producto[campo];
+          }
+          document.querySelector("#peso").value = producto.peso ?? "";
+          document.querySelector("#descripcion").value = producto.descripcion ?? "";
+          document.querySelector("#fechaVencimiento").value = producto.fechaVencimiento ?? "";
+          document.querySelector("#fechaHoraRegistro").value = String(producto.fechaHoraRegistro).slice(0, 16);
+          document.querySelector("#activo").checked = producto.activo;
+          imagenActualBase64 = producto.imagenBase64;
+          mostrar(`HTTP 200 · Registro ${id} cargado con éxito en el sistema de casino.`, true);
+        });
+      }
+
+      async function reemplazarProducto(evento) {
+        evento.preventDefault();
+        const id = Number(document.querySelector("#id").value);
+
+        await ejecutar(async () => {
+          const archivo = document.querySelector("#imagen").files[0];
+          const imagenBase64 = archivo ? await convertirBase64(archivo) : imagenActualBase64;
+          const productoRequestDto = {
+            codigo: valor("codigo"), nombre: valor("nombre"), categoria: valor("categoria"),
+            stock: Number(valor("stock")), precio: Number(valor("precio")),
+            peso: numeroONull("peso"), descripcion: valor("descripcion") || null,
+            activo: document.querySelector("#activo").checked,
+            fechaVencimiento: valor("fechaVencimiento") || null,
+            horaRegistro: valor("horaRegistro"), fechaHoraRegistro: valor("fechaHoraRegistro"),
+            imagenBase64,
+          };
+
+          const respuestaHttp = await fetch(`/api/productos/${id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(productoRequestDto),
+          });
+          const respuesta = await respuestaHttp.json();
+          resultado.textContent = JSON.stringify(respuesta, null, 2);
+          resultado.classList.remove("d-none");
+          if (!respuestaHttp.ok) throw new Error(`HTTP ${respuestaHttp.status} · ${respuesta.mensaje}`);
+          mostrar(`HTTP ${respuestaHttp.status} · ${respuesta.mensaje}`, true);
+        });
+      }
+
+      function valor(id) { return document.querySelector(`#${id}`).value.trim(); }
+      function numeroONull(id) { return valor(id) === "" ? null : Number(valor(id)); }
+      function convertirBase64(archivo) {
+        return new Promise((resolve, reject) => {
+          const lector = new FileReader();
+          lector.addEventListener("load", () => resolve(lector.result), { once: true });
+          lector.addEventListener("error", () => reject(lector.error), { once: true });
+          lector.readAsDataURL(archivo);
+        });
+      }
+      async function ejecutar(callback) {
+        try { await callback(); } catch (error) { mostrar(error.message, false); }
+      }
+      function mostrar(texto, correcto) {
+        mensaje.className = `alert alert-${correcto ? "success" : "danger"} shadow-sm`;
+        mensaje.textContent = texto;
+      }
+    </script>
+    <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

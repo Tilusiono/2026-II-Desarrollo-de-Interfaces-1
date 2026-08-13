@@ -5,78 +5,80 @@ import { ServiciosRepository } from "../repositories/ServiciosRepository.js";
 import { normalizarTexto } from "../utils/texto.js";
 
 export class ServiciosService {
-  constructor(serviciosRepository = new ServiciosRepository()) {
-    this.serviciosRepository = serviciosRepository;
-  }
-
-  async crear(servicioRequestDto) {
-    await this.validarCodigo(servicioRequestDto.codigo);
-    const imagenDatos = this.convertirImagen(servicioRequestDto.imagenBase64);
-
-   const servicioModel = new Servicio(
-    0,
-    servicioRequestDto.codigo ?? servicioRequestDto.codigoService, 
-    servicioRequestDto.nombre,
-    servicioRequestDto.categoria_id ?? servicioRequestDto.categoriaId, // <-- AQUÍ ESTÁ EL TRUCO
-    servicioRequestDto.capacidadMax,
-    servicioRequestDto.precio,
-    servicioRequestDto.duracionMinutos,
-    servicioRequestDto.descripcion,
-    servicioRequestDto.activo,
-    servicioRequestDto.fechaVencimiento,
-    servicioRequestDto.horaRegistro,
-    servicioRequestDto.fechaHoraRegistro,
-    imagenDatos.imagen,
-    imagenDatos.imagenMimeType
-);
-
-    const servicioCreadoModel = await this.serviciosRepository.crear(servicioModel);
-    return new ServicioResponseDto(servicioCreadoModel);
-  }
-
-  async validarCodigo(codigo, idOmitido) {
-    const serviciosModel = await this.serviciosRepository.listar();
-    const servicioRepetidoModel = serviciosModel.find(
-      (servicioModel) =>
-        normalizarTexto(servicioModel.codigo) === normalizarTexto(codigo) &&
-        Number(servicioModel.id) !== Number(idOmitido)
-    );
-
-    if (servicioRepetidoModel) {
-      throw new AppError("El código de servicio ya existe", 409);
-    }
-  }
-
-  convertirImagen(imagenBase64) {
-    if (imagenBase64 === null || imagenBase64 === "" || imagenBase64 === undefined) {
-      return { imagen: null, imagenMimeType: null };
+    constructor(serviciosRepository = new ServiciosRepository()) {
+        this.serviciosRepository = serviciosRepository;
     }
 
-    const coincidencia = String(imagenBase64).match(
-      /^data:(image\/[a-zA-Z0-9.+-]+);base64,(.+)$/
-    );
+    async crear(servicioRequestDto) {
+        await this.validarCodigo(servicioRequestDto.codigo);
+        const imagenDatos = this.convertirImagen(servicioRequestDto.imagenBase46);
 
-    if (!coincidencia) {
-      throw new AppError("La imagen Base64 no es válida", 400);
+        const servicioModel = new Servicio(
+            0,
+            servicioRequestDto.codigo ?? servicioRequestDto.codigoService,
+            servicioRequestDto.nombre,
+            servicioRequestDto.categoria_id ?? servicioRequestDto.categoriaId,
+            servicioRequestDto.capacidadMax,
+            servicioRequestDto.precio,
+            servicioRequestDto.duracionMinutos,
+            servicioRequestDto.descripcion,
+            servicioRequestDto.activo,
+            servicioRequestDto.fechaVencimiento,
+            servicioRequestDto.horaRegistro,
+            servicioRequestDto.fechaHoraRegistro,
+            imagenDatos.imagen,
+            imagenDatos.imagenMimeType
+        );
+
+        const servicioCreadoModel = await this.serviciosRepository.crear(servicioModel);
+        return new ServicioResponseDto(servicioCreadoModel);
     }
 
-    return {
-      imagen: Buffer.from(coincidencia[2], "base64"),
-      imagenMimeType: coincidencia[1],
-    };
-  }
-  async listar() {
-    const serviciosModel = await this.servicioRepository.listar();
-    return serviciosModel.map(
-      (servicioModel) => new ServicioResponseDto(servicioModel)
-    );
-  }
+    async validarCodigo(codigo, codigoOmitido) {
+        const serviciosModel = await this.serviciosRepository.listar();
+        const servicioRepetidoModel = serviciosModel.find(
+            (servicioModel) =>
+                normalizarTexto(servicioModel.codigo) === normalizarTexto(codigo) &&
+                normalizarTexto(servicioModel.codigo) !== normalizarTexto(codigoOmitido)
+        );
 
-  async obtener(id) {
-    const servicioModel = await this.servicioRepository.buscarPorId(id);
-    if (!servicioModel) throw new AppError("Servicio no encontrado", 404);
-    return new ServicioResponseDto(servicioModel);
-  }
+        if (servicioRepetidoModel) {
+            throw new AppError("El código de servicio ya existe", 409);
+        }
+    }
+
+    convertirImagen(imagenBase64) {
+        if (imagenBase64 === null || imagenBase64 === "" || imagenBase64 === undefined) {
+            return { imagen: null, imagenMimeType: null };
+        }
+
+        const coincidencia = String(imagenBase64).match(
+            /^data:(image\/[a-zA-Z0-9\-\+]+);base64,(.+)$/
+        );
+
+        if (!coincidencia) {
+            throw new AppError("La imagen Base64 no es válida", 400);
+        }
+
+        return {
+            imagen: Buffer.from(coincidencia[2], "base64"),
+            imagenMimeType: coincidencia[1],
+        };
+    }
+
+    async listar() {
+        const serviciosModel = await this.serviciosRepository.listar();
+        return serviciosModel.map(
+            (servicioModel) => new ServicioResponseDto(servicioModel)
+        );
+    }
+
+    async obtener(id) {
+        // Usamos buscarPorCodigo en lugar de buscarPorId para alinearlo con la tabla de servicios
+        const servicioModel = await this.serviciosRepository.buscarPorCodigo(id);
+        if (!servicioModel) throw new AppError("Servicio no encontrado", 404);
+        return new ServicioResponseDto(servicioModel);
+    }
 }
 
 export const serviciosService = new ServiciosService();

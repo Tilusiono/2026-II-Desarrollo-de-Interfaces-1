@@ -26,6 +26,16 @@ export class ServiciosController {
     const servicioResponseDto = await this.servicioService.obtener(req.params.id);
     res.json({ servicioResponseDto });
   }
+  async reemplazar(req, res) {
+        const servicioResponseDto = await this.serviciosService.reemplazar(
+            req.params.id,
+            req.body ?? req
+        );
+        res.json({
+            mensaje: "Servicio reemplazado",
+            servicioResponseDto,
+        });
+    }
 }
 
 export const serviciosController = new ServiciosController(serviciosService);

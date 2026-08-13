@@ -64,17 +64,37 @@ export class CategoriaRepository {
       `,
       )
       .run(
-        CategoriaModel.id,
-        CategoriaModel.nombre,
-        CategoriaModel.descripcion,
-        Number(CategoriaModel.activo),
-        CategoriaModel.horaRegistro,
-        CategoriaModel.fechaHoraRegistro,
-      );
+            CategoriaModel.id ?? CategoriaModel.codigo, // <-- AQUí ESTÁ EL TRUCO
+            CategoriaModel.nombre,
+            CategoriaModel.descripcion,
+            Number(CategoriaModel.activo),
+            CategoriaModel.horaRegistro,
+            CategoriaModel.fechaHoraRegistro,
+        );
+      }
+    
+      async reemplazar(id, categoriaModel) {
+        const stmt = this.db.prepare(`
+            UPDATE categorias
+            SET nombre = ?,
+                descripcion = ?,
+                activo = ?,
+                horaRegistro = ?,
+                fechaHoraRegistro = ?
+            WHERE id = ?
+        `);
 
-    return this.buscarPorId(CategoriaModel.id);
+        const resultado = stmt.run(
+            String(categoriaModel.nombre),
+            String(categoriaModel.descripcion || ''),
+            Number(categoriaModel.activo),
+            String(categoriaModel.horaRegistro),
+            String(categoriaModel.fechaHoraRegistro),
+            String(id) // El ID de categorías es TEXT (ej. 'CAT-001')
+        );
+
+        return resultado.changes ? await this.buscarPorId(id) : null;
+    }
   }
-
-}
 
         
