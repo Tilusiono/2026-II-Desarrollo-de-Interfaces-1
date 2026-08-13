@@ -21,14 +21,30 @@
         </button>
         <div class="collapse navbar-collapse" id="menuNavegacion">
           <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-            <li class="nav-item"><a class="nav-link" href="/index.html"><i class="bi bi-house-door me-1"></i>Inicio</a></li>
-            <li class="nav-item"><a class="nav-link" href="/pages/Empleados.html"><i class="bi bi-people me-1"></i>Empleados</a></li>
-            <li class="nav-item"><a class="nav-link" href="/pages/Areas.html"><i class="bi bi-diagram-3 me-1"></i>Áreas</a></li>
-            <li class="nav-item"><a class="nav-link active" href="/pages/Cargos.html"><i class="bi bi-file-earmark-post me-1"></i>Cargo</a></li>
-            <li class="nav-item"><a class="nav-link" href="/pages/Sedes.html"><i class="bi bi-house-add me-1"></i>Sedes</a></li>
-            <li class="nav-item"><a class="nav-link" href="/pages/Permisos.html"><i class="bi bi-device-ssd me-1"></i>Permisos</a></li>
-            <li class="nav-item"><a class="nav-link" href="/pages/Asistencias.html"><i class="bi bi-archive me-1"></i>Asistencias</a></li>
-            <li class="nav-item"><a class="nav-link" href="/pages/Vacaciones.html"><i class="bi bi-calendar-check me-1"></i>Vacaciones</a></li>
+            <li class="nav-item">
+              <a class="nav-link" href="/index.html"><i class="bi bi-house-door me-1"></i>Inicio</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/pages/Empleados.html"><i class="bi bi-people me-1"></i>Empleados</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/pages/Areas.html"><i class="bi bi-diagram-3 me-1"></i>Áreas</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="/pages/Cargos.html"><i class="bi bi-file-earmark-post me-1"></i>Cargo</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/pages/Sedes.html"><i class="bi bi-house-add me-1"></i>Sedes</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/pages/Permisos.html"><i class="bi bi-device-ssd me-1"></i>Permisos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/pages/Asistencias.html"><i class="bi bi-archive me-1"></i>Asistencias</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/pages/Vacaciones.html"><i class="bi bi-calendar-check me-1"></i>Vacaciones</a>
+            </li>
           </ul>
         </div>
       </div>
@@ -36,7 +52,9 @@
 
     <main class="container py-4">
       
-      <!--  FORMULARIO Crear  Editar  -->
+      <!-- ========================================== -->
+      <!-- ZONA 1: FORMULARIO (Crear / Editar Cargo)  -->
+      <!-- ========================================== -->
       <div class="card border-0 shadow-sm mb-4">
         <div class="card-body p-4">
           <div class="d-flex justify-content-between align-items-center mb-4">
@@ -46,17 +64,22 @@
           </div>
 
           <form id="form-cargo" class="row g-3">
-            <!-- CAMPO OCULTO para el ID al editar -->
+            <!-- CAMPO OCULTO: Guarda el ID cuando estamos editando -->
             <input type="hidden" id="idCargoEditar" value="" />
 
             <div class="col-md-4">
               <label class="form-label" for="nombre">Nombre del Cargo</label>
-              <input id="nombre" type="text" class="form-control" placeholder="Ej: Analista de Sistemas" required />
+              <input id="nombre" type="text" class="form-control" placeholder="Ej: Desarrollador" required />
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label" for="sueldo">Sueldo Base (S/.)</label>
+              <input id="sueldo" type="number" min="0" step="0.01" class="form-control" placeholder="0.00" required />
             </div>
             
-            <div class="col-md-8">
+            <div class="col-md-5">
               <label class="form-label" for="descripcion">Descripción</label>
-              <input id="descripcion" type="text" class="form-control" placeholder="Breve descripción de las funciones..." required />
+              <input id="descripcion" type="text" class="form-control" placeholder="Funciones del cargo..." required />
             </div>
 
             <!-- BOTONES DEL FORMULARIO -->
@@ -74,21 +97,24 @@
         </div>
       </div>
 
-      <!-- TABLA DE DATOS -->
+      <!-- ========================================== -->
+      <!-- ZONA 2: TABLA DE DATOS                     -->
+      <!-- ========================================== -->
       <div class="card border-0 shadow-sm">
         <div class="card-body p-0">
           <div class="table-responsive">
             <table class="table table-hover align-middle mb-0">
               <thead class="table-light">
                 <tr>
-                  <th width="10%">ID</th>
-                  <th width="30%">Nombre del Cargo</th>
-                  <th width="45%">Descripción</th>
+                  <th width="8%">ID</th>
+                  <th width="27%">Nombre del Cargo</th>
+                  <th width="20%">Sueldo Base</th>
+                  <th width="30%">Descripción</th>
                   <th width="15%" class="text-center">Acciones</th>
                 </tr>
               </thead>
               <tbody id="tabla-cargos">
-                <tr><td colspan="4" class="text-center py-4">Cargando datos...</td></tr>
+                <tr><td colspan="5" class="text-center py-4">Cargando datos...</td></tr>
               </tbody>
             </table>
           </div>
@@ -96,7 +122,6 @@
       </div>
     </main>
 
-    <!-- SCRIPT DE LÓGICA -->
     <script>
       const formulario = document.querySelector("#form-cargo");
       const mensaje = document.querySelector("#mensaje");
@@ -104,25 +129,22 @@
       
       let listaGlobalCargos = [];
 
-      // Inicializar
       document.addEventListener("DOMContentLoaded", cargarTablaCargos);
 
-      // GET - Cargar Cargos
       async function cargarTablaCargos() {
         try {
           const respuesta = await fetch("/api/cargos");
           const datos = await respuesta.json();
-          // Dependiendo de tu DTO, puede venir directo o dentro de una propiedad
           listaGlobalCargos = datos.cargosResponseDto || datos || [];
           dibujarTabla();
         } catch (error) {
-          tbody.innerHTML = `<tr><td colspan="4" class="text-center text-danger py-4">Error al cargar la tabla</td></tr>`;
+          tbody.innerHTML = `<tr><td colspan="5" class="text-center text-danger py-4">Error al cargar la tabla</td></tr>`;
         }
       }
 
       function dibujarTabla() {
         if (listaGlobalCargos.length === 0) {
-          tbody.innerHTML = `<tr><td colspan="4" class="text-center py-4 text-secondary">No hay cargos registrados.</td></tr>`;
+          tbody.innerHTML = `<tr><td colspan="5" class="text-center py-4 text-secondary">No hay cargos registrados.</td></tr>`;
           return;
         }
 
@@ -130,6 +152,7 @@
           <tr>
             <td>${cargo.idCargo}</td>
             <td><strong>${cargo.nombre}</strong></td>
+            <td>S/. ${Number(cargo.sueldo || cargo.sueldoBase || 0).toFixed(2)}</td>
             <td>${cargo.descripcion || '-'}</td>
             <td class="text-center">
               <button class="btn btn-sm btn-outline-primary me-1" onclick="prepararEdicion(${cargo.idCargo})" title="Editar">
@@ -143,12 +166,12 @@
         `).join('');
       }
 
-      // POST / PUT r
       formulario.addEventListener("submit", async (evento) => {
         evento.preventDefault();
 
         const datosFormulario = {
           nombre: document.querySelector("#nombre").value.trim(),
+          sueldoBase: Number(document.querySelector("#sueldo").value),
           descripcion: document.querySelector("#descripcion").value.trim()
         };
 
@@ -163,7 +186,7 @@
             body: JSON.stringify(datosFormulario),
           });
           
-          if (!respuestaHttp.ok) throw new Error("Error al guardar el cargo.");
+          if (!respuestaHttp.ok) throw new Error("Error al guardar el cargo en la base de datos.");
 
           mostrarMensaje(idAEditar ? "¡Cargo actualizado correctamente!" : "¡Cargo registrado con éxito!", true);
           
@@ -175,16 +198,16 @@
         }
       });
 
-      // Preparar Edición
       function prepararEdicion(idCargo) {
         const cargo = listaGlobalCargos.find(c => c.idCargo === idCargo);
         if (!cargo) return;
 
         document.querySelector("#idCargoEditar").value = cargo.idCargo;
         document.querySelector("#nombre").value = cargo.nombre;
+        document.querySelector("#sueldo").value = cargo.sueldo || cargo.sueldoBase || "";
         document.querySelector("#descripcion").value = cargo.descripcion || "";
 
-        document.querySelector("#titulo-formulario").innerHTML = `<i class="bi bi-pencil-square me-2"></i>Editando Cargo: ${cargo.nombre}`;
+        document.querySelector("#titulo-formulario").innerHTML = `<i class="bi bi-pencil-square me-2"></i>Editando Cargo ID: ${cargo.idCargo} - ${cargo.nombre}`;
         document.querySelector("#titulo-formulario").classList.replace("text-primary", "text-success");
         
         const btnGuardar = document.querySelector("#btn-guardar");
@@ -195,7 +218,6 @@
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
 
-      // Cancelar Edición
       function cancelarEdicion() {
         formulario.reset();
         document.querySelector("#idCargoEditar").value = "";
@@ -210,13 +232,12 @@
         document.querySelector("#btn-cancelar").classList.add("d-none");
       }
 
-      // DELETE - Eliminar Cargo
       async function eliminarCargo(idCargo) {
         if (!confirm(`¿Estás seguro de que deseas eliminar el cargo con ID ${idCargo}?`)) return;
 
         try {
           const respuesta = await fetch(`/api/cargos/${idCargo}`, { method: "DELETE" });
-          if (!respuesta.ok) throw new Error("No se pudo eliminar el cargo. Puede que haya empleados asignados a él.");
+          if (!respuesta.ok) throw new Error("No se pudo eliminar el cargo. Es posible que esté asignado a un empleado.");
           
           mostrarMensaje("Cargo eliminado correctamente", true);
           cargarTablaCargos();
@@ -225,12 +246,11 @@
         }
       }
 
-      // Mensajes flotantes
       function mostrarMensaje(texto, esExito) {
         mensaje.className = `alert alert-${esExito ? "success" : "danger"} mt-3`;
         mensaje.textContent = texto;
         mensaje.classList.remove("d-none");
-        setTimeout(() => mensaje.classList.add("d-none"), 3000);
+        setTimeout(() => mensaje.classList.add("d-none"), 4000);
       }
     </script>
     <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>

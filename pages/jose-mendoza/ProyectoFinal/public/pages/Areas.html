@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Áreas - Gestión HR</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/bootstrap-icons/font/bootstrap-icons.css" />
+    <link rel="stylesheet" href="/css/estilos.css" />
+  </head>
+  <body class="bg-light">
+    
+    <!-- BARRA DE NAVEGACIÓN -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+      <div class="container">
+        <a class="navbar-brand mb-0 h1" href="/index.html">
+          <i class="bi bi-building-fill me-2"></i>Gestión HR
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuNavegacion">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="menuNavegacion">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" href="/index.html"><i class="bi bi-house-door me-1"></i>Inicio</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/pages/Empleados.html"><i class="bi bi-people me-1"></i>Empleados</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="/pages/Areas.html"><i class="bi bi-diagram-3 me-1"></i>Áreas</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/pages/Cargos.html"><i class="bi bi-file-earmark-post me-1"></i>Cargo</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/pages/Sedes.html"><i class="bi bi-house-add me-1"></i>Sedes</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/pages/Permisos.html"><i class="bi bi-device-ssd me-1"></i>Permisos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/pages/Asistencias.html"><i class="bi bi-archive me-1"></i>Asistencias</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/pages/Vacaciones.html"><i class="bi bi-calendar-check me-1"></i>Vacaciones</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main class="container py-4">
+      
+      <!-- ========================================== -->
+      <!-- ZONA 1: FORMULARIO (Crear / Editar Área)   -->
+      <!-- ========================================== -->
+      <div class="card border-0 shadow-sm mb-4">
+        <div class="card-body p-4">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+              <h1 id="titulo-formulario" class="h4 mb-1 text-primary"><i class="bi bi-plus-square-fill me-2"></i>Registrar Nueva Área</h1>
+            </div>
+          </div>
+
+          <form id="form-area" class="row g-3">
+            <!-- CAMPO OCULTO: Guarda el ID cuando estamos editando -->
+            <input type="hidden" id="idAreaEditar" value="" />
+
+            <div class="col-md-4">
+              <label class="form-label" for="nombre">Nombre del Área</label>
+              <input id="nombre" type="text" class="form-control" placeholder="Ej: Recursos Humanos" required />
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label" for="capacidad">Capacidad (Personas)</label>
+              <input id="capacidad" type="number" min="1" class="form-control" placeholder="Ej: 10" required />
+            </div>
+
+            <div class="col-md-5">
+              <label class="form-label" for="idSede">Sede</label>
+              <select id="idSede" class="form-select" required>
+                <option value="">Cargando sedes...</option>
+              </select>
+            </div>
+
+            <div class="col-md-4">
+              <label class="form-label" for="jefe">Jefe de Área</label>
+              <input id="jefe" type="text" class="form-control" placeholder="Nombre del responsable" required />
+            </div>
+            
+            <div class="col-md-8">
+              <label class="form-label" for="descripcion">Descripción</label>
+              <input id="descripcion" type="text" class="form-control" placeholder="Funciones o detalles del área..." required />
+            </div>
+
+            <!-- BOTONES DEL FORMULARIO -->
+            <div class="col-12 mt-4 d-flex gap-2">
+              <button type="submit" id="btn-guardar" class="btn btn-primary">
+                <i class="bi bi-save me-1"></i>Guardar Área
+              </button>
+              <button type="button" id="btn-cancelar" class="btn btn-secondary d-none" onclick="cancelarEdicion()">
+                Cancelar Edición
+              </button>
+            </div>
+          </form>
+
+          <div id="mensaje" class="alert d-none mt-3 mb-0" role="alert"></div>
+        </div>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- ZONA 2: TABLA DE DATOS                     -->
+      <!-- ========================================== -->
+      <div class="card border-0 shadow-sm">
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th>ID</th>
+                  <th>Nombre</th>
+                  <th>Capacidad</th>
+                  <th>Jefe</th>
+                  <th>Sede</th>
+                  <th>Descripción</th>
+                  <th class="text-center">Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="tabla-areas">
+                <tr><td colspan="7" class="text-center py-4">Cargando datos...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      const formulario = document.querySelector("#form-area");
+      const mensaje = document.querySelector("#mensaje");
+      const tbody = document.querySelector("#tabla-areas");
+      
+      let listaGlobalAreas = [];
+
+      document.addEventListener("DOMContentLoaded", () => {
+        cargarSedes();
+        cargarTablaAreas();
+      });
+
+      // Cargar lista desplegable de Sedes
+      async function cargarSedes() {
+        try {
+          const respuesta = await fetch("/api/sedes");
+          const datos = await respuesta.json();
+          const selectSede = document.querySelector("#idSede");
+          selectSede.innerHTML = '<option value="">Seleccione una sede</option>';
+          
+          const listaSedes = Array.isArray(datos) ? datos : (Object.values(datos).find(val => Array.isArray(val)) || []);
+          listaSedes.forEach(sede => {
+            selectSede.innerHTML += `<option value="${sede.idSede}">${sede.nombre}</option>`;
+          });
+        } catch (error) {
+          console.error("Error al cargar sedes:", error);
+        }
+      }
+
+      // GET - Listar Áreas
+      async function cargarTablaAreas() {
+        try {
+          const respuesta = await fetch("/api/areas");
+          const datos = await respuesta.json();
+          listaGlobalAreas = datos.areasResponseDto || datos || [];
+          dibujarTabla();
+        } catch (error) {
+          tbody.innerHTML = `<tr><td colspan="7" class="text-center text-danger py-4">Error al cargar la tabla</td></tr>`;
+        }
+      }
+
+      function dibujarTabla() {
+        if (listaGlobalAreas.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="7" class="text-center py-4 text-secondary">No hay áreas registradas.</td></tr>`;
+          return;
+        }
+
+        tbody.innerHTML = listaGlobalAreas.map(area => `
+          <tr>
+            <td>${area.idArea}</td>
+            <td><strong>${area.nombre}</strong></td>
+            <td><span class="badge bg-secondary">${area.capacidad || 0} pers.</span></td>
+            <td>${area.jefe || 'Sin Asignar'}</td>
+            <td><span class="badge bg-info text-dark">${area.nombreSede || 'Sin Sede'}</span></td>
+            <td>${area.descripcion || '-'}</td>
+            <td class="text-center">
+              <button class="btn btn-sm btn-outline-primary me-1" onclick="prepararEdicion(${area.idArea})" title="Editar">
+                <i class="bi bi-pencil"></i>
+              </button>
+              <button class="btn btn-sm btn-outline-danger" onclick="eliminarArea(${area.idArea})" title="Eliminar">
+                <i class="bi bi-trash"></i>
+              </button>
+            </td>
+          </tr>
+        `).join('');
+      }
+
+      // POST / PUT - Guardar o Actualizar
+      formulario.addEventListener("submit", async (evento) => {
+        evento.preventDefault();
+
+        const datosFormulario = {
+          nombre: document.querySelector("#nombre").value.trim(),
+          capacidad: Number(document.querySelector("#capacidad").value),
+          idSede: Number(document.querySelector("#idSede").value),
+          jefe: document.querySelector("#jefe").value.trim(),
+          descripcion: document.querySelector("#descripcion").value.trim()
+        };
+
+        const idAEditar = document.querySelector("#idAreaEditar").value;
+        const metodoHttp = idAEditar ? "PUT" : "POST";
+        const urlApi = idAEditar ? `/api/areas/${idAEditar}` : "/api/areas";
+
+        try {
+          const respuestaHttp = await fetch(urlApi, {
+            method: metodoHttp,
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(datosFormulario),
+          });
+          
+          if (!respuestaHttp.ok) throw new Error("Error al guardar el área en la base de datos.");
+
+          mostrarMensaje(idAEditar ? "¡Área actualizada correctamente!" : "¡Área registrada con éxito!", true);
+          
+          cancelarEdicion(); 
+          cargarTablaAreas();
+          
+        } catch (error) {
+          mostrarMensaje(error.message, false);
+        }
+      });
+
+      // Preparar Edición
+      function prepararEdicion(idArea) {
+        const area = listaGlobalAreas.find(a => a.idArea === idArea);
+        if (!area) return;
+
+        document.querySelector("#idAreaEditar").value = area.idArea;
+        document.querySelector("#nombre").value = area.nombre;
+        document.querySelector("#capacidad").value = area.capacidad || "";
+        document.querySelector("#idSede").value = area.idSede || "";
+        document.querySelector("#jefe").value = area.jefe || "";
+        document.querySelector("#descripcion").value = area.descripcion || "";
+
+        document.querySelector("#titulo-formulario").innerHTML = `<i class="bi bi-pencil-square me-2"></i>Editando Área ID: ${area.idArea} - ${area.nombre}`;
+        document.querySelector("#titulo-formulario").classList.replace("text-primary", "text-success");
+        
+        const btnGuardar = document.querySelector("#btn-guardar");
+        btnGuardar.innerHTML = '<i class="bi bi-arrow-repeat me-1"></i>Actualizar Área';
+        btnGuardar.classList.replace("btn-primary", "btn-success");
+        
+        document.querySelector("#btn-cancelar").classList.remove("d-none");
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      // Cancelar Edición
+      function cancelarEdicion() {
+        formulario.reset();
+        document.querySelector("#idAreaEditar").value = "";
+        
+        document.querySelector("#titulo-formulario").innerHTML = `<i class="bi bi-plus-square-fill me-2"></i>Registrar Nueva Área`;
+        document.querySelector("#titulo-formulario").classList.replace("text-success", "text-primary");
+
+        const btnGuardar = document.querySelector("#btn-guardar");
+        btnGuardar.innerHTML = '<i class="bi bi-save me-1"></i>Guardar Área';
+        btnGuardar.classList.replace("btn-success", "btn-primary");
+        
+        document.querySelector("#btn-cancelar").classList.add("d-none");
+      }
+
+      // DELETE - Eliminar Área
+      async function eliminarArea(idArea) {
+        if (!confirm(`¿Estás seguro de que deseas eliminar el área con ID ${idArea}?`)) return;
+
+        try {
+          const respuesta = await fetch(`/api/areas/${idArea}`, { method: "DELETE" });
+          if (!respuesta.ok) throw new Error("No se pudo eliminar el área. Es posible que esté asignada a un empleado.");
+          
+          mostrarMensaje("Área eliminada correctamente", true);
+          cargarTablaAreas();
+        } catch (error) {
+          mostrarMensaje(error.message, false);
+        }
+      }
+
+      // Alertas flotantes
+      function mostrarMensaje(texto, esExito) {
+        mensaje.className = `alert alert-${esExito ? "success" : "danger"} mt-3`;
+        mensaje.textContent = texto;
+        mensaje.classList.remove("d-none");
+        setTimeout(() => mensaje.classList.add("d-none"), 4000);
+      }
+    </script>
+    <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
