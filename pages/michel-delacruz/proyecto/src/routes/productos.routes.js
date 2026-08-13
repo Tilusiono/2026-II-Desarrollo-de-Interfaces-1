@@ -7,8 +7,8 @@ import { ProductoRequestDto } from "../dtos/ProductoDto.js";
 const router = Router();
 
 router.post(
-  "/",
-  null,//validarProductoCompleto,
+  "/", 
+  null,//validarProductoCompleto, 
   asyncHandler((request, response) => {
     const productoRequestDto = new ProductoRequestDto(request.body);
     return controller.crear(productoRequestDto, response);
