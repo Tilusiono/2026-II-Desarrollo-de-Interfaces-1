@@ -1,4 +1,4 @@
-class Servicio {
+class Cafenegro {
   #id;
   #codigo;
   #nombre;
@@ -63,4 +63,4 @@ class Servicio {
   }
 }
 
-export default Servicio;
+export default Cafenegro;

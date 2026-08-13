@@ -1,49 +1,49 @@
 import { createRequire } from "node:module";
 import { sqlitePath } from "../config/storage.config.js";
-import Producto from "../models/Producto.js";
+import Cafenegro from "../models/Cafenegro.js";
 
 const require = createRequire(import.meta.url);
 
-export class ProductoRepository {
+export class CafenegrosRepository {
   constructor(archivo = sqlitePath) {
     const { DatabaseSync } = require("node:sqlite");
+
     this.db = new DatabaseSync(archivo);
+
     this.db.exec("PRAGMA foreign_keys = ON");
+
     this.db.exec(`
-      CREATE TABLE IF NOT EXISTS productos (
+      CREATE TABLE IF NOT EXISTS Cafenegro (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         codigo VARCHAR(20) NOT NULL UNIQUE,
         nombre TEXT NOT NULL,
         categoria CHAR(3) NOT NULL,
-        stock INTEGER NOT NULL DEFAULT 0,
         precio DECIMAL(10, 2) NOT NULL,
-        peso REAL,
         descripcion TEXT,
         activo BOOLEAN NOT NULL DEFAULT 1 CHECK (activo IN (0, 1)),
-        fechaVencimiento DATE,
         horaRegistro TIME NOT NULL,
         fechaHoraRegistro DATETIME NOT NULL,
         imagen BLOB,
         imagenMimeType VARCHAR(100)
-      )
+      );
     `);
   }
+
   async listar() {
-    const filas = this.db.prepare("SELECT * FROM productos ORDER BY id").all();
+    const filas = this.db
+      .prepare("SELECT * FROM Cafenegro ORDER BY id")
+      .all();
 
     return filas.map(
       (fila) =>
-        new Producto(
+        new Cafenegro(
           fila.id,
           fila.codigo,
           fila.nombre,
           fila.categoria,
-          fila.stock,
           fila.precio,
-          fila.peso,
           fila.descripcion,
           fila.activo,
-          fila.fechaVencimiento,
           fila.horaRegistro,
           fila.fechaHoraRegistro,
           fila.imagen ? Buffer.from(fila.imagen) : null,
@@ -54,22 +54,19 @@ export class ProductoRepository {
 
   async buscarPorId(id) {
     const fila = this.db
-      .prepare("SELECT * FROM productos WHERE id = ?")
+      .prepare("SELECT * FROM Cafenegro WHERE id = ?")
       .get(Number(id));
 
     if (!fila) return null;
 
-    return new Producto(
+    return new Cafenegro(
       fila.id,
       fila.codigo,
       fila.nombre,
       fila.categoria,
-      fila.stock,
       fila.precio,
-      fila.peso,
       fila.descripcion,
       fila.activo,
-      fila.fechaVencimiento,
       fila.horaRegistro,
       fila.fechaHoraRegistro,
       fila.imagen ? Buffer.from(fila.imagen) : null,
@@ -77,35 +74,38 @@ export class ProductoRepository {
     );
   }
 
-  async crear(productoModel) {
+  async crear(Cafenegro) {
     const resultado = this.db
       .prepare(
         `
-        INSERT INTO productos (
-          codigo, nombre, categoria, stock, precio, peso, descripcion,
-          activo, fechaVencimiento, horaRegistro, fechaHoraRegistro,
-          imagen, imagenMimeType
+        INSERT INTO Cafenegro (
+          codigo,
+          nombre,
+          categoria,
+          precio,
+          descripcion,
+          activo,
+          horaRegistro,
+          fechaHoraRegistro,
+          imagen,
+          imagenMimeType
         )
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-      `,
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        `,
       )
       .run(
-        productoModel.codigo,
-        productoModel.nombre,
-        productoModel.categoria,
-        productoModel.stock,
-        productoModel.precio,
-        productoModel.peso,
-        productoModel.descripcion,
-        Number(productoModel.activo),
-        productoModel.fechaVencimiento,
-        productoModel.horaRegistro,
-        productoModel.fechaHoraRegistro,
-        productoModel.imagen,
-        productoModel.imagenMimeType,
+        Cafenegro.codigo,
+        Cafenegro.nombre,
+        Cafenegro.categoria,
+        Cafenegro.precio,
+        Cafenegro.descripcion,
+        Number(Cafenegro.activo),
+        Cafenegro.horaRegistro,
+        Cafenegro.fechaHoraRegistro,
+        Cafenegro.imagen,
+        Cafenegro.imagenMimeType,
       );
 
     return this.buscarPorId(Number(resultado.lastInsertRowid));
   }
 }
-

@@ -6,8 +6,7 @@ import { loggerMiddleware } from "./src/middlewares/logger.middleware.js";
 import { normalizarBody } from "./src/middlewares/normalizacion.middleware.js";
 import { rutaNoEncontrada } from "./src/middlewares/notFound.middleware.js";
 import { manejarErrores } from "./src/middlewares/error.middleware.js";
-import productosRoutes from "./src/routes/productos.routes.js";
-import serviciosRoutes from "./src/routes/servicios.routes.js";
+import CafenegroRoutes from "./src/routes/Cafenegro.routes.js";
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -27,18 +26,16 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/api", (request, response) => {
   response.json({
-    nombre: "cafeteria coofee",
+    nombre: "Cafeteria Cafe Negro",
     almacenamiento: "sqlite",
-    recursos: ["productos,servicios"],
+    recursos: ["Cafenegro"],
   });
 });
 
 // rutas 
-import productosRoutes from "./src/routes/productos.routes.js";
-import serviciosRoutes from "./src/routes/servicios.routes.js";
 
-app.use("/api/productos", productosRoutes);
-app.use("/api/servicios", serviciosRoutes);
+
+app.use("/api/servicios", CafenegroRoutes);
 
 app.use(rutaNoEncontrada);
 app.use(manejarErrores);
@@ -46,3 +43,4 @@ app.use(manejarErrores);
 app.listen(PORT, () => {
   console.log(`Servidor ejecutándose en http://localhost:${PORT}`);
 });
+
