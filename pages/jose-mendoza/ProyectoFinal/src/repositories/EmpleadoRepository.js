@@ -46,11 +46,13 @@ export class EmpleadoRepository {
             SELECT empleado.*, 
                    area.nombre AS nombre_area, 
                    tipo_empleado.nombre AS nombre_tipo_empleado,
-                   cargo.nombre AS nombre_cargo
+                   cargo.nombre AS nombre_cargo,
+                   sede.nombre AS nombre_sede
             FROM empleado 
             LEFT JOIN area ON empleado.id_area = area.id_area
             LEFT JOIN tipo_empleado ON empleado.id_tipo_empleado = tipo_empleado.id_tipo_empleado
             LEFT JOIN cargo ON empleado.id_cargo = cargo.id_cargo
+            LEFT JOIN sede ON empleado.id_sede = sede.id_sede
             ORDER BY id_empleado
         `)
         .all();
@@ -75,6 +77,7 @@ export class EmpleadoRepository {
         empleado.nombreArea = fila.nombre_area || "Sin Área";
         empleado.nombreTipoEmpleado = fila.nombre_tipo_empleado || "Sin Tipo";
         empleado.nombreCargo = fila.nombre_cargo || "Sin Cargo";
+        empleado.nombreSede = fila.nombre_sede || "Sin Sede"; // <-- ¡Aquí capturamos el nombre de la Sede!
         return empleado;
     });
   }
@@ -85,11 +88,13 @@ export class EmpleadoRepository {
             SELECT empleado.*, 
                    area.nombre AS nombre_area, 
                    tipo_empleado.nombre AS nombre_tipo_empleado,
-                   cargo.nombre AS nombre_cargo
+                   cargo.nombre AS nombre_cargo,
+                   sede.nombre AS nombre_sede
             FROM empleado 
             LEFT JOIN area ON empleado.id_area = area.id_area
             LEFT JOIN tipo_empleado ON empleado.id_tipo_empleado = tipo_empleado.id_tipo_empleado
             LEFT JOIN cargo ON empleado.id_cargo = cargo.id_cargo
+            LEFT JOIN sede ON empleado.id_sede = sede.id_sede
             WHERE id_empleado = ?
         `)
         .get(Number(id));
@@ -115,9 +120,10 @@ export class EmpleadoRepository {
     empleado.nombreArea = fila.nombre_area || "Sin Área";
     empleado.nombreTipoEmpleado = fila.nombre_tipo_empleado || "Sin Tipo";
     empleado.nombreCargo = fila.nombre_cargo || "Sin Cargo";
+    empleado.nombreSede = fila.nombre_sede || "Sin Sede"; // <-- ¡Aquí capturamos el nombre de la Sede!
     return empleado;
   }
-
+  
   async crear(empleadoModel) {
     const resultado = this.db
         .prepare(

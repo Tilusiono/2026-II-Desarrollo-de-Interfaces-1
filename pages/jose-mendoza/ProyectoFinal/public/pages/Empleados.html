@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Gestión de Empleados</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/bootstrap-icons/font/bootstrap-icons.css" />
+    <link rel="stylesheet" href="/css/estilos.css" />
+  </head>
+  <body class="bg-light">
+    
+    <!-- BARRA DE NAVEGACIÓN -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+      <div class="container">
+        <a class="navbar-brand mb-0 h1" href="/index.html">
+          <i class="bi bi-building-fill me-2"></i>Gestión HR
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuNavegacion">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="menuNavegacion">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" href="/index.html"><i class="bi bi-house-door me-1"></i>Inicio</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="/pages/Empleados.html"><i class="bi bi-people me-1"></i>Empleados</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/pages/Areas.html"><i class="bi bi-diagram-3 me-1"></i>Áreas</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/pages/Cargos.html"><i class="bi bi-file-earmark-post me-1"></i>Cargo</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/pages/Sedes.html"><i class="bi bi-house-add me-1"></i>Sedes</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/pages/Permisos.html"><i class="bi bi-device-ssd me-1"></i>Permisos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/pages/Asistencias.html"><i class="bi bi-archive me-1"></i>Asistencias</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/pages/Vacaciones.html"><i class="bi bi-calendar-check me-1"></i>Vacaciones</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main class="container py-4">
+      
+      <!-- FORMULARIO Crear  Editar   -->
+
+
+      <div class="card border-0 shadow-sm mb-4">
+        <div class="card-body p-4">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+              <h1 id="titulo-formulario" class="h4 mb-1 text-primary"><i class="bi bi-person-plus-fill me-2"></i>Registrar Nuevo Empleado</h1>
+            </div>
+          </div>
+
+          <form id="form-empleado" class="row g-3">
+            <!-- CAMPO OCULTO Guarda el ID cuando estamos editando -->
+            <input type="hidden" id="idEmpleadoEditar" value="" />
+
+            <div class="col-md-3">
+              <label class="form-label" for="dni">DNI</label>
+              <input id="dni" class="form-control" maxlength="8" required />
+            </div>
+            <div class="col-md-4">
+              <label class="form-label" for="nombres">Nombres</label>
+              <input id="nombres" class="form-control" required />
+            </div>
+            <div class="col-md-5">
+              <label class="form-label" for="apellidos">Apellidos</label>
+              <input id="apellidos" class="form-control" required />
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label" for="telefono">Teléfono</label>
+              <input id="telefono" class="form-control" required />
+            </div>
+            <div class="col-md-4">
+              <label class="form-label" for="correo">Correo</label>
+              <input id="correo" type="email" class="form-control" required />
+            </div>
+            <div class="col-md-5">
+              <label class="form-label" for="direccion">Dirección</label>
+              <input id="direccion" class="form-control" required />
+            </div>
+
+            <div class="col-md-4">
+              <label class="form-label" for="fechaIngreso">Fecha de Ingreso</label>
+              <input id="fechaIngreso" type="date" class="form-control" required />
+            </div>
+            <div class="col-md-4">
+              <label class="form-label" for="salario">Salario (S/.)</label>
+              <input id="salario" type="number" min="0" step="0.01" class="form-control" required />
+            </div>
+            <div class="col-md-4">
+              <label class="form-label" for="estado">Estado</label>
+              <select id="estado" class="form-select" required>
+                <option value="Activo" selected>Activo</option>
+                <option value="Inactivo">Inactivo</option>
+              </select>
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label" for="idTipoEmpleado">Tipo</label>
+              <select id="idTipoEmpleado" class="form-select" required><option value="">Cargando...</option></select>
+            </div>
+            <div class="col-md-3">
+              <label class="form-label" for="idCargo">Cargo</label>
+              <select id="idCargo" class="form-select" required><option value="">Cargando...</option></select>
+            </div>
+            <div class="col-md-3">
+              <label class="form-label" for="idArea">Área</label>
+              <select id="idArea" class="form-select" required><option value="">Cargando...</option></select>
+            </div>
+            <div class="col-md-3">
+              <label class="form-label" for="idSede">Sede</label>
+              <select id="idSede" class="form-select" required><option value="">Cargando...</option></select>
+            </div>
+
+            <!-- BOTONES DEL FORMULARIO -->
+            <div class="col-12 mt-4 d-flex gap-2">
+              <button type="submit" id="btn-guardar" class="btn btn-primary">
+                <i class="bi bi-save me-1"></i>Registrar Empleado
+              </button>
+              <button type="button" id="btn-cancelar" class="btn btn-secondary d-none" onclick="cancelarEdicion()">
+                Cancelar Edición
+              </button>
+            </div>
+          </form>
+
+          <div id="mensaje" class="alert d-none mt-3 mb-0" role="alert"></div>
+        </div>
+      </div>
+
+      <!--  TABLA DE DATOS  
+                          -->
+      <div class="card border-0 shadow-sm">
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th>DNI</th>
+                  <th>Nombres</th>
+                  <th>Apellidos</th>
+                  <th>Área</th>
+                  <th>Cargo</th>
+                  <th>Sede</th>
+                  <th>Estado</th>
+                  <th class="text-center">Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="tabla-empleados">
+                <tr><td colspan="8" class="text-center py-4">Cargando datos...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script>
+
+      const formulario = document.querySelector("#form-empleado");
+      const mensaje = document.querySelector("#mensaje");
+      const tbody = document.querySelector("#tabla-empleados");
+      
+      // Aquí guardaremos la lista de empleados para no tener que volver a consultar  cuando le demos a "Editar"
+      let listaGlobalEmpleados = [];
+
+
+      // INICIALIZACIÓN
+      document.addEventListener("DOMContentLoaded", () => {
+        cargarListasDesplegables();
+        cargarTablaEmpleados();
+      });
+
+      // FUNCIONES DE CARGA (GET)
+      async function cargarListasDesplegables() {
+        try {
+          const [resTipo, resCargo, resArea, resSede] = await Promise.all([
+            fetch("/api/tipos-empleado"), fetch("/api/cargos"), fetch("/api/areas"), fetch("/api/sedes")
+          ]);
+          llenarSelect("#idTipoEmpleado", await resTipo.json(), "idTipoEmpleado", "nombre");
+          llenarSelect("#idCargo", await resCargo.json(), "idCargo", "nombre");
+          llenarSelect("#idArea", await resArea.json(), "idArea", "nombre");
+          llenarSelect("#idSede", await resSede.json(), "idSede", "nombre");
+        } catch (error) {
+          console.error("Error al cargar desplegables:", error);
+        }
+      }
+
+      function llenarSelect(selector, respuestaApi, campoId, campoNombre) {
+        const select = document.querySelector(selector);
+        select.innerHTML = '<option value="">Seleccione...</option>';
+        const lista = Array.isArray(respuestaApi) ? respuestaApi : (Object.values(respuestaApi).find(val => Array.isArray(val)) || []);
+        lista.forEach(item => {
+          select.innerHTML += `<option value="${item[campoId]}">${item[campoNombre]}</option>`;
+        });
+      }
+
+      async function cargarTablaEmpleados() {
+        try {
+          const respuesta = await fetch("/api/empleados");
+          const datos = await respuesta.json();
+          listaGlobalEmpleados = datos.empleadosResponseDto || datos || [];
+          dibujarTabla();
+        } catch (error) {
+          tbody.innerHTML = `<tr><td colspan="8" class="text-center text-danger py-4">Error al cargar la tabla</td></tr>`;
+        }
+      }
+
+      function dibujarTabla() {
+        if (listaGlobalEmpleados.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="8" class="text-center py-4">No hay empleados registrados.</td></tr>`;
+          return;
+        }
+
+        tbody.innerHTML = listaGlobalEmpleados.map(emp => `
+          <tr>
+            <td><strong>${emp.dni}</strong></td>
+            <td>${emp.nombres}</td>
+            <td>${emp.apellidos}</td>
+            <td><span class="badge bg-info text-dark">${emp.nombreArea || 'Sin Área'}</span></td>
+            <td><span class="badge bg-warning text-dark">${emp.nombreCargo || 'Sin Cargo'}</span></td>
+            <td><span class="badge bg-secondary">${emp.nombreSede || 'Sin Sede'}</span></td>
+            <td>
+              <span class="badge ${String(emp.estado) === '1' || emp.estado === 'Activo' ? 'bg-success' : 'bg-danger'}">
+                ${String(emp.estado) === '1' || emp.estado === 'Activo' ? 'Activo' : 'Inactivo'}
+              </span>
+            </td>
+            <td class="text-center">
+              <button class="btn btn-sm btn-outline-primary me-1" onclick="prepararEdicion(${emp.idEmpleado})" title="Editar">
+                <i class="bi bi-pencil"></i>
+              </button>
+              <button class="btn btn-sm btn-outline-danger" onclick="eliminarEmpleado(${emp.idEmpleado})" title="Eliminar">
+                <i class="bi bi-trash"></i>
+              </button>
+            </td>
+          </tr>
+        `).join('');
+      }
+
+      // ==========================================
+      // GUARDAR (POST) O ACTUALIZAR (PUT)
+      // ==========================================
+      formulario.addEventListener("submit", async (evento) => {
+        evento.preventDefault();
+
+        // Recolectar datos
+        const datosFormulario = {
+          dni: document.querySelector("#dni").value.trim(),
+          nombres: document.querySelector("#nombres").value.trim(),
+          apellidos: document.querySelector("#apellidos").value.trim(),
+          telefono: document.querySelector("#telefono").value.trim(),
+          correo: document.querySelector("#correo").value.trim(),
+          direccion: document.querySelector("#direccion").value.trim(),
+          fechaIngreso: document.querySelector("#fechaIngreso").value,
+          salario: Number(document.querySelector("#salario").value),
+          estado: document.querySelector("#estado").value,
+          idTipoEmpleado: Number(document.querySelector("#idTipoEmpleado").value),
+          idCargo: Number(document.querySelector("#idCargo").value),
+          idArea: Number(document.querySelector("#idArea").value),
+          idSede: Number(document.querySelector("#idSede").value)
+        };
+
+        // Verificamos si hay un ID oculto (Si hay ID = PUT, Si está vacío = POST)
+        const idAEditar = document.querySelector("#idEmpleadoEditar").value;
+        const metodoHttp = idAEditar ? "PUT" : "POST";
+        const urlApi = idAEditar ? `/api/empleados/${idAEditar}` : "/api/empleados";
+
+        try {
+          const respuestaHttp = await fetch(urlApi, {
+            method: metodoHttp,
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(datosFormulario),
+          });
+          
+          if (!respuestaHttp.ok) throw new Error("Ocurrió un error al guardar los datos en la base de datos.");
+
+          mostrarMensaje(idAEditar ? "¡Empleado actualizado correctamente!" : "¡Empleado registrado con éxito!", true);
+          
+          // Limpiar todo y recargar tabla
+          cancelarEdicion(); 
+          cargarTablaEmpleados();
+          
+        } catch (error) {
+          mostrarMensaje(error.message, false);
+        }
+      });
+
+      // ==========================================
+      // PREPARAR MODO EDICIÓN
+      // ==========================================
+      function prepararEdicion(idEmpleado) {
+        // Buscamos los datos de ese empleado en nuestra lista global
+        const emp = listaGlobalEmpleados.find(e => e.idEmpleado === idEmpleado);
+        if (!emp) return;
+
+        // Llenamos el formulario con sus datos
+        document.querySelector("#idEmpleadoEditar").value = emp.idEmpleado;
+        document.querySelector("#dni").value = emp.dni;
+        document.querySelector("#nombres").value = emp.nombres;
+        document.querySelector("#apellidos").value = emp.apellidos;
+        document.querySelector("#telefono").value = emp.telefono || "";
+        document.querySelector("#correo").value = emp.correo || "";
+        document.querySelector("#direccion").value = emp.direccion || "";
+        
+        // Formatear fecha para el input type="date" (YYYY-MM-DD)
+        if(emp.fechaIngreso) {
+          document.querySelector("#fechaIngreso").value = emp.fechaIngreso.split("T")[0];
+        }
+        
+        document.querySelector("#salario").value = emp.salario;
+        document.querySelector("#estado").value = String(emp.estado) === '1' || emp.estado === 'Activo' ? 'Activo' : 'Inactivo';
+        
+        // Seleccionar los desplegables
+        document.querySelector("#idTipoEmpleado").value = emp.idTipoEmpleado || "";
+        document.querySelector("#idCargo").value = emp.idCargo || "";
+        document.querySelector("#idArea").value = emp.idArea || "";
+        document.querySelector("#idSede").value = emp.idSede || "";
+
+        // Cambiar estilos y títulos para que el usuario sepa que está editando
+        document.querySelector("#titulo-formulario").innerHTML = `<i class="bi bi-pencil-square me-2"></i>Editando a ${emp.nombres}`;
+        document.querySelector("#titulo-formulario").classList.replace("text-primary", "text-success");
+        
+        const btnGuardar = document.querySelector("#btn-guardar");
+        btnGuardar.innerHTML = '<i class="bi bi-arrow-repeat me-1"></i>Actualizar Empleado';
+        btnGuardar.classList.replace("btn-primary", "btn-success");
+        
+        // Mostrar botón de cancelar
+        document.querySelector("#btn-cancelar").classList.remove("d-none");
+
+        // Subir automáticamente la pantalla hacia el formulario
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      // CANCELAR EDICIÓN (Volver a modo Crear)
+      function cancelarEdicion() {
+        formulario.reset();
+        document.querySelector("#idEmpleadoEditar").value = "";
+        
+        document.querySelector("#titulo-formulario").innerHTML = `<i class="bi bi-person-plus-fill me-2"></i>Registrar Nuevo Empleado`;
+        document.querySelector("#titulo-formulario").classList.replace("text-success", "text-primary");
+
+        const btnGuardar = document.querySelector("#btn-guardar");
+        btnGuardar.innerHTML = '<i class="bi bi-save me-1"></i>Registrar Empleado';
+        btnGuardar.classList.replace("btn-success", "btn-primary");
+        
+        document.querySelector("#btn-cancelar").classList.add("d-none");
+      }
+
+      // ELIMINAR (DELETE)
+      async function eliminarEmpleado(idEmpleado) {
+        if (!confirm("¿Estás seguro de que deseas eliminar este empleado?")) return;
+
+        try {
+          const respuesta = await fetch(`/api/empleados/${idEmpleado}`, { method: "DELETE" });
+          if (!respuesta.ok) throw new Error("No se pudo eliminar al empleado");
+          
+          mostrarMensaje("Empleado eliminado correctamente", true);
+          cargarTablaEmpleados(); // Recargar tabla
+        } catch (error) {
+          mostrarMensaje(error.message, false);
+        }
+      }
+
+      // ==========================================
+      // ALERTAS EN PANTALLA
+      // ==========================================
+      function mostrarMensaje(texto, esExito) {
+        mensaje.className = `alert alert-${esExito ? "success" : "danger"} mt-3`;
+        mensaje.textContent = texto;
+        mensaje.classList.remove("d-none");
+        setTimeout(() => mensaje.classList.add("d-none"), 4000);
+      }
+    </script>
+    <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

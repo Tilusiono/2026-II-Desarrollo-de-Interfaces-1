@@ -69,5 +69,6 @@ export class EmpleadoResponseDto {
         this.nombreTipoEmpleado = empleadoModel.nombreTipoEmpleado || "Sin Tipo";
         this.nombreArea = empleadoModel.nombreArea || "Sin Área";
         this.nombreCargo = empleadoModel.nombreCargo || "Sin Cargo";
+        this.nombreSede = empleadoModel.nombreSede || "Sin Sede"; 
     }
 }

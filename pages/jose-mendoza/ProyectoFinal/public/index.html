@@ -3,99 +3,128 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Prueba inicial</title>
+    <title>Menú Principal - Gestión HR</title>
     <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
     <link
       rel="stylesheet"
       href="/bootstrap-icons/font/bootstrap-icons.css"
     />
+    <link rel="stylesheet" href="/css/estilos.css" />
   </head>
   <body class="bg-light">
-    <nav class="navbar navbar-dark bg-primary">
+    
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
       <div class="container">
-        <span class="navbar-brand mb-0 h1">
-          <i class="bi bi-box-seam-fill me-2"></i>Productos Express
-        </span>
+
+        <a class="navbar-brand mb-0 h1" href="/index.html">
+          <i class="bi bi-building-fill me-2"></i>Gestión de Empleados Express
+        </a>
+        
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuNavegacion" aria-controls="menuNavegacion" aria-expanded="false" aria-label="Alternar navegación">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        
+
+        <div class="collapse navbar-collapse" id="menuNavegacion">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/index.html">
+                <i class="bi bi-house-door me-1"></i>Inicio
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="pages/Empleados.html">
+                <i class="bi bi-people me-1"></i>Empleados
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="pages/Areas.html">
+                <i class="bi bi-diagram-3 me-1"></i>Áreas
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="pages/Cargos.html">
+                <i class="bi bi-file-earmark-post"></i>Cargo
+              </a>
+            </li>
+
+
+            <li class="nav-item">
+              <a class="nav-link" href="pages/Sedes.html">
+                <i class="bi bi-house-add"></i>Sedes
+              </a>
+            </li>
+
+
+            <li class="nav-item">
+              <a class="nav-link" href="pages/Asistencia.html">
+                <i class="bi bi-device-ssd"></i>Permisos
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="pages/Asistencia.html">
+                <i class="bi bi-archive"></i>Asistencias
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="pages/Vacaciones.html">
+                <i class="bi bi-calendar-check me-1"></i>Vacaciones
+              </a>
+            </li>
+
+          </ul>
+        </div>
       </div>
     </nav>
 
     <main class="container py-5">
-      <div class="card border-0 shadow-sm mx-auto" style="max-width: 42rem">
+      <div class="card border-0 shadow-sm mx-auto" style="max-width: 45rem">
         <div class="card-body p-4 p-md-5 text-center">
           <i class="bi bi-bootstrap-fill text-primary display-3"></i>
           <h1 class="h3 mt-3">Configuración correcta</h1>
           <p class="text-secondary">
-            Express está publicando Bootstrap 5.3.8 y Bootstrap Icons desde
-            las dependencias instaladas con NPM.
+
           </p>
           <button
-            class="btn btn-primary"
+            class="btn btn-primary mb-4"
             type="button"
             data-bs-toggle="collapse"
             data-bs-target="#detalle-prueba"
           >
             <i class="bi bi-check-circle me-1"></i>Probar JavaScript
           </button>
-          <a
-            class="btn btn-outline-primary"
-            href="/hitos/03-post.html"
-            role="button"
-          >
-            <i class="bi bi-code-slash me-1"></i>POST
-          </a>
+          
+          <hr class="mb-4">
+          <h2 class="h5 mb-3 text-start text-secondary">Hitos de Prueba</h2>
 
-          <a
-            class="btn btn-outline-primary"
-            href="/hitos/04-get.html"
-            role="button"
-          >
-            <i class="bi bi-search me-1"></i>GET
-          </a>
+          <div class="d-flex flex-wrap gap-2 justify-content-center">
+            <a class="btn btn-outline-primary" href="/hitos/03-post.html" role="button">
+              <i class="bi bi-code-slash me-1"></i>POST
+            </a>
+            <a class="btn btn-outline-primary" href="/hitos/04-get.html" role="button">
+              <i class="bi bi-search me-1"></i>GET
+            </a>
+            <a class="btn btn-outline-primary" href="/hitos/05-put.html" role="button">
+              <i class="bi bi-pencil-square me-1"></i>PUT
+            </a>
+            <a class="btn btn-outline-primary" href="/hitos/06-patch.html" role="button">
+              <i class="bi bi-sliders me-1"></i>PATCH
+            </a>
+            <a class="btn btn-outline-primary" href="/hitos/07-get-buscar.html" role="button">
+              <i class="bi bi-funnel me-1"></i>FILTROS
+            </a> 
+            <a class="btn btn-outline-primary" href="/hitos/08-query.html" role="button">
+              <i class="bi bi-database-down me-1"></i>QUERY SEARCH
+            </a> 
+            <a class="btn btn-outline-primary" href="/hitos/09-delete.html" role="button">
+              <i class="bi bi-trash me-1"></i>DELETE
+            </a>
+          </div>
 
-          <a
-            class="btn btn-outline-primary"
-            href="/hitos/05-put.html"
-            role="button"
-          >
-            <i class="bi bi-search me-1"></i>PUT
-          </a>
-
-          <a
-            class="btn btn-outline-primary"
-            href="/hitos/06-patch.html"
-            role="button"
-          >
-            <i class="bi bi-search me-1"></i>PATH
-          </a>
-
-
-          <a
-            class="btn btn-outline-primary"
-            href="/hitos/07-get-buscar.html"
-            role="button"
-          >
-            <i class="bi bi-search me-1"></i>FILTROS
-          </a> 
-
-          <a
-            class="btn btn-outline-primary"
-            href="/hitos/08-query.html"
-            role="button"
-          >
-            <i class="bi bi-search me-1"></i>QUERY SEARCH
-          </a> 
-
-
-          <a
-            class="btn btn-outline-primary"
-            href="/hitos/09-delete.html"
-            role="button"
-          >
-            <i class="bi bi-search me-1"></i>DELETE
-          </a>
-
-
-          <div id="detalle-prueba" class="collapse mt-3">
+          <div id="detalle-prueba" class="collapse mt-4">
             <div class="alert alert-success mb-0">
               Bootstrap CSS, JavaScript e iconos funcionan correctamente.
             </div>
