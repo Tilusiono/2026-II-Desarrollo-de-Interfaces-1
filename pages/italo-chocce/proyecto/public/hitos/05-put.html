@@ -3,63 +3,69 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Hito 5 · Casino Management - Probar PUT</title>
+    <title>Casino System · Hito 5 · Probar PUT</title>
     <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" href="/bootstrap-icons/font/bootstrap-icons.css" />
     <style>
       body {
-        background-color: #121418;
-        color: #e2e8f0;
+        background-color: #1a1d20;
+        color: #f8f9fa;
       }
+      /* Barra superior idéntica a tu captura (roja de casino) */
       .navbar-casino {
-        background: linear-gradient(135deg, #1a1c23 0%, #0d0e12 100%);
-        border-bottom: 2px solid #d4af37;
+        background-color: #dc3545 !important;
+        border-bottom: 3px solid #b02a37;
       }
+      /* Tarjetas con el fondo gris oscuro de tu sistema */
       .card-casino {
-        background-color: #1a1c23;
-        border: 1px solid #2a2e39;
-        color: #e2e8f0;
+        background-color: #212529;
+        border: 1px solid #343a40;
+        color: #f8f9fa;
       }
+      /* Inputs oscuros con bordes sutiles */
       .form-control, .form-select {
-        background-color: #121418;
-        border-color: #2a2e39;
+        background-color: #2b3035;
+        border-color: #495057;
         color: #fff;
       }
       .form-control:focus, .form-select:focus {
-        background-color: #121418;
-        border-color: #d4af37;
+        background-color: #2b3035;
+        border-color: #ffc107;
         color: #fff;
-        box-shadow: 0 0 0 0.25rem rgba(212, 175, 55, 0.25);
+        box-shadow: 0 0 0 0.25rem rgba(255, 193, 7, 0.25);
       }
-      .btn-gold {
-        background-color: #d4af37;
-        border-color: #d4af37;
-        color: #121418;
+      /* Botones amarillos clásicos de tu UI */
+      .btn-warning-casino {
+        background-color: #ffc107;
+        border-color: #ffc107;
+        color: #000;
         font-weight: 600;
       }
-      .btn-gold:hover {
-        background-color: #c19b2e;
-        border-color: #c19b2e;
-        color: #121418;
+      .btn-warning-casino:hover {
+        background-color: #ffca2c;
+        border-color: #ffc720;
+        color: #000;
       }
-      .btn-outline-gold {
-        color: #d4af37;
-        border-color: #d4af37;
+      .btn-outline-warning-casino {
+        color: #ffc107;
+        border-color: #ffc107;
+        font-weight: 600;
       }
-      .btn-outline-gold:hover {
-        background-color: #d4af37;
-        color: #121418;
+      .btn-outline-warning-casino:hover {
+        background-color: #ffc107;
+        color: #000;
       }
-      .text-gold {
-        color: #d4af37 !important;
+      .text-warning-casino {
+        color: #ffc107 !important;
       }
     </style>
   </head>
   <body>
-    <nav class="navbar navbar-dark navbar-casino py-3">
+    <!-- Barra superior idéntica a la de tu Hito -->
+    <nav class="navbar navbar-dark navbar-casino py-3 shadow-sm">
       <div class="container">
-        <span class="navbar-brand fw-bold text-gold">
-          <i class="bi bi-dice-5-fill me-2"></i>Casino Royale Management · Hito 5 (PUT)
+        <span class="navbar-brand fw-bold fs-5">
+          🎲 Casino System · Hito 5 · Probar PUT (Reemplazar)
         </span>
       </div>
     </nav>
@@ -69,18 +75,21 @@
       
       <section class="card card-casino border-0 shadow-lg">
         <div class="card-body p-4">
-          <div class="row g-3 align-items-end mb-4">
+          
+          <!-- Bloque de Carga por ID (Estilo idéntico al de tus rutas GET) -->
+          <div class="row g-3 align-items-end mb-4 pb-3 border-bottom border-secondary">
             <div class="col-md-4">
-              <label class="form-label text-gold fw-semibold" for="id">ID del Registro a Reemplazar</label>
+              <label class="form-label text-warning-casino fw-semibold" for="id">ID que se reemplazará</label>
               <input id="id" type="number" min="1" value="1" class="form-control" />
             </div>
             <div class="col-md-4">
-              <button id="btn-cargar" type="button" class="btn btn-outline-gold w-100">
+              <button id="btn-cargar" type="button" class="btn btn-outline-warning-casino w-100">
                 <i class="bi bi-download me-1"></i>Cargar datos con GET
               </button>
             </div>
           </div>
 
+          <!-- Formulario de PUT -->
           <form id="form-put" class="row g-3">
             <div class="col-md-4">
               <label class="form-label" for="codigo">Código</label>
@@ -135,12 +144,13 @@
               <label class="form-label" for="descripcion">Descripción</label>
               <textarea id="descripcion" class="form-control" rows="2"></textarea>
             </div>
-            <div class="col-12 pt-2">
-              <button class="btn btn-gold w-100 py-2">
+            <div class="col-12 pt-3">
+              <button class="btn btn-warning-casino w-100 py-2">
                 <i class="bi bi-save me-1"></i>Reemplazar todos los campos con PUT
               </button>
             </div>
           </form>
+
           <pre id="resultado" class="bg-black text-warning border border-secondary rounded p-3 mt-4 mb-0 d-none" style="max-height: 300px; overflow-y: auto;"></pre>
         </div>
       </section>
@@ -171,7 +181,7 @@
           document.querySelector("#fechaHoraRegistro").value = String(producto.fechaHoraRegistro).slice(0, 16);
           document.querySelector("#activo").checked = producto.activo;
           imagenActualBase64 = producto.imagenBase64;
-          mostrar(`HTTP 200 · Registro ${id} cargado con éxito en el sistema de casino.`, true);
+          mostrar(`HTTP 200 · Registro ${id} cargado correctamente.`, true);
         });
       }
 
