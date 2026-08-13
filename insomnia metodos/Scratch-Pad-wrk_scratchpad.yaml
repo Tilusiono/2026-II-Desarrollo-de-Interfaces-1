@@ -1,0 +1,374 @@
+type: collection.insomnia.rest/5.0
+schema_version: "5.1"
+name: Scratch Pad
+meta:
+  id: wrk_scratchpad
+  created: 1786625091506
+  modified: 1786625091506
+  description: ""
+collection:
+  - name: Productos
+    meta:
+      id: fld_7d7ad5a6df3748b8ba94560625f7131b
+      created: 1786626174964
+      modified: 1786626431435
+      sortKey: -1786626174964
+      description: ""
+    children:
+      - url: http://localhost:4214/api/productos
+        name: Crear Producto
+        meta:
+          id: req_ef873cd0902d42359ab5cfd8a0483deb
+          created: 1786328248838
+          modified: 1786629230550
+          isPrivate: false
+          description: ""
+          sortKey: -1786626326839
+        method: POST
+        body:
+          mimeType: application/json
+          text: >-
+            {
+            			"id": 10,
+            			"codigo": "PROD-010",
+            			"nombre": "Limpiador Multiusos Floral 2L",
+            			"categoria": "LIMP",
+            			"stock": 85,
+            			"precio": 11.5,
+            			"peso": 2.1,
+            			"descripcion": "Desinfectante y aromatizante para pisos y superficies",
+            			"activo": true,
+            			"fechaVencimiento": null,
+            			"horaRegistro": "10:23",
+            			"fechaHoraRegistro": "2026-08-10T10:23:00",
+            			"imagenMimeType": null,
+            			"imagenBase64": null
+            		}
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:4214/api/productos/1
+        name: Buscar por ID (o Obtener Uno)
+        meta:
+          id: req_c6fb61f6af46441a9af359f5e42e70bc
+          created: 1786332607968
+          modified: 1786628436317
+          isPrivate: false
+          description: ""
+          sortKey: -1786626326839
+        method: GET
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:4214/api/productos/1
+        name: Actualizar Producto (Completo)
+        meta:
+          id: req_722777ed724141d1825825beaee1ccd8
+          created: 1786381953170
+          modified: 1786628450042
+          isPrivate: false
+          description: ""
+          sortKey: -1786626326789
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "nombre": "Desarrollador",
+              "descripcion": "Encargado de Desarrollar",
+              "sueldoBase": 2000.00
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:4214/api/productos/1
+        name: Actualizar Parcial
+        meta:
+          id: req_adf5166f327b472cb1bda0600a3fe521
+          created: 1786400151236
+          modified: 1786628223335
+          isPrivate: false
+          description: ""
+          sortKey: -1786626326764
+        method: PATCH
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "sueldoBase": 1000
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:4214/api/productos
+        name: BUSCAR
+        meta:
+          id: req_d1ebf00e91074ece862243c2f93ac349
+          created: 1786417977615
+          modified: 1786628432691
+          isPrivate: false
+          description: ""
+          sortKey: -1786626326939
+        method: GET
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:4214/api/productos/buscar?nombre=laptop
+        name: Buscar con Parámetros
+        meta:
+          id: req_757a9efd197142409187772ff1defdf4
+          created: 1786426459403
+          modified: 1786629093051
+          isPrivate: false
+          description: ""
+          sortKey: -1786626326839
+        method: QUERY
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:4214/api/productos
+        name: Eliminar Producto
+        meta:
+          id: req_e4911073b9f7410a9e5566ef9accc0dd
+          created: 1786481813712
+          modified: 1786628179191
+          isPrivate: false
+          description: ""
+          sortKey: -1786626326739
+        method: DELETE
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Categoria
+    meta:
+      id: fld_da770c881fca4101afbd9924719c3c2f
+      created: 1786628481457
+      modified: 1786628481457
+      sortKey: -1786626174914
+      description: ""
+    children:
+      - url: http://localhost:4214/api/categorias
+        name: Crear Categoria
+        meta:
+          id: req_2925de9f0770414a8fe9efa5e0781a6f
+          created: 1786628481457
+          modified: 1786629387883
+          isPrivate: false
+          description: ""
+          sortKey: -1786626326839
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            			"id": 6,
+            			"codigo": "CATEG-006",
+            			"nombre": "Lácteos y Derivados",
+            			"tipo": "ALIM",
+            			"cantidadProductos": 140,
+            			"presupuesto": 12000,
+            			"pesoPromedio": 1.1,
+            			"descripcion": "leches, quesos, yogures y mantequillas",
+            			"activo": true,
+            			"fechaLimite": null,
+            			"horaRegistro": "09:36",
+            			"fechaHoraRegistro": "2026-08-03T09:36:00",
+            			"imagenMimeType": null,
+            			"imagenBase64": null
+            		}
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:4214/api/categorias/1
+        name: Actualizar Categoria (Completo)
+        meta:
+          id: req_2c5cd37ffc9e4309b97af81ebda352ea
+          created: 1786628481457
+          modified: 1786629279583
+          isPrivate: false
+          description: ""
+          sortKey: -1786626326789
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "nombre": "Desarrollador",
+              "descripcion": "Encargado de Desarrollar",
+              "sueldoBase": 2000.00
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:4214/api/categorias/buscar?nombre=laptop
+        name: Buscar con Parámetros
+        meta:
+          id: req_3343b13c27824b57bcd5a84e606daa13
+          created: 1786628481457
+          modified: 1786629275880
+          isPrivate: false
+          description: ""
+          sortKey: -1786626326839
+        method: QUERY
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:4214/api/categorias/2
+        name: Buscar por ID (o Obtener Uno)
+        meta:
+          id: req_7be35b55524344d4befcd43103412cf3
+          created: 1786628481457
+          modified: 1786629451091
+          isPrivate: false
+          description: ""
+          sortKey: -1786626326839
+        method: GET
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:4214/api/categorias/6
+        name: Actualizar Parcial
+        meta:
+          id: req_996befa18b7b4ba5be28b4736acb895a
+          created: 1786628481457
+          modified: 1786629474212
+          isPrivate: false
+          description: ""
+          sortKey: -1786626326764
+        method: PATCH
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "sueldoBase": 1000
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:4214/api/categorias/6
+        name: Eliminar Categoria
+        meta:
+          id: req_ec88cada07814de79e12c3a17e73418c
+          created: 1786628481457
+          modified: 1786629481374
+          isPrivate: false
+          description: ""
+          sortKey: -1786626326739
+        method: DELETE
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:4214/api/categorias
+        name: BUSCAR
+        meta:
+          id: req_fb5fbb3a577146c69a002a84d4428dc7
+          created: 1786628481457
+          modified: 1786629270337
+          isPrivate: false
+          description: ""
+          sortKey: -1786626326939
+        method: GET
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_99d30891da4bdcebc63947a8fc17f076de878684
+    created: 1786625246064
+    modified: 1786625246064
+environments:
+  name: Base Environment
+  meta:
+    id: env_99d30891da4bdcebc63947a8fc17f076de878684
+    created: 1786625246038
+    modified: 1786625246038
+    isPrivate: false
