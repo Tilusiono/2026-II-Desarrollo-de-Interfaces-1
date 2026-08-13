@@ -77,7 +77,25 @@ export class CafenegroService {
       imagen: Buffer.from(coincidencia[2], "base64"), 
       imagenMimeType: coincidencia[1], 
     }; 
-  } 
+  }
+  async listar() {
+  const cafenegrosModel = await this.cafenegroRepository.listar();
+
+  return cafenegrosModel.map(
+    (cafenegroModel) => new CafenegroResponseDto(cafenegroModel),
+  );
+}
+
+async obtener(id) {
+  const cafenegroModel =
+    await this.cafenegroRepository.buscarPorId(id);
+
+  if (!cafenegroModel) {
+    throw new AppError("Cafenegro no encontrado", 404);
+  }
+
+  return new CafenegroResponseDto(cafenegroModel);
+}
 } 
  
 export const cafenegroService = new CafenegroService()

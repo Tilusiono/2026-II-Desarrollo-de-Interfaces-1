@@ -1,0 +1,66 @@
+type: collection.insomnia.rest/5.0
+schema_version: "5.1"
+name: Scratch Pad
+meta:
+  id: wrk_scratchpad
+  created: 1786647770293
+  modified: 1786647770293
+  description: ""
+collection:
+  - url: http://localhost:4214/api/servicios
+    name: CREAR
+    meta:
+      id: req_f4b2e3ccfe8a45aaa0ba2686414b099f
+      created: 1786648003886
+      modified: 1786648732170
+      isPrivate: false
+      description: ""
+      sortKey: -1786648003886
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "codigo": "CAF-002",
+          "nombre": "Capuchino",
+          "categoria": "CAF",
+          "precio": 10.50,
+          "descripcion": "Capuchino preparado con café y leche espumada",
+          "activo": true,
+          "horaRegistro": "10:15",
+          "fechaHoraRegistro": "2026-08-13T10:15:00",
+          "imagenBase64": null
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - name: My Folder
+    meta:
+      id: fld_c3bc891d2cfc42cca2e0f5c9c03c8124
+      created: 1786647942337
+      modified: 1786647978520
+      sortKey: -1786647942337
+      description: ""
+    environment:
+      "": ""
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_99d30891da4bdcebc63947a8fc17f076de878684
+    created: 1786647885856
+    modified: 1786647885856
+environments:
+  name: Base Environment
+  meta:
+    id: env_99d30891da4bdcebc63947a8fc17f076de878684
+    created: 1786647885850
+    modified: 1786647885850
+    isPrivate: false

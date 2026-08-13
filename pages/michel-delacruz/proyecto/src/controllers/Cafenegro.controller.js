@@ -14,6 +14,24 @@ export class CafenegroController {
       CafenegroResponseDto,
     });
   }
+  async listar(response) {
+    const cafenegrosResponseDto =
+      await this.CafenegroService.listar();
+
+    response.json({
+      total: cafenegrosResponseDto.length,
+      cafenegrosResponseDto,
+    });
+  }
+
+  async obtener(id, response) {
+    const cafenegroResponseDto =
+      await this.CafenegroService.obtener(id);
+
+    response.json({
+      cafenegroResponseDto,
+    });
+  }
 }
 
 export const cafenegroController =
