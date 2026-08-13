@@ -26,6 +26,8 @@ export class ProductosService {
       productoRequestDto.fechaVencimiento,
       productoRequestDto.horaRegistro,
       productoRequestDto.fechaHoraRegistro,
+      productoRequestDto.fechaHoraRegistro,
+
       imagenDatos.imagen,
       imagenDatos.imagenMimeType,
     );
