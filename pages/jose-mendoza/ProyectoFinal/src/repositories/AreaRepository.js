@@ -35,34 +35,50 @@ export class AreaRepository {
 
   //GET ALL 
   async listar() {
-
     const filas = this.db
-        .prepare("SELECT * FROM area ORDER BY id_area").all();
+        .prepare(`
+            SELECT area.*, 
+                   sede.nombre AS nombre_sede,
+                   (empleado.nombres || ' ' || empleado.apellidos) AS nombre_jefe
+            FROM area 
+            LEFT JOIN sede ON area.id_sede = sede.id_sede 
+            LEFT JOIN empleado ON area.id_jefe = empleado.id_empleado
+            ORDER BY area.id_area
+        `)
+        .all();
 
-    return filas.map(
-        (fila) =>
-            new Area(
-                fila.id_area,
-                fila.nombre,
-                fila.descripcion,
-                fila.capacidad,
-                fila.id_sede,
-                fila.id_jefe
-            )
-    );
+    return filas.map((fila) => {
+        const area = new Area(
+            fila.id_area,
+            fila.nombre,
+            fila.descripcion,
+            fila.capacidad,
+            fila.id_sede,
+            fila.id_jefe
+        );
+        area.nombreSede = fila.nombre_sede || "Sin Sede";
+        area.nombreJefe = fila.nombre_jefe || "Sin Asignar";
+        return area;
+    });
+  }
 
-}
-
-//GET BY ID
-async buscarPorId(id) {
-
+  //GET BY ID
+  async buscarPorId(id) {
     const fila = this.db
-        .prepare("SELECT * FROM area WHERE id_area = ?")
+        .prepare(`
+            SELECT area.*, 
+                   sede.nombre AS nombre_sede,
+                   (empleado.nombres || ' ' || empleado.apellidos) AS nombre_jefe
+            FROM area 
+            LEFT JOIN sede ON area.id_sede = sede.id_sede 
+            LEFT JOIN empleado ON area.id_jefe = empleado.id_empleado
+            WHERE area.id_area = ?
+        `)
         .get(Number(id));
 
     if (!fila) return null;
 
-    return new Area(
+    const area = new Area(
         fila.id_area,
         fila.nombre,
         fila.descripcion,
@@ -70,8 +86,11 @@ async buscarPorId(id) {
         fila.id_sede,
         fila.id_jefe
     );
+    area.nombreSede = fila.nombre_sede || "Sin Sede";
+    area.nombreJefe = fila.nombre_jefe || "Sin Asignar";
+    return area;
+  }
 
-}
 
   //POST
   async crear(areaModel) {
