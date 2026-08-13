@@ -1,4 +1,4 @@
-import { productoService } from "../services/productos.service.js";
+import { automovilesService } from "../services/Automoviles.service.js";
 
 export class AutomovilesController {
   constructor(automovilesServiceActual = automovilesService) {
