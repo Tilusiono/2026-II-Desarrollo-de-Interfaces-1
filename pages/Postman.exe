@@ -1,0 +1,60 @@
+{
+  "info": {
+    "_postman_id": "6f6e66d6-8098-42a4-bc96-178b85766ca1",
+    "name": "New Collection",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "57307273"
+  },
+  "item": [
+    {
+      "name": "New Request",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"codigo\": \"AUTO-001\",\r\n  \"marca\": \"Toyota\",\r\n  \"modelo\": \"Corolla\",\r\n  \"anio\": 2024,\r\n  \"color\": \"Rojo\",\r\n  \"categoria\": \"Sedan\",\r\n  \"precio\": 85000,\r\n  \"kilometraje\": 15000,\r\n  \"descripcion\": \"Automovil Toyota Corolla en buen estado\",\r\n  \"activo\": true,\r\n  \"horaRegistro\": \"10:30:00\",\r\n  \"fechaHoraRegistro\": \"2026-08-14T10:30:00\",\r\n  \"imagen\": null,\r\n  \"imagenMimeType\": null\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:4214/api/automoviles",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "4214",
+          "path": [
+            "api",
+            "automoviles"
+          ]
+        },
+        "description": "{  \n\"codigo\": \"AUTO-001\",  \n\"marca\": \"Toyota\",  \n\"modelo\": \"Corolla\",  \n\"anio\": 2024,  \n\"color\": \"Rojo\",  \n\"categoria\": \"Sedan\",  \n\"precio\": 85000,  \n\"kilometraje\": 15000,  \n\"descripcion\": \"Automovil Toyota Corolla en buen estado\",  \n\"activo\": true,  \n\"horaRegistro\": \"10:30:00\",  \n\"fechaHoraRegistro\": \"2026-08-14T10:30:00\",  \n\"imagen\": null,  \n\"imagenMimeType\": null  \n}"
+      },
+      "response": []
+    },
+    {
+      "name": "New Request",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:4214/api/productos",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "4214",
+          "path": [
+            "api",
+            "productos"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
