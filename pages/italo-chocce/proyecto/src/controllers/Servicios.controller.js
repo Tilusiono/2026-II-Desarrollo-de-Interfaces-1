@@ -36,6 +36,27 @@ export class ServiciosController {
             servicioResponseDto,
         });
     }
+  async actualizar(req, res) {
+    const servicioResponseDto = await this.serviciosService.actualizar(
+      req.params.id,
+      req.body ?? req,
+    );
+    res.json({
+      mensaje: "Servicio actualizado",
+      servicioResponseDto,
+    });
+  }
+  async eliminar(req, res) {
+    const servicioResponseDto = await this.serviciosService.eliminar(
+      req.params.id,
+    );
+    res.json({
+      mensaje: "Servicio eliminado",
+      servicioResponseDto,
+    });
+  }
+  
+
 }
 
 export const serviciosController = new ServiciosController(serviciosService);

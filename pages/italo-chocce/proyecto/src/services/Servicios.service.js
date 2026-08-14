@@ -79,6 +79,56 @@ export class ServiciosService {
         if (!servicioModel) throw new AppError("Servicio no encontrado", 404);
         return new ServicioResponseDto(servicioModel);
     }
+    async actualizar(id, servicioRequestDto) {
+    const servicioActualModel = await this.serviciosRepository.buscarPorId(id);
+    if (!servicioActualModel) throw new AppError("Servicio no encontrado", 404);
+
+    const codigo = servicioRequestDto.codigo ?? servicioActualModel.codigo;
+
+    let imagen = servicioActualModel.imagen;
+    let imagenMimeType = servicioActualModel.imagenMimeType;
+    if (servicioRequestDto.imagenBase64 !== undefined) {
+      const imagenDatos = this.convertirImagen(servicioRequestDto.imagenBase64);
+      imagen = imagenDatos.imagen;
+      imagenMimeType = imagenDatos.imagenMimeType;
+    }
+
+    const conservarSiNoSeEnvia = (nuevoValor, valorActual) =>
+      nuevoValor === undefined ? valorActual : nuevoValor;
+
+    const categoriaId = servicioRequestDto.categoriaId ?? servicioRequestDto.categoria_id ?? servicioActualModel.categoriaId;
+
+    const servicioModel = new Servicio(
+      id,
+      codigo,
+      servicioRequestDto.nombre ?? servicioActualModel.nombre,
+      categoriaId,
+      servicioRequestDto.capacidadMax ?? servicioActualModel.capacidadMax,
+      servicioRequestDto.precio ?? servicioActualModel.precio,
+      servicioRequestDto.duracionMinutos ?? servicioActualModel.duracionMinutos,
+      conservarSiNoSeEnvia(servicioRequestDto.descripcion, servicioActualModel.descripcion),
+      servicioRequestDto.activo ?? servicioActualModel.activo,
+      conservarSiNoSeEnvia(servicioRequestDto.fechaVencimiento, servicioActualModel.fechaVencimiento),
+      servicioRequestDto.horaRegistro ?? servicioActualModel.horaRegistro,
+      servicioRequestDto.fechaHoraRegistro ?? servicioActualModel.fechaHoraRegistro,
+      imagen,
+      imagenMimeType
+    );
+
+    const servicioActualizadoModel = await this.serviciosRepository.reemplazar(
+      id,
+      servicioModel
+    );
+    return new ServicioResponseDto(servicioActualizadoModel);
+  }
+  async eliminar(id) {
+    const servicioEliminadoModel = await this.serviciosRepository.eliminar(id);
+    if (!servicioEliminadoModel)
+      throw new AppError("Servicio no encontrado", 404);
+    return new ServicioResponseDto(servicioEliminadoModel);
+  }
+
+
 }
 
 export const serviciosService = new ServiciosService();

@@ -49,7 +49,37 @@ export class CategoriaService {
     const categoriaModel = await this.categoriaRepository.buscarPorId(id);
     if (!categoriaModel) throw new AppError("Categoría no encontrada", 404);
     return new CategoriaResponseDto(categoriaModel);
+  }
+  async actualizar(id, categoriaRequestDto) {
+    const categoriaActualModel = await this.categoriaRepository.buscarPorId(id);
+    if (!categoriaActualModel) throw new AppError("Categoría no encontrada", 404);
+
+    const conservarSiNoSeEnvia = (nuevoValor, valorActual) =>
+      nuevoValor === undefined ? valorActual : nuevoValor;
+
+    const categoriaModel = new Categoria(
+      id,
+      categoriaRequestDto.nombre ?? categoriaActualModel.nombre,
+      conservarSiNoSeEnvia(categoriaRequestDto.descripcion, categoriaActualModel.descripcion),
+      categoriaRequestDto.activo ?? categoriaActualModel.activo,
+      categoriaRequestDto.horaRegistro ?? categoriaActualModel.horaRegistro,
+      categoriaRequestDto.fechaHoraRegistro ?? categoriaActualModel.fechaHoraRegistro
+    );
+
+    const categoriaActualizadaModel = await this.categoriaRepository.reemplazar(
+      id,
+      categoriaModel
+    );
+    return new CategoriaResponseDto(categoriaActualizadaModel);
   }  
+    async eliminar(id) {
+    const categoriaEliminadaModel = await this.categoriaRepository.eliminar(id);
+    if (!categoriaEliminadaModel)
+      throw new AppError("Categoría no encontrada", 404);
+    return new CategoriaResponseDto(categoriaEliminadaModel);
+  }
+
+
 }
 
 export const categoriaService = new CategoriaService();

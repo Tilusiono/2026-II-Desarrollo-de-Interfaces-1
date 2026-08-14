@@ -95,6 +95,14 @@ export class CategoriaRepository {
 
         return resultado.changes ? await this.buscarPorId(id) : null;
     }
+
+    async eliminar(id) {
+    const categoriaModel = await this.buscarPorId(id);
+    if (!categoriaModel) return null;
+
+    this.db.prepare("DELETE FROM categorias WHERE id = ?").run(id);
+    return categoriaModel;
+  }
   }
 
         

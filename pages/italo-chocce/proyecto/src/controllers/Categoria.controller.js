@@ -33,5 +33,25 @@ export class CategoriaController {
             categoriaResponseDto,
         });
       }
+  async actualizar(req, res) {
+    const categoriaResponseDto = await this.categoriaService.actualizar(
+      req.params.id,
+      req.body ?? req,
+    );
+    res.json({
+      mensaje: "Categoría actualizada",
+      categoriaResponseDto,
+    });
+  }
+  async eliminar(req, res) {
+    const categoriaResponseDto = await this.categoriaService.eliminar(
+      req.params.id,
+    );
+    res.json({
+      mensaje: "Categoría eliminada",
+      categoriaResponseDto,
+    });
+  }
+
 }
 export const categoriaController = new CategoriaController(categoriaService);

@@ -3,41 +3,108 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Prueba inicial</title>
+    <title>Prueba inicial · Casino System</title>
     <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
     <link
       rel="stylesheet"
       href="/bootstrap-icons/font/bootstrap-icons.css"
     />
+    <style>
+      body {
+        background-color: #1a1d20;
+        color: #f8f9fa;
+      }
+    
+      .navbar-casino {
+        background-color: #dc3545 !important;
+        border-bottom: 3px solid #b02a37;
+      }
+      
+      .card-casino {
+        background-color: #212529;
+        border: 1px solid #343a40;
+        color: #f8f9fa;
+      }
+      
+      .btn-warning-casino {
+        background-color: #ffc107;
+        border-color: #ffc107;
+        color: #000;
+        font-weight: 600;
+      }
+      .btn-warning-casino:hover {
+        background-color: #ffca2c;
+        border-color: #ffc720;
+        color: #000;
+      }
+      .btn-outline-warning-casino {
+        color: #ffc107;
+        border-color: #ffc107;
+        font-weight: 600;
+      }
+      .btn-outline-warning-casino:hover {
+        background-color: #ffc107;
+        color: #000;
+      }
+      .text-warning-casino {
+        color: #ffc107 !important;
+      }
+    </style>
   </head>
-  <body class="bg-light">
-    <nav class="navbar navbar-dark bg-primary">
+  <body>
+    
+    <nav class="navbar navbar-dark navbar-casino shadow-sm">
       <div class="container">
         <span class="navbar-brand mb-0 h1">
-          <i class="bi bi-box-seam-fill me-2"></i>Productos Express
+          <i class="bi bi-box-seam-fill me-2"></i>Productos Express · Casino
         </span>
       </div>
     </nav>
 
     <main class="container py-5">
-      <div class="card border-0 shadow-sm mx-auto" style="max-width: 42rem">
+      <div class="card card-casino border-0 shadow-lg mx-auto" style="max-width: 44rem">
         <div class="card-body p-4 p-md-5 text-center">
-          <i class="bi bi-bootstrap-fill text-primary display-3"></i>
-          <h1 class="h3 mt-3">Configuración correcta</h1>
-          <p class="text-secondary">
+          <i class="bi bi-bootstrap-fill text-warning-casino display-3"></i>
+          <h1 class="h3 mt-3 text-warning-casino">Configuración correcta</h1>
+          <p class="text-secondary mb-4">
             Express está publicando Bootstrap 5.3.8 y Bootstrap Icons desde
             las dependencias instaladas con NPM.
           </p>
+
+          
+          <div class="d-grid gap-2 col-md-10 mx-auto mb-4 text-start">
+            <div class="text-secondary small fw-bold text-uppercase mb-1">Navegación de Pruebas (Hitos):</div>
+            <a href="/hitos/03-post.html" class="btn btn-outline-warning-casino btn-sm py-2">
+              <i class="bi bi-file-earmark-plus me-2"></i>03-post.html
+            </a>
+            <a href="/hitos/04-post.html" class="btn btn-outline-warning-casino btn-sm py-2">
+              <i class="bi bi-file-earmark-plus me-2"></i>04-post.html
+            </a>
+            <a href="/hitos/05-put.html" class="btn btn-outline-warning-casino btn-sm py-2">
+              <i class="bi bi-pencil-square me-2"></i>05-put.html
+            </a>
+            <a href="/hitos/06-patch.html" class="btn btn-outline-warning-casino btn-sm py-2">
+              <i class="bi bi-sliders me-2"></i>06-patch.html
+            </a>
+            <a href="/hitos/07-delete.html" class="btn btn-outline-danger btn-sm py-2 text-warning">
+              <i class="bi bi-trash me-2"></i>07-delete.html
+            </a>
+          </div>
+
+          <hr class="border-secondary my-4">
+
+         
           <button
-            class="btn btn-primary"
+            class="btn btn-warning-casino"
             type="button"
             data-bs-toggle="collapse"
             data-bs-target="#detalle-prueba"
           >
             <i class="bi bi-check-circle me-1"></i>Probar JavaScript
           </button>
+          
           <div id="detalle-prueba" class="collapse mt-3">
-            <div class="alert alert-success mb-0">
+            <div class="alert alert-success bg-dark text-success border-success mb-0 shadow-sm">
               Bootstrap CSS, JavaScript e iconos funcionan correctamente.
             </div>
           </div>

@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Casino System · Hito 6 · Probar PATCH</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/bootstrap-icons/font/bootstrap-icons.css" />
+    <style>
+      body {
+        background-color: #1a1d20;
+        color: #f8f9fa;
+      }
+      /* Barra superior de casino (roja) */
+      .navbar-casino {
+        background-color: #dc3545 !important;
+        border-bottom: 3px solid #b02a37;
+      }
+      /* Tarjetas con el fondo gris oscuro del sistema */
+      .card-casino {
+        background-color: #212529;
+        border: 1px solid #343a40;
+        color: #f8f9fa;
+      }
+      /* Inputs oscuros */
+      .form-control, .form-select {
+        background-color: #2b3035;
+        border-color: #495057;
+        color: #fff;
+      }
+      .form-control:focus, .form-select:focus {
+        background-color: #2b3035;
+        border-color: #ffc107;
+        color: #fff;
+        box-shadow: 0 0 0 0.25rem rgba(255, 193, 7, 0.25);
+      }
+      .form-control::placeholder {
+        color: #adb5bd;
+      }
+      /* Botones amarillos clásicos */
+      .btn-warning-casino {
+        background-color: #ffc107;
+        border-color: #ffc107;
+        color: #000;
+        font-weight: 600;
+      }
+      .btn-warning-casino:hover {
+        background-color: #ffca2c;
+        border-color: #ffc720;
+        color: #000;
+      }
+      .btn-outline-warning-casino {
+        color: #ffc107;
+        border-color: #ffc107;
+        font-weight: 600;
+      }
+      .btn-outline-warning-casino:hover {
+        background-color: #ffc107;
+        color: #000;
+      }
+      .text-warning-casino {
+        color: #ffc107 !important;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Barra superior de casino -->
+    <nav class="navbar navbar-dark navbar-casino py-3 shadow-sm">
+      <div class="container">
+        <span class="navbar-brand fw-bold fs-5">
+          🎲 Casino System · Hito 6 · Probar PATCH (Parcial)
+        </span>
+      </div>
+    </nav>
+
+    <main class="container py-4">
+      <div id="mensaje" class="alert d-none shadow-sm" role="alert"></div>
+      
+      <div class="row g-4">
+        <div class="col-lg-6">
+          <section class="card card-casino border-0 shadow-lg h-100">
+            <div class="card-body p-4">
+              <h1 class="h4 text-warning-casino mb-3">Enviar solamente algunos campos</h1>
+              
+              <form id="form-patch" class="row g-3">
+                <div class="col-12">
+                  <label class="form-label" for="id">ID</label>
+                  <input id="id" type="number" min="1" value="1" class="form-control" required />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="stock">Nuevo stock</label>
+                  <input id="stock" type="number" min="0" class="form-control" placeholder="Vacío = conservar" />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="precio">Nuevo precio</label>
+                  <input id="precio" type="number" min="0" step="0.01" class="form-control" placeholder="Vacío = conservar" />
+                </div>
+                <div class="col-12">
+                  <label class="form-label" for="activo">Estado</label>
+                  <select id="activo" class="form-select">
+                    <option value="">No enviar: conservar</option>
+                    <option value="true">Enviar true</option>
+                    <option value="false">Enviar false</option>
+                  </select>
+                </div>
+                <div class="col-12">
+                  <div class="form-check mb-2">
+                    <input id="enviar-descripcion" class="form-check-input" type="checkbox" />
+                    <label class="form-check-label" for="enviar-descripcion">Incluir descripción en PATCH</label>
+                  </div>
+                  <textarea id="descripcion" class="form-control" rows="2" placeholder="Si se incluye vacía, se enviará null"></textarea>
+                </div>
+                <div class="col-12 d-flex gap-2 pt-2">
+                  <button class="btn btn-warning-casino flex-grow-1">
+                    <i class="bi bi-send me-1"></i>Enviar PATCH
+                  </button>
+                  <button id="btn-consultar" type="button" class="btn btn-outline-warning-casino">
+                    <i class="bi bi-search me-1"></i>Consultar con GET
+                  </button>
+                </div>
+              </form>
+            </div>
+          </section>
+        </div>
+
+        <div class="col-lg-6">
+          <section class="card card-casino border-0 shadow-lg h-100">
+            <div class="card-body p-4">
+              <h2 class="h5 text-warning-casino">Body que se enviará</h2>
+              <pre id="body" class="bg-black text-warning border border-secondary rounded p-3">{}</pre>
+              
+              <h2 class="h5 mt-4 text-warning-casino">Producto guardado</h2>
+              <pre id="resultado" class="bg-black text-warning border border-secondary rounded p-3 mb-0" style="max-height: 250px; overflow-y: auto;">Ejecuta PATCH o GET.</pre>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      const mensaje = document.querySelector("#mensaje");
+      const bodyVista = document.querySelector("#body");
+      const resultado = document.querySelector("#resultado");
+
+      document.querySelector("#form-patch").addEventListener("submit", async (evento) => {
+        evento.preventDefault();
+        const id = Number(document.querySelector("#id").value);
+        const productoRequestDto = construirBody();
+        bodyVista.textContent = JSON.stringify(productoRequestDto, null, 2);
+
+        if (!Object.keys(productoRequestDto).length) {
+          mostrar("Selecciona por lo menos un campo para PATCH.", false);
+          return;
+        }
+
+        await ejecutar(async () => {
+          const respuestaHttp = await fetch(`/api/productos/${id}`, {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(productoRequestDto),
+          });
+          const respuesta = await respuestaHttp.json();
+          if (!respuestaHttp.ok) throw new Error(`HTTP ${respuestaHttp.status} · ${respuesta.mensaje}`);
+          resultado.textContent = JSON.stringify(respuesta.productoResponseDto, null, 2);
+          mostrar(`HTTP ${respuestaHttp.status} · ${respuesta.mensaje}`, true);
+        });
+      });
+
+      document.querySelector("#btn-consultar").addEventListener("click", consultar);
+
+      function construirBody() {
+        const productoRequestDto = {};
+        const stock = document.querySelector("#stock").value;
+        const precio = document.querySelector("#precio").value;
+        const activo = document.querySelector("#activo").value;
+
+        if (stock !== "") productoRequestDto.stock = Number(stock);
+        if (precio !== "") productoRequestDto.precio = Number(precio);
+        if (activo !== "") productoRequestDto.activo = activo === "true";
+        if (document.querySelector("#enviar-descripcion").checked) {
+          productoRequestDto.descripcion = document.querySelector("#descripcion").value.trim() || null;
+        }
+        return productoRequestDto;
+      }
+
+      async function consultar() {
+        const id = Number(document.querySelector("#id").value);
+        await ejecutar(async () => {
+          const respuestaHttp = await fetch(`/api/productos/${id}`);
+          const respuesta = await respuestaHttp.json();
+          if (!respuestaHttp.ok) throw new Error(`HTTP ${respuestaHttp.status} · ${respuesta.mensaje}`);
+          resultado.textContent = JSON.stringify(respuesta.productoResponseDto, null, 2);
+          mostrar("HTTP 200 · Producto consultado", true);
+        });
+      }
+
+      async function ejecutar(callback) {
+        try { await callback(); } catch (error) { mostrar(error.message, false); }
+      }
+      function mostrar(texto, correcto) {
+        mensaje.className = `alert alert-${correcto ? "success" : "danger"} shadow-sm`;
+        mensaje.textContent = texto;
+      }
+    </script>
+    <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
