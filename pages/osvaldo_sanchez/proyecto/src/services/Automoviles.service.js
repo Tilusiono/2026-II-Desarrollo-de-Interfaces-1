@@ -80,3 +80,5 @@ export class AutomovilesService {
 }
 
 export const automovilesService = new AutomovilesService();
+
+// no quiere agg data de tienda.sqlite
