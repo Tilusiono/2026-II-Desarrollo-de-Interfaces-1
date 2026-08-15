@@ -8,6 +8,7 @@ export class PerifericosController {
     this.perifericosService = perifericosServiceActual;
   }
 
+//POST
   async crear(perifericosRequestDto, response) {
     const perifericosResponseDto =
       await this.perifericosService.crear(perifericosRequestDto);
@@ -16,6 +17,24 @@ export class PerifericosController {
       perifericosResponseDto,
     });
   }
+
+
+// GET ALL
+  async listar(response) {
+    const perifericosResponseDto = await this.perifericosService.listar();
+    response.json({
+      total: perifericosResponseDto.length,
+      perifericosResponseDto,
+    });
+  }
+
+
+// GET BY ID  
+  async obtener(id, response) {
+    const perifericosResponseDto = await this.perifericosService.obtener(id);
+    response.json({ perifericosResponseDto });
+  }
+
 }
 
 export const perifericosController = new PerifericosController(perifericosService);

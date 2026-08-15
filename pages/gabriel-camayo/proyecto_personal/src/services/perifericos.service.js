@@ -69,6 +69,20 @@ export class PerifericosService {
       imagenMimeType: coincidencia[1],
     };
   }
+    
+  async listar() {
+    const perifericosModel = await this.perifericosRepository.listar();
+    return perifericosModel.map(
+      (perifericosModel) => new PerifericosResponseDto(perifericosModel),
+    );
+  }
+
+  async obtener(id) {
+    const perifericosModel = await this.perifericosRepository.buscarPorId(id);
+    if (!perifericosModel) throw new AppError("Periférico no encontrado", 404);
+    return new PerifericosResponseDto(perifericosModel);
+  }
+
 }
 
 export const perifericosService = new PerifericosService();
