@@ -13,6 +13,20 @@ export class ProductosController {
       productoResponseDto,
     });
   }
+    async listar(response) {
+    const productosResponseDto = await this.productosService.listar();
+    response.json({
+      total: productosResponseDto.length,
+      productosResponseDto,
+    });
+  }
+
+  async obtener(id, response) {
+    const productoResponseDto = await this.productosService.obtener(id);
+    response.json({ productoResponseDto });
+  }
+
+   
 }
 
 export const productosController = new ProductosController(productosService);

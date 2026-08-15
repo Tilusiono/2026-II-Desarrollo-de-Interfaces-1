@@ -77,6 +77,20 @@ export class AutomovilesService {
       imagenMimeType: coincidencia[1],
     };
   }
+    async listar() {
+    const automovilesModel = await this.automovilesRepository.listar();
+    return automovilesModel.map(
+      (automovilesModel) => new AutomovilesResponseDto(automovilesModel),
+    );
+  }
+
+  async obtener(id) {
+    const automovilesModel = await this.automovilesRepository.buscarPorId(id);
+    if (!automovilesModel) throw new AppError("Automovil no encontrado", 404);
+    return new AutomovilesResponseDto(automovilesModel);
+  }
+
+
 }
 
 export const automovilesService = new AutomovilesService();

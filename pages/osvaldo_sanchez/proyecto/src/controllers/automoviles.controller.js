@@ -13,6 +13,20 @@ export class AutomovilesController {
       automovilResponseDto,
     });
   }
+    async listar(response) {
+    const automovilesResponseDto = await this.automovilesService.listar();
+    response.json({
+      total: automovilesResponseDto.length,
+      automovilesResponseDto,
+    });
+  }
+
+  async obtener(id, response) {
+    const automovilResponseDto = await this.automovilesService.obtener(id);
+    response.json({ automovilResponseDto });
+  }
+
+   
 }
 
 export const automovilesController = new AutomovilesController(automovilesService);
