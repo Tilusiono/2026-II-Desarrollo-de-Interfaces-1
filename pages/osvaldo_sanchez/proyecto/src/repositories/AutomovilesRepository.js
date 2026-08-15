@@ -116,5 +116,15 @@ export class AutomovilesRepository {
     return this.buscarPorId(Number(resultado.lastInsertRowid));
   }
 
+  // delete
+    async eliminar(id) {
+    const automovilModel = await this.buscarPorId(id);
+    if (!automovilModel) return null;
+
+    this.db.prepare("DELETE FROM automoviles WHERE id = ?").run(Number(id));
+    return automovilModel;
+  }
+
+
 }
  

@@ -109,5 +109,15 @@ export class ProductoRepository {
 
     return this.buscarPorId(Number(resultado.lastInsertRowid));
   }
+
+  // delete
+    async eliminar(id) {
+    const productoModel = await this.buscarPorId(id);
+    if (!productoModel) return null;
+
+    this.db.prepare("DELETE FROM productos WHERE id = ?").run(Number(id));
+    return productoModel;
+  }
+
   
 }
