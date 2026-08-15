@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Sistema de gestión integral para Mini Market: control de productos, clientes y ventas."
+    >
+
+    <title>Mini Market - Sistema de Gestión</title>
+
+    <link
+        rel="stylesheet"
+        href="css/estilos.css"
+    >
+
+</head>
+
+<body>
+
+    <!-- ENCABEZADO -->
+    <header class="encabezado">
+
+        <div class="logo">
+            <span
+                role="img"
+                aria-label="Carrito de compras"
+            >🛒</span> Mini Market
+        </div>
+
+        <nav
+            class="menu"
+            aria-label="Navegación principal"
+        >
+
+            <button
+                type="button"
+                onclick="mostrarSeccion('inicio')"
+            >
+                Inicio
+            </button>
+
+            <button
+                type="button"
+                onclick="mostrarSeccion('productos')"
+            >
+                Productos
+            </button>
+
+            <button
+                type="button"
+                onclick="mostrarSeccion('clientes')"
+            >
+                Clientes
+            </button>
+
+            <button
+                type="button"
+                onclick="mostrarSeccion('ventas')"
+            >
+                Ventas
+            </button>
+
+        </nav>
+
+    </header>
+
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="contenedor">
+
+
+        <!-- INICIO -->
+        <section
+            id="inicio"
+            class="seccion activa"
+            aria-labelledby="titulo-inicio"
+        >
+
+            <div class="bienvenida">
+
+                <h1 id="titulo-inicio">
+                    🛒 Bienvenido a Mini Market
+                </h1>
+
+                <p>
+                    Sistema de gestión para nuestro Mini Market
+                </p>
+
+                <button
+                    type="button"
+                    class="boton-principal"
+                    onclick="mostrarSeccion('productos')"
+                >
+                    Ver productos
+                </button>
+
+            </div>
+
+
+            <div class="tarjetas">
+
+                <article
+                    class="tarjeta"
+                    onclick="mostrarSeccion('productos')"
+                    tabindex="0"
+                    role="button"
+                >
+
+                    <div
+                        class="icono"
+                        aria-hidden="true"
+                    >📦</div>
+
+                    <h3>Productos</h3>
+
+                    <p>Consulta y administra el catálogo e inventario de productos.</p>
+
+                </article>
+
+
+                <article
+                    class="tarjeta"
+                    onclick="mostrarSeccion('clientes')"
+                    tabindex="0"
+                    role="button"
+                >
+
+                    <div
+                        class="icono"
+                        aria-hidden="true"
+                    >👥</div>
+
+                    <h3>Clientes</h3>
+
+                    <p>Administra los datos y registro de clientes del Mini Market.</p>
+
+                </article>
+
+
+                <article
+                    class="tarjeta"
+                    onclick="mostrarSeccion('ventas')"
+                    tabindex="0"
+                    role="button"
+                >
+
+                    <div
+                        class="icono"
+                        aria-hidden="true"
+                    >💰</div>
+
+                    <h3>Ventas</h3>
+
+                    <p>Registra transacciones y consulta el historial de ventas.</p>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- PRODUCTOS -->
+        <section
+            id="productos"
+            class="seccion"
+            aria-labelledby="titulo-productos"
+        >
+
+            <div class="titulo-seccion">
+
+                <h2 id="titulo-productos">
+                    📦 Productos
+                </h2>
+
+                <button
+                    type="button"
+                    class="boton-principal"
+                    onclick="cargarProductos()"
+                >
+                    Actualizar
+                </button>
+
+            </div>
+
+
+            <div
+                id="listaProductos"
+                class="grid-productos"
+                aria-live="polite"
+            >
+
+                <p class="estado-carga">Cargando productos...</p>
+
+            </div>
+
+        </section>
+
+
+        <!-- CLIENTES -->
+        <section
+            id="clientes"
+            class="seccion"
+            aria-labelledby="titulo-clientes"
+        >
+
+            <div class="titulo-seccion">
+
+                <h2 id="titulo-clientes">
+                    👥 Clientes
+                </h2>
+
+                <button
+                    type="button"
+                    class="boton-principal"
+                    onclick="cargarClientes()"
+                >
+                    Actualizar
+                </button>
+
+            </div>
+
+
+            <div
+                id="listaClientes"
+                class="tabla-contenedor"
+                aria-live="polite"
+            >
+
+                <p class="estado-carga">Cargando clientes...</p>
+
+            </div>
+
+        </section>
+
+
+        <!-- VENTAS -->
+        <section
+            id="ventas"
+            class="seccion"
+            aria-labelledby="titulo-ventas"
+        >
+
+            <div class="titulo-seccion">
+
+                <h2 id="titulo-ventas">
+                    💰 Ventas
+                </h2>
+
+                <button
+                    type="button"
+                    class="boton-principal"
+                    onclick="cargarVentas()"
+                >
+                    Actualizar
+                </button>
+
+            </div>
+
+
+            <div
+                id="listaVentas"
+                class="tabla-contenedor"
+                aria-live="polite"
+            >
+
+                <p class="estado-carga">Cargando ventas...</p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- PIE DE PÁGINA -->
+    <footer class="pie">
+
+        <p>© 2026 Mini Market - Sistema de Gestión</p>
+
+    </footer>
+
+
+    <!-- ARCHIVOS JS -->
+    <script src="js/app.js"></script>
+
+</body>
+
+</html>

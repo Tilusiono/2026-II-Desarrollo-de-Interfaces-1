@@ -1,0 +1,19 @@
+{
+  "name": "minimarket-backend",
+  "version": "1.0.0",
+  "description": "Backend del sistema Mini Market",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "mysql2": "^3.23.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
