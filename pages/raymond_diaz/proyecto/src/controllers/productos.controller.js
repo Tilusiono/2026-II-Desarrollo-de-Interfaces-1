@@ -5,6 +5,14 @@ export class ProductosController {
     this.productosService = productosServiceActual;
   }
 
+  async listar(response) {
+    const productosResponseDto = await this.productosService.listar();
+    response.json({
+      total: productosResponseDto.length,
+      productosResponseDto,
+    });
+  }
+
   async crear(productoRequestDto, response) {
     const productoResponseDto =
       await this.productosService.crear(productoRequestDto);

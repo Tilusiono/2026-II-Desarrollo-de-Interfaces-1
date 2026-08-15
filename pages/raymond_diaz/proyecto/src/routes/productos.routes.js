@@ -6,6 +6,11 @@ import { ProductoRequestDto } from "../dtos/ProductoDto.js";
 
 const router = Router();
 
+router.get(
+  "/",
+  asyncHandler((request, response) => controller.listar(response)),
+);
+
 router.post(
   "/",
   validarProductoCompleto,

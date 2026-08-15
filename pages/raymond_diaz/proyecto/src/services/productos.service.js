@@ -9,6 +9,13 @@ export class ProductosService {
     this.productoRepository = productoRepository;
   }
 
+  async listar() {
+    const productosModel = await this.productoRepository.listar();
+    return productosModel.map(
+      (productoModel) => new ProductoResponseDto(productoModel),
+    );
+  }
+
   async crear(productoRequestDto) {
     await this.validarCodigo(productoRequestDto.codigo);
     const imagenDatos = this.convertirImagen(productoRequestDto.imagenBase64);
@@ -72,4 +79,3 @@ export class ProductosService {
 }
 
 export const productosService = new ProductosService();
-

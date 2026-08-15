@@ -1,4 +1,6 @@
 import { createRequire } from "node:module";
+import { mkdirSync } from "node:fs";
+import path from "node:path";
 import { sqlitePath } from "../config/storage.config.js";
 import Producto from "../models/Producto.js";
 
@@ -7,6 +9,7 @@ const require = createRequire(import.meta.url);
 export class ProductoRepository {
   constructor(archivo = sqlitePath) {
     const { DatabaseSync } = require("node:sqlite");
+    mkdirSync(path.dirname(archivo), { recursive: true });
     this.db = new DatabaseSync(archivo);
     this.db.exec("PRAGMA foreign_keys = ON");
     this.db.exec(`
