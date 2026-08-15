@@ -17,6 +17,15 @@ router.post(
   }),
 );
 
+  router.delete(
+  "/:id",
+  validarId,
+  asyncHandler((request, response) =>
+    controller.eliminar(Number(request.params.id), response),
+  ),
+);
+
+
 router.get("/",             asyncHandler((request, response) => controller.listar(response)));
 router.get("/:id",validarId,asyncHandler((request, response) =>controller.obtener(Number(request.params.id), response),),);
 
