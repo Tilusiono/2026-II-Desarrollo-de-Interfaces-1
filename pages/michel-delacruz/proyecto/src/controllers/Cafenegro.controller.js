@@ -33,10 +33,10 @@ export class CafenegroController {
     });
   }
     async eliminar(id, response) {
-    const productoResponseDto = await this.productosService.eliminar(id);
+    const cafenegroResponseDto = await this.CafenegroService.eliminar(id);
     response.json({
-      mensaje: "Producto eliminado",
-      productoResponseDto,
+      mensaje: "cafe eliminado",
+      cafenegroResponseDto,
     });
   }
 
