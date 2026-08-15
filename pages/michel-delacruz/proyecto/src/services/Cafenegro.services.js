@@ -99,7 +99,7 @@ async obtener(id) {
     const cafenegroEliminadoModel = await this.cafenegroRepository.eliminar(id);
     if (!cafenegroEliminadoModel)
       throw new AppError("Cafenegro no encontrado", 404);
-    return new new CafenegroResponseDto(cafenegroEliminadoModel);
+    return new CafenegroResponseDto(cafenegroEliminadoModel);
   }
 
 } 
