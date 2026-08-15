@@ -90,6 +90,12 @@ export class AutomovilesService {
     return new AutomovilesResponseDto(automovilesModel);
   }
 
+  async eliminar(id) {
+    const automovilEliminadoModel = await this.automovilesRepository.eliminar(id);
+    if (!automovilEliminadoModel)
+      throw new AppError("Automovil no encontrado", 404);
+    return new AutomovilesResponseDto(automovilEliminadoModel);
+  }
 
 }
 

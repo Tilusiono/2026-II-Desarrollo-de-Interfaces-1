@@ -82,6 +82,14 @@ export class ProductosService {
     return new ProductoResponseDto(productoModel);
   }
 
+    async eliminar(id) {
+    const productoEliminadoModel = await this.productoRepository.eliminar(id);
+    if (!productoEliminadoModel)
+      throw new AppError("Producto no encontrado", 404);
+    return new ProductoResponseDto(productoEliminadoModel);
+  }
+
+
 
 }
 
