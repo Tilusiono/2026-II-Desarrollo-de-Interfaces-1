@@ -96,10 +96,10 @@ async obtener(id) {
 
   return new CafenegroResponseDto(cafenegroModel);
 }   async eliminar(id) {
-    const productoEliminadoModel = await this.productoRepository.eliminar(id);
-    if (!productoEliminadoModel)
-      throw new AppError("Producto no encontrado", 404);
-    return new ProductoResponseDto(productoEliminadoModel);
+    const cafenegroEliminadoModel = await this.cafenegroRepository.eliminar(id);
+    if (!cafenegroEliminadoModel)
+      throw new AppError("Cafenegro no encontrado", 404);
+    return new new CafenegroResponseDto(cafenegroEliminadoModel);
   }
 
 } 
