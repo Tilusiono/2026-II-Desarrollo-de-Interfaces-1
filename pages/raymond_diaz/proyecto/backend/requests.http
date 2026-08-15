@@ -1,0 +1,104 @@
+@baseUrl = http://localhost:4214/api
+
+### 1. GET: comprobar conexión con la API y SQLite
+GET {{baseUrl}}
+
+### 2. GET: listar productos (usa SELECT)
+GET {{baseUrl}}/productos
+
+### 3. POST: crear producto
+POST {{baseUrl}}/productos
+Content-Type: application/json
+
+{
+  "codigo": "LAP-LEN-15",
+  "nombre": "Laptop Lenovo IdeaPad 15",
+  "marca": "Lenovo",
+  "descripcion": "Intel Core i5, 16 GB RAM y SSD de 512 GB",
+  "precio": 2799.90,
+  "stock": 8,
+  "categoriaId": 1,
+  "proveedorId": 1,
+  "activo": true
+}
+
+### 4. GET: obtener producto por ID
+GET {{baseUrl}}/productos/7
+
+### 5. PUT: reemplazar todos los datos del producto
+PUT {{baseUrl}}/productos/7
+Content-Type: application/json
+
+{
+  "codigo": "LAP-LEN-15",
+  "nombre": "Laptop Lenovo IdeaPad 15 actualizada",
+  "marca": "Lenovo",
+  "descripcion": "Versión completa reemplazada mediante PUT",
+  "precio": 2699.90,
+  "stock": 10,
+  "categoriaId": 1,
+  "proveedorId": 1,
+  "activo": true
+}
+
+### 6. PATCH: cambiar solamente stock y estado
+PATCH {{baseUrl}}/productos/7
+Content-Type: application/json
+
+{
+  "stock": 12,
+  "activo": false
+}
+
+### 7. GET: buscar por texto y categoría
+GET {{baseUrl}}/productos/buscar?texto=Lenovo&categoriaId=1
+
+### 8. QUERY: consulta educativa con filtros
+QUERY {{baseUrl}}/productos/consulta?categoriaId=1&precioMax=3000
+
+### 9. DELETE: dar de baja el producto
+DELETE {{baseUrl}}/productos/7
+
+### 10. POST: crear usuario
+POST {{baseUrl}}/usuarios
+Content-Type: application/json
+
+{
+  "documento": "74443322",
+  "nombres": "María",
+  "apellidos": "López Torres",
+  "correo": "maria.lopez.demo@example.com",
+  "telefono": "987654333",
+  "direccion": "Lima, Perú",
+  "rol": "cliente",
+  "activo": true
+}
+
+### 11. GET: listar usuarios
+GET {{baseUrl}}/usuarios
+
+### 12. PUT: reemplazar usuario
+PUT {{baseUrl}}/usuarios/4
+Content-Type: application/json
+
+{
+  "documento": "74443322",
+  "nombres": "María Elena",
+  "apellidos": "López Torres",
+  "correo": "maria.lopez.demo@example.com",
+  "telefono": "999888777",
+  "direccion": "Lima, Perú",
+  "rol": "vendedor",
+  "activo": true
+}
+
+### 13. PATCH: actualizar solo el estado del usuario
+PATCH {{baseUrl}}/usuarios/4
+Content-Type: application/json
+
+{
+  "activo": false
+}
+
+### 14. DELETE: dar de baja al usuario
+DELETE {{baseUrl}}/usuarios/4

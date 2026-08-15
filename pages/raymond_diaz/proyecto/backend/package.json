@@ -1,0 +1,26 @@
+{
+  "name": "tienda-computadoras-api",
+  "version": "1.0.0",
+  "description": "API REST y aplicación web para gestionar productos y usuarios de una tienda de computadoras",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "node --watch app.js",
+    "test": "node --test --test-reporter=spec",
+    "test:coverage": "node --test --experimental-test-coverage",
+    "format": "prettier --write ."
+  },
+  "engines": {
+    "node": ">=22.13"
+  },
+  "dependencies": {
+    "bootstrap": "^5.3.8",
+    "bootstrap-icons": "^1.13.1",
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "prettier": "^3.9.6"
+  },
+  "license": "ISC"
+}

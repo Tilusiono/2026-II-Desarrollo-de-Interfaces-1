@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Sistema de gestión de productos y clientes para una tienda de computadoras" />
+    <title>ByteMarket | Gestión de computadoras</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/bootstrap-icons/bootstrap-icons.css" />
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#contenido">Saltar al contenido principal</a>
+    <nav class="navbar navbar-expand-lg navbar-dark app-navbar" aria-label="Navegación principal">
+      <div class="container-xl">
+        <a class="navbar-brand d-flex align-items-center gap-2" href="#inicio" aria-label="ByteMarket, inicio">
+          <span class="brand-mark" aria-hidden="true"><i class="bi bi-cpu-fill"></i></span>
+          <span>Byte<span class="brand-accent">Market</span></span>
+        </a>
+        <div class="connection-pill" id="connection-status" role="status" aria-live="polite">
+          <span class="status-dot"></span>
+          <span>Conectando con SQLite…</span>
+        </div>
+      </div>
+    </nav>
+
+    <header class="hero" id="inicio">
+      <div class="container-xl hero-content">
+        <div>
+          <p class="eyebrow"><i class="bi bi-shield-check me-2"></i>Panel de gestión seguro</p>
+          <h1>Controla tu tienda de computadoras en un solo lugar</h1>
+          <p class="hero-copy">Registra productos y clientes, actualiza el inventario y comprueba cómo cada cambio permanece guardado en la base de datos.</p>
+        </div>
+        <div class="hero-badge" aria-label="Tecnologías utilizadas">
+          <i class="bi bi-database-check" aria-hidden="true"></i>
+          <div><strong>Node.js + SQLite</strong><span>API REST persistente</span></div>
+        </div>
+      </div>
+    </header>
+
+    <main class="container-xl py-4 py-lg-5" id="contenido" tabindex="-1">
+      <div id="app-message" class="alert app-alert d-none" role="alert" aria-live="assertive"></div>
+
+      <section class="metrics-grid" aria-labelledby="resumen-title">
+        <h2 class="visually-hidden" id="resumen-title">Resumen del negocio</h2>
+        <article class="metric-card metric-indigo">
+          <span class="metric-icon"><i class="bi bi-box-seam"></i></span>
+          <div><span class="metric-label">Productos activos</span><strong id="metric-products">—</strong></div>
+        </article>
+        <article class="metric-card metric-cyan">
+          <span class="metric-icon"><i class="bi bi-stack"></i></span>
+          <div><span class="metric-label">Unidades en stock</span><strong id="metric-stock">—</strong></div>
+        </article>
+        <article class="metric-card metric-amber">
+          <span class="metric-icon"><i class="bi bi-exclamation-triangle"></i></span>
+          <div><span class="metric-label">Stock bajo</span><strong id="metric-low-stock">—</strong></div>
+        </article>
+        <article class="metric-card metric-green">
+          <span class="metric-icon"><i class="bi bi-people"></i></span>
+          <div><span class="metric-label">Usuarios activos</span><strong id="metric-users">—</strong></div>
+        </article>
+      </section>
+
+      <nav class="section-tabs" aria-label="Módulos del sistema">
+        <button class="section-tab active" type="button" data-panel="products-panel" aria-selected="true">
+          <i class="bi bi-pc-display-horizontal"></i> Productos
+        </button>
+        <button class="section-tab" type="button" data-panel="users-panel" aria-selected="false">
+          <i class="bi bi-person-badge"></i> Usuarios
+        </button>
+        <button class="section-tab" type="button" data-panel="api-panel" aria-selected="false">
+          <i class="bi bi-braces"></i> Métodos HTTP
+        </button>
+      </nav>
+
+      <section id="products-panel" class="app-panel" aria-labelledby="products-heading">
+        <div class="panel-heading">
+          <div><p class="section-kicker">Inventario</p><h2 id="products-heading">Gestión de productos</h2></div>
+          <button class="btn btn-primary" id="new-product" type="button"><i class="bi bi-plus-lg me-1"></i>Nuevo producto</button>
+        </div>
+        <div class="workspace-grid">
+          <section class="form-card" aria-labelledby="product-form-title">
+            <div class="form-card-header">
+              <span class="method-badge method-post" id="product-method">POST</span>
+              <div><h3 id="product-form-title">Registrar producto</h3><p>Los campos con * son obligatorios.</p></div>
+            </div>
+            <form id="product-form" novalidate>
+              <div class="row g-3">
+                <div class="col-sm-5"><label class="form-label" for="product-code">Código *</label><input class="form-control" id="product-code" name="codigo" maxlength="30" pattern="[A-Za-z0-9-]{3,30}" required /></div>
+                <div class="col-sm-7"><label class="form-label" for="product-name">Nombre *</label><input class="form-control" id="product-name" name="nombre" maxlength="100" required /></div>
+                <div class="col-sm-6"><label class="form-label" for="product-brand">Marca *</label><input class="form-control" id="product-brand" name="marca" maxlength="60" required /></div>
+                <div class="col-sm-3"><label class="form-label" for="product-price">Precio (S/) *</label><input class="form-control" id="product-price" name="precio" type="number" min="0" step="0.01" required /></div>
+                <div class="col-sm-3"><label class="form-label" for="product-stock">Stock *</label><input class="form-control" id="product-stock" name="stock" type="number" min="0" step="1" required /></div>
+                <div class="col-sm-6"><label class="form-label" for="product-category">Categoría *</label><select class="form-select" id="product-category" name="categoriaId" required><option value="">Seleccione…</option></select></div>
+                <div class="col-sm-6"><label class="form-label" for="product-supplier">Proveedor</label><select class="form-select" id="product-supplier" name="proveedorId"><option value="">Sin proveedor</option></select></div>
+                <div class="col-12"><label class="form-label" for="product-description">Descripción</label><textarea class="form-control" id="product-description" name="descripcion" rows="2" maxlength="500"></textarea></div>
+                <div class="col-12"><div class="form-check form-switch"><input class="form-check-input" id="product-active" name="activo" type="checkbox" checked /><label class="form-check-label" for="product-active">Producto activo y visible</label></div></div>
+              </div>
+              <div class="form-actions"><button class="btn btn-primary" id="save-product" type="submit"><i class="bi bi-database-add me-1"></i>Guardar con POST</button><button class="btn btn-light d-none" id="cancel-product" type="button">Cancelar edición</button></div>
+            </form>
+          </section>
+
+          <section class="data-card" aria-labelledby="products-list-title">
+            <div class="data-toolbar">
+              <div><h3 id="products-list-title">Productos guardados</h3><p id="products-count">Cargando registros…</p></div>
+              <div class="filters">
+                <label class="visually-hidden" for="product-search">Buscar productos</label><div class="input-group"><span class="input-group-text"><i class="bi bi-search"></i></span><input class="form-control" id="product-search" type="search" placeholder="Buscar por nombre, marca o código" /></div>
+                <label class="visually-hidden" for="product-filter-category">Filtrar por categoría</label><select class="form-select" id="product-filter-category"><option value="">Todas las categorías</option></select>
+              </div>
+            </div>
+            <div class="table-responsive"><table class="table align-middle app-table"><thead><tr><th>Producto</th><th>Categoría</th><th class="text-end">Precio</th><th class="text-center">Stock</th><th>Estado</th><th class="text-end">Acciones</th></tr></thead><tbody id="products-body"></tbody></table></div>
+          </section>
+        </div>
+      </section>
+
+      <section id="users-panel" class="app-panel d-none" aria-labelledby="users-heading">
+        <div class="panel-heading"><div><p class="section-kicker">Clientes y equipo</p><h2 id="users-heading">Gestión de usuarios</h2></div><button class="btn btn-primary" id="new-user" type="button"><i class="bi bi-person-plus me-1"></i>Nuevo usuario</button></div>
+        <div class="workspace-grid">
+          <section class="form-card" aria-labelledby="user-form-title">
+            <div class="form-card-header"><span class="method-badge method-post" id="user-method">POST</span><div><h3 id="user-form-title">Registrar usuario</h3><p>Los datos se validan antes de guardarse.</p></div></div>
+            <form id="user-form" novalidate>
+              <div class="row g-3">
+                <div class="col-sm-5"><label class="form-label" for="user-document">Documento *</label><input class="form-control" id="user-document" name="documento" inputmode="numeric" pattern="[0-9]{8,12}" required /></div>
+                <div class="col-sm-7"><label class="form-label" for="user-email">Correo *</label><input class="form-control" id="user-email" name="correo" type="email" required /></div>
+                <div class="col-sm-6"><label class="form-label" for="user-names">Nombres *</label><input class="form-control" id="user-names" name="nombres" required /></div>
+                <div class="col-sm-6"><label class="form-label" for="user-lastnames">Apellidos *</label><input class="form-control" id="user-lastnames" name="apellidos" required /></div>
+                <div class="col-sm-6"><label class="form-label" for="user-phone">Teléfono</label><input class="form-control" id="user-phone" name="telefono" inputmode="tel" pattern="[0-9]{7,15}" /></div>
+                <div class="col-sm-6"><label class="form-label" for="user-role">Rol *</label><select class="form-select" id="user-role" name="rol" required><option value="cliente">Cliente</option><option value="vendedor">Vendedor</option><option value="administrador">Administrador</option></select></div>
+                <div class="col-12"><label class="form-label" for="user-address">Dirección</label><input class="form-control" id="user-address" name="direccion" maxlength="200" /></div>
+                <div class="col-12"><div class="form-check form-switch"><input class="form-check-input" id="user-active" name="activo" type="checkbox" checked /><label class="form-check-label" for="user-active">Usuario activo</label></div></div>
+              </div>
+              <div class="form-actions"><button class="btn btn-primary" id="save-user" type="submit"><i class="bi bi-database-add me-1"></i>Guardar con POST</button><button class="btn btn-light d-none" id="cancel-user" type="button">Cancelar edición</button></div>
+            </form>
+          </section>
+          <section class="data-card" aria-labelledby="users-list-title">
+            <div class="data-toolbar"><div><h3 id="users-list-title">Usuarios guardados</h3><p id="users-count">Cargando registros…</p></div><div class="filters"><label class="visually-hidden" for="user-search">Buscar usuarios</label><div class="input-group"><span class="input-group-text"><i class="bi bi-search"></i></span><input class="form-control" id="user-search" type="search" placeholder="Buscar nombre, DNI o correo" /></div><label class="visually-hidden" for="user-filter-role">Filtrar por rol</label><select class="form-select" id="user-filter-role"><option value="">Todos los roles</option><option value="cliente">Cliente</option><option value="vendedor">Vendedor</option><option value="administrador">Administrador</option></select></div></div>
+            <div class="table-responsive"><table class="table align-middle app-table"><thead><tr><th>Usuario</th><th>Documento</th><th>Contacto</th><th>Rol</th><th>Estado</th><th class="text-end">Acciones</th></tr></thead><tbody id="users-body"></tbody></table></div>
+          </section>
+        </div>
+      </section>
+
+      <section id="api-panel" class="app-panel d-none" aria-labelledby="api-heading">
+        <div class="panel-heading"><div><p class="section-kicker">Aprendizaje comprobable</p><h2 id="api-heading">Flujo de métodos HTTP y SQL</h2></div><button class="btn btn-outline-primary" id="run-query" type="button"><i class="bi bi-play-circle me-1"></i>Probar QUERY</button></div>
+        <div class="api-grid">
+          <article class="info-card"><span class="method-badge method-get">GET</span><h3>Leer y buscar</h3><p>Solicita los registros mediante consultas <code>SELECT</code> parametrizadas sin alterar la base de datos.</p><code>GET /api/productos</code></article>
+          <article class="info-card"><span class="method-badge method-post">POST</span><h3>Crear</h3><p>Valida el formulario, inserta el registro y responde con el nuevo identificador.</p><code>POST /api/productos</code></article>
+          <article class="info-card"><span class="method-badge method-put">PUT</span><h3>Reemplazar</h3><p>Exige todos los campos y reemplaza el estado completo del recurso seleccionado.</p><code>PUT /api/productos/:id</code></article>
+          <article class="info-card"><span class="method-badge method-patch">PATCH</span><h3>Actualizar una parte</h3><p>Modifica solamente los campos enviados, por ejemplo el stock o el estado.</p><code>PATCH /api/productos/:id</code></article>
+          <article class="info-card"><span class="method-badge method-delete">DELETE</span><h3>Eliminar</h3><p>Realiza una baja lógica para conservar la trazabilidad de ventas e inventario.</p><code>DELETE /api/productos/:id</code></article>
+          <article class="info-card"><span class="method-badge method-query">QUERY</span><h3>Consulta educativa</h3><p>Ejecuta los mismos filtros del buscador, pero exige el verbo personalizado de la guía.</p><code>QUERY /api/productos/consulta</code></article>
+        </div>
+        <div class="query-result"><div><h3>Resultado de la prueba QUERY</h3><p>La respuesta aparecerá aquí sin recargar la página.</p></div><pre id="query-output" tabindex="0">Presiona “Probar QUERY”.</pre></div>
+      </section>
+    </main>
+
+    <dialog id="confirm-dialog" class="confirm-dialog" aria-labelledby="confirm-title">
+      <form method="dialog"><span class="dialog-icon"><i class="bi bi-exclamation-triangle"></i></span><h2 id="confirm-title">Confirmar eliminación</h2><p id="confirm-message">Este registro dejará de aparecer en el sistema.</p><div class="dialog-actions"><button class="btn btn-light" value="cancel">Cancelar</button><button class="btn btn-danger" value="confirm">Sí, eliminar</button></div></form>
+    </dialog>
+
+    <footer><div class="container-xl"><span><i class="bi bi-cpu me-2"></i>ByteMarket · Tienda de computadoras</span><span>Proyecto individual · Desarrollo de Interfaces 1</span></div></footer>
+    <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="/js/main.js"></script>
+  </body>
+</html>
