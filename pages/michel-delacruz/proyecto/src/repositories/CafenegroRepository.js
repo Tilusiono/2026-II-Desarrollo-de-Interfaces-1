@@ -110,11 +110,11 @@ export class CafenegrosRepository {
   }
    // DELETE
      async eliminar(id) {
-    const productoModel = await this.buscarPorId(id);
-    if (!productoModel) return null;
+    const cafenegroModel = await this.buscarPorId(id);
+    if (!cafenegroModel) return null;
 
-    this.db.prepare("DELETE FROM productos WHERE id = ?").run(Number(id));
-    return productoModel;
+    this.db.prepare("DELETE FROM Cafenegro WHERE id = ?").run(Number(id));
+    return cafenegroModel;
   }
 
 }
