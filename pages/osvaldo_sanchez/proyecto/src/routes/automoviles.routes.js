@@ -4,6 +4,8 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { AutomovilesRequestDto } from "../dtos/AutomovilesDto.js";
 //import { validarAutomovilesCompleto as validacion } from "../middlewares/validacion.middleware.js";
 import { automovilesController as controller } from "../controllers/automoviles.controller.js";
+import { validarId } from "../middlewares/id.middleware.js";
+
 
 const router = Router();
 
