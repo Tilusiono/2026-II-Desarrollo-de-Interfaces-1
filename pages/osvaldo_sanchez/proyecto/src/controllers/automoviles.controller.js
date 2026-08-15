@@ -26,7 +26,15 @@ export class AutomovilesController {
     response.json({ automovilResponseDto });
   }
 
-   
+  // delete
+    async eliminar(id, response) {
+    const automovilResponseDto = await this.automovilesService.eliminar(id);
+    response.json({
+      mensaje: "Automóvil eliminado",
+      automovilResponseDto,
+    });
+  }
+
 }
 
 export const automovilesController = new AutomovilesController(automovilesService);
