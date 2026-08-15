@@ -32,6 +32,14 @@ export class CafenegroController {
       cafenegroResponseDto,
     });
   }
+    async eliminar(id, response) {
+    const productoResponseDto = await this.productosService.eliminar(id);
+    response.json({
+      mensaje: "Producto eliminado",
+      productoResponseDto,
+    });
+  }
+
 }
 
 export const cafenegroController =
