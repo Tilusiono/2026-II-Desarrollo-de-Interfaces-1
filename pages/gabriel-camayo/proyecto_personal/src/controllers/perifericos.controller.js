@@ -8,7 +8,7 @@ export class PerifericosController {
     this.perifericosService = perifericosServiceActual;
   }
 
-//POST
+  //POST
   async crear(perifericosRequestDto, response) {
     const perifericosResponseDto =
       await this.perifericosService.crear(perifericosRequestDto);
@@ -19,7 +19,7 @@ export class PerifericosController {
   }
 
 
-// GET ALL
+  // GET ALL
   async listar(response) {
     const perifericosResponseDto = await this.perifericosService.listar();
     response.json({
@@ -29,11 +29,24 @@ export class PerifericosController {
   }
 
 
-// GET BY ID  
+  // GET BY ID  
   async obtener(id, response) {
     const perifericosResponseDto = await this.perifericosService.obtener(id);
     response.json({ perifericosResponseDto });
   }
+
+  // PUT
+  async modificar(id, perifericosRequestDto, response) {
+    const perifericosResponseDto = await this.perifericosService.modificar(
+      id,
+      perifericosRequestDto,
+    );
+    response.json({
+      mensaje: "Periférico reemplazado",
+      perifericosResponseDto,
+    });
+  }
+
 
 }
 

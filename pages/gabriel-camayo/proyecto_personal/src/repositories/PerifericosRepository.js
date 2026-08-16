@@ -28,7 +28,7 @@ export class PerifericosRepository {
 
 
 
-//GET ALL
+  //GET ALL
   async listar() {
     const filas = this.db.prepare("SELECT * FROM perifericos ORDER BY id").all();
 
@@ -46,12 +46,12 @@ export class PerifericosRepository {
           fila.stock,
           fila.horaRegistro,
           fila.fechaHoraRegistro,
-         
+
         ),
     );
   }
 
-//GET BY ID
+  //GET BY ID
   async buscarPorId(id) {
     const fila = this.db
       .prepare("SELECT * FROM perifericos WHERE id = ?")
@@ -74,7 +74,7 @@ export class PerifericosRepository {
     );
   }
 
-//POST
+  //POST
   async crear(periferico) {
     const resultado = this.db
       .prepare(
@@ -97,8 +97,46 @@ export class PerifericosRepository {
         periferico.stock,
         periferico.horaRegistro,
         periferico.fechaHoraRegistro,
-        );
+      );
 
     return this.buscarPorId(Number(resultado.lastInsertRowid));
   }
+
+
+  //PUT
+  async modificar(id, perifericosModel) {
+    const resultado = this.db
+      .prepare(
+        `
+        UPDATE perifericos
+        SET codigo = ?,
+            tipo = ?,
+            marca = ?,
+            modelo = ?,
+            tipoConexion = ?,
+            color = ?,
+            precio = ?,
+            stock = ?,
+            horaRegistro = ?,
+            fechaHoraRegistro = ?
+        WHERE id = ?
+      `,
+      )
+      .run(
+        perifericosModel.codigo,
+        perifericosModel.tipo,
+        perifericosModel.marca,
+        perifericosModel.modelo,
+        perifericosModel.tipoConexion,
+        perifericosModel.color,
+        perifericosModel.precio,
+        perifericosModel.stock,
+        perifericosModel.horaRegistro,
+        perifericosModel.fechaHoraRegistro,
+        Number(id),
+      );
+
+    return resultado.changes ? this.buscarPorId(id) : null;
+  }
+
 }

@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Hito 5 - PUT Periféricos</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/bootstrap-icons/font/bootstrap-icons.css" />
+    <style>
+      /* Toques azules personalizados para diferenciarlo */
+      .navbar-custom { background-color: #0a3d6e !important; }
+      .card-custom { border-top: 4px solid #0a3d6e; }
+    </style>
+  </head>
+  <body class="bg-primary-subtle">
+    <nav class="navbar navbar-dark navbar-custom shadow-sm">
+      <div class="container">
+        <span class="navbar-brand"><i class="bi bi-pencil-square me-2"></i>Hito 5 · PUT Periféricos</span>
+      </div>
+    </nav>
+
+    <main class="container py-4">
+      <div id="mensaje" class="alert d-none" role="alert"></div>
+      
+      <section class="card card-custom border-0 shadow-sm">
+        <div class="card-body p-4">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+              <h1 class="h4 text-primary-emphasis mb-1">Actualizar un periférico</h1>
+              <p class="text-secondary mb-0">PUT /api/perifericos/:id</p>
+            </div>
+            <span class="badge bg-primary">Proyecto Gabriel</span>
+          </div>
+
+          <div class="row g-3 align-items-end mb-4 bg-light p-3 rounded border">
+            <div class="col-md-4">
+              <label class="form-label fw-bold text-primary-emphasis" for="id">ID que se reemplazará</label>
+              <input id="id" type="number" min="1" value="1" class="form-control" />
+            </div>
+            <div class="col-md-4">
+              <button id="btn-cargar" type="button" class="btn btn-outline-primary w-100 fw-bold">
+                <i class="bi bi-download me-1"></i>1. Cargar datos con GET
+              </button>
+            </div>
+          </div>
+
+          <form id="form-put" class="row g-3">
+            <!-- Fila 1 -->
+            <div class="col-md-3">
+              <label class="form-label fw-bold text-primary-emphasis" for="codigo">Código</label>
+              <input id="codigo" class="form-control" required disabled />
+            </div>
+            <div class="col-md-3">
+              <label class="form-label fw-bold text-primary-emphasis" for="tipo">Tipo</label>
+              <select id="tipo" class="form-select" required disabled>
+                <option value="Mouse">Mouse</option>
+                <option value="Teclado">Teclado</option>
+                <option value="Monitor">Monitor</option>
+                <option value="Auriculares">Auriculares</option>
+                <option value="Micrófono">Micrófono</option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <label class="form-label fw-bold text-primary-emphasis" for="marca">Marca</label>
+              <input id="marca" class="form-control" required disabled />
+            </div>
+            <div class="col-md-3">
+              <label class="form-label fw-bold text-primary-emphasis" for="modelo">Modelo</label>
+              <input id="modelo" class="form-control" required disabled />
+            </div>
+
+            <!-- Fila 2 -->
+            <div class="col-md-3">
+              <label class="form-label fw-bold text-primary-emphasis" for="tipoConexion">Conexión</label>
+              <select id="tipoConexion" class="form-select" required disabled>
+                <option value="Cable USB">Cable USB</option>
+                <option value="Inalámbrico">Inalámbrico (Dongle)</option>
+                <option value="Bluetooth">Bluetooth</option>
+                <option value="Jack 3.5mm">Jack 3.5mm</option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <label class="form-label fw-bold text-primary-emphasis" for="color">Color</label>
+              <input id="color" class="form-control" required disabled />
+            </div>
+            <div class="col-md-3">
+              <label class="form-label fw-bold text-primary-emphasis" for="precio">Precio (S/)</label>
+              <input id="precio" type="number" min="0" step="0.01" class="form-control" required disabled />
+            </div>
+            <div class="col-md-3">
+              <label class="form-label fw-bold text-primary-emphasis" for="stock">Stock</label>
+              <input id="stock" type="number" min="0" class="form-control" required disabled />
+            </div>
+
+            <!-- Fila 3 -->
+            <div class="col-md-3">
+              <label class="form-label fw-bold text-primary-emphasis" for="horaRegistro">Hora de Registro</label>
+              <input id="horaRegistro" type="time" class="form-control" required disabled />
+            </div>
+            <div class="col-md-4">
+              <label class="form-label fw-bold text-primary-emphasis" for="fechaHoraRegistro">Fecha y Hora</label>
+              <input id="fechaHoraRegistro" type="datetime-local" class="form-control" required disabled />
+            </div>
+            <div class="col-md-5">
+              <label class="form-label fw-bold text-primary-emphasis" for="imagen">Reemplazar Imagen</label>
+              <input id="imagen" type="file" accept="image/*" class="form-control" disabled />
+            </div>
+
+            <div class="col-12 mt-4">
+              <button id="btn-guardar" class="btn btn-primary w-100 fw-bold" disabled>
+                <i class="bi bi-save me-1"></i>2. Reemplazar todos los campos con PUT
+              </button>
+            </div>
+          </form>
+          
+          <pre id="resultado" class="bg-dark text-info border border-secondary rounded p-3 mt-4 mb-0 d-none"></pre>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      let imagenActualBase64 = null;
+      const mensaje = document.querySelector("#mensaje");
+      const resultado = document.querySelector("#resultado");
+
+      document.querySelector("#btn-cargar").addEventListener("click", cargarPeriferico);
+      document.querySelector("#form-put").addEventListener("submit", reemplazarPeriferico);
+
+      // Habilitar los campos del formulario solo después de cargar los datos
+      function habilitarFormulario() {
+        const inputs = document.querySelectorAll("#form-put input, #form-put select, #btn-guardar");
+        inputs.forEach(input => input.disabled = false);
+      }
+
+      async function cargarPeriferico() {
+        const id = Number(document.querySelector("#id").value);
+        await ejecutar(async () => {
+          const respuestaHttp = await fetch(`/api/perifericos/${id}`);
+          const respuesta = await respuestaHttp.json();
+          if (!respuestaHttp.ok) throw new Error(`HTTP ${respuestaHttp.status} · ${respuesta.mensaje}`);
+
+          // Manejar la estructura de respuesta según el backend
+          const periferico = respuesta.perifericosResponseDto || respuesta;
+          
+          // Llenar todos los campos
+          const camposTexto = ["codigo", "tipo", "marca", "modelo", "tipoConexion", "color", "stock", "precio", "horaRegistro"];
+          for (const campo of camposTexto) {
+            document.querySelector(`#${campo}`).value = periferico[campo];
+          }
+          
+          document.querySelector("#fechaHoraRegistro").value = String(periferico.fechaHoraRegistro).slice(0, 16);
+          imagenActualBase64 = periferico.imagenBase64 || null;
+          
+          habilitarFormulario();
+          mostrar(`HTTP 200 · Periférico ${id} cargado. Modifica cualquier campo y haz clic en reemplazar.`, true);
+        });
+      }
+
+      async function reemplazarPeriferico(evento) {
+        evento.preventDefault();
+        const id = Number(document.querySelector("#id").value);
+
+        await ejecutar(async () => {
+          const archivo = document.querySelector("#imagen").files[0];
+          const imagenBase64 = archivo ? await convertirBase64(archivo) : imagenActualBase64;
+          
+          // Construir el DTO específico para Periféricos
+          const perifericoRequestDto = {
+            codigo: valor("codigo"), 
+            tipo: valor("tipo"), 
+            marca: valor("marca"),
+            modelo: valor("modelo"), 
+            tipoConexion: valor("tipoConexion"), 
+            color: valor("color"),
+            precio: Number(valor("precio")), 
+            stock: Number(valor("stock")), 
+            horaRegistro: valor("horaRegistro"), 
+            fechaHoraRegistro: valor("fechaHoraRegistro"),
+            imagenBase64
+          };
+
+          const respuestaHttp = await fetch(`/api/perifericos/${id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(perifericoRequestDto),
+          });
+          
+          const respuesta = await respuestaHttp.json();
+          resultado.textContent = JSON.stringify(respuesta, null, 2);
+          resultado.classList.remove("d-none");
+          
+          if (!respuestaHttp.ok) throw new Error(`HTTP ${respuestaHttp.status} · ${respuesta.mensaje}`);
+          mostrar(`HTTP ${respuestaHttp.status} · ${respuesta.mensaje || "Actualizado con éxito"}`, true);
+        });
+      }
+
+      function valor(id) { return document.querySelector(`#${id}`).value.trim(); }
+      
+      function convertirBase64(archivo) {
+        return new Promise((resolve, reject) => {
+          const lector = new FileReader();
+          lector.addEventListener("load", () => resolve(lector.result), { once: true });
+          lector.addEventListener("error", () => reject(lector.error), { once: true });
+          lector.readAsDataURL(archivo);
+        });
+      }
+
+      async function ejecutar(callback) {
+        try { 
+            mensaje.classList.add("d-none");
+            await callback(); 
+        } catch (error) { 
+            mostrar(error.message, false); 
+        }
+      }
+
+      function mostrar(texto, correcto) {
+        mensaje.classList.remove("d-none");
+        mensaje.className = `alert alert-${correcto ? "success" : "danger"} mb-4`;
+        mensaje.textContent = texto;
+      }
+    </script>
+    <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

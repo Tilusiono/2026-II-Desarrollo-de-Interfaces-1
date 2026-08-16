@@ -20,4 +20,13 @@ router.post(
 router.get("/",             asyncHandler((request, response) => controller.listar(response)));
 router.get("/:id",validarId,asyncHandler((request, response) =>controller.obtener(Number(request.params.id), response),),);
 
+router.put("/:id",validarId,//validarPerifericoCompleto,
+  asyncHandler((request, response) => {
+    const id = Number(request.params.id);
+    const perifericosRequestDto = new PerifericosRequestDto(request.body);
+    return controller.modificar(id, perifericosRequestDto, response);
+  }),
+);
+
+
 export default router;

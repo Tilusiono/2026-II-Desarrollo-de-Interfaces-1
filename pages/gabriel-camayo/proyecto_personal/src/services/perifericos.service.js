@@ -69,7 +69,7 @@ export class PerifericosService {
       imagenMimeType: coincidencia[1],
     };
   }
-    
+
   async listar() {
     const perifericosModel = await this.perifericosRepository.listar();
     return perifericosModel.map(
@@ -81,6 +81,35 @@ export class PerifericosService {
     const perifericosModel = await this.perifericosRepository.buscarPorId(id);
     if (!perifericosModel) throw new AppError("Periférico no encontrado", 404);
     return new PerifericosResponseDto(perifericosModel);
+  }
+
+  async modificar(id, perifericosRequestDto) {
+    const perifericoExistenteModel =
+      await this.perifericosRepository.buscarPorId(id);
+    if (!perifericoExistenteModel)
+      throw new AppError("Periferico no encontrado", 404);
+    await this.validarCodigo(perifericosRequestDto.codigo, id);
+
+    const imagenDatos = this.convertirImagen(perifericosRequestDto.imagenBase64);
+    const perifericosModel = new Perifericos(
+      id,
+      perifericosRequestDto.codigo,
+      perifericosRequestDto.tipo,
+      perifericosRequestDto.marca,
+      perifericosRequestDto.modelo,
+      perifericosRequestDto.tipoConexion,
+      perifericosRequestDto.color,
+      perifericosRequestDto.precio,
+      perifericosRequestDto.stock,
+      perifericosRequestDto.horaRegistro,
+      perifericosRequestDto.fechaHoraRegistro,
+    );
+
+    const perifericoActualizadoModel = await this.perifericosRepository.modificar(
+      id,
+      perifericosModel,
+    );
+    return new PerifericosResponseDto(perifericoActualizadoModel);
   }
 
 }
