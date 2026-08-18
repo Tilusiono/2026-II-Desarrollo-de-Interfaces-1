@@ -83,6 +83,7 @@ export class PerifericosService {
     return new PerifericosResponseDto(perifericosModel);
   }
 
+  //modificar todo
   async modificar(id, perifericosRequestDto) {
     const perifericoExistenteModel =
       await this.perifericosRepository.buscarPorId(id);
@@ -112,6 +113,37 @@ export class PerifericosService {
     return new PerifericosResponseDto(perifericoActualizadoModel);
   }
 
+  //modificar parcialmente
+  async modificarParcialmente(id, perifericosRequestDto) {
+  const perifericosActualModel = await this.perifericosRepository.buscarPorId(id);
+  if (!perifericosActualModel) throw new AppError("Periferico no encontrado", 404);
+
+  const codigo = perifericosRequestDto.codigo ?? perifericosActualModel.codigo;
+  await this.validarCodigo(codigo, id);
+
+  const conservarSiNoSeEnvia = (nuevoValor, valorActual) => nuevoValor === undefined ? valorActual : nuevoValor;
+
+  const perifericoModel = new Perifericos(
+    id,
+    codigo,
+    conservarSiNoSeEnvia(perifericosRequestDto.tipo, perifericosActualModel.tipo),
+    conservarSiNoSeEnvia(perifericosRequestDto.marca, perifericosActualModel.marca),
+    conservarSiNoSeEnvia(perifericosRequestDto.modelo, perifericosActualModel.modelo),
+    conservarSiNoSeEnvia(perifericosRequestDto.tipoConexion, perifericosActualModel.tipoConexion),
+    conservarSiNoSeEnvia(perifericosRequestDto.color, perifericosActualModel.color),
+    conservarSiNoSeEnvia(perifericosRequestDto.precio, perifericosActualModel.precio),
+    conservarSiNoSeEnvia(perifericosRequestDto.stock, perifericosActualModel.stock),
+    conservarSiNoSeEnvia(perifericosRequestDto.horaRegistro, perifericosActualModel.horaRegistro),
+    conservarSiNoSeEnvia(perifericosRequestDto.fechaHoraRegistro, perifericosActualModel.fechaHoraRegistro)
+  );
+
+  const perifericoActualizadoModel = await this.perifericosRepository.modificar(
+    id,
+    perifericoModel
+  );
+  
+  return new PerifericosResponseDto(perifericoActualizadoModel);
+}
 }
 
 export const perifericosService = new PerifericosService();

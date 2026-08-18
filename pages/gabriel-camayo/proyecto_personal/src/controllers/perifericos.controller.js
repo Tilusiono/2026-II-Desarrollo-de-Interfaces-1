@@ -47,6 +47,17 @@ export class PerifericosController {
     });
   }
 
+  // PATCH
+  async modificarParcialmente(id, perifericosRequestDto, response) {
+    const PerifericosResponseDto = await this.perifericosService.modificarParcialmente(
+      id,
+      perifericosRequestDto,
+    );
+    response.json({
+      mensaje: "Periférico actualizado",
+      PerifericosResponseDto,
+    });
+  }
 
 }
 

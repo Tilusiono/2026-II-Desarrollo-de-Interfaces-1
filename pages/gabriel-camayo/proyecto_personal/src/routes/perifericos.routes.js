@@ -6,6 +6,8 @@ import { perifericosController as controller } from "../controllers/perifericos.
 //import { validarPerifericosCompleto as validacion } from "../middlewares/validacion.middleware.js";
 import { PerifericosRequestDto } from "../dtos/PerifericosDto.js";
 import { validarId } from "../middlewares/id.middleware.js";
+//import {validarProductoCompleto,validarProductoParcial,} from "../middlewares/validacion.middleware.js";
+
 
 const router = Router();
 
@@ -28,5 +30,12 @@ router.put("/:id",validarId,//validarPerifericoCompleto,
   }),
 );
 
+router.patch("/:id",validarId,//validarProductoParcial,
+  asyncHandler((request, response) => {
+    const id = Number(request.params.id);
+    const perifericosRequestDto = new PerifericosRequestDto(request.body);
+    return controller.modificarParcialmente(id, perifericosRequestDto, response);
+  }),
+);
 
 export default router;
