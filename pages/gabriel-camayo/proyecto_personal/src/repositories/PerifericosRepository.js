@@ -1,6 +1,8 @@
 import { createRequire } from "node:module";
 import { sqlitePath } from "../config/storage.config.js";
 import Perifericos from "../models/Perifericos.js";
+import { objetoContieneTexto } from "../utils/texto.js";
+
 
 const require = createRequire(import.meta.url);
 
@@ -139,4 +141,31 @@ export class PerifericosRepository {
     return resultado.changes ? this.buscarPorId(id) : null;
   }
 
+  //SEARCH
+  async query(perifericoConsultaDto) {
+  const perifericos = await this.listar();
+  const texto = perifericoConsultaDto.texto ?? "";
+  const tipo = perifericoConsultaDto.tipo ?? "";
+  const marca = perifericoConsultaDto.marca ?? ""; // Faltaba declarar esta variable
+  const precioMin = perifericoConsultaDto.precioMin ?? "";
+  const precioMax = perifericoConsultaDto.precioMax ?? "";
+
+  return perifericos.filter((perifericosModel) => { // Cambiado 'productos' por 'perifericos'
+    const camposBuscables = {
+      id: perifericosModel.id,
+      codigo: perifericosModel.codigo,
+      tipo: perifericosModel.tipo,
+      marca: perifericosModel.marca
+      
+    };
+
+    return (
+      objetoContieneTexto(camposBuscables, texto) &&
+      (marca === "" || perifericosModel.marca === marca) && // Cambiado 'categoria' por 'marca'
+      (tipo === "" || perifericosModel.tipo === tipo) &&    // Cambiado 'activo' por 'tipo'
+      (precioMin === "" || perifericosModel.precio >= Number(precioMin)) &&
+      (precioMax === "" || perifericosModel.precio <= Number(precioMax))
+    );
+  });
+}
 }

@@ -59,6 +59,17 @@ export class PerifericosController {
     });
   }
 
+  // SEARCH
+  async buscar(perifericoConsultaDto, response) {
+    const perifericosResponseDto =
+      await this.perifericosService.buscar(perifericoConsultaDto);
+    response.json({
+      total: perifericosResponseDto.length,
+      perifericoConsultaDto,
+      perifericosResponseDto,
+    });
+  }
+
 }
 
 export const perifericosController = new PerifericosController(perifericosService);

@@ -1,3 +1,6 @@
+
+
+
 export class PerifericosRequestDto {
   constructor(requestBody = {}) {
     this.codigo = requestBody.codigo;
